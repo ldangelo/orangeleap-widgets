@@ -9,8 +9,9 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-		/WEB-INF/orangeleap-form-servlet.xml
+		/WEB-INF/donatenow-servlet.xml
 		/WEB-INF/applicationContext.xml 
+		/WEB-INF/applicationContext-security.xml
 		</param-value>
 	</context-param>
 
@@ -27,6 +28,18 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>
+			org.springframework.web.filter.DelegatingFilterProxy
+		</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
 	<servlet>
 		<servlet-name>dwr</servlet-name>
 		<servlet-class>org.directwebremoting.spring.DwrSpringServlet</servlet-class>
@@ -38,54 +51,23 @@
 	</servlet>
 
 	<servlet>
-		<servlet-name>orangeleap-form</servlet-name>
+		<servlet-name>donatenow</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+				<init-param>
+		    <param-name>contextConfigLocation</param-name>
+		    <param-value>/WEB-INF/donatenow-servlet.xml</param-value>
+		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>orangeleap-form</servlet-name>
+		<servlet-name>donatenow</servlet-name>
 		<url-pattern>*.htm</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>dwr</servlet-name>
 		<url-pattern>/dwr/*</url-pattern>
 	</servlet-mapping>
-
-	<filter>
-        <filter-name>saveRequestFilter</filter-name>
-        <filter-class>com.orangeleap.common.security.SaveRequestFilter</filter-class>
-    </filter>
-	<filter>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-	</filter>
-	<filter>
-		<filter-name>initializeRequestFilter</filter-name>
-		<filter-class>com.mpower.util.InitializeRequestFilter</filter-class>
-	</filter>
-	<filter>
-		<filter-name>entityManagerInViewFilter</filter-name>
-		<filter-class>
-			org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
-	</filter>
-
-	<filter-mapping>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>initializeRequestFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>entityManagerInViewFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>saveRequestFilter</filter-name>
-		<url-pattern>/*</url-pattern>  
-	</filter-mapping>
 
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
@@ -100,36 +82,8 @@
 			<taglib-uri>/spring-form</taglib-uri>
 			<taglib-location>/WEB-INF/tld/spring-form.tld</taglib-location>
 		</taglib>
-		<taglib>
-			<taglib-uri>/mpower</taglib-uri>
-			<taglib-location>/WEB-INF/tld/mpower.tld</taglib-location>
-		</taglib>
 	</jsp-config>
 
-	<servlet>
-		<servlet-name>spring-ws</servlet-name>
-		<servlet-class>org.springframework.ws.transport.http.MessageDispatcherServlet</servlet-class>
-		<init-param>
-			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/webservice-context.xml</param-value>
-		</init-param>
-		<init-param>
-			<param-name>transformWsdlLocations</param-name>
-			<param-value>true</param-value>
-		</init-param>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>spring-ws</servlet-name>
-		<url-pattern>/services/*</url-pattern>
-	</servlet-mapping>
-
-
-	<servlet-mapping>
-        <servlet-name>spring-ws</servlet-name>
-        <url-pattern>*.wsdl</url-pattern>
-	</servlet-mapping>
-	
 	
 	<session-config>
 	             <!-- 12 hours -->

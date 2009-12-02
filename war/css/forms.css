@@ -1,0 +1,573 @@
+ul.formFields {
+	list-style-type:none;
+	margin:0pt;
+	padding:0pt;
+	width:100%;
+}
+li.fieldGroup {
+	clear:both;
+	margin:0pt;
+	padding:4px 5px 2px 9px;
+	position:relative;
+}
+
+ul.formFields li.side label.desc {
+	float:left;
+	width:117px;
+	text-align:right;
+	padding-right:4px;
+	color: #173D5F;
+	font-family:Arial, sans-serif;
+	padding-top: 4px;
+}
+ul.formFields li input {
+	width:100%;
+	padding:3px 4px;
+	border:1px solid #7f9db9;
+}
+ul.formFields li textarea {
+	padding:3px 4px;
+	border:1px solid #7f9db9;
+}
+ul.formFields li select {
+	padding:2px;
+}
+ul.formFields li.side input {
+	width:63.8%;
+}
+ul.formFields li.side input.checkbox {
+	width:auto;
+	border:0;
+}
+input[type=checkbox], input.checkbox {
+	margin: 3px 3px 3px 4px;
+}
+ul.formFields li.side select {
+	width:66.6%;
+}
+ul.formFields li.side select.expMonth {
+	width:20%;
+}
+ul.formFields li.side select.expYear {
+	width:43.8%;
+	margin-left:1%;
+}
+ul.formFields li.side textarea {
+	width:63.8%;
+}
+ul.formFields li.side input.date { width: 97.1%; }
+ul.formFields li.side input.lookup { width: 60%; }
+li.side {
+	padding:4px 10px 4px 0;
+	clear: left;
+}
+form .req {
+	color:red !important;
+	float:none;
+	font-weight:bold;
+	margin:0pt;
+}
+input.text, input.file, textarea.textarea, select.select{
+	margin:0;
+	font-size:100%;
+	color:#333;
+}
+input.text, input.file, textarea {
+	padding:3px;
+	margin:0;
+}
+form li.fieldGroup, form li.buttons {
+	display:block;
+}
+form li:after, .buttons:after{
+	content:"."; 
+	display:block;
+	height:0; 
+	clear:both; 
+	visibility:hidden;
+}
+
+ul.formFields li.clear {
+	clear:both;
+	font-size:1px;
+	line-height:1px;
+}
+ul.width600 {
+	width:600px;
+}
+ul.width385 {
+	width:385px;
+	padding-right:5px;
+}
+ul.width350 {
+	width: 360px;
+	padding-right: 10px;
+}
+span.required {
+	font-size: 1.6em; color:#f00; vertical-align: text-top;
+}
+span.helpText {
+	display: none;
+}
+a.helpLink img {
+	border:none;
+	vertical-align: -20%;
+	background-color: #eee;
+}
+a.helpLink {
+	margin: 0px 2px;
+}
+a.helpLink:hover img {
+	background-color: #ffb;
+}
+h4.formSectionHeader {
+	font-weight:bold;
+	font-family:Arial, sans-serif;
+	font-size:14px;
+	margin:0 0 6px 0;
+	padding:0;
+	color:#777;
+	border-bottom:1px solid #aaa;
+}
+div.singleColumn h4.formSectionHeader { width: 98%; }
+h4.gridSectionHeader {
+	font-weight:bold;
+	font-family:Arial, sans-serif;
+	font-size:14px;
+	margin:0;
+	padding:10px 0 0 0;
+	color:#777;
+	border-bottom:1px solid #aaa;
+}
+.formButtonFooter {
+	text-align:center;
+	border-top:1px solid #aaa;
+	padding:6px 0 7px;
+	margin:8px 0 0 0;
+	background: #F6F7FB;
+}
+
+a.lookupLink, a.multiLookupLink, .lookupField a.hideText, .multiLookupField a.hideText {
+	background: transparent url(../images/icons/view.png) no-repeat center center;
+	display: block;
+	height: 16px;
+	width: 16px;
+	margin: 0;
+	padding:3px;
+    position: absolute;
+	text-indent: -2000px;
+}
+.lookupField a.hideText:hover, 
+	.lookupField a.hideText:focus, 
+	.multiLookupField a.hideText:hover, 
+	.multiLookupField a.hideText:focus, 
+	a.lookupLink:hover, 
+	a.lookupLink:focus, 
+	a.multiLookupLink:hover,
+	a.multiLookupLink:focus {
+	background-color: #DFF1FF;
+}
+a.lookupLink, a.multiLookupLink {
+	overflow:hidden;
+}
+a.lookupLink {
+	right: -1px;
+	top: 1px;
+}
+a.multiLookupLink {
+	right: 16px;
+	top: 6px;
+}
+
+table.tablesorter tbody tr td a.lookupLink { top: 1px; right: -4px; padding: 1px; }
+table.tablesorter tbody tr.lineRow td a.hideText { top: 0; right: 0; padding: 1px; }
+.lookupField a.hideText, .multiLookupField a.hideText {
+    top: 0;
+    right: 0;
+}
+
+.lookupTable {
+	background:#fff;
+	padding:2px;
+	width:100%;
+}
+.searchSection {
+	background:#f6f7fb;
+	padding-top:10px;
+	/*border-bottom:1px solid #888;*/
+}
+.searchSection h4.formSectionHeader { padding: 0 5px; }
+
+.searchConstituentButtons {
+	text-align:center;
+	padding:12px;
+	position:relative;
+}
+.constituentFormButtons {
+	position:relative;
+}
+.constituentFormButtons input {
+	font-size:13px;
+	margin:0 5px;
+	font-family:arial;
+}
+
+.saveButton, .button, .disabledButton {
+	font-family:arial;
+	text-decoration:none;
+	font-weight:bold;
+	padding: 0 5px 0 5px;
+    -webkit-padding-start: 3px 5px 0 5px;
+    background-image: url(../images/buttons/buttons.png);
+    background-repeat: repeat-x;
+	border: 0;
+	margin:0 4px;
+	color: #000;
+	height: 24px;
+}
+.saveButton {
+    background-position: 0 0;
+    border-right: 1px solid #86b2d1;
+    border-bottom: 1px solid #86b2d1;
+}
+.button {
+    background-position: 0 -26px;
+    border-right: 1px solid #b0bec8;
+    border-bottom: 1px solid #b0bec8;
+}
+.saveButton:hover, .button:hover, .saveButton:focus, .button:focus {
+	background-position: 0 -52px; 
+    border-right: 1px solid #9dc7df;
+    border-bottom: 1px solid #9dc7df;
+    cursor: pointer;
+}
+.disabledButton, .disabledButton:hover, .disabledButton:focus {
+    background-position: 0 -78px; 
+    border-right: 1px solid #adb9c2;
+    border-bottom: 1px solid #adb9c2;
+    color: #A0A0A0;
+    cursor: default;
+}
+table.disabledButton button {
+    color: #A0A0A0;
+    cursor: default;
+}
+
+#savedMarker, .savedIcon {
+	background:transparent url(../images/icons/check-eee.gif) no-repeat center left;
+	margin-left:12px;
+	padding-left:18px;
+	color:#080;
+	font-weight:bold;
+	font-size:14px;
+}
+.newAccountButton {
+	position:absolute;
+	bottom:13px;
+	right:8px;
+	color:#525F95;
+	font-weight:bold;
+	font-family:arial;
+	font-size:14px;
+}
+.searchConstituentButtons .newAccountButton {
+	bottom:6px;
+}
+.newLink {
+	color:#525F95;
+	font-family:arial;
+	font-size:14px;
+	font-weight:bold;
+}
+ul.formFields li input.textError, 
+	ul.formFields li textarea.textError,
+    ul.formFields li select.textError {
+	background:#fed;
+	border:1px solid #d00;
+}
+table tr td input.text {
+	border:1px solid #7f9db9;
+	padding:1px;
+}
+table tr td input.textError {
+	background:#fed;
+	border:1px solid #d00;
+	padding:1px;
+}
+table tr td input.x-form-text.textError, table tr td textarea.x-form-field.textError { padding: 1px 3px; }
+.globalFormErrors h5 {
+	margin:6px 0 4px;
+	font-size:13px;
+	color:#d00;
+}
+.globalFormErrors ul {
+	margin:0;
+	padding-left:30px;
+	list-style-type:disc;
+}
+.globalFormErrors ul li {
+	color:#d00;
+}
+.globalFormErrors {
+	padding-left:36px;
+	margin-left:8px;
+	margin-bottom:10px;
+	background:transparent url(../images/icons/document_forbidden.png) no-repeat left 10px;
+	padding-bottom:4px;
+}
+.accountForm h1 {
+	margin:12px 0 0 0;
+	color:#EE5522;
+	font-size:22px;
+	background:#eee;
+	border:1px solid #aaa;
+	padding:8px 8px 10px;
+}
+table.formTable {
+	margin:10px 50px;
+}
+.formTable td {
+	padding:3px;
+	font-size:12px;
+}
+.formTable td label {
+	font-size:14px;
+	color:#444;
+}
+.formTable input {
+	padding:3px;
+	margin:0;
+}
+.tablesorter td input {
+	margin:0;
+	padding:0;
+	width:100%;
+}
+.tablesorter td input.code {
+	width:90%;
+}
+table tr td input.code {
+	padding:1px 20px 1px 1px;
+}
+.tablesorter td input.lookup {
+	width:80%;
+}
+
+div.gridActions {
+	margin: 0 24px 0 4px;
+	text-align: left;
+}
+div.gridActions .value {
+	background-color:#f0f0f0;
+	border:1px solid #444;
+	padding:0 2px 1px 8px;
+	text-align: right;
+	width: 174px;
+    min-height: 18px;
+}
+#totalText { font-weight: normal; }
+
+/* will be depreciated below */
+p.gridActions {
+	margin:6px 0;
+	position:relative;
+}
+p.gridActions #subTotal {
+	position:absolute;
+	right:24px;
+}
+#subTotal .value {
+	background-color:#f0f0f0;
+	border:1px solid #444;
+	padding:0px 2px 1px 8px;
+}
+/* will be depreciated above */
+
+.gridActions .warning {
+	padding-left:20px;
+	background:transparent url(../images/icons/warning.png) no-repeat left 2px;
+}
+.gridActions .warningText {
+	display:none;
+}
+.gridActions .warning .warningText {
+	color:#c00;
+	display:inline;
+}
+form input[type=text], form input.text {
+	height: 16px;
+}
+form table.tablesorter input { height: 16px; line-height: 16px; min-height: 16px; }
+form table.tablesorter input.number, form table.tablesorter input.percentage {
+	text-align:right; 
+}
+table.tablesorter col.node { width: 16px; }
+table.tablesorter col.code { width: 25%; }
+table.tablesorter col.reference { width: 30%; }
+table.tablesorter col.button { width: 3%; }
+table.tablesorter td input.code { width: 90.2%; }
+
+table.distributionLines { table-layout: fixed; }
+table.distributionLines col.number { width: 12%; }
+table.distributionLines col.pct { width: 7%; }
+table.distributionLines .lineRow .lookupField { min-height: 18px; padding: 0; }
+table.giftInKindDetails col.number { width: 20%; }
+table.giftInKindDetails col.text { width: 55%; }
+table.giftInKindDetails col.checkbox { width: 3%; }
+table.tablesorter td.nodeLink { width: 16px; padding: 0; vertical-align: middle; }
+
+form table.tablesorter thead tr th {
+	background-color:#E6EEEE;
+	color:#000;
+	font-size:11px;
+	font-weight:bold;
+	padding:2px 0px 2px 5px;
+}
+form table.tablesorter thead th.actionColumn {
+	width:19px;
+}
+.codeList {
+	height:300px;
+	overflow-y:auto;
+	border:1px solid #bbb;
+}
+.codeList table input {
+	font-family:arial,sans-serif;
+}
+div.lookupWrapper {
+	position:relative;
+	float:left;
+	width:247px;
+}
+table div.lookupWrapper {
+	position:relative;
+	width:100%;
+}
+div.lookupWrapper a.dp-choose-date {
+	position:absolute;
+	right:-4px;
+	top: -2px;
+}
+ul.formFields div.lookupWrapper input {
+	width:100%;
+}
+ul.formFields div.lookupWrapper input.code {
+	width:87.3%;
+	padding-right:28px;
+}
+
+.lookupImg {
+	position:absolute;
+	top:0;
+	left:0;
+	z-index:5000;
+}
+
+.readOnlyField {
+	border:1px solid #7F9DB9;
+	padding:1px 4px;
+	float:left;
+	width:63.8%;
+	background:#eee;
+	min-height: 18px;
+	word-wrap: break-word;
+}
+.ea-wrappable { 
+	-moz-binding: url('../xml/wordwrap.xml#wordwrap'); 
+}
+.lookupField {
+	border:1px solid #7F9DB9;
+	padding:2px 0;
+	min-height: 18px;
+	width:100%;
+    position: relative;
+    background-color: #FFF;
+}
+a.hideText {
+	font-size: 0;
+    text-decoration: none;
+    line-height: 0;
+    color: transparent;
+}
+
+li.multiOptionLi { padding-right: 0; position: relative; }
+div.lookupScrollTop, div.lookupScrollBottom, div.lookupScrollLeft, div.lookupScrollRight { position: relative; background-color: #7F9DB9; }
+div.lookupScrollTop.textError, 
+	div.lookupScrollBottom.textError, 
+	div.lookupScrollContainer.textError div.lookupScrollLeft, 
+	div.lookupScrollContainer.textError div.lookupScrollRight { background-color: #D00; } 
+div.lookupScrollContainer.textError div.multiLookupField { background-color: #FED; } 
+div.lookupScrollTop, div.lookupScrollBottom { height:1px; left:121px; width:249px; z-index:1; } 
+div.lookupScrollBottom { top:-1px; }
+div.lookupScrollTop { top:1px; } 
+div.lookupScrollBottom { height: 1px; left:121px; top:-1px; width:249px; z-index:1; }
+div.lookupScrollContainer { max-height:95px; overflow-x:hidden; overflow-y:auto; position:relative; width:263px; }
+div.lookupScrollContainer.readOnly { width: 254px; } 
+div.multiLookupField { padding:2px 0; width: 247px; position: relative; min-height: 20px; background-color: #FFF; }
+div.lookupScrollLeft, div.lookupScrollRight { height: 100%; position: absolute; top: 0; width: 1px; z-index: 1; }
+div.lookupScrollLeft { left:0; }
+div.lookupScrollRight { left:248px; }
+
+div.lookupScrollContainer div.multiOption, div.lookupWrapper div.queryLookupOption { background-color: #FFF; }
+div.lookupField.textError { border-color: #D00; }
+div.lookupField.textError, div.lookupField.textError div.queryLookupOption { background-color: #FED; }
+div.lookupWrapper div.queryLookupOption { width: 98%; padding-left: 4px; }
+div.lookupScrollContainer div.multiOption { padding: 1px 22px 1px 5px; width: 90%; }
+div.lookupScrollContainer div.multiOption:hover, div.lookupWrapper div.queryLookupOption:hover { background-color: #DFF1FF !important; }
+a.deleteOption { vertical-align: bottom; margin-left: 3px; visibility: hidden; }
+div.multiOption:hover a.deleteOption, div.queryLookupOption:hover a.deleteOption, div.multiOption:focus a.deleteOption, div.queryLookupOption:focus a.deleteOption { visibility: visible; } 
+a.deleteOption img { vertical-align: top; }
+a.treeNodeLink { background: transparent url(../images/expandCollapse.gif) no-repeat 0 0; float: left; height: 22px; width: 16px;	margin: 0;	padding: 0; overflow: hidden; text-indent: -2000px; }
+a.plus { background-position: 0 0; }
+a.plus:hover, a.plus:focus { background-position: 0 -22px; } 
+a.minus { background-position: 0 -44px; }
+a.minus:hover, a.minus:focus { background-position: 0 -66px; } 
+div.lookupScrollContainer.readOnly div.multiOption, 
+	div.lookupWrapper.readOnly div.queryLookupOption,
+	div.lookupScrollContainer.readOnly div.multiOption:hover, 
+	div.lookupWrapper.readOnly div.queryLookupOption:hover { background-color: #eee !important; }
+
+table.alignLeft td,
+	table.alignLeft th { text-align:left; }
+
+input:focus, textarea:focus, .focused { background-color: #DFF1FF; }
+input.defaultText { color: #AFAFAF; }
+ul.formFields li.side label.inFocus, label.inFocus { font-weight: bold; color: black; }
+
+.mainForm h3.info { color: #070; }
+
+div.readOnly div.multiLookupField,
+	div.readOnly div.lookupField, 
+	div.disabled div.multiLookupField,
+	div.disabled div.lookupField { background-color: #EEEEEE; }
+div.disabled ~ a.multiLookupLink {
+	background:#EEEEEE url(../images/icons/viewDisabled.png) no-repeat scroll center center;
+	cursor:default;
+}
+div.multiLookupField a, div.lookupField a { text-decoration: none; }
+tr.hiddenRow td table { margin-left: 16px; }
+tr.hiddenRow td table ul.width350 li.side label.desc { width:100px; }
+tr.hiddenRow td table ul.width350 li.side select { width:67%; }
+tr.hiddenRow td table ul.width350 div.lookupScrollTop, 
+	tr.hiddenRow td table ul.width350 div.lookupScrollBottom { left: 104px; width: 233px; }
+tr.hiddenRow td table ul.width350 div.lookupWrapper { width: 66%; } 
+tr.hiddenRow td table ul.width350 div.multiLookupField { width: 233px; }
+tr.hiddenRow td table ul.width350 div.lookupScrollContainer { width: 246px; }
+tr.hiddenRow td table ul.width350 div.lookupScrollContainer div.multiOption { width: 88.5%; }
+tr.hiddenRow td table ul.width350 div.lookupScrollRight { left: 232px; }
+tr.hiddenRow td table ul.width350 li.side input { width: 65.5%; }
+tr.hiddenRow td table ul.width350 li.side input.checkbox { width: auto; } 
+tr.hiddenRow td table ul.width350 a.multiLookupLink { right: 24px; top: 6px; }
+tr.hiddenRow td table ul.width350 .readOnlyField { width: 63.8%; } 
+tr.hiddenRow td table td { border-bottom: 0; }
+
+table.distributionLines tbody:hover tr td, table.giftInKindDetails tbody:hover tr td { background-color: #FFD; }
+tbody.expandable tr.expanded td { border-bottom: 0; }
+tbody.gridRow tr.lineRow div.readOnlyField { width: 85%; line-height: 16px; min-height: 16px; }
+tbody.gridRow tr.lineRow div.readOnlyField.code { width: 97%; }
+tbody.gridRow tr.lineRow td div.lookupScrollTop, tbody.gridRow tr.lineRow td div.lookupScrollBottom { left: 0; top: 0; width: 100%; }
+tbody.gridRow tr.lineRow td div.lookupScrollRight { left: auto; margin-left: 99.7%; }
+tbody.gridRow tr.lineRow td div.lookupScrollContainer, tbody.gridRow tr.lineRow td div.multiLookupField { padding: 0; }
+tbody.gridRow tr.lineRow td div.lookupScrollContainer.readOnly { width: 100%; }
+tbody.gridRow tr.lineRow td div.multiLookupField { min-height: 18px; width: 100%; line-height: normal; }
+
