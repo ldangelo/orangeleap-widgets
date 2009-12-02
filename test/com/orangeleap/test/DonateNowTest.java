@@ -11,11 +11,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.orangeleap.domain.Address;
-import com.orangeleap.domain.CreditCardPaymentInfo;
-import com.orangeleap.domain.Donation;
-import com.orangeleap.domain.PaymentStatus;
-import com.orangeleap.service.impl.DonateNowImpl;
+import com.orangeleap.donatenow.domain.Address;
+import com.orangeleap.donatenow.domain.Donation;
+import com.orangeleap.donatenow.domain.PaymentInfo;
+import com.orangeleap.donatenow.domain.PaymentStatus;
+import com.orangeleap.donatenow.domain.PaymentType;
+import com.orangeleap.donatenow.service.impl.DonateNowImpl;
 
 public class DonateNowTest {
 
@@ -45,7 +46,8 @@ public class DonateNowTest {
 		a.setPostalCode("75093");
 		d.setBillingAddress(a);
 		
-		CreditCardPaymentInfo payInfo = new CreditCardPaymentInfo();
+		PaymentInfo payInfo = new PaymentInfo();
+		payInfo.setPaymentType(PaymentType.CC);		
 		payInfo.setName("Leo DAngelo");
 		payInfo.setCcNumber("4111111111111111");
 		payInfo.setCcExpMonth(12);
@@ -78,7 +80,8 @@ public class DonateNowTest {
 		a.setPostalCode("75093");
 		d.setBillingAddress(a);
 		
-		CreditCardPaymentInfo payInfo = new CreditCardPaymentInfo();
+		PaymentInfo payInfo = new PaymentInfo();
+		payInfo.setPaymentType(PaymentType.CC);
 		payInfo.setName("Leo DAngelo");
 		payInfo.setCcNumber("4111111111111111");
 		payInfo.setCcExpMonth(12);
