@@ -18,7 +18,7 @@ public class WSClient  {
 	public OrangeLeap getOrangeLeap(String wsdlUrl,String username, String password) {
 		OrangeLeapService orangeLeapService;
 		try {
-			orangeLeapService = new OrangeLeapService(new URL(wsdlUrl),new QName("http://www.orangeleap.com/orangeleap/services/1.0", "OrangeLeapService"));
+			orangeLeapService = new OrangeLeapService(new URL(wsdlUrl),new QName("http://www.orangeleap.com/orangeleap/services2.0/", "OrangeLeapService"));
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 			return null;

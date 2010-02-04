@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="distributionLine">
  *   &lt;complexContent>
- *     &lt;extension base="{http://www.orangeleap.com/orangeleap/services/1.0}abstractCustomizableEntity">
+ *     &lt;extension base="{http://www.orangeleap.com/orangeleap/services2.0/}abstractCustomizableEntity">
  *       &lt;sequence>
  *         &lt;element name="adjustedGiftId" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
  *         &lt;element name="amount" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>

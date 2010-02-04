@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="constituentId" type="{http://www.w3.org/2001/XMLSchema}long" maxOccurs="unbounded"/>
- *         &lt;element name="communicationHistory" type="{http://www.orangeleap.com/orangeleap/services/1.0}communicationHistory"/>
+ *         &lt;element name="communicationHistory" type="{http://www.orangeleap.com/orangeleap/services2.0/}communicationHistory"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>

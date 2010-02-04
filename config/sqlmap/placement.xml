@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="Placement">
+	<resultMap id="result" class="com.orangeleap.donatenow.domain.Placement">
+		<result property="id" column="id" jdbcType="BIGINT"/>
+		<result property="widgetid" column="widgetid" jdbcType="BIGINT"/>
+		<result property="placementURL" column="placementURL" jdbcType="VARCHAR"/>
+		<result property="errorCount" column="errorCount" jdbcType="BIGINT"/>
+		<result property="giftCount" column="giftCount" jdbcType="BIGINT"/>
+		<result property="viewCount" column="viewCount" jdbcType="BIGINT"/>
+	</resultMap>
+
+	<select id="listPlacementsByWidgetId" resultMap="result">
+		select id,widgetid,placementURL,errorCount,giftCount,viewCount from placements where widgetid=#value#
+	</select>	
+	<select id="findPlacementByURL" resultMap="result">
+		select id,widgetid,placementURL,errorCount,giftCount,viewCount from placements where placementURL=#value#
+	</select>
+	
+	<insert id="savePlacement" parameterClass="com.orangeleap.donatenow.domain.Placement">
+		insert into placements (widgetid,placementURL,errorCount,giftCount,viewCount) values (#widgetid#,#placementURL#,#errorCount#,#giftCount#,#viewCount#)
+	</insert>
+	
+	<update id="updatePlacement" parameterClass="com.orangeleap.donatenow.domain.Placement">
+		update placements set widgetid=#widgetid#,placementURL=#placementURL#,errorCount=#errorCount#,giftCount=#giftCount#,viewCount=#viewCount# where id=#id#
+	</update>
+	
+</sqlMap>

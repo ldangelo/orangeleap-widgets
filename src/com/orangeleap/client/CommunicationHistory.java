@@ -3,68 +3,61 @@ package com.orangeleap.client;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
- * <p>Java class for communicationHistory complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * 						CommunicationHistory is used to update/add any type of communication with a
+ * 						constituent. It will map to the
+ * 						"touch points" screen within the orange leap API. Because orange leap is
+ * 						extensible you can track much more
+ * 						than just e-mails and calls with our CommunicationHistory.
  * 
- * <pre>
- * &lt;complexType name="communicationHistory">
- *   &lt;complexContent>
- *     &lt;extension base="{http://www.orangeleap.com/orangeleap/services/1.0}abstractCustomizableEntity">
- *       &lt;sequence>
- *         &lt;element name="comments" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="communicationHistoryType" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="entryType" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="giftId" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
- *         &lt;element name="constituentId" type="{http://www.w3.org/2001/XMLSchema}long"/>
- *         &lt;element name="pledgeId" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
- *         &lt;element name="recordDate" type="{http://www.w3.org/2001/XMLSchema}dateTime"/>
- *         &lt;element name="recurringGiftId" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
- *         &lt;element name="systemGenerated" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
- *       &lt;/sequence>
- *     &lt;/extension>
- *   &lt;/complexContent>
- * &lt;/complexType>
- * </pre>
+ * 						Some examples of implementations we have done track things like
+ * 						events, website visits, volunteer hours, etc... using
+ * 						"touch points"/Communication History.
+ * 
+ * 						CommunicationHistory objects are tied to constituents but can alternately reference
+ * 						Gifts, Pledges, etc...
+ * 
+ * 						Like all entities on orange leap CommunicationHistory can be
+ * 						customized. For example an EventName could be added to all
+ * 						"touch points" that have a type of "Event". These custom fields are
+ * 						accessed through the customFieldMap of the
+ * 						abstractCustomizableEntity
+ * 						that we inherit from.
+ * 				
+ * 
  * 
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "communicationHistory", propOrder = {
-    "comments",
-    "communicationHistoryType",
-    "entryType",
-    "giftId",
-    "constituentId",
-    "pledgeId",
-    "recordDate",
-    "recurringGiftId",
-    "systemGenerated"
-})
+@XmlType(name = "communicationHistory")
 public class CommunicationHistory
     extends AbstractCustomizableEntity
 {
 
+    @XmlAttribute
     protected String comments;
-    @XmlElement(required = true)
+    @XmlAttribute(required = true)
     protected String communicationHistoryType;
-    @XmlElement(required = true)
+    @XmlAttribute
     protected String entryType;
+    @XmlAttribute
     protected Long giftId;
+    @XmlAttribute(required = true)
     protected long constituentId;
+    @XmlAttribute
     protected Long pledgeId;
-    @XmlElement(required = true)
+    @XmlAttribute(required = true)
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar recordDate;
+    @XmlAttribute
     protected Long recurringGiftId;
-    protected boolean systemGenerated;
 
     /**
      * Gets the value of the comments property.
@@ -248,22 +241,6 @@ public class CommunicationHistory
      */
     public void setRecurringGiftId(Long value) {
         this.recurringGiftId = value;
-    }
-
-    /**
-     * Gets the value of the systemGenerated property.
-     * 
-     */
-    public boolean isSystemGenerated() {
-        return systemGenerated;
-    }
-
-    /**
-     * Sets the value of the systemGenerated property.
-     * 
-     */
-    public void setSystemGenerated(boolean value) {
-        this.systemGenerated = value;
     }
 
 }

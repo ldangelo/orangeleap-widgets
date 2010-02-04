@@ -11,7 +11,25 @@ public class Donation {
 	private PaymentInfo paymentInfo;
 	private BigDecimal amount = null;
 	private Address billingAddress = null;
+	private String  GUID = null;
+	private String  referrer = null;
 	
+	public String getReferrer() {
+		return referrer;
+	}
+
+	public void setReferrer(String referrer) {
+		this.referrer = referrer;
+	}
+
+	public String getGUID() {
+		return GUID;
+	}
+
+	public void setGUID(String gUID) {
+		GUID = gUID;
+	}
+
 	public Donation() {
 		
 	}
@@ -71,5 +89,7 @@ public class Donation {
 	public void setBillingAddress(Address billingAddress) {
 		this.billingAddress = billingAddress;
 	}
+
+
 
 }

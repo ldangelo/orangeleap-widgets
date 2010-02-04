@@ -3,7 +3,6 @@ package com.orangeleap.client;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -15,15 +14,15 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="address">
  *   &lt;complexContent>
- *     &lt;extension base="{http://www.orangeleap.com/orangeleap/services/1.0}abstractCommunicationEntity">
+ *     &lt;extension base="{http://www.orangeleap.com/orangeleap/services2.0/}abstractCommunicationEntity">
  *       &lt;sequence>
- *         &lt;element name="addressLine1" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="addressLine1" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="addressLine2" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="addressLine3" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="city" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="country" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="postalCode" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="stateProvince" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="city" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="country" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="postalCode" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="stateProvince" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -46,17 +45,12 @@ public class Address
     extends AbstractCommunicationEntity
 {
 
-    @XmlElement(required = true)
     protected String addressLine1;
     protected String addressLine2;
     protected String addressLine3;
-    @XmlElement(required = true)
     protected String city;
-    @XmlElement(required = true)
     protected String country;
-    @XmlElement(required = true)
     protected String postalCode;
-    @XmlElement(required = true)
     protected String stateProvince;
 
     /**

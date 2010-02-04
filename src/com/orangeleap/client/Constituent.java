@@ -17,25 +17,24 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="constituent">
  *   &lt;complexContent>
- *     &lt;extension base="{http://www.orangeleap.com/orangeleap/services/1.0}abstractCustomizableEntity">
+ *     &lt;extension base="{http://www.orangeleap.com/orangeleap/services2.0/}abstractCustomizableEntity">
  *       &lt;sequence>
+ *         &lt;element name="constituentId" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
  *         &lt;element name="accountNumber" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
  *         &lt;element name="firstName" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="middleName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="lastName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="title" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="addresses" type="{http://www.orangeleap.com/orangeleap/services/1.0}address" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="emails" type="{http://www.orangeleap.com/orangeleap/services/1.0}email" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="phones" type="{http://www.orangeleap.com/orangeleap/services/1.0}phone" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="primaryAddress" type="{http://www.orangeleap.com/orangeleap/services/1.0}address" minOccurs="0"/>
- *         &lt;element name="primaryEmail" type="{http://www.orangeleap.com/orangeleap/services/1.0}email" minOccurs="0"/>
- *         &lt;element name="primaryPhone" type="{http://www.orangeleap.com/orangeleap/services/1.0}phone" minOccurs="0"/>
+ *         &lt;element name="addresses" type="{http://www.orangeleap.com/orangeleap/services2.0/}address" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="emails" type="{http://www.orangeleap.com/orangeleap/services2.0/}email" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="phones" type="{http://www.orangeleap.com/orangeleap/services2.0/}phone" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="organizationName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="constituentAttributes" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="constituentIndividualRoles" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="constituentOrganizationRoles" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="constituentType" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="preferredPhoneType" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="site" type="{http://www.orangeleap.com/orangeleap/services/1.0}site"/>
+ *         &lt;element name="site" type="{http://www.orangeleap.com/orangeleap/services2.0/}site"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -46,16 +45,15 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "constituent", propOrder = {
+    "constituentId",
     "accountNumber",
     "firstName",
+    "middleName",
     "lastName",
     "title",
     "addresses",
     "emails",
     "phones",
-    "primaryAddress",
-    "primaryEmail",
-    "primaryPhone",
     "organizationName",
     "constituentAttributes",
     "constituentIndividualRoles",
@@ -68,9 +66,11 @@ public class Constituent
     extends AbstractCustomizableEntity
 {
 
+    protected Long constituentId;
     protected Long accountNumber;
     @XmlElement(required = true)
     protected String firstName;
+    protected String middleName;
     @XmlElement(required = true)
     protected String lastName;
     protected String title;
@@ -80,9 +80,6 @@ public class Constituent
     protected List<Email> emails;
     @XmlElement(nillable = true)
     protected List<Phone> phones;
-    protected Address primaryAddress;
-    protected Email primaryEmail;
-    protected Phone primaryPhone;
     protected String organizationName;
     protected String constituentAttributes;
     protected String constituentIndividualRoles;
@@ -91,6 +88,30 @@ public class Constituent
     protected String preferredPhoneType;
     @XmlElement(required = true)
     protected Site site;
+
+    /**
+     * Gets the value of the constituentId property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Long }
+     *     
+     */
+    public Long getConstituentId() {
+        return constituentId;
+    }
+
+    /**
+     * Sets the value of the constituentId property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Long }
+     *     
+     */
+    public void setConstituentId(Long value) {
+        this.constituentId = value;
+    }
 
     /**
      * Gets the value of the accountNumber property.
@@ -138,6 +159,30 @@ public class Constituent
      */
     public void setFirstName(String value) {
         this.firstName = value;
+    }
+
+    /**
+     * Gets the value of the middleName property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    /**
+     * Sets the value of the middleName property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setMiddleName(String value) {
+        this.middleName = value;
     }
 
     /**
@@ -273,78 +318,6 @@ public class Constituent
             phones = new ArrayList<Phone>();
         }
         return this.phones;
-    }
-
-    /**
-     * Gets the value of the primaryAddress property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Address }
-     *     
-     */
-    public Address getPrimaryAddress() {
-        return primaryAddress;
-    }
-
-    /**
-     * Sets the value of the primaryAddress property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Address }
-     *     
-     */
-    public void setPrimaryAddress(Address value) {
-        this.primaryAddress = value;
-    }
-
-    /**
-     * Gets the value of the primaryEmail property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Email }
-     *     
-     */
-    public Email getPrimaryEmail() {
-        return primaryEmail;
-    }
-
-    /**
-     * Sets the value of the primaryEmail property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Email }
-     *     
-     */
-    public void setPrimaryEmail(Email value) {
-        this.primaryEmail = value;
-    }
-
-    /**
-     * Gets the value of the primaryPhone property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Phone }
-     *     
-     */
-    public Phone getPrimaryPhone() {
-        return primaryPhone;
-    }
-
-    /**
-     * Sets the value of the primaryPhone property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Phone }
-     *     
-     */
-    public void setPrimaryPhone(Phone value) {
-        this.primaryPhone = value;
     }
 
     /**

@@ -20,19 +20,19 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * <pre>
  * &lt;complexType name="abstractPaymentInfoEntity">
  *   &lt;complexContent>
- *     &lt;extension base="{http://www.orangeleap.com/orangeleap/services/1.0}abstractCustomizableEntity">
+ *     &lt;extension base="{http://www.orangeleap.com/orangeleap/services2.0/}abstractCustomizableEntity">
  *       &lt;sequence>
  *         &lt;element name="acknowledgmentDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
- *         &lt;element name="address" type="{http://www.orangeleap.com/orangeleap/services/1.0}address" minOccurs="0"/>
+ *         &lt;element name="address" type="{http://www.orangeleap.com/orangeleap/services2.0/}address" minOccurs="0"/>
  *         &lt;element name="checkNumber" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="comments" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="currencyCode" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="distributionLines" type="{http://www.orangeleap.com/orangeleap/services/1.0}distributionLine" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="email" type="{http://www.orangeleap.com/orangeleap/services/1.0}email" minOccurs="0"/>
- *         &lt;element name="paymentSource" type="{http://www.orangeleap.com/orangeleap/services/1.0}paymentSource" minOccurs="0"/>
- *         &lt;element name="paymentType" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="currencyCode" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="distributionLines" type="{http://www.orangeleap.com/orangeleap/services2.0/}distributionLine" maxOccurs="unbounded"/>
+ *         &lt;element name="email" type="{http://www.orangeleap.com/orangeleap/services2.0/}email" minOccurs="0"/>
+ *         &lt;element name="paymentSource" type="{http://www.orangeleap.com/orangeleap/services2.0/}paymentSource"/>
+ *         &lt;element name="paymentType" type="{http://www.orangeleap.com/orangeleap/services2.0/}PaymentType"/>
  *         &lt;element name="constituentId" type="{http://www.w3.org/2001/XMLSchema}long"/>
- *         &lt;element name="phone" type="{http://www.orangeleap.com/orangeleap/services/1.0}phone" minOccurs="0"/>
+ *         &lt;element name="phone" type="{http://www.orangeleap.com/orangeleap/services2.0/}phone" minOccurs="0"/>
  *         &lt;element name="sendAcknowledgment" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *       &lt;/sequence>
  *     &lt;/extension>
@@ -70,12 +70,15 @@ public abstract class AbstractPaymentInfoEntity
     protected Address address;
     protected Integer checkNumber;
     protected String comments;
+    @XmlElement(required = true)
     protected String currencyCode;
-    @XmlElement(nillable = true)
+    @XmlElement(required = true)
     protected List<DistributionLine> distributionLines;
     protected Email email;
+    @XmlElement(required = true)
     protected PaymentSource paymentSource;
-    protected String paymentType;
+    @XmlElement(required = true)
+    protected PaymentType paymentType;
     protected long constituentId;
     protected Phone phone;
     protected boolean sendAcknowledgment;
@@ -282,10 +285,10 @@ public abstract class AbstractPaymentInfoEntity
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link PaymentType }
      *     
      */
-    public String getPaymentType() {
+    public PaymentType getPaymentType() {
         return paymentType;
     }
 
@@ -294,10 +297,10 @@ public abstract class AbstractPaymentInfoEntity
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link PaymentType }
      *     
      */
-    public void setPaymentType(String value) {
+    public void setPaymentType(PaymentType value) {
         this.paymentType = value;
     }
 

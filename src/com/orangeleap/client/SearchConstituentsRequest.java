@@ -19,9 +19,9 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="firstName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="lastName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="primaryAddress" type="{http://www.orangeleap.com/orangeleap/services/1.0}address" minOccurs="0"/>
- *         &lt;element name="primaryPhone" type="{http://www.orangeleap.com/orangeleap/services/1.0}phone" minOccurs="0"/>
- *         &lt;element name="primaryEmail" type="{http://www.orangeleap.com/orangeleap/services/1.0}email" minOccurs="0"/>
+ *         &lt;element name="primaryAddress" type="{http://www.orangeleap.com/orangeleap/services2.0/}address" minOccurs="0"/>
+ *         &lt;element name="primaryPhone" type="{http://www.orangeleap.com/orangeleap/services2.0/}phone" minOccurs="0"/>
+ *         &lt;element name="primaryEmail" type="{http://www.orangeleap.com/orangeleap/services2.0/}email" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>

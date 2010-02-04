@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="abstractCustomizableEntity">
  *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *     &lt;extension base="{http://www.orangeleap.com/orangeleap/services2.0/}abstractEntity">
  *       &lt;sequence>
  *         &lt;element name="customFieldMap">
  *           &lt;complexType>
@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlType;
  *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *                           &lt;sequence>
  *                             &lt;element name="key" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *                             &lt;element name="value" type="{http://www.orangeleap.com/orangeleap/services/1.0}customField"/>
+ *                             &lt;element name="value" type="{http://www.orangeleap.com/orangeleap/services2.0/}customField"/>
  *                           &lt;/sequence>
  *                         &lt;/restriction>
  *                       &lt;/complexContent>
@@ -43,7 +43,7 @@ import javax.xml.bind.annotation.XmlType;
  *           &lt;/complexType>
  *         &lt;/element>
  *       &lt;/sequence>
- *     &lt;/restriction>
+ *     &lt;/extension>
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
@@ -57,11 +57,15 @@ import javax.xml.bind.annotation.XmlType;
 @XmlSeeAlso({
     Constituent.class,
     CommunicationHistory.class,
+    Picklist.class,
+    PicklistItem.class,
     AbstractPaymentInfoEntity.class,
     AbstractCommunicationEntity.class,
     DistributionLine.class
 })
-public abstract class AbstractCustomizableEntity {
+public abstract class AbstractCustomizableEntity
+    extends AbstractEntity
+{
 
     @XmlElement(required = true)
     protected AbstractCustomizableEntity.CustomFieldMap customFieldMap;
@@ -107,7 +111,7 @@ public abstract class AbstractCustomizableEntity {
      *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
      *                 &lt;sequence>
      *                   &lt;element name="key" type="{http://www.w3.org/2001/XMLSchema}string"/>
-     *                   &lt;element name="value" type="{http://www.orangeleap.com/orangeleap/services/1.0}customField"/>
+     *                   &lt;element name="value" type="{http://www.orangeleap.com/orangeleap/services2.0/}customField"/>
      *                 &lt;/sequence>
      *               &lt;/restriction>
      *             &lt;/complexContent>
@@ -170,7 +174,7 @@ public abstract class AbstractCustomizableEntity {
          *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
          *       &lt;sequence>
          *         &lt;element name="key" type="{http://www.w3.org/2001/XMLSchema}string"/>
-         *         &lt;element name="value" type="{http://www.orangeleap.com/orangeleap/services/1.0}customField"/>
+         *         &lt;element name="value" type="{http://www.orangeleap.com/orangeleap/services2.0/}customField"/>
          *       &lt;/sequence>
          *     &lt;/restriction>
          *   &lt;/complexContent>

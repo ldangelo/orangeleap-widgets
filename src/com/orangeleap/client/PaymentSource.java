@@ -3,6 +3,7 @@ package com.orangeleap.client;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -24,7 +25,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="achHolderName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="achRoutingNumber" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="achRoutingNumberDisplay" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="address" type="{http://www.orangeleap.com/orangeleap/services/1.0}address" minOccurs="0"/>
+ *         &lt;element name="address" type="{http://www.orangeleap.com/orangeleap/services2.0/}address" minOccurs="0"/>
  *         &lt;element name="creditCardExpiration" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="creditCardExpirationMonth" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="creditCardExpirationYear" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
@@ -35,9 +36,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="creditCardType" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="inactive" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="lastFourDigits" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="paymentType" type="{http://www.orangeleap.com/orangeleap/services/1.0}PaymentType" minOccurs="0"/>
- *         &lt;element name="constituentId" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
- *         &lt;element name="phone" type="{http://www.orangeleap.com/orangeleap/services/1.0}phone" minOccurs="0"/>
+ *         &lt;element name="paymentType" type="{http://www.orangeleap.com/orangeleap/services2.0/}PaymentType"/>
+ *         &lt;element name="constituentId" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="phone" type="{http://www.orangeleap.com/orangeleap/services2.0/}phone" minOccurs="0"/>
  *         &lt;element name="profile" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="userCreated" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *       &lt;/sequence>
@@ -93,8 +94,9 @@ public class PaymentSource {
     protected String creditCardType;
     protected boolean inactive;
     protected String lastFourDigits;
+    @XmlElement(required = true)
     protected PaymentType paymentType;
-    protected Long constituentId;
+    protected long constituentId;
     protected Phone phone;
     protected String profile;
     protected boolean userCreated;
@@ -526,24 +528,16 @@ public class PaymentSource {
     /**
      * Gets the value of the constituentId property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Long }
-     *     
      */
-    public Long getConstituentId() {
+    public long getConstituentId() {
         return constituentId;
     }
 
     /**
      * Sets the value of the constituentId property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Long }
-     *     
      */
-    public void setConstituentId(Long value) {
+    public void setConstituentId(long value) {
         this.constituentId = value;
     }
 

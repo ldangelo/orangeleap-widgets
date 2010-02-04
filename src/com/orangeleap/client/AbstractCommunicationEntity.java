@@ -17,13 +17,12 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * <pre>
  * &lt;complexType name="abstractCommunicationEntity">
  *   &lt;complexContent>
- *     &lt;extension base="{http://www.orangeleap.com/orangeleap/services/1.0}abstractCustomizableEntity">
+ *     &lt;extension base="{http://www.orangeleap.com/orangeleap/services2.0/}abstractCustomizableEntity">
  *       &lt;sequence>
- *         &lt;element name="activationStatus" type="{http://www.orangeleap.com/orangeleap/services/1.0}activationType" minOccurs="0"/>
+ *         &lt;element name="activationStatus" type="{http://www.orangeleap.com/orangeleap/services2.0/}activationType" minOccurs="0"/>
  *         &lt;element name="comments" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="effectiveDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="inactive" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
- *         &lt;element name="constituentId" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="primary" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="receiveCorrespondence" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="seasonalEndDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
@@ -46,7 +45,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "comments",
     "effectiveDate",
     "inactive",
-    "constituentId",
     "primary",
     "receiveCorrespondence",
     "seasonalEndDate",
@@ -70,7 +68,6 @@ public abstract class AbstractCommunicationEntity
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar effectiveDate;
     protected boolean inactive;
-    protected long constituentId;
     protected boolean primary;
     protected boolean receiveCorrespondence;
     @XmlSchemaType(name = "dateTime")
@@ -170,22 +167,6 @@ public abstract class AbstractCommunicationEntity
      */
     public void setInactive(boolean value) {
         this.inactive = value;
-    }
-
-    /**
-     * Gets the value of the constituentId property.
-     * 
-     */
-    public long getConstituentId() {
-        return constituentId;
-    }
-
-    /**
-     * Sets the value of the constituentId property.
-     * 
-     */
-    public void setConstituentId(long value) {
-        this.constituentId = value;
     }
 
     /**

@@ -1,58 +1,120 @@
-   Ext.onReady(function() {
-      Ext.QuickTips.init();
-      Ext.form.Field.prototype.msgTarget = 'side';
 
-      var form_donate = new Ext.form.FormPanel({frame: true,title: 'Donate Now!',autoHeight: true, width: 512, bodyStyle : {padding: '10px'}});
-      
-      var panel_name = new Ext.Panel({frame: true, title: 'Name',autoHeight: true});
-      
-      var field_firstName = new Ext.form.TextField({fieldLabel: 'First Name', name:'firstName', width:140});
-      var field_lastName = new Ext.form.TextField({fieldLabel: 'Last Name', name:'lastName', width:140});
+var $j = jQuery.noConflict();
+		
+ function handleReturn(paymentStatus) {
+ 	if (paymentStatus.processed == false) {
+ 		handleError("Payment processing failed! Please confirm payment information");
+ 		showError();
+ 	} else {
+ 		handleApproval(paymentStatus.authorizationCode);
+ 	}
+ }
 
-      panel_name.add(field_firstName,field_lastName);
-      
-      var field_emailAddress = new Ext.form.TextField({fieldLabel: 'Email ', name:'emailAddress', width:140});
-      var field_billingAddressLine1 = new Ext.form.TextField({fieldLabel: 'Line 1', name:'billingAddressLine1', width:140});
-      var field_billingAddressLine2 = new Ext.form.TextField({fieldLabel: 'Line 2', name:'billingAddressLine2', width:140});
-      var field_billingAddressLine3 = new Ext.form.TextField({fieldLabel: 'Line 3', name:'billingAddressLine3', width:140});
-      var field_billingAddressCity = new Ext.form.TextField({fieldLabel: 'City', name:'billingAddressLine3', width:140});
-      var field_billingAddressState = new Ext.form.TextField({fieldLabel: 'State', name:'billingAddressLine3', width:140});
-      var field_billingAddressZip = new Ext.form.TextField({fieldLabel: 'Zip Code', name:'billingAddressLine3', width:140});
+function handleApproval(authCode) {
+	$j("div#approval").show();
+	$j("<li>Thank your for your donation!</li>").appendTo("ul#approved");
+	$j("<li>Your authorization code for this transaction is " + authCode + " </li>").appendTo("ul#approved");
+}
 
-      var field_ccNumber = new Ext.form.TextField({fieldLabel: 'Credit Card', name:'ccNumber', width:140});
-      
-   // create reusable renderer
-      Ext.util.Format.comboRenderer = function(combo){
-          return function(value){
-              var record = combo.findRecord(combo.valueField, value);
-              return record ? record.get(combo.displayField) : combo.valueNotFoundText;
-          }
-      }
+function showError() {
+	$j("div#globalErrors").show();
+}
 
-      var combo_ccExpMonth = new Ext.form.ComboBox({typeAhead: true,triggerAction:'all',lazyRender:true,mode:'local',
-    	  store: new Ext.data.SimpleStore({
-    		  id: 0,
-    		  field: ['expId','displayText'],data:[
-    		                                       [1, '01'],
-    		                                       [2, '02'],
-       		                                       [3, '03'],
-       		                                       [4, '04'],
-       		                                       [5, '05'],
-       		                                       [6, '06'],
-       		                                       [7, '07'],
-       		                                       [8, '08'],
-       		                                       [9, '09'],
-       		                                       [10, '10'],
-       		                                       [11, '11'],
-       		                                       [12, '12']]
-       		                                       }),
-       	   valueField: 'expId',
-      	   displayField: 'displayText'
-      });
+function hideError() {
+	$j("div#globalErrors").hide();
+}
+
+function clearError() {
+	$j("ul#errors").empty();
+}
+
+function handleError(str) {
+	$j("<li>" + str + "</li>").appendTo('ul#errors');
+}
+ 		
+function validateForm() {
+	var isValid = 1;
+	if($j("#firstName").attr("value").length <= 0) {
+		handleError("First Name is required!");
+		isValid = 0;
+	}
+
+	if($j("#lastName").attr("value").length <= 0) {
+		handleError("Last Name is required!");
+		isValid = 0;
+	}
+
+	if($j("#email").attr("value").length <= 0) {
+		handleError("Email Address is required!");
+		isValid = 0;
+	}
+
+	if($j("#phone").attr("value").length <= 0) {
+		handleError("Billing phone number is required!");
+		isValid = 0;
+	}
+
+	if($j("#amount").attr("value").length <= 0) {
+		handleError("Donation amount is required!");
+		isValid = 0;
+	}
+
+	if($j("#cardnum").attr("value").length <= 0) {
+		handleError("Credit card number is required!");
+		isValid = 0;
+	}
+
+	if($j("#expmonth").attr("value").length <= 0) {
+		handleError("Credit card expiration month is required!");
+		isValid = 0;
+	}
+
+	if($j("#expyear").attr("value").length <= 0) {
+		handleError("Credit card expiration year is required!");
+		isValid = 0;
+	}
+
+	if (isValid != 1) showError();
+			
+	return isValid;	
+}
+ 		
+ 
+   $j(function() {
+   	 hideError();
+   	   
+     $j(".saveButton").click(function() {  
+
+		
+		clearError();
+		hideError();
+		
+		if (validateForm() == 1){
+		
+		var pi = {
+			name: $j("#firstName").attr("value") + " " + $j("#lastName").attr("value"),
+			paymentType: "CC",
+			ccNumber: $j("#cardnum").attr("value"),
+			ccExpMonth: $j("#expmonth").attr("value"),
+			ccExpYear: $j("#expyear").attr("value")
+		};
+		
+		var d = { 
+			GUID: $j("#GUID").attr("value"),
+			firstName: $j("#firstName").attr("value"),
+			lastName: $j("#lastName").attr("value"),
+			emailAddress: $j("#email").attr("value"),
+			phoneNumber: $j("#phone").attr("value"),
+			amount: $j("#amount").attr("value"),
+			paymentInfo: pi,
+			referrer: document.location.href
+		};
+		
+		donateNow.donate(d,handleReturn);
+}
+      });  
       
-      var field_ccExpYear = new Ext.form.TextField({fieldLabel: 'Expiration Year', name:'ccExpYear', width:4});
-  	
-      form_donate.add({legend: 'Donate Now!'},panel_name,field_emailAddress,field_billingAddressLine1,field_billingAddressLine2,field_billingAddressLine3,field_billingAddressCity,field_billingAddressState,field_billingAddressZip,field_ccNumber,combo_ccExpMonth,field_ccExpYear);
-  	
-  	form_donate.render('donate-form');
-  });
+      donateNow.updateViewCount($j("#GUID").attr("value"),document.location.href);
+    });  
+
+ 

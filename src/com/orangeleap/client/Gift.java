@@ -18,12 +18,12 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * <pre>
  * &lt;complexType name="gift">
  *   &lt;complexContent>
- *     &lt;extension base="{http://www.orangeleap.com/orangeleap/services/1.0}abstractPaymentInfoEntity">
+ *     &lt;extension base="{http://www.orangeleap.com/orangeleap/services2.0/}abstractPaymentInfoEntity">
  *       &lt;sequence>
  *         &lt;element name="amount" type="{http://www.w3.org/2001/XMLSchema}decimal"/>
  *         &lt;element name="authCode" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="deductible" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
- *         &lt;element name="deductibleAmount" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
+ *         &lt;element name="deductibleAmount" type="{http://www.w3.org/2001/XMLSchema}decimal"/>
  *         &lt;element name="donationDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="giftStatus" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="paymentMessage" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -31,7 +31,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="postmarkDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="transactionDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="txRefNum" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="site" type="{http://www.orangeleap.com/orangeleap/services/1.0}site"/>
+ *         &lt;element name="site" type="{http://www.orangeleap.com/orangeleap/services2.0/}site"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -63,6 +63,7 @@ public class Gift
     protected BigDecimal amount;
     protected String authCode;
     protected boolean deductible;
+    @XmlElement(required = true)
     protected BigDecimal deductibleAmount;
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar donationDate;
