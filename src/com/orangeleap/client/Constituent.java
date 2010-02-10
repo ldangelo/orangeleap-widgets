@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="firstName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="middleName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="lastName" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="suffix" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="suffix" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="title" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="addresses" type="{http://www.orangeleap.com/orangeleap/services2.0/}address" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="emails" type="{http://www.orangeleap.com/orangeleap/services2.0/}email" maxOccurs="unbounded" minOccurs="0"/>
@@ -73,7 +73,6 @@ public class Constituent
     protected String middleName;
     @XmlElement(required = true)
     protected String lastName;
-    @XmlElement(required = true)
     protected String suffix;
     protected String title;
     @XmlElement(nillable = true)

@@ -134,7 +134,8 @@ public class DonateWidgetServiceImpl implements DonateWidgetService {
 		c.setFirstName(d.getFirstName());
 		c.setLastName(d.getLastName());
 		c.setCustomFieldMap(fieldMap);
-
+		c.setConstituentType("individual");
+		
 		Email email = new Email();
 		email.setEmailAddress(d.getEmailAddress());
 		email.setCustomFieldMap(fieldMap);

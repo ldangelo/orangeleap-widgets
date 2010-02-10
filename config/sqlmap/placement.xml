@@ -11,18 +11,18 @@
 	</resultMap>
 
 	<select id="listPlacementsByWidgetId" resultMap="result">
-		select id,widgetid,placementURL,errorCount,giftCount,viewCount from placements where widgetid=#value#
+		select id,widgetid,placementURL,errorCount,giftCount,viewCount from PLACEMENTS where widgetid=#value#
 	</select>	
 	<select id="findPlacementByURL" resultMap="result">
-		select id,widgetid,placementURL,errorCount,giftCount,viewCount from placements where placementURL=#value#
+		select id,widgetid,placementURL,errorCount,giftCount,viewCount from PLACEMENTS where placementURL=#value#
 	</select>
 	
 	<insert id="savePlacement" parameterClass="com.orangeleap.donatenow.domain.Placement">
-		insert into placements (widgetid,placementURL,errorCount,giftCount,viewCount) values (#widgetid#,#placementURL#,#errorCount#,#giftCount#,#viewCount#)
+		insert into PLACEMENTS (widgetid,placementURL,errorCount,giftCount,viewCount) values (#widgetid#,#placementURL#,#errorCount#,#giftCount#,#viewCount#)
 	</insert>
 	
 	<update id="updatePlacement" parameterClass="com.orangeleap.donatenow.domain.Placement">
-		update placements set widgetid=#widgetid#,placementURL=#placementURL#,errorCount=#errorCount#,giftCount=#giftCount#,viewCount=#viewCount# where id=#id#
+		update PLACEMENTS set widgetid=#widgetid#,placementURL=#placementURL#,errorCount=#errorCount#,giftCount=#giftCount#,viewCount=#viewCount# where id=#id#
 	</update>
 	
 </sqlMap>

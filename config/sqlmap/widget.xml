@@ -16,22 +16,22 @@
 	</resultMap>
 	
 	<select id="findWidgetById" resultMap="result">
-		select id,guid,userName,passWord,projectCode,motivationCode,errorCount,giftCount,createDate,widgetHTML,viewCount from widgets where id=#value#
+		select id,guid,userName,passWord,projectCode,motivationCode,errorCount,giftCount,createDate,widgetHTML,viewCount from WIDGETS where id=#value#
 	</select>
 	
 	<select id="findWidgetByGuid" resultMap="result">
-		select id,guid,userName,passWord,projectCode,motivationCode,errorCount,giftCount,createDate,widgetHTML,viewCount from widgets where guid=#value#
+		select id,guid,userName,passWord,projectCode,motivationCode,errorCount,giftCount,createDate,widgetHTML,viewCount from WIDGETS where guid=#value#
 	</select>
 	
 	<select id="listWidgets" resultMap="result" parameterClass="map">
-		select id,guid,userName,passWord,projectCode,motivationCode,errorCount,giftCount,createDate,widgetHTML,viewCount from widgets where userName=#userName# and passWord=#passWord#
+		select id,guid,userName,passWord,projectCode,motivationCode,errorCount,giftCount,createDate,widgetHTML,viewCount from WIDGETS where userName=#userName# and passWord=#passWord#
 	</select>
 	
 	<update id="updateWidget" parameterClass="com.orangeleap.donatenow.domain.DonateWidget">
-		update widgets set guid=#guid#,userName=#userName#, passWord=#passWord#,motivationCode=#motivationCode#,errorCount=#errorCount#,giftCount=#giftCount#,viewCount=#viewCount# where id=#id# 
+		update WIDGETS set guid=#guid#,userName=#userName#, passWord=#passWord#,motivationCode=#motivationCode#,errorCount=#errorCount#,giftCount=#giftCount#,viewCount=#viewCount# where id=#id# 
 	</update>
 	<insert id="saveWidget" parameterClass="com.orangeleap.donatenow.domain.DonateWidget">
-		insert into widgets (guid,userName,passWord,projectCode,motivationCode,errorCount,giftCount,createDate,widgetHTML,viewCount) values
+		insert into WIDGETS (guid,userName,passWord,projectCode,motivationCode,errorCount,giftCount,createDate,widgetHTML,viewCount) values
 		(#guid#,#userName#,#passWord#,#projectCode#,#motivationCode#,#errorCount#,#giftCount#,#createDate#,#widgetHTML#,#viewCount#)
 		<selectKey keyProperty="id" resultClass="long">
 			SELECT LAST_INSERT_ID() AS value
