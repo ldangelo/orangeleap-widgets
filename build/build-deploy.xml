@@ -12,7 +12,6 @@
 	<target name="deploy" description="Deploy build output and populate database" depends="resolve"  >
 
 		<property name="dev.build.file" value="${basedir}/build/build.xml" />
-		<property name="load.base.data.file" value="${basedir}/build/build-base-data.xml" />
 
 		<exec dir="/opt/orangeleap" executable="su" spawn="true">
 			<arg line="- tomcat -c 'cd /opt/orangeleap;/opt/orangeleap/run.sh stop ${instance}'"/>
