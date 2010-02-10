@@ -55,13 +55,13 @@ import javax.xml.bind.annotation.XmlType;
     "customFieldMap"
 })
 @XmlSeeAlso({
-    Constituent.class,
     CommunicationHistory.class,
+    Constituent.class,
     Picklist.class,
-    PicklistItem.class,
-    AbstractPaymentInfoEntity.class,
     AbstractCommunicationEntity.class,
-    DistributionLine.class
+    PicklistItem.class,
+    DistributionLine.class,
+    AbstractPaymentInfoEntity.class
 })
 public abstract class AbstractCustomizableEntity
     extends AbstractEntity

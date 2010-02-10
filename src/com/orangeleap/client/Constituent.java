@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="firstName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="middleName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="lastName" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="suffix" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="title" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="addresses" type="{http://www.orangeleap.com/orangeleap/services2.0/}address" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="emails" type="{http://www.orangeleap.com/orangeleap/services2.0/}email" maxOccurs="unbounded" minOccurs="0"/>
@@ -34,7 +35,6 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="constituentOrganizationRoles" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="constituentType" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="preferredPhoneType" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="site" type="{http://www.orangeleap.com/orangeleap/services2.0/}site"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -50,6 +50,7 @@ import javax.xml.bind.annotation.XmlType;
     "firstName",
     "middleName",
     "lastName",
+    "suffix",
     "title",
     "addresses",
     "emails",
@@ -59,8 +60,7 @@ import javax.xml.bind.annotation.XmlType;
     "constituentIndividualRoles",
     "constituentOrganizationRoles",
     "constituentType",
-    "preferredPhoneType",
-    "site"
+    "preferredPhoneType"
 })
 public class Constituent
     extends AbstractCustomizableEntity
@@ -73,6 +73,8 @@ public class Constituent
     protected String middleName;
     @XmlElement(required = true)
     protected String lastName;
+    @XmlElement(required = true)
+    protected String suffix;
     protected String title;
     @XmlElement(nillable = true)
     protected List<Address> addresses;
@@ -86,8 +88,6 @@ public class Constituent
     protected String constituentOrganizationRoles;
     protected String constituentType;
     protected String preferredPhoneType;
-    @XmlElement(required = true)
-    protected Site site;
 
     /**
      * Gets the value of the constituentId property.
@@ -207,6 +207,30 @@ public class Constituent
      */
     public void setLastName(String value) {
         this.lastName = value;
+    }
+
+    /**
+     * Gets the value of the suffix property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getSuffix() {
+        return suffix;
+    }
+
+    /**
+     * Sets the value of the suffix property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setSuffix(String value) {
+        this.suffix = value;
     }
 
     /**
@@ -462,30 +486,6 @@ public class Constituent
      */
     public void setPreferredPhoneType(String value) {
         this.preferredPhoneType = value;
-    }
-
-    /**
-     * Gets the value of the site property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Site }
-     *     
-     */
-    public Site getSite() {
-        return site;
-    }
-
-    /**
-     * Sets the value of the site property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Site }
-     *     
-     */
-    public void setSite(Site value) {
-        this.site = value;
     }
 
 }

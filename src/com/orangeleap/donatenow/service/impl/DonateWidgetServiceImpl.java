@@ -165,7 +165,7 @@ public class DonateWidgetServiceImpl implements DonateWidgetService {
 		Site s = new Site();
 
 		s.setName("company1");
-		c.setSite(s);
+
 
 		SaveOrUpdateConstituentRequest request = new SaveOrUpdateConstituentRequest();
 		request.setConstituent(c);
@@ -210,7 +210,7 @@ public class DonateWidgetServiceImpl implements DonateWidgetService {
 		GregorianCalendar today = new GregorianCalendar();
 		XMLGregorianCalendar xmlToday = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
 		
-		g.setSite(s);
+
 		g.setSendAcknowledgment(true);
 		g.setCurrencyCode("USD");
 		g.setCreateDate(xmlToday);

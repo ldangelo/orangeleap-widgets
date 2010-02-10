@@ -22,7 +22,6 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="picklistNameId" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="picklistName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="picklistDesc" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="site" type="{http://www.orangeleap.com/orangeleap/services2.0/}site"/>
  *         &lt;element name="multiselect" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="picklistItems" type="{http://www.orangeleap.com/orangeleap/services2.0/}picklistItem" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
@@ -38,7 +37,6 @@ import javax.xml.bind.annotation.XmlType;
     "picklistNameId",
     "picklistName",
     "picklistDesc",
-    "site",
     "multiselect",
     "picklistItems"
 })
@@ -52,8 +50,6 @@ public class Picklist
     protected String picklistName;
     @XmlElement(required = true)
     protected String picklistDesc;
-    @XmlElement(required = true)
-    protected Site site;
     protected boolean multiselect;
     protected List<PicklistItem> picklistItems;
 
@@ -127,30 +123,6 @@ public class Picklist
      */
     public void setPicklistDesc(String value) {
         this.picklistDesc = value;
-    }
-
-    /**
-     * Gets the value of the site property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Site }
-     *     
-     */
-    public Site getSite() {
-        return site;
-    }
-
-    /**
-     * Sets the value of the site property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Site }
-     *     
-     */
-    public void setSite(Site value) {
-        this.site = value;
     }
 
     /**

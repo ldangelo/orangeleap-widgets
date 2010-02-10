@@ -31,7 +31,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="postmarkDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="transactionDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="txRefNum" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="site" type="{http://www.orangeleap.com/orangeleap/services2.0/}site"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -52,8 +51,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "paymentStatus",
     "postmarkDate",
     "transactionDate",
-    "txRefNum",
-    "site"
+    "txRefNum"
 })
 public class Gift
     extends AbstractPaymentInfoEntity
@@ -75,8 +73,6 @@ public class Gift
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar transactionDate;
     protected String txRefNum;
-    @XmlElement(required = true)
-    protected Site site;
 
     /**
      * Gets the value of the amount property.
@@ -332,30 +328,6 @@ public class Gift
      */
     public void setTxRefNum(String value) {
         this.txRefNum = value;
-    }
-
-    /**
-     * Gets the value of the site property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Site }
-     *     
-     */
-    public Site getSite() {
-        return site;
-    }
-
-    /**
-     * Sets the value of the site property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Site }
-     *     
-     */
-    public void setSite(Site value) {
-        this.site = value;
     }
 
 }
