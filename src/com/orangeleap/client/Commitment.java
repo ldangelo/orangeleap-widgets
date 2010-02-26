@@ -21,17 +21,17 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * <pre>
  * &lt;complexType name="commitment">
  *   &lt;complexContent>
- *     &lt;extension base="{http://www.orangeleap.com/orangeleap/services/1.0}abstractPaymentInfoEntity">
+ *     &lt;extension base="{http://www.orangeleap.com/orangeleap/services2.0/}abstractPaymentInfoEntity">
  *       &lt;sequence>
  *         &lt;element name="amountPaid" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *         &lt;element name="amountPerGift" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *         &lt;element name="amountRemaining" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *         &lt;element name="amountTotal" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *         &lt;element name="associatedGiftIds" type="{http://www.w3.org/2001/XMLSchema}long" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="commitmentType" type="{http://www.orangeleap.com/orangeleap/services/1.0}commitmentType" minOccurs="0"/>
+ *         &lt;element name="commitmentType" type="{http://www.orangeleap.com/orangeleap/services2.0/}commitmentType" minOccurs="0"/>
  *         &lt;element name="endDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="frequency" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="gifts" type="{http://www.orangeleap.com/orangeleap/services/1.0}gift" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="gifts" type="{http://www.orangeleap.com/orangeleap/services2.0/}gift" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="lastEntryDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="startDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *       &lt;/sequence>
@@ -57,7 +57,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "startDate"
 })
 @XmlSeeAlso({
-    Pledge.class
+    Pledge.class,
+    RecurringGift.class
 })
 public abstract class Commitment
     extends AbstractPaymentInfoEntity

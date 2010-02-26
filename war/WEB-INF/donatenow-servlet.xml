@@ -1,59 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-	   http://www.directwebremoting.org/schema/spring-dwr
-	   http://www.directwebremoting.org/schema/spring-dwr-2.0.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	   http://www.directwebremoting.org/schema/spring-dwr  http://www.directwebremoting.org/schema/spring-dwr-2.0.xsd
+	   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
-   <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-				<value>classpath:theguru.properties</value>
-            </list>
-        </property>
-    </bean>
 
-	<dwr:configuration/>
-	<dwr:controller id="dwrController" debug="true"/>
-	
-	<bean id="donateNow" class="com.orangeleap.donatenow.service.impl.DonateNowImpl">
-		<dwr:remote javascript="donateNow">
-		<dwr:include method="donate"/>
-			<dwr:convert type="bean" class="com.orangeleap.donatenow.domain.ACHPaymentInfo"/>
-			<dwr:convert type="bean" class="com.orangeleap.donatenow.domain.Address"/>
-			<dwr:convert type="bean" class="com.orangeleap.donatenow.domain.CreditCardPaymentInfo"/>
-			<dwr:convert type="bean" class="com.orangeleap.donatenow.domain.Donation"/>
-			<dwr:convert type="bean" class="com.orangeleap.donatenow.domain.PaymentInfo"/>
-			<dwr:convert type="bean" class="com.orangeleap.donatenow.domain.PaymentStatus"/>
-			<dwr:convert type="enum" class="com.orangeleap.donatenow.domain.PaymentType"/>						
-		</dwr:remote>
-	</bean>    
+  
+  <bean id="propertyConfigurer"
+	class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="locations">
+      <list>
+	<value>classpath:donatenow.properties</value>
+      </list>
+    </property>
+  </bean>
 
-	<bean name="donateNowController" class="com.orangeleap.donatenow.controller.DonateNow">
- 		<property name="sessionForm" value="true"/>
- 		<property name="commandName" value="donation"/>
- 		<property name="commandClass" value="com.orangeleap.donatenow.domain.Donation"/>
- 		<property name="formView" value="donatenow"/>
- 		<property name="successView" value="thankyou"/>
- 		<property name="donateNow" ref="donateNowService"/>
- 	</bean>
- 	
- 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
- 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
- 		<property name="prefix" value="WEB-INF/jsp/"/>
- 		<property name="suffix" value=".jsp"/>
- 	</bean>
- 	
- 	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-		<property name="order" value="0" />
-		<property name="alwaysUseFullPath" value="true" />
+	<bean id="sysProps"
+		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetClass"><value>java.lang.System</value></property>
+		<property name="targetMethod"><value>getProperties</value></property>
 	</bean>
-    <bean id="donateNowUrlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping" parent="urlMapping">
-		<property name="mappings">
-		    <props>
-			    <prop key="/donatenow.htm">donateNowController</prop>
-			</props>
+
+	<bean id="wsdlUrl"
+		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetObject"><ref local="sysProps" /></property>
+		<property name="targetMethod"><value>setProperty</value></property>
+		<property name="arguments">
+			<list>
+				<value>donatenow.wsdllocation</value>
+				<value>${donatenow.wsdllocation}</value>
+			</list>
 		</property>
 	</bean>
+
+	<bean id="appLocation"
+		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetObject"><ref local="sysProps" /></property>
+		<property name="targetMethod"><value>setProperty</value></property>
+		<property name="arguments">
+			<list>
+				<value>donatenow.applocation</value>
+				<value>${donatenow.applocation}</value>
+			</list>
+		</property>
+	</bean>
+
+	
+  <context:component-scan base-package="com.orangeleap.donatenow"/>
+
+  <!-- Enables annotated POJO @Controllers -->
+  <bean
+      class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+
+
+  <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <!-- 				<property name="viewClass"
+	 value="org.springframework.web.servlet.view.JstlView" /> -->
+    <property name="prefix" value="/WEB-INF/jsp/" />
+    <property name="suffix" value=".jsp" />
+  </bean>
+
+
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<value>donatenow-messages</value>
+		</property>
+	</bean>
+
+
+
 </beans>

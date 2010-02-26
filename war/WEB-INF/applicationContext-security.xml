@@ -8,6 +8,15 @@
                 http://www.springframework.org/schema/security
                 http://www.springframework.org/schema/security/spring-security-2.0.4.xsd">
 
+  <bean id="propertyConfigurer"
+	class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="locations">
+      <list>
+	<value>classpath:donatenow.properties</value>
+      </list>
+    </property>
+  </bean>
+  
     <!-- Enable usage of the @Secured annotation, although not thinking we're using it -->
 	<sec:global-method-security secured-annotations="enabled"/>
 
@@ -15,17 +24,25 @@
     <sec:authentication-manager alias="authenticationManager"/>
 
 	<sec:http auto-config="true">
-		<sec:intercept-url pattern='/login*' filters='IS_AUTHENTICATED_ANONYMOUSLY'/>
-    	<sec:intercept-url pattern='/logoutSuccess*' filters='IS_AUTHENTICATED_ANONYMOUSLY'/>
+		<sec:intercept-url pattern='/login*' access='IS_AUTHENTICATED_ANONYMOUSLY'/>
+		<sec:intercept-url pattern='/test.html' access='IS_AUTHENTICATED_ANONYMOUSLY'/>		
+    	<sec:intercept-url pattern='/logoutSuccess*' access='IS_AUTHENTICATED_ANONYMOUSLY'/>
+    	<sec:intercept-url pattern='/css/*' access='IS_AUTHENTICATED_ANONYMOUSLY'/>    	
+    	<sec:intercept-url pattern='/js/*' access='IS_AUTHENTICATED_ANONYMOUSLY'/>    	    	
+    	<sec:intercept-url pattern='/decorators/*' access='IS_AUTHENTICATED_ANONYMOUSLY'/>
+    	<sec:intercept-url pattern='/includes/*' access='IS_AUTHENTICATED_ANONYMOUSLY'/>    	    	
+    	<sec:intercept-url pattern='/images/*' access='IS_AUTHENTICATED_ANONYMOUSLY'/>    	    	    	
+    	<sec:intercept-url pattern='/dwr/*' access='IS_AUTHENTICATED_ANONYMOUSLY'/>    	    	    	    	
 		<sec:intercept-url pattern='/**' access='ROLE_USER'/>
 		<sec:form-login login-page='/login.jsp' 
-			default-target-url='/createWidget.htm' 
+			default-target-url='/index.jsp' 
 			login-processing-url='/loginProcess'
-			authentication-failure-url="/login.jsp?login_error=1"/>
-		<sec:logout logout-url="logout" logout-succes-url="/logoutSuccess.jsp" />
+			authentication-failure-url="/login.jsp?login_error=1" always-use-default-target="true"/>
+		<sec:logout logout-url="/logout" logout-success-url="/" />
 	</sec:http>
 
-	<!-- OrangeLeap ordered list of providers to try -->
+	
+	<!-- OrangeLeap ordered list of providers to try    --> 
 	<bean id="orangeLeapAuthenticationProvider" class="com.orangeleap.common.security.OrangeLeapAuthenticationProvider">
      <sec:custom-authentication-provider/>
      <property name="providerList" >
@@ -34,6 +51,7 @@
      	</list>
      </property>
     </bean>
+
     
     <!-- General LDAP -->
     <bean id="contextSource" class="org.springframework.security.ldap.DefaultSpringSecurityContextSource">

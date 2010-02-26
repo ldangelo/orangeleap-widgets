@@ -1,0 +1,62 @@
+
+package com.orangeleap.client;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
+
+/**
+ * <p>Java class for GetConstituentByPaymentSourceResponse complex type.
+ * 
+ * <p>The following schema fragment specifies the expected content contained within this class.
+ * 
+ * <pre>
+ * &lt;complexType name="GetConstituentByPaymentSourceResponse">
+ *   &lt;complexContent>
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;sequence>
+ *         &lt;element name="constituent" type="{http://www.orangeleap.com/orangeleap/services2.0/}constituent"/>
+ *       &lt;/sequence>
+ *     &lt;/restriction>
+ *   &lt;/complexContent>
+ * &lt;/complexType>
+ * </pre>
+ * 
+ * 
+ */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "GetConstituentByPaymentSourceResponse", propOrder = {
+    "constituent"
+})
+public class GetConstituentByPaymentSourceResponse {
+
+    @XmlElement(required = true)
+    protected Constituent constituent;
+
+    /**
+     * Gets the value of the constituent property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Constituent }
+     *     
+     */
+    public Constituent getConstituent() {
+        return constituent;
+    }
+
+    /**
+     * Sets the value of the constituent property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Constituent }
+     *     
+     */
+    public void setConstituent(Constituent value) {
+        this.constituent = value;
+    }
+
+}

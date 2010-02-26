@@ -53,7 +53,19 @@
 				classifier="sources" conf="sources" />
 		</dependency>
 
+        <!-- Custom JsonView -->
+        <dependency org="com.mpower" name="JsonView" transitive="false" rev="1.1">
+            <artifact name="JsonView" type="jar"/>
+        </dependency>
+
 		<!-- JSP/Servlets/Ajax -->
+        <dependency org="opensymphony" name="sitemesh" transitive="false" rev="2.4.2"/>
+
+        <dependency org="org.json" name="json" transitive="false" rev="20080701">
+            <artifact name="json" type="jar"/>
+            <artifact name="json" type="source" ext="jar" classifier="sources" conf="sources"/>
+        </dependency>
+
 		<dependency org="org.directwebremoting" name="dwr"
 			transitive="false" rev="2.0.3">
 			<artifact name="dwr" type="jar" />

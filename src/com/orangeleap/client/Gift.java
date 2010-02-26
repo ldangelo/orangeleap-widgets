@@ -18,12 +18,12 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * <pre>
  * &lt;complexType name="gift">
  *   &lt;complexContent>
- *     &lt;extension base="{http://www.orangeleap.com/orangeleap/services/1.0}abstractPaymentInfoEntity">
+ *     &lt;extension base="{http://www.orangeleap.com/orangeleap/services2.0/}abstractPaymentInfoEntity">
  *       &lt;sequence>
  *         &lt;element name="amount" type="{http://www.w3.org/2001/XMLSchema}decimal"/>
  *         &lt;element name="authCode" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="deductible" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
- *         &lt;element name="deductibleAmount" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
+ *         &lt;element name="deductibleAmount" type="{http://www.w3.org/2001/XMLSchema}decimal"/>
  *         &lt;element name="donationDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="giftStatus" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="paymentMessage" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -31,7 +31,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="postmarkDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="transactionDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="txRefNum" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="site" type="{http://www.orangeleap.com/orangeleap/services/1.0}site"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -52,8 +51,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "paymentStatus",
     "postmarkDate",
     "transactionDate",
-    "txRefNum",
-    "site"
+    "txRefNum"
 })
 public class Gift
     extends AbstractPaymentInfoEntity
@@ -63,6 +61,7 @@ public class Gift
     protected BigDecimal amount;
     protected String authCode;
     protected boolean deductible;
+    @XmlElement(required = true)
     protected BigDecimal deductibleAmount;
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar donationDate;
@@ -74,8 +73,6 @@ public class Gift
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar transactionDate;
     protected String txRefNum;
-    @XmlElement(required = true)
-    protected Site site;
 
     /**
      * Gets the value of the amount property.
@@ -331,30 +328,6 @@ public class Gift
      */
     public void setTxRefNum(String value) {
         this.txRefNum = value;
-    }
-
-    /**
-     * Gets the value of the site property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Site }
-     *     
-     */
-    public Site getSite() {
-        return site;
-    }
-
-    /**
-     * Sets the value of the site property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Site }
-     *     
-     */
-    public void setSite(Site value) {
-        this.site = value;
     }
 
 }

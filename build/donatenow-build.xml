@@ -77,11 +77,11 @@
 			</fileset>
 		</copy>
 
-<!--		<replace file="${stage.dir}/war/login.jsp" token="$${build.version}" value="${build.TODAY}"/>
+		<replace file="${stage.dir}/war/login.jsp" token="$${build.version}" value="${build.TODAY}"/>
 		<replace file="${stage.dir}/war/login.jsp" token="$${build.time}" value="${build.DSTAMP} ${build.TSTAMP}"/>
 
-		<replace file="${stage.dir}/war/WEB-INF/jsp/includes/footer.jsp" token="$${build.time}" value="${build.DSTAMP}.${build.TSTAMP}"/>
- -->		
+		<replace file="${stage.dir}/war/includes/footer.jsp" token="$${build.time}" value="${build.DSTAMP}.${build.TSTAMP}"/>
+
 	</target>
 
 	<target name="jar">
@@ -94,6 +94,7 @@
 
 			<fileset dir="${config.dir}">
 				<include name="**/*.properties" />
+				<include name="**/*.xml"/>
 			</fileset>
 
 		</copy>
@@ -168,6 +169,70 @@
 			<fileset dir="${deploy.path}" includes="${war.name}.war" />
 			<fileset dir="${deploy.path}" includes="${war.name}" />
 		</delete>
+	</target>
+
+	<target name="xapp.synch">
+		<echo>Synchronizing App</echo>
+
+		<mkdir dir="${stage.dir}/war" />
+		<mkdir dir="${stage.dir}/war/css" />
+		<mkdir dir="${stage.dir}/war/js" />
+
+		<copy todir="${stage.dir}/war/css" includeemptydirs="true">
+			<fileset dir="${war.dir}/css">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+		<copy todir="${stage.dir}/war/js" includeemptydirs="true">
+			<fileset dir="${war.dir}/js">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+
+		<antcall target="optimize-dev"/>
+
+		<sync todir="${deploy.path}/${war.name}/css">
+			<fileset dir="${stage.dir}/war/css">
+				<include name="**/*.*"/>
+			</fileset>
+		</sync>
+		<sync todir="${deploy.path}/${war.name}/js">
+			<fileset dir="${stage.dir}/war/js">
+				<include name="**/*.*"/>
+			</fileset>
+		</sync>
+		<sync todir="${deploy.path}/${war.name}/xml">
+			<fileset dir="${war.dir}/xml">
+				<include name="**/*.*"/>
+			</fileset>
+		</sync>
+		<sync todir="${deploy.path}/${war.name}/images">
+			<fileset dir="${war.dir}/images">
+				<include name="**/*.*"/>
+			</fileset>
+		</sync>
+		<sync todir="${deploy.path}/${war.name}/WEB-INF/jsp">
+			<fileset dir="${war.dir}/WEB-INF/jsp">
+				<include name="**/*.*"/>
+			</fileset>
+		</sync>
+		<copy todir="${deploy.path}/${war.name}">
+			<fileset dir="${war.dir}">
+				<include name="*.jsp"/>
+			</fileset>
+		</copy>
+
+		<delete dir="${stage.dir}/war" />
+	</target>
+
+	<target name="jsp.synch">
+		<echo>Synchronizing JSPs</echo>
+
+		<sync todir="${deploy.path}/${war.name}/WEB-INF/jsp">
+			<fileset dir="${war.dir}/WEB-INF/jsp">
+				<include name="**/*.*"/>
+			</fileset>
+		</sync>
 	</target>
 
 		<target name="optimize-dev" depends="resolve">

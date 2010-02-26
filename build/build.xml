@@ -17,6 +17,15 @@
 		<antcall target="undeploy-war" />
 	</target>
 
+	<target name="xjsp.sync" description="Sync jsp files">
+	  <antcall target="jsp.synch"/>
+	</target>
+
+	<target name="xapp.sync" description="Sync files">
+	  <antcall target="xapp.sync"/>
+	</target>
+
+
 	<target name="3.5. Start Tomcat - Non-Debug Mode">
 	    <java jar="${appserver.home}/bin/bootstrap.jar" fork="true">
 	        <jvmarg value="-Dcatalina.home=${appserver.home}"/>
@@ -27,6 +36,7 @@
 	</target>
 
 	<target name="4. Start Tomcat - Debug Mode">
+	  <echo>Setting up for environment = ${appserver.home}</echo>
 	    <java jar="${appserver.home}/bin/bootstrap.jar" fork="true">
             <jvmarg value="-Xshare:off"/>
 	        <jvmarg value="-Dcatalina.home=${appserver.home}"/>
@@ -36,6 +46,35 @@
 	    	<jvmarg value="-Xmx512m" />
 	    	<jvmarg value="-XX:MaxPermSize=512M" />
 	    </java>
+	</target>
+
+	<target name="5. Stop Tomcat">
+	    <java jar="${appserver.home}/bin/bootstrap.jar" fork="true">
+	        <jvmarg value="-Dcatalina.home=${appserver.home}"/>
+	        <arg value="stop"/>
+	    </java>
+	</target>
+
+	<target name="Load Schema" depends="resolve">
+	     <sql driver="${mysql.db.driver}"
+		          url="${mysql.db.url}"
+		          userid="${mysql.db.user}"
+		          password="${mysql.db.pw}"
+		          encoding="UTF-8"
+		          classpath="${compile.lib}"
+ 	              delimiter=";">
+		    <transaction src="${basedir}/db/donatenow.sql"/>
+	    </sql>
+
+		<sql driver="${mysql.db.driver}"
+		          url="${mysql.db.url}"
+		          userid="${mysql.db.user}"
+		          password="${mysql.db.pw}"
+		          encoding="UTF-8"
+		          classpath="${compile.lib}"
+		     	  delimiter="$$">
+		    <transaction src="${basedir}/db/prod/tangerine-functions.sql"/>
+		</sql>
 	</target>
 
 </project>

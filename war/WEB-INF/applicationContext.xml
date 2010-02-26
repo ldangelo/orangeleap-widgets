@@ -1,62 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans           http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
-           http://www.springframework.org/schema/aop           http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+    xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
+      	xsi:schemaLocation="http://www.springframework.org/schema/beans           http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.directwebremoting.org/schema/spring-dwr   http://www.directwebremoting.org/schema/spring-dwr-2.0.xsd
+	   http://www.springframework.org/schema/aop           http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
            http://www.springframework.org/schema/tx           http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
            http://www.springframework.org/schema/context           http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
-	    <context:component-scan base-package="com.orangeleap" />
+	<context:component-scan base-package="com.orangeleap.donatenow" />
 
-<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-	<property name="basenames">
-		<value>donatenow-messages</value>
-	</property>
-</bean>
-
-	<aop:aspectj-autoproxy/>
-
-	<tx:annotation-driven proxy-target-class="true" transaction-manager="transactionManager"/>
-    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
- 				<value>classpath:donatenow.properties</value>
-           </list>
-        </property>
-    </bean>
-    
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource">
-			<ref local="dataSource"/>
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<value>donatenow-messages</value>
 		</property>
 	</bean>
-	
-	 <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="${jdbc.driverClassName}" />
-		<property name="url" value="${jdbc.url}"/>
-		<property name="username" value="${jdbc.username}"/>
-		<property name="password" value="${jdbc.password}"/>
- 		<property name="maxActive"><value>100</value></property>
-		<property name="maxIdle"><value>30</value></property>
-		<property name="maxWait"><value>10000</value></property>
- 		<property name="validationQuery" value="SELECT 1"/>
-		<property name="testOnBorrow"><value>true</value></property>
-		<property name="testWhileIdle"><value>true</value></property>
-	</bean>
 
-<!-- 
-	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
-		<property name="configLocation" value="WEB-INF/sqlmap-config.xml"/>
-		<property name="dataSource" ref="dataSource"/>
-	</bean>
- -->
+  <dwr:configuration />
+  <dwr:controller id="dwrController" debug="true" />
+
+  <bean id="donateNow" class="com.orangeleap.donatenow.service.impl.DonateNowImpl">
+    <dwr:remote javascript="donateNow">
+      <dwr:include method="donate" />
+      <dwr:include method="updateViewCount"/>
+      <dwr:convert type="bean"
+		   class="com.orangeleap.donatenow.domain.ACHPaymentInfo" />
+      <dwr:convert type="bean"
+		   class="com.orangeleap.donatenow.domain.Address" />
+      <dwr:convert type="bean"
+		   class="com.orangeleap.donatenow.domain.CreditCardPaymentInfo" />
+      <dwr:convert type="bean"
+		   class="com.orangeleap.donatenow.domain.Donation" />
+      <dwr:convert type="bean"
+		   class="com.orangeleap.donatenow.domain.PaymentInfo" />
+      <dwr:convert type="bean"
+		   class="com.orangeleap.donatenow.domain.PaymentStatus" />
+      <dwr:convert type="enum"
+		   class="com.orangeleap.donatenow.domain.PaymentType" />
+    </dwr:remote>
+  </bean>
+
 	<bean name="donateNowService" class="com.orangeleap.donatenow.service.impl.DonateNowImpl">
-		
+
 	</bean>
- 
- 
+	
+	<bean name="donateWidgetService" class="com.orangeleap.donatenow.service.impl.DonateWidgetServiceImpl">
+	</bean>
 </beans>
 
