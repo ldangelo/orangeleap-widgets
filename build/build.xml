@@ -9,6 +9,11 @@
 		<antcall target="deploy-exploded-war" />
 	</target>
 
+	<target name="deploy-war">
+	  <antcall target="undeploy-war"/>
+	  <antcall target="deploy-integrated-war"/>
+	</target>
+
 	<target name="2. Deploy War" description="Deploys the unexploded war.">
 		<antcall target="deploy-integrated-war" />
 	</target>
@@ -55,7 +60,7 @@
 	    </java>
 	</target>
 
-	<target name="Load Schema" depends="resolve">
+	<target name="load-schema" depends="resolve">
 	     <sql driver="${mysql.db.driver}"
 		          url="${mysql.db.url}"
 		          userid="${mysql.db.user}"
@@ -65,16 +70,6 @@
  	              delimiter=";">
 		    <transaction src="${basedir}/db/donatenow.sql"/>
 	    </sql>
-
-		<sql driver="${mysql.db.driver}"
-		          url="${mysql.db.url}"
-		          userid="${mysql.db.user}"
-		          password="${mysql.db.pw}"
-		          encoding="UTF-8"
-		          classpath="${compile.lib}"
-		     	  delimiter="$$">
-		    <transaction src="${basedir}/db/prod/tangerine-functions.sql"/>
-		</sql>
 	</target>
 
 </project>

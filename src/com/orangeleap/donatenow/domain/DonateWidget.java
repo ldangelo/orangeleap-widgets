@@ -14,20 +14,21 @@ import com.orangeleap.client.PicklistItem;
 import com.orangeleap.client.WSClient;
 
 public class DonateWidget {
-	Long   id;
-	String   guid;
-	String userName;
-	String passWord;
-	Long   giftCount;
-	Long   errorCount;
-	Date   createDate;
-    String projectCode;
-    String motivationCode;
-    String widgetHTML;
-    List<PicklistItem> projectCodeList;
-    List<PicklistItem> motivationCodeList;
-    Long  viewCount;
-    
+    private Long   id;
+    private String   guid;
+    private String userName;
+    private String passWord;
+    private Long   giftCount;
+    private Long   errorCount;
+    private Date   createDate;
+    private String projectCode;
+    private String motivationCode;
+    private String widgetHTML;
+    private List<PicklistItem> projectCodeList;
+    private List<PicklistItem> motivationCodeList;
+    private Long  viewCount;
+    private String site;
+
 	public DonateWidget() {
 		guid = UUID.randomUUID().toString();
 		userName = null;

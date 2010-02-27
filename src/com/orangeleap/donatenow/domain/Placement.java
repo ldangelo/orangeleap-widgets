@@ -1,13 +1,14 @@
 package com.orangeleap.donatenow.domain;
 
 public class Placement {
-	private Long id;
-	private Long widgetid;
-	private String placementURL;
-	private Long   giftCount;
-	private Long   errorCount;
-	private Long viewCount;
-	
+    private Long id;
+    private Long widgetid;
+    private String placementURL;
+    private Long   giftCount;
+    private Long   errorCount;
+    private Long viewCount;
+    private String site;
+
 	public Long getId() {
 		return id;
 	}

@@ -68,6 +68,7 @@ public class DonateWidgetServiceImpl implements DonateWidgetService {
 			oleap = client
 					.getOrangeLeap(System.getProperty("donatenow.wsdllocation"),widget.getUserName(), widget.getPassWord());
 
+			String site = widget.getUserName().substring(widget.getUserName().indexOf("@"));
 			Constituent c = findConstituent(d);
 			if (c == null) {
 				c = createConstituent(d);
@@ -79,7 +80,7 @@ public class DonateWidgetServiceImpl implements DonateWidgetService {
 			
 			//
 			// see if a placement exists for this referrer....
-			Placement placement = placementDao.findPlacementByURL(d.getReferrer());
+			Placement placement = placementDao.findPlacementByURL(d.getReferrer(),site);
 			if (placement == null) {
 					placement = new Placement();
 					placement.setWidgetid(widget.getId());
@@ -278,7 +279,9 @@ public class DonateWidgetServiceImpl implements DonateWidgetService {
 	@Override
 	public void updateViewCount(String guid, String referrer) {
 		DonateWidget widget = donateWidgetDao.findWidgetByGuid(guid);
-		Placement placement = placementDao.findPlacementByURL(referrer);
+
+		String site = widget.getUserName().substring(widget.getUserName().indexOf("@"));
+		Placement placement = placementDao.findPlacementByURL(referrer,site);
 		
 		if (widget == null) return;
 		

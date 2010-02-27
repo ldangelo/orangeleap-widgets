@@ -8,13 +8,14 @@
 		<result property="errorCount" column="errorCount" jdbcType="BIGINT"/>
 		<result property="giftCount" column="giftCount" jdbcType="BIGINT"/>
 		<result property="viewCount" column="viewCount" jdbcType="BIGINT"/>
+		<result property="site" column="site" jdbcType="VARCHAR"/>
 	</resultMap>
 
 	<select id="listPlacementsByWidgetId" resultMap="result">
-		select id,widgetid,placementURL,errorCount,giftCount,viewCount from PLACEMENTS where widgetid=#value#
+		select id,widgetid,placementURL,errorCount,giftCount,viewCount from PLACEMENTS where widgetid=#widgetid# and site=#sitename#
 	</select>	
 	<select id="findPlacementByURL" resultMap="result">
-		select id,widgetid,placementURL,errorCount,giftCount,viewCount from PLACEMENTS where placementURL=#value#
+		select id,widgetid,placementURL,errorCount,giftCount,viewCount from PLACEMENTS where placementURL=#url# and site=#sitename#
 	</select>
 	
 	<insert id="savePlacement" parameterClass="com.orangeleap.donatenow.domain.Placement">
