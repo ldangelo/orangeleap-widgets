@@ -13,7 +13,6 @@ CREATE TABLE  `DONATENOW`.`PLACEMENTS` (
   `errorCount` bigint(20) NOT NULL,
   `giftCount` bigint(20) NOT NULL,
   `viewCount` bigint(20) NOT NULL DEFAULT '0',
-  `site` varchar(64) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
@@ -30,6 +29,5 @@ CREATE TABLE  `DONATENOW`.`WIDGETS` (
   `createDate` datetime NOT NULL,
   `widgetHTML` varchar(4096) NOT NULL,
   `viewCount` bigint(20) NOT NULL DEFAULT '0',
-  `site` varchar(64) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;

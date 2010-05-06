@@ -1,16 +1,11 @@
 package com.orangeleap.donatenow.service.impl;
 
-import java.math.BigDecimal;
-import java.util.GregorianCalendar;
-import java.util.List;
 
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
+import com.orangeleap.client.AbstractCustomizableEntity.CustomFieldMap.Entry;
+import com.orangeleap.client.AbstractCustomizableEntity.CustomFieldMap;
+import com.orangeleap.client.AbstractCustomizableEntity;
 import com.orangeleap.client.Address;
 import com.orangeleap.client.Constituent;
 import com.orangeleap.client.CustomField;
@@ -29,8 +24,6 @@ import com.orangeleap.client.SearchConstituentsRequest;
 import com.orangeleap.client.SearchConstituentsResponse;
 import com.orangeleap.client.Site;
 import com.orangeleap.client.WSClient;
-import com.orangeleap.client.AbstractCustomizableEntity.CustomFieldMap;
-import com.orangeleap.client.AbstractCustomizableEntity.CustomFieldMap.Entry;
 import com.orangeleap.donatenow.dao.DonateWidgetDao;
 import com.orangeleap.donatenow.dao.PlacementDao;
 import com.orangeleap.donatenow.domain.DonateWidget;
@@ -39,9 +32,26 @@ import com.orangeleap.donatenow.domain.PaymentStatus;
 import com.orangeleap.donatenow.domain.Placement;
 import com.orangeleap.donatenow.service.DonateWidgetService;
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
+import java.math.BigDecimal;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.List;
+import javax.xml.soap.SOAPFault;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.soap.Detail;
+import javax.xml.soap.DetailEntry;
+import javax.xml.ws.soap.SOAPFaultException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service("donateWidgetService")
 public class DonateWidgetServiceImpl implements DonateWidgetService {
+    private static final Log logger = LogFactory.getLog(DonateWidgetServiceImpl.class);
+
 	@Autowired
 	protected DonateWidgetDao donateWidgetDao = null;
 
@@ -68,7 +78,6 @@ public class DonateWidgetServiceImpl implements DonateWidgetService {
 			oleap = client
 					.getOrangeLeap(System.getProperty("donatenow.wsdllocation"),widget.getUserName(), widget.getPassWord());
 
-			String site = widget.getUserName().substring(widget.getUserName().indexOf("@"));
 			Constituent c = findConstituent(d);
 			if (c == null) {
 				c = createConstituent(d);
@@ -80,7 +89,7 @@ public class DonateWidgetServiceImpl implements DonateWidgetService {
 			
 			//
 			// see if a placement exists for this referrer....
-			Placement placement = placementDao.findPlacementByURL(d.getReferrer(),site);
+			Placement placement = placementDao.findPlacementByURL(d.getReferrer());
 			if (placement == null) {
 					placement = new Placement();
 					placement.setWidgetid(widget.getId());
@@ -131,16 +140,47 @@ public class DonateWidgetServiceImpl implements DonateWidgetService {
 		CustomFieldMap fieldMap = new CustomFieldMap();
 		CustomFieldMap cFieldMap = new CustomFieldMap();
 
+		CustomField cfCP = new CustomField();
+		cfCP.setEntityType("constituent");
+		cfCP.setName("communicationOptInPreferences");
+		cfCP.setValue("Any");
+		Entry entryCP = new Entry();
+		entryCP.setKey("communicationOptInPreferences");
+		entryCP.setValue(cfCP);
+		
+		cFieldMap.getEntry().add(entryCP);
+
+		CustomField cfOptIn = new CustomField();
+		cfOptIn.setEntityType("constituent");
+		cfOptIn.setName("communicationPreferences");
+		cfOptIn.setValue("Opt In");
+		Entry entryOptIn = new Entry();
+		entryOptIn.setKey("communicationPreferences");
+		entryOptIn.setValue(cfOptIn);
+		
+		cFieldMap.getEntry().add(entryOptIn);
+		
+		CustomField cfEF = new CustomField();
+		cfEF.setEntityType("constituent");
+		cfEF.setName("emailFormat");
+		cfEF.setValue("Both");
+		Entry entryEF = new Entry();
+		entryEF.setKey("emailFormat");
+		entryEF.setValue(cfOptIn);
+		
+		cFieldMap.getEntry().add(entryEF);
+		
 		Constituent c = new Constituent();
 		c.setFirstName(d.getFirstName());
 		c.setLastName(d.getLastName());
-		c.setCustomFieldMap(fieldMap);
+		c.setCustomFieldMap(cFieldMap);
 		c.setConstituentType("individual");
 		
 		Email email = new Email();
 		email.setEmailAddress(d.getEmailAddress());
 		email.setCustomFieldMap(fieldMap);
 		email.setPrimary(true);
+		email.setReceiveCorrespondence(true);
 		c.getEmails().add(email);
 
 
@@ -167,13 +207,34 @@ public class DonateWidgetServiceImpl implements DonateWidgetService {
 		Site s = new Site();
 
 		s.setName("company1");
-
+		c.setSite(s);
 
 		SaveOrUpdateConstituentRequest request = new SaveOrUpdateConstituentRequest();
 		request.setConstituent(c);
+		SaveOrUpdateConstituentResponse response = null;
+		try {
 
-		SaveOrUpdateConstituentResponse response = oleap
-				.saveOrUpdateConstituent(request);
+		    response = oleap.saveOrUpdateConstituent(request);
+
+		} catch ( Exception e) {
+		    logger.error(e.getMessage());
+		    if (e instanceof SOAPFaultException) {
+				SOAPFaultException sfe = (SOAPFaultException)e;
+				Throwable t = ((SOAPFaultException)e).getCause();
+				SOAPFault fault = sfe.getFault();
+				
+				if (fault.hasDetail()) {
+					Detail detail = fault.getDetail();
+					Iterator<DetailEntry> it = detail.getDetailEntries();
+					while (it.hasNext()) {
+						DetailEntry dte = it.next();
+						System.out.println(dte.getTextContent());
+					}
+				}
+
+			}
+		}
+
 		return response.getConstituent();
 	}
 
@@ -255,10 +316,16 @@ public class DonateWidgetServiceImpl implements DonateWidgetService {
 			source.setPaymentType(PaymentType.ACH);
 		}
 
-		SaveOrUpdateGiftRequest request = new SaveOrUpdateGiftRequest();
-		request.setGift(g);
-		request.setConstituentId(c.getAccountNumber());
-		SaveOrUpdateGiftResponse response = oleap.saveOrUpdateGift(request);
+		SaveOrUpdateGiftResponse response = null;
+
+		try {
+			SaveOrUpdateGiftRequest request = new SaveOrUpdateGiftRequest();
+			request.setGift(g);
+			request.setConstituentId(c.getAccountNumber());
+			response = oleap.saveOrUpdateGift(request);
+		} catch (Exception ex) {
+		    logger.error(ex.getMessage());
+		}
 
 		if (response != null && response.getGift() != null) {
 			return response.getGift();
@@ -279,11 +346,12 @@ public class DonateWidgetServiceImpl implements DonateWidgetService {
 	@Override
 	public void updateViewCount(String guid, String referrer) {
 		DonateWidget widget = donateWidgetDao.findWidgetByGuid(guid);
-
-		String site = widget.getUserName().substring(widget.getUserName().indexOf("@"));
-		Placement placement = placementDao.findPlacementByURL(referrer,site);
 		
 		if (widget == null) return;
+
+		
+		Placement placement = placementDao.findPlacementByURL(referrer);
+		
 		
 		//
 		// there are no placements for this widget yet.
@@ -294,6 +362,7 @@ public class DonateWidgetServiceImpl implements DonateWidgetService {
 					placement.setErrorCount(0L);
 					placement.setGiftCount(0L);
 					placement.setViewCount(1L);
+					
 					placement = placementDao.save(placement);
 		} else {
 			placement.setViewCount(placement.getViewCount() + 1);

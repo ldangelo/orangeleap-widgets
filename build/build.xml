@@ -5,6 +5,25 @@
 	<property file="${commonBuild.dir}/commonBuild.properties"/>
 	<property name="build.env" value="dev"/>
 
+	<taskdef classpath="/Users/ldangelo/Development/i3sp-build/jar/com.i3sp.build.jar" resource="com/i3sp/ant/Taskdefs.properties"/>
+
+
+<target name="mungejar">
+  <path id="all.jars">
+    <fileset dir="${lib.dir}">
+      <include name="**/*.jar"/>
+    </fileset>
+  </path>
+  <property name="all-jars" refid="all.jars"/>
+</target>
+
+<target name="prj.el" depends="mungejar">
+  <jdeproject prjel="${basedir}/prj.el"
+	      srcdirs="${basedir}/src"
+	      classdir="${basedir}/build/stage/classes-jar"
+	      classpath="${all-jars}" />
+</target>
+
 	<target name="1. Deploy Exploded War" description="Deploys the exploded war.">
 		<antcall target="deploy-exploded-war" />
 	</target>

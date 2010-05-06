@@ -24,19 +24,18 @@ public class PlacementDaoImpl extends SqlMapClientDaoSupport implements Placemen
 	}
 	
 	@Override
-	public List<Placement> listPlacementsByWidgetId(Long widgetid,String sitename) {
+	public List<Placement> listPlacementsByWidgetId(Long widgetid) {
 	    Map<String,Object> params = new HashMap<String,Object>();
 	    params.put("widgetid",widgetid);
-	    params.put("sitename",sitename);
-		return (List<Placement>) this.getSqlMapClientTemplate().queryForList("listPlacementsByWidgetId", widgetid);
+
+		return (List<Placement>) this.getSqlMapClientTemplate().queryForList("listPlacementsByWidgetId", params);
 	}
 	
 	@Override
-	public Placement findPlacementByURL(String url,String sitename) {
+	public Placement findPlacementByURL(String url) {
 	    Map<String,Object> params = new HashMap<String,Object>();
 	    params.put("url",url);
-	    params.put("sitename",sitename);
 
-	    return (Placement) this.getSqlMapClientTemplate().queryForObject("findPlacementByURL",url);	
+	    return (Placement) this.getSqlMapClientTemplate().queryForObject("findPlacementByURL",params);	
 	}
 }

@@ -7,9 +7,9 @@ import com.orangeleap.donatenow.domain.Placement;
 
 public interface PlacementDao {
 
-    public Placement findPlacementByURL(String url, String site);
+    public Placement findPlacementByURL(String url);
 
-    public List<Placement> listPlacementsByWidgetId(Long widgetid,String site);
+    public List<Placement> listPlacementsByWidgetId(Long widgetid);
 
     public void update(Placement placement);
 

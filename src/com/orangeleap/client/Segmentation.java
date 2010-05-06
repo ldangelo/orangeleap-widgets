@@ -23,9 +23,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="description" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="type" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="executionUser" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="executionCount" type="{http://www.w3.org/2001/XMLSchema}long"/>
- *         &lt;element name="executionDate" type="{http://www.w3.org/2001/XMLSchema}dateTime"/>
+ *         &lt;element name="executionUser" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="executionCount" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
+ *         &lt;element name="executionDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -53,10 +53,8 @@ public class Segmentation {
     protected long id;
     @XmlElement(required = true)
     protected String type;
-    @XmlElement(required = true)
     protected String executionUser;
-    protected long executionCount;
-    @XmlElement(required = true)
+    protected Long executionCount;
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar executionDate;
 
@@ -175,16 +173,24 @@ public class Segmentation {
     /**
      * Gets the value of the executionCount property.
      * 
+     * @return
+     *     possible object is
+     *     {@link Long }
+     *     
      */
-    public long getExecutionCount() {
+    public Long getExecutionCount() {
         return executionCount;
     }
 
     /**
      * Sets the value of the executionCount property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link Long }
+     *     
      */
-    public void setExecutionCount(long value) {
+    public void setExecutionCount(Long value) {
         this.executionCount = value;
     }
 

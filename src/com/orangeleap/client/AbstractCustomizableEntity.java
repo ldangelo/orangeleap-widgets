@@ -55,8 +55,8 @@ import javax.xml.bind.annotation.XmlType;
     "customFieldMap"
 })
 @XmlSeeAlso({
-    CommunicationHistory.class,
     Constituent.class,
+    CommunicationHistory.class,
     Picklist.class,
     AbstractCommunicationEntity.class,
     PicklistItem.class,

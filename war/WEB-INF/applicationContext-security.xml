@@ -29,10 +29,11 @@
     	<sec:intercept-url pattern='/logoutSuccess*' access='IS_AUTHENTICATED_ANONYMOUSLY'/>
     	<sec:intercept-url pattern='/css/*' access='IS_AUTHENTICATED_ANONYMOUSLY'/>    	
     	<sec:intercept-url pattern='/js/*' access='IS_AUTHENTICATED_ANONYMOUSLY'/>    	    	
+    	<sec:intercept-url pattern='/js/jquery/*' access='IS_AUTHENTICATED_ANONYMOUSLY'/>    	    	    	
     	<sec:intercept-url pattern='/decorators/*' access='IS_AUTHENTICATED_ANONYMOUSLY'/>
     	<sec:intercept-url pattern='/includes/*' access='IS_AUTHENTICATED_ANONYMOUSLY'/>    	    	
     	<sec:intercept-url pattern='/images/*' access='IS_AUTHENTICATED_ANONYMOUSLY'/>    	    	    	
-    	<sec:intercept-url pattern='/dwr/*' access='IS_AUTHENTICATED_ANONYMOUSLY'/>    	    	    	    	
+    	<sec:intercept-url pattern='/dwr/**' access='IS_AUTHENTICATED_ANONYMOUSLY'/>    	    	    	    	
 		<sec:intercept-url pattern='/**' access='ROLE_USER'/>
 		<sec:form-login login-page='/login.jsp' 
 			default-target-url='/index.jsp' 

@@ -29,6 +29,14 @@ public class DonateWidget {
     private Long  viewCount;
     private String site;
 
+	public String getSite() {
+		return site;
+	}
+
+	public void setSite(String site) {
+		this.site = site;
+	}
+
 	public DonateWidget() {
 		guid = UUID.randomUUID().toString();
 		userName = null;

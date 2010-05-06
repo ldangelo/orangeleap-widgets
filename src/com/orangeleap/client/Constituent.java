@@ -35,6 +35,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="constituentOrganizationRoles" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="constituentType" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="preferredPhoneType" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="site" type="{http://www.orangeleap.com/orangeleap/services2.0/}site" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -60,7 +61,8 @@ import javax.xml.bind.annotation.XmlType;
     "constituentIndividualRoles",
     "constituentOrganizationRoles",
     "constituentType",
-    "preferredPhoneType"
+    "preferredPhoneType",
+    "site"
 })
 public class Constituent
     extends AbstractCustomizableEntity
@@ -87,6 +89,7 @@ public class Constituent
     protected String constituentOrganizationRoles;
     protected String constituentType;
     protected String preferredPhoneType;
+    protected Site site;
 
     /**
      * Gets the value of the constituentId property.
@@ -485,6 +488,30 @@ public class Constituent
      */
     public void setPreferredPhoneType(String value) {
         this.preferredPhoneType = value;
+    }
+
+    /**
+     * Gets the value of the site property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Site }
+     *     
+     */
+    public Site getSite() {
+        return site;
+    }
+
+    /**
+     * Sets the value of the site property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Site }
+     *     
+     */
+    public void setSite(Site value) {
+        this.site = value;
     }
 
 }

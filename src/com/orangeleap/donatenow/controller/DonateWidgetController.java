@@ -20,10 +20,13 @@ import com.orangeleap.client.OrangeLeap;
 import com.orangeleap.client.WSClient;
 import com.orangeleap.donatenow.dao.DonateWidgetDao;
 import com.orangeleap.donatenow.domain.DonateWidget;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 @Controller
 @RequestMapping("/donatewidget.htm")
 public class DonateWidgetController {
+    private static final Log logger = LogFactory.getLog(DonateWidgetController.class);
     
     @Autowired
     protected DonateWidgetDao donateWidgetDao = null;
@@ -61,11 +64,26 @@ public class DonateWidgetController {
 		GetPickListByNameResponse response = null;
 		
 		request.setName("projectCode");
-		response = oleap.getPickListByName(request);
+
+		try {
+		    response = oleap.getPickListByName(request);		    
+		} catch ( Exception ex) {
+		    logger.error(ex.getMessage());
+		}
+
+
 		widget.setProjectCodeList(response.getPicklist().getPicklistItems());
 		
+
 		request.setName("motivationCode");
-		response = oleap.getPickListByName(request);
+
+
+		try {
+		    response = oleap.getPickListByName(request);		    
+		} catch ( Exception ex) {
+		    logger.error(ex.getMessage());
+		}
+
 		widget.setMotivationCodeList(response.getPicklist().getPicklistItems());		
 		model.addAttribute(widget);
     }
@@ -84,9 +102,11 @@ public class DonateWidgetController {
 	
 	String userName = auth.getName();
 	String password = (String) auth.getCredentials();
+	String siteName = userName.substring(userName.indexOf('@') + 1);
 	widget.setUserName(userName);
 	widget.setPassWord(password);
-
+	widget.setSite(siteName);
+	
 	DonateWidget result = null;
 	
 	if (widget.getId() != null)

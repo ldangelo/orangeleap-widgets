@@ -19,6 +19,14 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="type" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="offset" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="limit">
+ *           &lt;simpleType>
+ *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}int">
+ *               &lt;pattern value="[0-9][0-9]"/>
+ *             &lt;/restriction>
+ *           &lt;/simpleType>
+ *         &lt;/element>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -29,13 +37,17 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "type"
+    "type",
+    "offset",
+    "limit"
 })
 @XmlRootElement(name = "GetSegmentationListByTypeRequest")
 public class GetSegmentationListByTypeRequest {
 
     @XmlElement(required = true)
     protected String type;
+    protected int offset;
+    protected int limit;
 
     /**
      * Gets the value of the type property.
@@ -59,6 +71,38 @@ public class GetSegmentationListByTypeRequest {
      */
     public void setType(String value) {
         this.type = value;
+    }
+
+    /**
+     * Gets the value of the offset property.
+     * 
+     */
+    public int getOffset() {
+        return offset;
+    }
+
+    /**
+     * Sets the value of the offset property.
+     * 
+     */
+    public void setOffset(int value) {
+        this.offset = value;
+    }
+
+    /**
+     * Gets the value of the limit property.
+     * 
+     */
+    public int getLimit() {
+        return limit;
+    }
+
+    /**
+     * Sets the value of the limit property.
+     * 
+     */
+    public void setLimit(int value) {
+        this.limit = value;
     }
 
 }

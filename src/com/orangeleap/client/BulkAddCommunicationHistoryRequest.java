@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="constituentId" type="{http://www.w3.org/2001/XMLSchema}long" maxOccurs="unbounded"/>
+ *         &lt;element name="bulkAdd" type="{http://www.orangeleap.com/orangeleap/services2.0/}BulkAddCommunicationHistory" maxOccurs="unbounded"/>
  *         &lt;element name="communicationHistory" type="{http://www.orangeleap.com/orangeleap/services2.0/}communicationHistory"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -32,44 +32,44 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "constituentId",
+    "bulkAdd",
     "communicationHistory"
 })
 @XmlRootElement(name = "BulkAddCommunicationHistoryRequest")
 public class BulkAddCommunicationHistoryRequest {
 
-    @XmlElement(type = Long.class)
-    protected List<Long> constituentId;
+    @XmlElement(required = true)
+    protected List<BulkAddCommunicationHistory> bulkAdd;
     @XmlElement(required = true)
     protected CommunicationHistory communicationHistory;
 
     /**
-     * Gets the value of the constituentId property.
+     * Gets the value of the bulkAdd property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the constituentId property.
+     * This is why there is not a <CODE>set</CODE> method for the bulkAdd property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getConstituentId().add(newItem);
+     *    getBulkAdd().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Long }
+     * {@link BulkAddCommunicationHistory }
      * 
      * 
      */
-    public List<Long> getConstituentId() {
-        if (constituentId == null) {
-            constituentId = new ArrayList<Long>();
+    public List<BulkAddCommunicationHistory> getBulkAdd() {
+        if (bulkAdd == null) {
+            bulkAdd = new ArrayList<BulkAddCommunicationHistory>();
         }
-        return this.constituentId;
+        return this.bulkAdd;
     }
 
     /**
