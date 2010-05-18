@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="orangeleap" basedir=".." default="deploy">
 
-	<property name="build.output.dir" value="/root/.hudson/jobs/orangeleap-donatenow/workspace/orangeleap-donatenow/build/stage" />
+	<property name="build.output.dir" value="/home/hudson/hudson-home/jobs/orangeleap-donatenow/workspace/build/stage" />
 
 	<property name="target.tomcat.dir" value="/opt/orangeleap/instance_DEV" />
 	<property name="mysql.port" value="10006" />

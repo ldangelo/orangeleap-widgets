@@ -19,11 +19,11 @@
 		<sleep seconds="30" />
 		
 		
-		<property name="overrideUrl1" value="jdbc:mysql://localhost:${mysql.port}/donatenow?${mysql.opts}" />
+<!--		<property name="overrideUrl1" value="jdbc:mysql://localhost:${mysql.port}/donatenow?${mysql.opts}" />
         <script language="javascript"> <![CDATA[
            self.getProject().setProperty("mysql.db.url", overrideUrl1);
         ]]> </script>
-		
+-->		
 		<!-- Reset schema -->
 	     <sql driver="${mysql.db.driver}"
 		          url="${mysql.db.url}"
