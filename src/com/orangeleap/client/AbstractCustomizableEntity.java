@@ -58,8 +58,8 @@ import javax.xml.bind.annotation.XmlType;
     Constituent.class,
     CommunicationHistory.class,
     Picklist.class,
-    AbstractCommunicationEntity.class,
     PicklistItem.class,
+    AbstractCommunicationEntity.class,
     DistributionLine.class,
     AbstractPaymentInfoEntity.class
 })
