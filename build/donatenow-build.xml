@@ -13,7 +13,7 @@
 	</taskdef>
 	
 	<!-- Integrated targets -->
-	<target name="build" depends="resolve, clean-build, setup, compile, setup-war, jar, copy-jars-to-war, build-integrated-war" description="Does a clean build including precompiling JSPs"/>
+	<target name="build" depends="resolve, clean-build, setup, compile, setup-war, jar, copy-jars-to-war, fork-optimization-dev, wait-for-optimize-fork-finish-dev, build-integrated-war" description="Does a clean build including precompiling JSPs"/>
 
 	<target name="local-unit-build" depends="resolve, setup, compile, jar" description="Used ONLY for local unit test builds"/>
 	
