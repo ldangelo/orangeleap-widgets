@@ -336,10 +336,21 @@ public class DonateWidgetServiceImpl implements DonateWidgetService {
 
 	private PaymentStatus createPaymentStatus(Gift g) {
 		PaymentStatus status = new PaymentStatus();
-		status.setAuthorizationCode(g.getAuthCode());
-		status.setMessage(g.getPaymentMessage());
-		if (g.getAuthCode() != null && g.getAuthCode() != "")
-			status.setProcessed(true);
+
+    if (g != null ) {
+      if (g.getAuthCode() != null && g.getPaymentMessage() != null) {
+        status.setAuthorizationCode(g.getAuthCode());
+        status.setMessage(g.getPaymentMessage());
+        if (g.getAuthCode() != null && g.getAuthCode() != "")
+          status.setProcessed(true);
+      } else {
+        status.setProcessed(false);
+      }
+
+    } else {
+      status.setProcessed(false);
+    }
+
 		return status;
 	}
 
