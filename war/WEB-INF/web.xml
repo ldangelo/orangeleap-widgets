@@ -66,6 +66,10 @@
 		  <param-name>allowGetForSafariButMakeForgeryEasier</param-name>
 		  <param-value>true</param-value>
 		</init-param>
+		<init-param>
+		  <param-name>allowScriptTagRemoting</param-name>
+		  <param-value>true</param-value>
+		</init-param>
 	</servlet>
 
     <servlet>
