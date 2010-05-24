@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlType;
  * </pre>
  * 
  */
-@XmlType(name = "commitmentType")
+@XmlType(name = "commitmentType", namespace = "http://www.orangeleap.com/orangeleap/typesv3")
 @XmlEnum
 public enum CommitmentType {
 

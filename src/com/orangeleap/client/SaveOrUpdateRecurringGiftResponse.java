@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="recurringgift" type="{http://www.orangeleap.com/orangeleap/services2.0/}recurringGift"/>
+ *         &lt;element name="recurringgift" type="{http://www.orangeleap.com/orangeleap/typesv3}recurringGift"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>

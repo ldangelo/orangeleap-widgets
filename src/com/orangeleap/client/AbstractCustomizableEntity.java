@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="abstractCustomizableEntity">
  *   &lt;complexContent>
- *     &lt;extension base="{http://www.orangeleap.com/orangeleap/services2.0/}abstractEntity">
+ *     &lt;extension base="{http://www.orangeleap.com/orangeleap/typesv3}abstractEntity">
  *       &lt;sequence>
  *         &lt;element name="customFieldMap">
  *           &lt;complexType>
@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlType;
  *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *                           &lt;sequence>
  *                             &lt;element name="key" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *                             &lt;element name="value" type="{http://www.orangeleap.com/orangeleap/services2.0/}customField"/>
+ *                             &lt;element name="value" type="{http://www.orangeleap.com/orangeleap/typesv3}customField"/>
  *                           &lt;/sequence>
  *                         &lt;/restriction>
  *                       &lt;/complexContent>
@@ -51,17 +51,19 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "abstractCustomizableEntity", propOrder = {
+@XmlType(name = "abstractCustomizableEntity", namespace = "http://www.orangeleap.com/orangeleap/typesv3", propOrder = {
     "customFieldMap"
 })
 @XmlSeeAlso({
-    Constituent.class,
     CommunicationHistory.class,
-    Picklist.class,
+    Constituent.class,
+    CustomTable.class,
     PicklistItem.class,
-    AbstractCommunicationEntity.class,
     DistributionLine.class,
-    AbstractPaymentInfoEntity.class
+    AbstractCommunicationEntity.class,
+    AbstractPaymentInfoEntity.class,
+    CustomTableRow.class,
+    Picklist.class
 })
 public abstract class AbstractCustomizableEntity
     extends AbstractEntity
@@ -111,7 +113,7 @@ public abstract class AbstractCustomizableEntity
      *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
      *                 &lt;sequence>
      *                   &lt;element name="key" type="{http://www.w3.org/2001/XMLSchema}string"/>
-     *                   &lt;element name="value" type="{http://www.orangeleap.com/orangeleap/services2.0/}customField"/>
+     *                   &lt;element name="value" type="{http://www.orangeleap.com/orangeleap/typesv3}customField"/>
      *                 &lt;/sequence>
      *               &lt;/restriction>
      *             &lt;/complexContent>
@@ -131,6 +133,7 @@ public abstract class AbstractCustomizableEntity
     })
     public static class CustomFieldMap {
 
+        @XmlElement(namespace = "http://www.orangeleap.com/orangeleap/typesv3")
         protected List<AbstractCustomizableEntity.CustomFieldMap.Entry> entry;
 
         /**
@@ -174,7 +177,7 @@ public abstract class AbstractCustomizableEntity
          *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
          *       &lt;sequence>
          *         &lt;element name="key" type="{http://www.w3.org/2001/XMLSchema}string"/>
-         *         &lt;element name="value" type="{http://www.orangeleap.com/orangeleap/services2.0/}customField"/>
+         *         &lt;element name="value" type="{http://www.orangeleap.com/orangeleap/typesv3}customField"/>
          *       &lt;/sequence>
          *     &lt;/restriction>
          *   &lt;/complexContent>
@@ -190,9 +193,9 @@ public abstract class AbstractCustomizableEntity
         })
         public static class Entry {
 
-            @XmlElement(required = true)
+            @XmlElement(namespace = "http://www.orangeleap.com/orangeleap/typesv3", required = true)
             protected String key;
-            @XmlElement(required = true)
+            @XmlElement(namespace = "http://www.orangeleap.com/orangeleap/typesv3", required = true)
             protected CustomField value;
 
             /**

@@ -9,11 +9,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * 
- * 		  Request to add a picklist item to an existing picklist.
+ * Request to add a picklist item to an existing picklist.
  * 		  
  * 		  Requires a name and picklist item.
- * 		
  * 
  * 
  * 
@@ -32,9 +30,7 @@ public class AddPickListItemByNameRequest {
     protected PicklistItem picklistitem;
 
     /**
-     * 
-     * 			The name of the picklist that you want to add a value too.
-     * 		      
+     * The name of the picklist that you want to add a value too.
      * 
      * @return
      *     possible object is
@@ -58,9 +54,7 @@ public class AddPickListItemByNameRequest {
     }
 
     /**
-     * 
-     * 			The value you are wishing to add to the picklist.
-     * 		      
+     * The value you are wishing to add to the picklist.
      * 
      * @return
      *     possible object is

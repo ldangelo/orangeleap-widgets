@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="constituent">
  *   &lt;complexContent>
- *     &lt;extension base="{http://www.orangeleap.com/orangeleap/services2.0/}abstractCustomizableEntity">
+ *     &lt;extension base="{http://www.orangeleap.com/orangeleap/typesv3}abstractCustomizableEntity">
  *       &lt;sequence>
  *         &lt;element name="constituentId" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
  *         &lt;element name="accountNumber" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
@@ -26,16 +26,16 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="lastName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="suffix" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="title" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="addresses" type="{http://www.orangeleap.com/orangeleap/services2.0/}address" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="emails" type="{http://www.orangeleap.com/orangeleap/services2.0/}email" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="phones" type="{http://www.orangeleap.com/orangeleap/services2.0/}phone" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="addresses" type="{http://www.orangeleap.com/orangeleap/typesv3}address" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="emails" type="{http://www.orangeleap.com/orangeleap/typesv3}email" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="phones" type="{http://www.orangeleap.com/orangeleap/typesv3}phone" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="organizationName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="constituentAttributes" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="constituentIndividualRoles" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="constituentOrganizationRoles" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="constituentType" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="preferredPhoneType" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="site" type="{http://www.orangeleap.com/orangeleap/services2.0/}site" minOccurs="0"/>
+ *         &lt;element name="site" type="{http://www.orangeleap.com/orangeleap/typesv3}site" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -45,7 +45,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "constituent", propOrder = {
+@XmlType(name = "constituent", namespace = "http://www.orangeleap.com/orangeleap/typesv3", propOrder = {
     "constituentId",
     "accountNumber",
     "firstName",

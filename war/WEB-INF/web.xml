@@ -102,6 +102,10 @@
 	</welcome-file-list>
 
 	<jsp-config>
+	  <taglib>
+	    <taglib-uri>/olwidget</taglib-uri>
+	    <taglib-location>/WEB-INF/taglib.tld</taglib-location>
+	  </taglib>
 		<taglib>
 			<taglib-uri>/spring</taglib-uri>
 			<taglib-location>/WEB-INF/tld/spring.tld</taglib-location>
@@ -131,5 +135,6 @@
 	             <!-- 12 hours -->
       <session-timeout>720</session-timeout> 
     </session-config>
+
 
 </web-app>

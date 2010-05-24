@@ -17,9 +17,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * <pre>
  * &lt;complexType name="abstractCommunicationEntity">
  *   &lt;complexContent>
- *     &lt;extension base="{http://www.orangeleap.com/orangeleap/services2.0/}abstractCustomizableEntity">
+ *     &lt;extension base="{http://www.orangeleap.com/orangeleap/typesv3}abstractCustomizableEntity">
  *       &lt;sequence>
- *         &lt;element name="activationStatus" type="{http://www.orangeleap.com/orangeleap/services2.0/}activationType" minOccurs="0"/>
+ *         &lt;element name="activationStatus" type="{http://www.orangeleap.com/orangeleap/typesv3}activationType" minOccurs="0"/>
  *         &lt;element name="comments" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="effectiveDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="inactive" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
@@ -40,7 +40,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "abstractCommunicationEntity", propOrder = {
+@XmlType(name = "abstractCommunicationEntity", namespace = "http://www.orangeleap.com/orangeleap/typesv3", propOrder = {
     "activationStatus",
     "comments",
     "effectiveDate",
@@ -55,9 +55,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "userCreated"
 })
 @XmlSeeAlso({
-    Address.class,
     Phone.class,
-    Email.class
+    Email.class,
+    Address.class
 })
 public abstract class AbstractCommunicationEntity
     extends AbstractCustomizableEntity

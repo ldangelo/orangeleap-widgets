@@ -31,7 +31,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "abstractEntity", propOrder = {
+@XmlType(name = "abstractEntity", namespace = "http://www.orangeleap.com/orangeleap/typesv3", propOrder = {
     "id",
     "createDate",
     "updateDate"

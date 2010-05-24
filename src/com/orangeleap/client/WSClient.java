@@ -19,13 +19,13 @@ public class WSClient  {
 		OrangeLeapService orangeLeapService;
 		try {
 
-			orangeLeapService = new OrangeLeapService(new URL(wsdlUrl),new QName("http://www.orangeleap.com/orangeleap/services2.0/", "OrangeLeapService"));
+			orangeLeapService = new OrangeLeapService(new URL(wsdlUrl),new QName("http://www.orangeleap.com/orangeleap/services3.0/", "OrangeLeapService"));
 
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 			return null;
 		}
-		OrangeLeap orangeLeapPort = orangeLeapService.getOrangeLeapPort();
+		OrangeLeap orangeLeapPort = orangeLeapService.getOrangeLeapSoap11();
 
     	
         Map outProps = new HashMap();

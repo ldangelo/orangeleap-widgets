@@ -20,19 +20,19 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * <pre>
  * &lt;complexType name="abstractPaymentInfoEntity">
  *   &lt;complexContent>
- *     &lt;extension base="{http://www.orangeleap.com/orangeleap/services2.0/}abstractCustomizableEntity">
+ *     &lt;extension base="{http://www.orangeleap.com/orangeleap/typesv3}abstractCustomizableEntity">
  *       &lt;sequence>
  *         &lt;element name="acknowledgmentDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
- *         &lt;element name="address" type="{http://www.orangeleap.com/orangeleap/services2.0/}address" minOccurs="0"/>
+ *         &lt;element name="address" type="{http://www.orangeleap.com/orangeleap/typesv3}address" minOccurs="0"/>
  *         &lt;element name="checkNumber" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="comments" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="currencyCode" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="distributionLines" type="{http://www.orangeleap.com/orangeleap/services2.0/}distributionLine" maxOccurs="unbounded"/>
- *         &lt;element name="email" type="{http://www.orangeleap.com/orangeleap/services2.0/}email" minOccurs="0"/>
- *         &lt;element name="paymentSource" type="{http://www.orangeleap.com/orangeleap/services2.0/}paymentSource"/>
- *         &lt;element name="paymentType" type="{http://www.orangeleap.com/orangeleap/services2.0/}PaymentType"/>
+ *         &lt;element name="distributionLines" type="{http://www.orangeleap.com/orangeleap/typesv3}distributionLine" maxOccurs="unbounded"/>
+ *         &lt;element name="email" type="{http://www.orangeleap.com/orangeleap/typesv3}email" minOccurs="0"/>
+ *         &lt;element name="paymentSource" type="{http://www.orangeleap.com/orangeleap/typesv3}paymentSource"/>
+ *         &lt;element name="paymentType" type="{http://www.orangeleap.com/orangeleap/typesv3}PaymentType"/>
  *         &lt;element name="constituentId" type="{http://www.w3.org/2001/XMLSchema}long"/>
- *         &lt;element name="phone" type="{http://www.orangeleap.com/orangeleap/services2.0/}phone" minOccurs="0"/>
+ *         &lt;element name="phone" type="{http://www.orangeleap.com/orangeleap/typesv3}phone" minOccurs="0"/>
  *         &lt;element name="sendAcknowledgment" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *       &lt;/sequence>
  *     &lt;/extension>
@@ -43,7 +43,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "abstractPaymentInfoEntity", propOrder = {
+@XmlType(name = "abstractPaymentInfoEntity", namespace = "http://www.orangeleap.com/orangeleap/typesv3", propOrder = {
     "acknowledgmentDate",
     "address",
     "checkNumber",

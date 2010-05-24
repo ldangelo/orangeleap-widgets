@@ -20,8 +20,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="bulkAdd" type="{http://www.orangeleap.com/orangeleap/services2.0/}BulkAddCommunicationHistory" maxOccurs="unbounded"/>
- *         &lt;element name="communicationHistory" type="{http://www.orangeleap.com/orangeleap/services2.0/}communicationHistory"/>
+ *         &lt;element name="bulkAdd" type="{http://www.orangeleap.com/orangeleap/services3.0/}BulkAddCommunicationHistory" maxOccurs="unbounded"/>
+ *         &lt;element name="communicationHistory" type="{http://www.orangeleap.com/orangeleap/typesv3}communicationHistory"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>

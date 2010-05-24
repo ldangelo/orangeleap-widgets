@@ -17,13 +17,13 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="picklist">
  *   &lt;complexContent>
- *     &lt;extension base="{http://www.orangeleap.com/orangeleap/services2.0/}abstractCustomizableEntity">
+ *     &lt;extension base="{http://www.orangeleap.com/orangeleap/typesv3}abstractCustomizableEntity">
  *       &lt;sequence>
  *         &lt;element name="picklistNameId" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="picklistName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="picklistDesc" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="multiselect" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
- *         &lt;element name="picklistItems" type="{http://www.orangeleap.com/orangeleap/services2.0/}picklistItem" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="picklistItems" type="{http://www.orangeleap.com/orangeleap/typesv3}picklistItem" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "picklist", propOrder = {
+@XmlType(name = "picklist", namespace = "http://www.orangeleap.com/orangeleap/typesv3", propOrder = {
     "picklistNameId",
     "picklistName",
     "picklistDesc",

@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="email">
  *   &lt;complexContent>
- *     &lt;extension base="{http://www.orangeleap.com/orangeleap/services2.0/}abstractCommunicationEntity">
+ *     &lt;extension base="{http://www.orangeleap.com/orangeleap/typesv3}abstractCommunicationEntity">
  *       &lt;sequence>
  *         &lt;element name="emailAddress" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="emailDisplay" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "email", propOrder = {
+@XmlType(name = "email", namespace = "http://www.orangeleap.com/orangeleap/typesv3", propOrder = {
     "emailAddress",
     "emailDisplay"
 })

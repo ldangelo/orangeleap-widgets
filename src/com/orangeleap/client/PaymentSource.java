@@ -25,7 +25,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="achHolderName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="achRoutingNumber" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="achRoutingNumberDisplay" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="address" type="{http://www.orangeleap.com/orangeleap/services2.0/}address" minOccurs="0"/>
+ *         &lt;element name="address" type="{http://www.orangeleap.com/orangeleap/typesv3}address" minOccurs="0"/>
  *         &lt;element name="creditCardExpiration" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="creditCardExpirationMonth" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="creditCardExpirationYear" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
@@ -36,9 +36,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="creditCardType" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="inactive" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="lastFourDigits" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="paymentType" type="{http://www.orangeleap.com/orangeleap/services2.0/}PaymentType"/>
+ *         &lt;element name="paymentType" type="{http://www.orangeleap.com/orangeleap/typesv3}PaymentType"/>
  *         &lt;element name="constituentId" type="{http://www.w3.org/2001/XMLSchema}long"/>
- *         &lt;element name="phone" type="{http://www.orangeleap.com/orangeleap/services2.0/}phone" minOccurs="0"/>
+ *         &lt;element name="phone" type="{http://www.orangeleap.com/orangeleap/typesv3}phone" minOccurs="0"/>
  *         &lt;element name="profile" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="userCreated" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *       &lt;/sequence>
@@ -50,7 +50,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "paymentSource", propOrder = {
+@XmlType(name = "paymentSource", namespace = "http://www.orangeleap.com/orangeleap/typesv3", propOrder = {
     "achAccountNumber",
     "achAccountNumberDisplay",
     "achAccountNumberEncrypted",

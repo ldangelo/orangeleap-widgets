@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "site", propOrder = {
+@XmlType(name = "site", namespace = "http://www.orangeleap.com/orangeleap/typesv3", propOrder = {
     "name"
 })
 public class Site {

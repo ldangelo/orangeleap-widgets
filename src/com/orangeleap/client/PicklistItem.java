@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="picklistItem">
  *   &lt;complexContent>
- *     &lt;extension base="{http://www.orangeleap.com/orangeleap/services2.0/}abstractCustomizableEntity">
+ *     &lt;extension base="{http://www.orangeleap.com/orangeleap/typesv3}abstractCustomizableEntity">
  *       &lt;sequence>
  *         &lt;element name="itemName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="defaultDisplayValue" type="{http://www.w3.org/2001/XMLSchema}string"/>
@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "picklistItem", propOrder = {
+@XmlType(name = "picklistItem", namespace = "http://www.orangeleap.com/orangeleap/typesv3", propOrder = {
     "itemName",
     "defaultDisplayValue",
     "longDescription",
