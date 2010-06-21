@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="Widget">
+	<resultMap id="result" class="com.orangeleap.donatenow.domain.Widget">
+		<result property="id" column="id" jdbcType="BIGINT"/>
+		<result property="guid" column="guid" jdbcType="VARCHAR"/>
+		<result property="userName" column="userName" jdbcType="VARCHAR"/>
+		<result property="passWord" column="passWord" jdbcType="VARCHAR"/>
+		<result property="errorCount" column="errorCount" jdbcType="BIGINT"/>
+		<result property="createDate" column="createDate" jdbcType="DATETIME"/>
+		<result property="widgetHTML" column="widgetHTML" jdbcType="VARCHAR"/>
+		<result property="viewCount" column="viewCount" jdbcType="BIGINT"/>
+	</resultMap>
+	
+	<select id="findWidgetById" resultMap="result">
+		select id,guid,userName,passWord,errorCount,createDate,widgetHTML,viewCount from WIDGETS where id=#value#
+	</select>
+	
+	<select id="findWidgetByGuid" resultMap="result">
+		select id,guid,userName,passWord,errorCount,createDate,widgetHTML,viewCount from WIDGETS where guid=#value#
+	</select>
+	
+	<select id="listWidgets" resultMap="result" parameterClass="map">
+		select id,guid,userName,passWord,errorCount,createDate,widgetHTML,viewCount from WIDGETS where userName=#userName# and passWord=#passWord#
+	</select>
+	
+	<update id="updateWidget" parameterClass="com.orangeleap.donatenow.domain.Widget">
+		update WIDGETS set guid=#guid#,userName=#userName#, passWord=#passWord#,errorCount=#errorCount#,viewCount=#viewCount# where id=#id# 
+	</update>
+	<insert id="saveWidget" parameterClass="com.orangeleap.donatenow.domain.Widget">
+		insert into WIDGETS (guid,userName,passWord,errorCount,createDate,widgetHTML,viewCount) values
+		(#guid#,#userName#,#passWord#,#errorCount#,#createDate#,#widgetHTML#,#viewCount#)
+		<selectKey keyProperty="id" resultClass="long">
+			SELECT LAST_INSERT_ID() AS value
+		</selectKey>
+	</insert>
+</sqlMap>

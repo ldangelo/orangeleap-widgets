@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com/DTD SQL Map Config 2.0//EN" "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
 <sqlMapConfig>
-	<sqlMap resource="sqlmap/widget.xml" />
-	<sqlMap resource="sqlmap/placement.xml" />
+  <settings useStatementNamespaces="true" />
+  <sqlMap resource="com/orangeleap/donatenow/dao/maps/PLACEMENTS_SqlMap.xml" />
+  <sqlMap resource="com/orangeleap/donatenow/dao/maps/DONATION_WIDGET_SqlMap.xml" />
+  <sqlMap resource="com/orangeleap/donatenow/dao/maps/CUSTOM_ENTITY_WIDGET_SqlMap.xml" />
+  <sqlMap resource="com/orangeleap/donatenow/dao/maps/WIDGET_SqlMap.xml" />
 </sqlMapConfig>

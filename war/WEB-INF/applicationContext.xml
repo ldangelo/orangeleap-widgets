@@ -10,7 +10,7 @@
 	   http://www.springframework.org/schema/aop           http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
            http://www.springframework.org/schema/tx           http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
            http://www.springframework.org/schema/context           http://www.springframework.org/schema/context/spring-context-2.5.xsd">
-
+  <context:annotation-config />
 	<context:component-scan base-package="com.orangeleap.donatenow" />
 
 	<bean id="messageSource"
@@ -23,32 +23,24 @@
   <dwr:configuration />
   <dwr:controller id="dwrController" debug="true" />
 
-  <bean id="donateNow" class="com.orangeleap.donatenow.service.impl.DonateNowImpl">
-    <dwr:remote javascript="donateNow">
-      <dwr:include method="donate" />
+  <bean id="orangeLeapWidget" class="com.orangeleap.donatenow.service.impl.OrangeLeapWidgetServiceImpl">
+    <dwr:remote javascript="OrangeLeapWidget">
+      <dwr:include method="create" />
+      <dwr:include method="authenticate" />
       <dwr:include method="updateViewCount"/>
-      <dwr:convert type="bean"
-		   class="com.orangeleap.donatenow.domain.ACHPaymentInfo" />
-      <dwr:convert type="bean"
-		   class="com.orangeleap.donatenow.domain.Address" />
-      <dwr:convert type="bean"
-		   class="com.orangeleap.donatenow.domain.CreditCardPaymentInfo" />
-      <dwr:convert type="bean"
-		   class="com.orangeleap.donatenow.domain.Donation" />
-      <dwr:convert type="bean"
-		   class="com.orangeleap.donatenow.domain.PaymentInfo" />
-      <dwr:convert type="bean"
-		   class="com.orangeleap.donatenow.domain.PaymentStatus" />
-      <dwr:convert type="enum"
-		   class="com.orangeleap.donatenow.domain.PaymentType" />
+      <dwr:include method="process"/>
+      <dwr:include method="getCustomEntity"/>
+      <dwr:include method="getConstituent"/>
+      <dwr:include method="getPickListItems"/>
+      <dwr:include method="getConstituentGifts"/>
+      <dwr:convert type="bean"  class="com.orangeleap.donatenow.domain.WidgetData" />
+      <dwr:convert type="bean"  class="com.orangeleap.client.*"/>
+      <dwr:convert type="bean"  class="com.orangeleap.client.CustomTable"/>
+      <dwr:convert type="bean"  class="com.orangeleap.client.CustomTableField"/>
+      <dwr:convert type="bean"  class="com.orangeleap.client.AbstractCustomizableEntity$CustomFieldMap"/>
+      <dwr:convert type="bean"  class="com.sun.org.apache.xerces.internal.jaxb.datatype.XMLGregorianCalendarImpl"/>
     </dwr:remote>
   </bean>
 
-	<bean name="donateNowService" class="com.orangeleap.donatenow.service.impl.DonateNowImpl">
-
-	</bean>
-	
-	<bean name="donateWidgetService" class="com.orangeleap.donatenow.service.impl.DonateWidgetServiceImpl">
-	</bean>
 </beans>
 

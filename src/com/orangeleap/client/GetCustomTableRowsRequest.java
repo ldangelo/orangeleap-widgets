@@ -1,8 +1,11 @@
 
 package com.orangeleap.client;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -17,9 +20,10 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="customTableId" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="tablename" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="offset" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="limit" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="filters" type="{http://www.orangeleap.com/orangeleap/services3.0/}filter" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -30,31 +34,42 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "customTableId",
+    "tablename",
     "offset",
-    "limit"
+    "limit",
+    "filters"
 })
 @XmlRootElement(name = "GetCustomTableRowsRequest")
 public class GetCustomTableRowsRequest {
 
-    protected long customTableId;
+    @XmlElement(required = true)
+    protected String tablename;
     protected long offset;
     protected long limit;
+    protected List<Filter> filters;
 
     /**
-     * Gets the value of the customTableId property.
+     * Gets the value of the tablename property.
      * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public long getCustomTableId() {
-        return customTableId;
+    public String getTablename() {
+        return tablename;
     }
 
     /**
-     * Sets the value of the customTableId property.
+     * Sets the value of the tablename property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
-    public void setCustomTableId(long value) {
-        this.customTableId = value;
+    public void setTablename(String value) {
+        this.tablename = value;
     }
 
     /**
@@ -87,6 +102,35 @@ public class GetCustomTableRowsRequest {
      */
     public void setLimit(long value) {
         this.limit = value;
+    }
+
+    /**
+     * Gets the value of the filters property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the filters property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getFilters().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Filter }
+     * 
+     * 
+     */
+    public List<Filter> getFilters() {
+        if (filters == null) {
+            filters = new ArrayList<Filter>();
+        }
+        return this.filters;
     }
 
 }

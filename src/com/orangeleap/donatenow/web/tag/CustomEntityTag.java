@@ -5,15 +5,16 @@ import com.orangeleap.client.AbstractCustomizableEntity.CustomFieldMap;
 import com.orangeleap.client.AbstractCustomizableEntity;
 import com.orangeleap.client.CustomTable;
 import com.orangeleap.client.CustomTableField;
+import com.orangeleap.client.CustomTableRow;
 import com.orangeleap.client.GetCustomTableRowsRequest;
 import com.orangeleap.client.GetCustomTableRowsResponse;
 import com.orangeleap.client.GetPickListByNameRequest;
 import com.orangeleap.client.GetPickListByNameResponse;
-import com.orangeleap.client.ListCustomTablesRequest;
-import com.orangeleap.client.ListCustomTablesResponse;
 import com.orangeleap.client.OrangeLeap;
 import com.orangeleap.client.Picklist;
 import com.orangeleap.client.PicklistItem;
+import com.orangeleap.client.ReadCustomTableByNameRequest;
+import com.orangeleap.client.ReadCustomTableByNameResponse;
 import com.orangeleap.client.WSClient;
 import java.io.IOException;
 import java.lang.String;
@@ -30,8 +31,8 @@ public class CustomEntityTag extends TagSupport
   private String guid;
 
     public CustomEntityTag() {
-    super();
-  }
+      super();
+    }
 
   private void startForm() throws java.io.IOException {
     pageContext.getOut().write("<div class='column singleColumn'>");
@@ -131,7 +132,16 @@ public class CustomEntityTag extends TagSupport
   }
 
 
+  private String customFieldMapValue(CustomFieldMap map,String fieldName) {
+        List<Entry> entries = map.getEntry(); 
+        Iterator<Entry> itEntries = entries.iterator();
+        while (itEntries.hasNext()) {
+          Entry entry = itEntries.next();
 
+          if (entry.getKey().equals(fieldName)) return entry.getValue().getValue();
+        }
+        return null;
+  }
 
   public int doEndTag() throws javax.servlet.jsp.JspTagException
   {
@@ -141,15 +151,45 @@ public class CustomEntityTag extends TagSupport
       WSClient client = new WSClient();
       OrangeLeap oleap = client.getOrangeLeap(System.getProperty("donatenow.wsdllocation"),"nolan@company1","ryan");
 
-      ListCustomTablesRequest request = new ListCustomTablesRequest();
-      ListCustomTablesResponse response = null;
+      ReadCustomTableByNameRequest request = new ReadCustomTableByNameRequest();
+      ReadCustomTableByNameResponse response = null;
 
+      request.setName("webwidgits");
 
-      response = oleap.listCustomTables(request);
+      //
+      // get a list of all the web widget's
+      response = oleap.readCustomTableByName(request);
 
-      renderCustomTable(response.getCustomTable().get(0));
+      GetCustomTableRowsRequest webwidgetRequest = new GetCustomTableRowsRequest();
+      GetCustomTableRowsResponse webwidgetResponse = null;
+      
+      webwidgetRequest.setTablename("webwidgets");
+      webwidgetRequest.setOffset(0);
+      webwidgetRequest.setLimit(1);
 
+      webwidgetResponse = oleap.getCustomTableRows(webwidgetRequest);
 
+      //
+      // now find the widget with the matching guid
+      List<CustomTableRow> rows = webwidgetResponse.getCustomTableRow();
+      Iterator<CustomTableRow> rowit = rows.iterator();
+      while (rowit.hasNext()) {
+        CustomTableRow row = rowit.next();
+        CustomFieldMap map = row.getCustomFieldMap();
+
+        String val = customFieldMapValue(map,"guid");
+        if (val != null && val.equals(guid)) {
+          //
+          // we found the widget
+          // get the custom table associated with this widget and render it...
+          String tableName = customFieldMapValue(map,"widgettype");
+
+          request.setName(tableName);
+          response = oleap.readCustomTableByName(request);
+          renderCustomTable(response.getCustomTable());
+        }
+
+      }
     } catch (java.io.IOException e) {
       throw new JspTagException("IO Error: " + e.getMessage());
     }

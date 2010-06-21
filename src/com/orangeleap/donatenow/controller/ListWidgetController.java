@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.orangeleap.donatenow.dao.DonateWidgetDao;
-import com.orangeleap.donatenow.domain.DonateWidget;
-import com.orangeleap.donatenow.service.DonateWidgetService;
+import com.orangeleap.donatenow.dao.WidgetDAO;
+import com.orangeleap.donatenow.domain.Widget;
+import com.orangeleap.donatenow.service.WidgetService;
 
 @Controller
 @RequestMapping("/listwidgets.htm")
 public class ListWidgetController {
 
 	   @Autowired
-	    protected DonateWidgetService donateWidgetService = null;
+	    protected WidgetService widgetService = null;
 	   
 	   @RequestMapping(method = RequestMethod.GET)
        public void form(Model model) {
@@ -28,7 +28,7 @@ public class ListWidgetController {
 			
 			String userName = auth.getName();
 			String password = (String) auth.getCredentials();
-		   List<DonateWidget> widgets = donateWidgetService.listWidgets(userName, password);
+		   List<Widget> widgets = widgetService.listWidgets(userName, password);
 		   model.addAttribute("widgets",widgets);
 	   }
 }

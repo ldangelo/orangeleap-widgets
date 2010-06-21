@@ -29,6 +29,9 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="addresses" type="{http://www.orangeleap.com/orangeleap/typesv3}address" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="emails" type="{http://www.orangeleap.com/orangeleap/typesv3}email" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="phones" type="{http://www.orangeleap.com/orangeleap/typesv3}phone" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="primaryAddress" type="{http://www.orangeleap.com/orangeleap/typesv3}address" minOccurs="0"/>
+ *         &lt;element name="primaryEmail" type="{http://www.orangeleap.com/orangeleap/typesv3}email" minOccurs="0"/>
+ *         &lt;element name="primaryPhone" type="{http://www.orangeleap.com/orangeleap/typesv3}phone" minOccurs="0"/>
  *         &lt;element name="organizationName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="constituentAttributes" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="constituentIndividualRoles" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -56,6 +59,9 @@ import javax.xml.bind.annotation.XmlType;
     "addresses",
     "emails",
     "phones",
+    "primaryAddress",
+    "primaryEmail",
+    "primaryPhone",
     "organizationName",
     "constituentAttributes",
     "constituentIndividualRoles",
@@ -83,6 +89,9 @@ public class Constituent
     protected List<Email> emails;
     @XmlElement(nillable = true)
     protected List<Phone> phones;
+    protected Address primaryAddress;
+    protected Email primaryEmail;
+    protected Phone primaryPhone;
     protected String organizationName;
     protected String constituentAttributes;
     protected String constituentIndividualRoles;
@@ -344,6 +353,78 @@ public class Constituent
             phones = new ArrayList<Phone>();
         }
         return this.phones;
+    }
+
+    /**
+     * Gets the value of the primaryAddress property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Address }
+     *     
+     */
+    public Address getPrimaryAddress() {
+        return primaryAddress;
+    }
+
+    /**
+     * Sets the value of the primaryAddress property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Address }
+     *     
+     */
+    public void setPrimaryAddress(Address value) {
+        this.primaryAddress = value;
+    }
+
+    /**
+     * Gets the value of the primaryEmail property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Email }
+     *     
+     */
+    public Email getPrimaryEmail() {
+        return primaryEmail;
+    }
+
+    /**
+     * Sets the value of the primaryEmail property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Email }
+     *     
+     */
+    public void setPrimaryEmail(Email value) {
+        this.primaryEmail = value;
+    }
+
+    /**
+     * Gets the value of the primaryPhone property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Phone }
+     *     
+     */
+    public Phone getPrimaryPhone() {
+        return primaryPhone;
+    }
+
+    /**
+     * Sets the value of the primaryPhone property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Phone }
+     *     
+     */
+    public void setPrimaryPhone(Phone value) {
+        this.primaryPhone = value;
     }
 
     /**

@@ -16,26 +16,26 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.orangeleap.donatenow.domain.DonateWidget;
-import com.orangeleap.donatenow.service.DonateWidgetService;
+import com.orangeleap.donatenow.domain.Widget;
+import com.orangeleap.donatenow.service.WidgetService;
 
 @Controller
 @RequestMapping("/listWidgets.json")
 public class JsonListWidgetController {
 
    @Autowired
-   protected DonateWidgetService donateWidgetService = null;
+   protected WidgetService widgetService = null;
 	   
 	private void addWidgets(List widgets, List<Map<String, Object>> returnList) {
-		Iterator<DonateWidget> it = widgets.iterator();
+		Iterator<Widget> it = widgets.iterator();
 		while (it.hasNext()) {
-			DonateWidget widget = (DonateWidget) it.next();
+			Widget widget = (Widget) it.next();
 			
 			// Add widgetid
 			Map<String, Object> map = new HashMap<String, Object>();
 //			map.put("ID", "widgetid");
 //			map.put("LABEL", "Widget Id");
-			map.put("widgetid", widget.getId());
+			map.put("widgetid", widget.getWidgetId());
 //			map.put("CLASS", "long");
 			returnList.add(map);
 
@@ -44,45 +44,22 @@ public class JsonListWidgetController {
 //			map.put("ID", "guid");
 //			map.put("LABEL", "GUID");
 //			map.put("VALUE", widget.getGuid());
-			map.put("guid", widget.getGuid());
+			map.put("guid", widget.getWidgetGuid());
 //			map.put("MAX_LEN", 255);
 			returnList.add(map);
-			
-			// add projectcode
-//			map = new HashMap<String, Object>();
-//			map.put("ID", "projectcode");
-//			map.put("LABEL", "Project Code");
-			map.put("projectcode", widget.getProjectCode());
-//			map.put("CLASS", "string");
-//			map.put("MAX_LEN", 255);
-			returnList.add(map);			
-			
-			// add motivationcode
-//			map = new HashMap<String, Object>();
-//			map.put("ID", "motivationcode");
-//			map.put("LABEL", "Motivation Code");
-			map.put("motivationcode", widget.getMotivationCode());
-//			map.put("CLASS", "string");
-//			map.put("MAX_LEN", 255);
-			returnList.add(map);						
-			
-			// add giftcount
-//			map = new HashMap<String, Object>();
-//			map.put("ID", "giftcount");
-//			map.put("LABEL", "Gift Count");
-			map.put("giftcount", widget.getGiftCount());
-//			map.put("CLASS", "long");
-			returnList.add(map);									
+
+            map.put("type",widget.getWidgetType());
+            returnList.add(map);
 			
 			// add errocount
 //			map = new HashMap<String, Object>();
 //			map.put("ID", "errorcount");
 //			map.put("LABEL", "Error Count");
-			map.put("errorcount", widget.getErrorCount());
+			map.put("errorcount", widget.getWidgetErrorCount());
 //			map.put("CLASS", "long");
 			returnList.add(map);												
 			
-			map.put("viewcount", widget.getViewCount());
+			map.put("viewcount", widget.getWidgetViewCount());
 			returnList.add(map);
 		}
 	}
@@ -95,7 +72,7 @@ public class JsonListWidgetController {
 		
 		String userName = auth.getName();
 		String password = (String) auth.getCredentials();
-		List widgets = donateWidgetService.listWidgets(userName, password);
+		List widgets = widgetService.listWidgets(userName, password);
 		
 		addWidgets(widgets,returnList);
 		

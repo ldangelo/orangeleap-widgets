@@ -46,7 +46,7 @@
 	</target>
 
 	<target name="xapp.sync" description="Sync files">
-	  <antcall target="xapp.sync"/>
+	  <antcall target="app.sync"/>
 	</target>
 
 

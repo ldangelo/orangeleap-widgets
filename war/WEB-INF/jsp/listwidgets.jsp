@@ -43,9 +43,7 @@ Ext.onReady(function() {
 			},[
 				{name: 'widgetid', mapping: 'widgetid'},
 				{name: 'guid'},
-				{name: 'projectcode'}, 
-				{name: 'motivationcode'},
-				{name: 'giftcount'},
+				{name: 'type'},
 				{name: 'errorcount'},
 				{name: 'viewcount'}
 			]
@@ -67,9 +65,7 @@ Ext.onReady(function() {
 		columns: [
 			{id:'widgetid',width: 80,header:'Widget Id',dataIndex:'widgetid'},
 			{id:'guid',width: 250,header:'Widget GUID',dataIndex:'guid'},		
-			{id:'projectcode',width: 160, header: 'Project Code',dataIndex:'projectcode'},
-			{id:'motivationcode',width: 160,header:'Motivation Code',dataIndex:'motivationcode'},
-			{id:'giftcount',width: 80,header:'Gift Count',dataIndex:'giftcount', renderer: add_thousands_separator },
+			{id:'type',width: 80,header:'Widget Type',dataIndex:'type'},
 			{id:'errorcount',width: 80,header:'Error Count',dataIndex:'errorcount', renderer: add_thousands_separator },			
 			{id:'viewcount',width:80,header:'View Count',dataIndex:'viewcount',renderer: add_thousands_separator }				
 		],

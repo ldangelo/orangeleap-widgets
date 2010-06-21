@@ -171,7 +171,7 @@
 		</delete>
 	</target>
 
-	<target name="xapp.synch">
+	<target name="app.sync">
 		<echo>Synchronizing App</echo>
 
 		<mkdir dir="${stage.dir}/war" />
@@ -201,11 +201,7 @@
 				<include name="**/*.*"/>
 			</fileset>
 		</sync>
-		<sync todir="${deploy.path}/${war.name}/xml">
-			<fileset dir="${war.dir}/xml">
-				<include name="**/*.*"/>
-			</fileset>
-		</sync>
+
 		<sync todir="${deploy.path}/${war.name}/images">
 			<fileset dir="${war.dir}/images">
 				<include name="**/*.*"/>
@@ -233,6 +229,14 @@
 				<include name="**/*.*"/>
 			</fileset>
 		</sync>
+
+		<sync todir="${deploy.path}/${war.name}/js">
+			<fileset dir="${war.dir}/js">
+				<include name="**/*.*"/>
+			</fileset>
+		</sync>
+
+
 	</target>
 
 		<target name="optimize-dev" depends="resolve">
