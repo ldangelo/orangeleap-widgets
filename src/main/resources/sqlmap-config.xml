@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com/DTD SQL Map Config 2.0//EN" "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+  <settings useStatementNamespaces="true" />
+  <sqlMap resource="sqlmap/PLACEMENTS_SqlMap.xml" />
+  <sqlMap resource="sqlmap/DONATION_WIDGET_SqlMap.xml" />
+  <sqlMap resource="sqlmap/CUSTOM_ENTITY_WIDGET_SqlMap.xml" />
+  <sqlMap resource="sqlmap/WIDGET_SqlMap.xml" />
+</sqlMapConfig>

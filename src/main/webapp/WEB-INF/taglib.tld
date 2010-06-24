@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN" "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+<taglib>
+	<tlibversion>1.0</tlibversion>
+	<jspversion>1.1</jspversion>
+	<shortname>olwidget</shortname>
+	<uri>http://www.orangeleap.com/orangeleap-widgets/tags</uri>
+	<info>Orange Leap Widget's Tag Library</info>
+
+<tag>
+	<name>customentity</name>
+	<tagclass>com.orangeleap.donatenow.web.tag.CustomEntityTag</tagclass>
+	<bodycontent>empty</bodycontent>
+	<info>Custom Entity Tag for Orange Leap Widget's</info>
+	<attribute>
+		<name>guid</name>
+		<required>true</required>
+		<rtexprvalue>false</rtexprvalue>
+	</attribute>
+</tag>
+
+<tag>
+	<name>authcustomentity</name>
+	<tagclass>com.orangeleap.donatenow.web.tag.AuthCustomEntityTag</tagclass>
+	<bodycontent>empty</bodycontent>
+	<info>Authorization Required Custom Entity Tag for Orange Leap Widget's</info>
+	<attribute>
+		<name>guid</name>
+		<required>true</required>
+		<rtexprvalue>false</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>constituentId</name>
+		<required>false</required>
+		<rtexprvalue>false</rtexprvalue>
+	</attribute>
+</tag>
+
+</taglib>

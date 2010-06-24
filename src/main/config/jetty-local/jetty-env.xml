@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://jetty.mortbay.org/configure.dtd">
+
+<Configure id="Server" class="org.mortbay.jetty.webapp.WebAppContext">
+
+	<New id="MPowerOpen" class="org.mortbay.jetty.plus.naming.Resource">
+        <Arg></Arg>
+		<Arg>env/jdbc/MPowerOpen</Arg>
+		<Arg>
+			<New class="com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource">
+				<Set name="Url">jdbc:mysql://localhost:3306/</Set>
+				<Set name="User">orangeleap</Set>
+				<Set name="Password">orangeleap</Set>
+		`	</New>
+		</Arg>
+	</New>
+
+</Configure>
