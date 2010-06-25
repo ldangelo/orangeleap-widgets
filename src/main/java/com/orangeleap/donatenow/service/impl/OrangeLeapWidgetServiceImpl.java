@@ -91,7 +91,14 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
       webwidgetRequest.setLimit(1);
       webwidgetRequest.getFilters().add(filter);
 
-      webwidgetResponse = oleap.getCustomTableRows(webwidgetRequest);
+      try {
+        webwidgetResponse = oleap.getCustomTableRows(webwidgetRequest);
+      } catch (Exception e) {
+        logger.error("Errror: " + e.getMessage());
+        return -1L;
+      }
+
+
       
       if (webwidgetResponse != null) {
         CustomTableRow row = webwidgetResponse.getCustomTableRow().get(0);
