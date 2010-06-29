@@ -172,7 +172,9 @@ public class CustomEntityListController {
 
           Map<String,Object> map = new HashMap<String,Object>();
           map.put("name",ctfield.getCustomTableFieldName());
+          map.put("type",ctfield.getCustomTableFieldDatatype());
           map.put("header",ctfield.getCustomTableFieldDesc());
+          map.put("searchable",ctfield.isCustomTableFieldSearchable());
           fields.add(map);
 
       }
