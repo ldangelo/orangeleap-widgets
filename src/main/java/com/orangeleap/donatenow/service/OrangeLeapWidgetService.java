@@ -1,7 +1,8 @@
 package com.orangeleap.donatenow.service;
-
+import com.orangeleap.client.AbstractCustomizableEntity.CustomFieldMap.Entry;
 import com.orangeleap.client.Constituent;
 import com.orangeleap.client.CustomTable;
+import com.orangeleap.client.CustomTableRow;
 import com.orangeleap.client.Gift;
 import com.orangeleap.client.PicklistItem;
 import com.orangeleap.donatenow.domain.WidgetData;
@@ -24,4 +25,6 @@ public interface OrangeLeapWidgetService {
   public void updateViewCount(String guid, String referrer);
 
   public Constituent getConstituent(String guid,Long id);
+
+  public CustomTableRow addCustomTableRow(String guid,Entry[] row);
 }

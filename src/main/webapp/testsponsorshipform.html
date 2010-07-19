@@ -12,19 +12,28 @@
 <script type='text/javascript' src='/donatenow/dwr/engine.js'></script>
 <script type='text/javascript' src='/donatenow/dwr/util.js'></script>
 <script type='text/javascript' src='/donatenow/js/jquery/jquery-1.3.2.js'></script>
-<script type="text/javascript" src="js/extjs/ext-base.js"></script>
+<script type="text/javascript" src="js/extjs/ext-base-debug.js"></script>
 <!--<script type="text/javascript" src="js/extjs/ext-jquery-adapter.js"></script>-->
 <script type="text/javascript" src="js/extjs/ext-all-debug.js"></script>
 <script type='text/javascript' src='/donatenow/js/sponsorshipform.js'></script>
 </head>
 <body class='ext-gecko ext-gecko3 ext-mac'>
-<div id='customentitywidget' class='columns'>
+<div id="win_req_in" class="x-hidden">
+	<div class="x-window-header">Dialog</div>	
+</div>
+<div id="loading-mask"></div>
+<div id="loading">
+<div class="loading-indicator">
+Loading...
+</div>
+</div><div id='customentitywidget' class='columns'>
 <ul id='customentitywidget' class='formFields width385'></ul>
 </div>
 <script type='text/javascript'>
 Ext.onReady(function() {
 sponsorshipform.generateWidget("customentitywidget","TEST4",false,"/donatenow/testlogin.html");
 });
+
 </script>
 </body>
 </html>

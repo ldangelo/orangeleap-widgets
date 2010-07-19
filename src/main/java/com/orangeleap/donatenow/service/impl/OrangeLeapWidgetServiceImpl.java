@@ -31,6 +31,7 @@ import com.orangeleap.donatenow.service.OrangeLeapWidgetService;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import com.orangeleap.client.AbstractCustomizableEntity.CustomFieldMap.Entry;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,7 +87,7 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
       filter.setName("username");
       filter.setValue(username);
       
-      webwidgetRequest.setTablename("widgetauthentication");
+      webwidgetRequest.setTablename("widget_authentication");
       webwidgetRequest.setOffset(0);
       webwidgetRequest.setLimit(1);
       webwidgetRequest.getFilters().add(filter);
@@ -101,10 +102,12 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
 
       
       if (webwidgetResponse != null) {
-        CustomTableRow row = webwidgetResponse.getCustomTableRow().get(0);
-        String val = customFieldMapValue(row.getCustomFieldMap(),"password");
+        if (webwidgetResponse.getCustomTableRow().size() > 0) {
+          CustomTableRow row = webwidgetResponse.getCustomTableRow().get(0);
+          String val = customFieldMapValue(row.getCustomFieldMap(),"password");
         if (val.equals(password)) {
-          return Long.parseLong(customFieldMapValue(row.getCustomFieldMap(),"constituent"));
+          return Long.parseLong(customFieldMapValue(row.getCustomFieldMap(),"constituentid"));
+        }
         }
       }
 
@@ -293,6 +296,20 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
     widgetDAO.updateWidgetByPrimaryKey(widget);
   }
 
+  public void updateErrorCount(String guid, String refererrer)
+  {
+    WidgetExample example = new WidgetExample();
+    example.createCriteria().andWidgetGuidEqualTo(guid);
+    List<Widget> widgets = widgetDAO.selectWidgetByExample(example);
+    
+    //
+    // guid is a unique key so this will only return one widget
+    Widget widget = widgets.get(0);
+
+    widget.setWidgetErrorCount(widget.getWidgetErrorCount() + 1);
+    widgetDAO.updateWidgetByPrimaryKey(widget);
+  }
+
   public Widget saveOrUpdate(Widget widget) {
 	if (widget.getWidgetCreateDate() == null)
 	    widget.setWidgetCreateDate(new Date());
@@ -314,5 +331,11 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
 		widgetDAO.insertWidget(widget);
 	
     return widget;
+  }
+
+  public CustomTableRow addCustomTableRow(String guid,Entry[] row)
+  {
+    logger.error(row.toString());
+    return null;
   }
 }

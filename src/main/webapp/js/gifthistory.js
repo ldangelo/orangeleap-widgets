@@ -71,7 +71,7 @@ var gifthistory = {
     },
 
     generateWidget: function(widgetname,widgetid,authenticate, redirecturl) {
-	var constituentId = getCookie("constituentId");
+	var constituentId = this.getCookie("constituentId");
 
 	if (authenticate == true) 
 	    if (constituentId == "") window.location=redirecturl;

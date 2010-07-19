@@ -52,42 +52,31 @@
 	
   <context:component-scan base-package="com.orangeleap.donatenow"/>
 
+
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
+    <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
+
+    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
+
+    <bean name="viewNameTranslator"     class="com.orangeleap.json.JsonRequestToViewNameTranslator"
+                p:view="jsonView"/>
+
+    <bean name="jsonView" class="com.orangeleap.json.views.JsonMVCView" p:encodeNullBeanProperties="false"/>
 <bean id="paramResolver" class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
 		<property name="paramName" value="action"/>
 </bean>
-
-
 
   <bean id="customEntityController" class="com.orangeleap.donatenow.controller.CustomEntityController">
     <property name="methodNameResolver" ref="paramResolver"/>
 </bean>
 
 
-  <bean
-      class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
-
-
-<!--	<bean id="handlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping" >
-		<property name="mappings">
-			<props>
-				<prop key="*.ajax">customEntityController</prop>
-			</props>
-		</property>
-	</bean>-->
-
-  <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" /> 
-    <property name="prefix" value="/WEB-INF/jsp/" />
-    <property name="suffix" value=".jsp" />
+  <bean id="handlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping" >
+    <property name="mappings">
+      <props>
+	<prop key="*.ajax">customEntityController</prop>
+      </props>
+    </property>
   </bean>
-
-
-
-<bean id="messageSource"
-	class="org.springframework.context.support.ResourceBundleMessageSource">
-	<property name="basenames">
-		<value>donatenow-messages</value>
-	</property>
-</bean>
 
 </beans>

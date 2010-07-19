@@ -26,6 +26,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="customTableFieldDatatype" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="customTableFieldDefaultValue" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="customTableFieldDesc" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="customTableFieldExpression" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="customTableFieldFkCustomTableName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="customTableFieldFkEntityType" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="customTableFieldKey" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
@@ -39,6 +40,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="customTableFieldRegex" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="customTableFieldRequired" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="customTableFieldSearchable" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="customTableFieldWWViewable" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="customTableFieldSortDir" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="customTableFieldSortPriority" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
  *         &lt;element name="customTableFieldTabOrder" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
@@ -63,6 +65,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "customTableFieldDatatype",
     "customTableFieldDefaultValue",
     "customTableFieldDesc",
+    "customTableFieldExpression",
     "customTableFieldFkCustomTableName",
     "customTableFieldFkEntityType",
     "customTableFieldKey",
@@ -76,6 +79,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "customTableFieldRegex",
     "customTableFieldRequired",
     "customTableFieldSearchable",
+    "customTableFieldWWViewable",
     "customTableFieldSortDir",
     "customTableFieldSortPriority",
     "customTableFieldTabOrder",
@@ -94,6 +98,7 @@ public class CustomTableField {
     protected String customTableFieldDatatype;
     protected String customTableFieldDefaultValue;
     protected String customTableFieldDesc;
+    protected String customTableFieldExpression;
     protected String customTableFieldFkCustomTableName;
     protected String customTableFieldFkEntityType;
     protected boolean customTableFieldKey;
@@ -107,6 +112,7 @@ public class CustomTableField {
     protected String customTableFieldRegex;
     protected boolean customTableFieldRequired;
     protected boolean customTableFieldSearchable;
+    protected boolean customTableFieldWWViewable;
     protected String customTableFieldSortDir;
     protected Long customTableFieldSortPriority;
     protected Long customTableFieldTabOrder;
@@ -229,6 +235,30 @@ public class CustomTableField {
      */
     public void setCustomTableFieldDesc(String value) {
         this.customTableFieldDesc = value;
+    }
+
+    /**
+     * Gets the value of the customTableFieldExpression property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCustomTableFieldExpression() {
+        return customTableFieldExpression;
+    }
+
+    /**
+     * Sets the value of the customTableFieldExpression property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCustomTableFieldExpression(String value) {
+        this.customTableFieldExpression = value;
     }
 
     /**
@@ -509,6 +539,22 @@ public class CustomTableField {
      */
     public void setCustomTableFieldSearchable(boolean value) {
         this.customTableFieldSearchable = value;
+    }
+
+    /**
+     * Gets the value of the customTableFieldWWViewable property.
+     * 
+     */
+    public boolean isCustomTableFieldWWViewable() {
+        return customTableFieldWWViewable;
+    }
+
+    /**
+     * Sets the value of the customTableFieldWWViewable property.
+     * 
+     */
+    public void setCustomTableFieldWWViewable(boolean value) {
+        this.customTableFieldWWViewable = value;
     }
 
     /**

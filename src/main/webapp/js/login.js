@@ -1,7 +1,8 @@
 var $j = jQuery.noConflict();
 
 var authentication = {
-
+    failureurl: null,
+    loginform:null,
     include: function(filename)
     {
 	var head = document.getElementsByTagName('head')[0];
@@ -44,12 +45,18 @@ var authentication = {
 	}
     },
 
-    handleReturn: function(constituentid,widetid,redirecturl) {
+    handleReturn: function(constituentid,widgetid,successurl,failureurl) {
 	if (constituentid == -1) {
-	    this.handlerError("Authentication Failed!");
+	    this.handleError(widgetid,"Authentication Failed!");
 	} else {
-	    this.setCookie("constituentId",constituentid);
-	    document.location = redirecturl;
+	    if (Ext.get("remember").dom.value == "on")
+		this.setCookie("constituentId",constituentid,5);
+	    else
+		this.setCookie("constituentId",constituentid);
+
+	    OrangeLeapWidget.updateViewCount(widgetid,document.referrer);
+	    if (successurl != null)
+		document.location = successurl;
 	}
     },
 
@@ -70,34 +77,56 @@ var authentication = {
 	return "";
     },
 
-    generateWidget: function(widgetid, redirecturl) {
+    generateWidget: function(widgetid, successurl, failureurl) {
 	constituentid = this.getCookie("constituentId");
 
-	if (constituentid != "") window.location.redirecturl;
+	if (constituentid != "") window.location.successurl;
 
-        var loginform = new Ext.form.FormPanel({
+	this.failureurl = failureurl;
+
+	Ext.QuickTips.init();
+	Ext.form.Field.prototype.msgTarget = 'under';
+
+        this.loginform = new Ext.form.FormPanel({
 	    id:'loginform',
 	    frame:true,
 	    title: 'Authenticate',
 	    width:350,
 	    defaults: {width: 230},
 	    defaultType: 'textfield',
+	    monitorValid:true,
 	    items: [{
 		fieldLabel: 'User Name',
 		name: 'username',
-		allowBlank:false
+		allowBlank:false,
+		minLength: 6,
+		maxLength: 12,
+		blankText: 'Enter your User Name Please.',
+		minLengthText: 'User Name must be at least 6 characters'
 	    },{
+		inputType:'password',
 		fieldLabel: 'Password',
 		name:'password',
-		allowBlank:false
-	    }],
+		allowBlank:false,
+		minLength: 6,
+		maxLength: 12,
+		blankText: 'Enter your Password Please.',
+		minLengthText: 'Password must be at least 6 characters'
+		
+	    },
+		    {id: 'remember',
+		     xtype:'checkbox',
+		     boxLabel: 'Rember Me'
+		    }],
 	    buttons: [{
 		text: 'Login',
+		formBind:true,
 		handler: function(b,e) {
+		    
 		    //
 		    // call authenticate through DWR
 		    var callbackproxy = function(dataFromServer) {
-			authentication.handleReturn(dataFromServer,widgetid,redirecturl);
+			authentication.handleReturn(dataFromServer,widgetid,successurl,failureurl);
 		    }
 		    
 		    var callMetaData = {callback:callbackproxy};
@@ -108,7 +137,12 @@ var authentication = {
 	    
         });
 
-	loginform.render("widget");
+
+	var element = Ext.query('script[src$=required-field.js]')[0];
+	var renderElement = element.parentNode;
+	this.loginform.render("widget");
+
+//	loginform.render(renderElement);
     },
 
     showError: function() {
@@ -123,8 +157,23 @@ var authentication = {
 	$j("ul#errors").empty();
     },
 
-    handleError: function(str) {
-	$j("<li>" + str + "</li>").appendTo('ul#errors');
+    errorHandlerFinished: function() {
+	    if (authentication.failureurl != null)
+		document.location = authentication.failureurl;
+    },
+    handleError: function(widgetid, str) {
+	// update widget's error count
+	OrangeLeapWidget.updateErrorCount(widgetid,document.referrer);
+
+	// display the error
+	Ext.Msg.show({
+	    title: 'ERROR',
+	    msg: str,
+	    icon: Ext.MessageBox.ERROR,
+	    buttons: Ext.Msg.OK,
+	    modal: true,
+	    fn: this.errorHandlerFinished
+	});
     },
 
     validateForm: function() {

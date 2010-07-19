@@ -36,9 +36,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@Controller
-@RequestMapping("/customEntityList.json")
-public class CustomEntityListController {
+//@Controller
+//@RequestMapping("/customEntity.json")
+public class CustomEntityController {
     @Autowired
     WidgetDAO widgetDAO = null;
 
@@ -82,19 +82,11 @@ public class CustomEntityListController {
 
       response = oleap.readCustomTableByName(request);
 
-      //
-      // now get the rows....
-      GetCustomTableRowsRequest rowRequest = new GetCustomTableRowsRequest();
-      GetCustomTableRowsResponse rowResponse = null;
-      
-      rowRequest.setTablename(ceWidget.getCustomEntityName());
-      rowResponse = oleap.getCustomTableRows(rowRequest);
 
-        if (rowResponse != null) {
-          populateMetaData(response.getCustomTable(),modelMap);
+      populateMetaData(response.getCustomTable(),modelMap);
 
-          addCustomTableRows(wsusername,wspassword,response.getCustomTable(),rowResponse.getCustomTableRow(),returnList);
-        }
+
+
     }
 
       modelMap.put("rows", returnList);
@@ -102,10 +94,7 @@ public class CustomEntityListController {
     }
 
   @RequestMapping(method = RequestMethod.POST)
-  public void postCustomEntityList(@RequestParam(required=true) String guid, 
-      @RequestParam(required=true) Long start,
-      @RequestParam(required=true) Long limit,
-      @RequestParam(required=true) String pattern,ModelMap modelMap) {
+  public void postCustomEntityt(@RequestParam(required=true) String guid,ModelMap modelMap) {
       List <Map<String,Object>> returnList = new ArrayList<Map<String,Object>>();
 
     WidgetExample example = new WidgetExample();
@@ -137,22 +126,9 @@ public class CustomEntityListController {
 
       response = oleap.readCustomTableByName(request);
 
-      //
-      // now get the rows....
-      GetCustomTableRowsRequest rowRequest = new GetCustomTableRowsRequest();
-      GetCustomTableRowsResponse rowResponse = null;
-      
-      rowRequest.setTablename(ceWidget.getCustomEntityName());
-      rowRequest.setOffset(start);
-      rowRequest.setLimit(limit);
-      rowResponse = oleap.getCustomTableRows(rowRequest);
+      populateMetaData(response.getCustomTable(),modelMap);
 
-        if (rowResponse != null) {
-          populateMetaData(response.getCustomTable(),modelMap);
-
-          addCustomTableRows(wsusername,wspassword,response.getCustomTable(),rowResponse.getCustomTableRow(),returnList);
-        }
-    }
+  }
     
     modelMap.put("rows", returnList);
     modelMap.put("totalRows", returnList.size());
@@ -172,6 +148,7 @@ public class CustomEntityListController {
       map.put("header","Id");
       map.put("searchable",false);
       map.put("hidden",true);
+      map.put("required",false);
       fields.add(map);
 
       while (ctit.hasNext()) {
@@ -181,8 +158,7 @@ public class CustomEntityListController {
         //
         // don't list section definitions or items with a '.' in their name...
         // only list item's that are marked as 'Include in web widgets'
-        if (ctfield.getCustomTableFieldDatatype().compareTo("section") == 0 
-            || ctfield.getCustomTableFieldName().contains(".")
+        if (ctfield.getCustomTableFieldName().contains(".")
             || ctfield.isCustomTableFieldWWViewable() == false) {
             continue;
           }
@@ -193,6 +169,7 @@ public class CustomEntityListController {
           map.put("header",ctfield.getCustomTableFieldDesc());
           map.put("searchable",ctfield.isCustomTableFieldSearchable());
           map.put("hidden",false);
+          map.put("required",ctfield.isCustomTableFieldRequired());
           fields.add(map);
 
       }
@@ -215,56 +192,6 @@ public class CustomEntityListController {
       //      metaData.put("start",0);
       //      metaData.put("limit",20);
       modelMap.put("metaData",metaData);
-  }
-
-  private void addCustomTableRows(String username, String password,CustomTable table,List<CustomTableRow> rows, List<Map<String,Object>> returnList) {
-    Iterator<CustomTableRow> it = rows.iterator();
-
-    int id = 0;
-    while (it.hasNext()) {
-      CustomTableRow row = it.next();
-      Map<String, Object> map = new HashMap<String, Object>();
-      List<Entry> fields = row.getCustomFieldMap().getEntry();
-      Iterator<Entry> fldIt = fields.iterator();
-      map.put("id",row.getId());
-      while (fldIt.hasNext()) {
-        Entry entry = fldIt.next();
-        
-
-        CustomTableField ctfield = (CustomTableField)  fieldMap.get(entry.getKey());
-
-        //
-        // don't add fields that can't be viewed by web widget's
-        if (ctfield.isCustomTableFieldWWViewable() == false)   continue;
-
-        if (ctfield != null && ctfield.getCustomTableFieldDatatype().equals("picklist")) {
-
-          //
-          // don't use the value us the displayvalue for the picklist
-          List<PicklistItem> picklistitems = picklistService.getPickListItems(username,password,ctfield.getCustomTableFieldPicklistNameId());
-          Iterator<PicklistItem> picklistit = picklistitems.iterator();
-          while (picklistit.hasNext()) {
-            PicklistItem item = picklistit.next();
-            if (item.getItemName().equals(entry.getValue().getValue())) {
-              if (item.getLongDescription() == null || item.getLongDescription().equals(""))
-                  map.put(entry.getKey(),item.getDefaultDisplayValue());
-              else
-                map.put(entry.getKey(),item.getLongDescription());
-
-              break;
-            }
-          }
-
-        } else {
-          map.put(entry.getKey(),entry.getValue().getValue());          
-        }
-
-
-
-      }
-      returnList.add(map);
-    }
-
   }
 
    

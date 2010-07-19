@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx" 
 	xmlns:context="http://www.springframework.org/schema/context"
@@ -12,6 +13,28 @@
            http://www.springframework.org/schema/context           http://www.springframework.org/schema/context/spring-context-2.5.xsd">
   <context:annotation-config />
 	<context:component-scan base-package="com.orangeleap.donatenow" />
+
+    <!-- Load EHCache bean here, since it is needed by messageSource -->
+    <bean id="cacheManager"
+          class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
+          p:configLocation="classpath:ehcache.xml"/>
+
+    <bean id="picklistCache"
+          class="org.springframework.cache.ehcache.EhCacheFactoryBean"
+          p:cacheManager-ref="cacheManager"
+          p:cacheName="picklistCache"
+          />
+
+    <bean id="customTableCache"
+          class="org.springframework.cache.ehcache.EhCacheFactoryBean"
+          p:cacheManager-ref="cacheManager"
+          p:cacheName="customTableCache"
+          />
+    <bean id="constituentCache"
+          class="org.springframework.cache.ehcache.EhCacheFactoryBean"
+          p:cacheManager-ref="cacheManager"
+          p:cacheName="customTableCache"
+          />
 
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
@@ -28,11 +51,13 @@
       <dwr:include method="create" />
       <dwr:include method="authenticate" />
       <dwr:include method="updateViewCount"/>
+      <dwr:include method="updateErrorCount"/>
       <dwr:include method="process"/>
       <dwr:include method="getCustomEntity"/>
       <dwr:include method="getConstituent"/>
       <dwr:include method="getPickListItems"/>
       <dwr:include method="getConstituentGifts"/>
+      <dwr:include method="addCustomTableRow"/>
       <dwr:convert type="bean"  class="com.orangeleap.donatenow.domain.WidgetData" />
       <dwr:convert type="bean"  class="com.orangeleap.client.*"/>
       <dwr:convert type="bean"  class="com.orangeleap.client.CustomTable"/>

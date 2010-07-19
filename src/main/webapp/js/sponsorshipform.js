@@ -1,8 +1,14 @@
 var $j = jQuery.noConflict();
+
+Ext.ns("sponshorshipform");
+
 var fldidx = 0;
 var mydatastore = null;
 var form = null;
+var searchform = null;
 var wname = null;
+var win = null;
+var swin = null;
 
 var sponsorshipform =  {
 
@@ -79,11 +85,164 @@ var sponsorshipform =  {
 	var records = mydatastore.data.items;
 	for (var m=0; m < metaData.length; m++) {
 	    var value = records[fldidx].get(metaData[m].name);
-	    form.get(metaData[m].name).setValue(value);
+	    form.findById(metaData[m].name).setValue(value);
 	}
 
     },
+    onSearch:function() {
+    },
+    onRecurringGift: function() {
+    },
     onSponsor: function() {
+	var sponsorform = new Ext.FormPanel({
+	    id: 'sponsor',
+	    border:false,
+	    frame:true,
+	    labelWidth:150,
+	    width:500,
+	    autoHeight:true,
+	    items:[
+		{
+		    xtype:'fieldset',
+		    title:'Contact Information',
+		    collapsible: true,
+		    autoHeight: true,
+		    defaultType:'textfield',
+		    items: [
+			{
+			    xtype:'textfield',
+			    fieldLabel:'First Name',
+			    name:'firstName',
+			    allowBlank:false
+			},
+			{
+			    xtype:'textfield',
+			    fieldLabel:'Last Name',
+			    name:'lastName',
+			    allowBlank:false
+			},
+			{
+			    xtype:'textfield',
+			    fieldLabel:'Email Address',
+			    name:'emailAddress',
+			    allowBlank:false
+			}]},
+		{
+		    xtype:'fieldset',
+		    title:'Registration Information',
+		    collapsible:true,
+		    autoHeight:true,
+		    defaultType:'textfield',
+		    items: [
+			{
+			    xtype:'textfield',
+			    fieldLabel:'User Name',
+			    name:'userName',
+			    allowBlank:false
+			},
+			{
+			    xtype:'textfield',
+			    fieldLabel:'Password',
+			    name:'password',
+			    inputType:'password',
+			    allowBlank:false
+			},
+			{
+			    xtype:'textfield',
+			    fieldLabel:'Verify Password',
+			    name:'verifypassword',
+			    inputType:'password',
+			    allowBlank:false
+			}
+		    ]},
+		{
+		    xtype:'fieldset',
+		    title:'Billing Address',
+		    collapsible:true,
+		    autoHeight:true,
+		    defaultType:'textfield',
+		    items: [
+			{
+			    xtype:'textfield',
+			    fieldLabel:'Address Line 1',
+			    name:'addressLine1',
+			    allowBlank:false
+			},
+			{
+			    xtype:'textfield',
+			    fieldLabel:'Address Line 2',
+			    name:'addressLine2'
+			},
+			{
+			    xtype:'textfield',
+			    fieldLabel:'City',
+			    name:'city',
+			    allowBlank:false
+			},
+			{
+			    xtype:'textfield',
+			    fieldLabel:'State',
+			    name:'state',
+			    allowBlank:false
+			},
+			{
+			    xtype:'textfield',
+			    fieldLabel:'Postal Code',
+			    name:'postalcode',
+			    allowBlank:false
+			}]},
+		{xtype:'fieldset',
+		 title:'Payment Information',
+		 collapsible:true,
+		 autoHeight:true,
+		 defaultType:'textfield',
+		 items: [
+		     {
+			 xtype:'textfield',
+			 fieldLabel:'Credit Card Type',
+			 name:'cctype',
+			 allowBlank:false
+		     },
+		     {
+			 xtype:'textfield',
+			 fieldLabel:'Credit Card Number',
+			 name:'ccnumber',
+			 allowBlank:false
+		     },
+		     {
+			 xtype:'textfield',
+			 fieldLabel:'Expiration Month',
+			 name:'expMonth',
+			 allowBlank:false
+		     },
+		     {
+			 xtype:'textfield',
+			 fieldLabel:'Expiration Month',
+			 name:'expYear',
+			 allowBlank:false
+		     }]}
+],
+	    buttons: [
+		{text: 'Sponsor',
+		 handler:sponsorshipform.onRecurringGift,
+		 align:'center'
+		}
+	    ]
+	});
+	swin = new Ext.Window({
+//	    el:'win-req-in',
+	    id: 'sponsorshipform-win',
+	    title:'Sponsor',
+ 	    modal:true,
+    	    layout:'fit',
+	    width:400,
+	    autoHeight:true,
+	    closable:true,
+	    border:false,
+	    plain:true,
+	    items:[sponsorform]
+	});
+	swin.show();
     },
     onNext: function() {
 	fldidx = fldidx + 1;
@@ -91,7 +250,7 @@ var sponsorshipform =  {
 	var records = mydatastore.data.items;
 	for (var m=0; m < metaData.length; m++) {
 	    var value = records[fldidx].get(metaData[m].name);
-	    form.get(metaData[m].name).setValue(value);
+	    form.findById(metaData[m].name).setValue(value);
 	}
 
 //	form.load();
@@ -113,12 +272,13 @@ var sponsorshipform =  {
 	    listeners: {
 		'metachange': function (store, meta) {
 		    var fields = meta.fields;
+		    var col1 = new Ext.Panel({columnWidth: '.50',layout:'form',defaults:{anchor:'100%'},bodyStyle:'padding:0 18px 0 0',items:[]});
+		    var col2 = new Ext.Panel({columnWidth: '.50',layout:'form',defaults:{anchor:'100%'},bodyStyle:'padding:0 18px 0 0',items:[]})
+		    var panel = new Ext.Panel({ columnWidth:0.5,layout:'column', bodyStyle:'padding:0 18px 0 0',items:[col1,col2]});
 		    
-		    var searchable = [];
-
 		    for (var f=0;f < fields.length; f++) {
-			if (fields[f].type == 'text' || fields[f].type == 'date' || fields[f].type == 'picklist') {
-			var field = new Ext.form.TextField();
+			if (fields[f].hidden == true) {
+			    var field = new Ext.form.Hidden();
 			    field.id = fields[f].name;
 			    field.name = fields[f].name;
 			    field.fieldLabel = fields[f].header;
@@ -126,35 +286,173 @@ var sponsorshipform =  {
 			    field.mode = 'local';
 			    field.readOnly = true;
 			    field.border = false;
-			} else if (fields[f].type == 'comments') {
-			    var field = new Ext.form.TextArea();
-			    field.id = fields[f].name;
-			    field.name = fields[f].name;
-			    field.fieldLabel = fields[f].header;
-			    field.store = mydatastore;
-			    field.mode = 'local';
-			    field.readOnly = true;			    
-			    field.border = false;
-			    field.width = 350;
-			    field.height = 150;
-			}
-			form.items.add(field);
+
+			    if (f > fields.length/2)
+				col2.add(field);
+			    else
+				col1.add(field);
+
+            } else if (fields[f].type == 'text' || fields[f].type == 'date' || fields[f].type == 'integer') {
+		var field = new Ext.form.TextField();
+		field.id = fields[f].name;
+		field.name = fields[f].name;
+		field.fieldLabel = fields[f].header;
+		field.store = mydatastore;
+		field.mode = 'local';
+		field.readOnly = true;
+		field.border = false;
+			    if (f > fields.length/2)
+				col2.add(field);
+			    else
+				col1.add(field);
+
+	    } else if (fields[f].type == 'comments') {
+		var field = new Ext.form.TextArea();
+		field.id = fields[f].name;
+		field.name = fields[f].name;
+		field.fieldLabel = fields[f].header;
+		field.store = mydatastore;
+		field.mode = 'local';
+		field.readOnly = true;			    
+		field.border = false;
+		field.width = 350;
+		field.height = 150;
+			    if (f > fields.length/2)
+				col2.add(field);
+			    else
+				col1.add(field);
+
+	    } else if (fields[f].type == 'picklist') {
+		var field = new Ext.form.TextField();
+		field.id = fields[f].name;
+		field.name = fields[f].name;
+		field.fieldLabel = fields[f].header;
+		field.store = mydatastore;
+		field.mode = 'local';
+		field.readOnly = true;
+		field.border = false;
+			    if (f > fields.length/2)
+				col2.add(field);
+			    else
+				col1.add(field);
+
+	    } else if (fields[f].type == 'multi-picklist') {
+		var field = new Ext.form.TextField();
+		field.id = fields[f].name;
+		field.name = fields[f].name;
+		field.fieldLabel = fields[f].header;
+		field.store = mydatastore;
+		field.mode = 'local';
+		field.readOnly = true;
+		field.border = false;
+			    if (f > fields.length/2)
+				col2.add(field);
+			    else
+				col1.add(field);
+
+	    }
 		    }
+			form.add(panel);
 		},
 		'load': function(store,records,options) {
 		    var metaData = store.reader.meta.fields;
+		    var value = null;
 		    for (var m=0; m < metaData.length; m++) {
-			var value = records[fldidx].get(metaData[m].name);
-			form.get(metaData[m].name).setValue(value);
+
+			    value = records[fldidx].get(metaData[m].name);
+
+			form.findById(metaData[m].name).setValue(value);
 		    }
 
-		    form.render(widgetname);		    
+		    win.render(widgetname);		    
+//		    win.show();
+		    Ext.get('loading').remove();
+		    Ext.get('loading-mask').fadeOut({remove:true});
 		}}});
-	
+
+	var countryComboConfig = {
+	    xtype:'combo',
+	    id:'countrycombo',
+	    valueField:'Name',
+	    triggerAction:'all',
+	    hiddenName:'Name',
+	    displayField:'Description',
+	    forceSelection:true,
+	    allowBlank:false,
+	    emptyText: 'Select location...',
+	    store:new Ext.data.JsonStore({
+		id:'Name',
+		root:'rows',
+		totalProperty:'totalRows',
+		fields: [
+		    {name:'Name',type:'string'},
+		    {name:'Description',type:'string'}
+		],
+		url:'picklistItems.json',
+		baseParams: {
+		    guid: guid,
+		    picklistname: 'country'
+		}
+	    }),
+	    fieldLabel:'Country'
+	};
+
+	var genderStore = new Ext.data.ArrayStore({
+	    fields: ['gender'],
+	    data :[['Boy'],['Girl'],['Unspecified']]
+	    
+	});
+	var genderCombo = new Ext.form.ComboBox({
+	    store: genderStore,
+	    displayField: 'gender',
+	    typeAhead:true,
+	    mode:'local',
+	    forceSelection:true,
+	    triggerAction:'all',
+	    emptyText: 'Select Gender...',
+	    selectOnFocus:true
+	});
+
+	var ageStore = new Ext.data.ArrayStore({
+	    fields: ['age'],
+	    data :[['<1'],['1'],['2'],['3'],['4'],['5'],['6'],['7'],['8'],['9'],['10'],['11'],['12'],['13'],['14']]
+	    
+	});
+	var ageCombo = new Ext.form.ComboBox({
+	    store: ageStore,
+	    displayField: 'age',
+	    typeAhead:true,
+	    mode:'local',
+	    forceSelection:true,
+	    triggerAction:'all',
+	    emptyText: 'Select age...',
+	    selectOnFocus:true
+	});
+
+	searchform = new Ext.FormPanel({
+	    id: 'searchform',
+//	    region: 'botton',
+	    border:false,
+	    layout: 'column',
+	    frame:true,
+	    labelWidth:100,
+	    monitorValid:true,
+	    width:600,
+	    items:[
+		countryComboConfig,genderCombo,ageCombo
+	    ],
+	    buttons: [{
+		text: 'Search',
+		handler: sponsorshipform.onSearch,
+		align:'center'
+	    }]
+	});
 	form = new Ext.FormPanel({
+	    id: 'form',
+//	    region: 'top',
 	    border: false,
 	    frame: true,
-	    labelWidth: 200,
+	    labelWidth: 100,
 	    monitorValid:true,
 	    width: 600,
 	    items: [],
@@ -172,6 +470,17 @@ var sponsorshipform =  {
 		align: 'center'
 	    }
 	    ]
+	});
+
+	win = new Ext.Panel({
+	    id: 'sponsorshipform-panel',
+//	    title:'Sponsor',
+//	    layout:'border',
+//	    width:650,
+//	    height:500,
+	    closable:false,
+	    border:false,
+	    items:[form,searchform]
 	});
 
 

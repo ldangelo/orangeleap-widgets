@@ -17,11 +17,21 @@
 <script type='text/javascript' src='/donatenow/js/customentitylist.js'></script>
 </head>
 <body class='ext-gecko ext-gecko3 ext-mac'>
+<div id="loading-mask"></div>
+<div id="loading">
+<div class="loading-indicator">
+Loading...
+</div>
+</div>
 <div id='customentitywidget' class='columns'>
 <ul id='customentitywidget' class='formFields width385'></ul>
 </div>
 <script type='text/javascript'>
 Ext.onReady(function() {
+setTimeout(function(){
+Ext.get('loading').remove();
+Ext.get('loading-mask').fadeOut({remove:true});
+}, 250);
 customentitylist.generateWidget("customentitywidget","TEST4",false,"/donatenow/testlogin.html");
 });
 </script>

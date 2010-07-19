@@ -16,8 +16,7 @@
 
     <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
 
-    <bean name="viewNameTranslator"
-                class="com.orangeleap.json.JsonRequestToViewNameTranslator"
+    <bean name="viewNameTranslator"     class="com.orangeleap.json.JsonRequestToViewNameTranslator"
                 p:view="jsonView"/>
 
     <bean name="jsonView" class="com.orangeleap.json.views.JsonMVCView" p:encodeNullBeanProperties="false"/>

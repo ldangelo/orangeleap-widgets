@@ -3,11 +3,11 @@
 <head>
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
 <title>Donor Portal</title>
-<link rel='stylesheet' href='css/master.css' />
+<link rel='stylesheet' href='css/main.css' />
 <link rel='stylesheet' href='css/pages.css' />
 <link rel='stylesheet' href='css/navigation.css' />
 <link rel="stylesheet" href='js/extjs/resources/css/ext-all.css'/>
-
+<link rel="stylesheet" href='css/widgets.css'/>
 <script type='text/javascript' src='/donatenow/dwr/interface/OrangeLeapWidget.js'></script>
 <script type='text/javascript' src='/donatenow/dwr/engine.js'></script>
 <script type='text/javascript' src='/donatenow/dwr/util.js'></script>
@@ -16,14 +16,45 @@
 <script type="text/javascript" src="js/extjs/ext-base-debug.js"></script>
 <!--<script type="text/javascript" src="js/extjs/ext-jquery-adapter.js"></script>-->
 <script type="text/javascript" src="js/extjs/ext-all-debug.js"></script>
+<script type='text/javascript' src='/donatenow/js/required-field.js'></script>
 <script type='text/javascript' src='/donatenow/js/customentity.js'></script>
 <script type='text/javascript' src='/donatenow/js/gifthistory.js'></script>
 </head>
 <body class='ext-gecko ext-gecko3 ext-mac'>
+<div id="loading-mask"></div>
+<div id="loading">
+<div class="loading-indicator">
+Loading...
+</div>
+</div>
 <div id='donorprofilewidget'>
 <ul id='donorprofilewidget' class='formFields width385'></ul>
 </div>
-<script type='text/javascript'>generateCustomEntityWidget("donorprofilewidget","TEST2",true,"/donatenow/testlogin.html");</script>
+<script type='text/javascript'>
+  Ext.onReady(function() {
+  var customentity = new OrangeLeap.CustomEntity({
+  widgetid:'donorprofilewidget',
+  labelAlign: 'left',
+  layout:'form',
+  monitorPoll:200,
+  monitorValid:true,
+  minButtonWidth:75,
+  guid:'TEST2',
+  authenticate:true,
+  loginurl:'/donatnow/testlogin.html',
+  buttonLabel:'Update',
+    id: 'form',
+    border:false,
+    frame:true,
+    labelAlign:'left',
+    labelWidth:200,
+    monitorValid:true,
+    width:600,
+  items:[],
+  buttons:[]
+  });
+  });
+</script>
 
 <div id='giftwidget' class='columns'>
 </div>
