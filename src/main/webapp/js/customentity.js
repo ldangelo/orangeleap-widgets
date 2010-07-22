@@ -139,6 +139,9 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 		'metachange':function(store,meta) {
 		    var fields = meta.fields;
 		    var fieldset = null;
+		    var fieldsectioncount = 0;
+		    var fieldsectionindex = 0;
+
 		    for (var f=0;f < fields.length; f++) {
 			if (fields[f].hidden == true) {
 			    
@@ -151,9 +154,6 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 			    field.border = false;
 			    if (fieldset == null) 
 				this.form.superclass().add.call(this.form,field);
-			    else
-				fieldset.add(field);
-			    
 			} else if (fields[f].type == 'text' || fields[f].type == 'date' || fields[f].type == 'integer' || fields[f].type == 'number') {
 			    var field = new Ext.form.TextField();
 			    field.id = fields[f].name;
@@ -169,8 +169,13 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 			    }
 			    if (fieldset == null)
 				this.form.superclass().add.call(this.form,field);
-			    else
-				fieldset.add(field);
+			    else {
+				if (fieldsectionindex >= fieldsectioncount/2)
+				    col2.add(field);
+				else
+				    col1.add(field);
+				fieldsectionindex ++;
+			    }
 			} else if (fields[f].type == 'comments') {
 			    var field = new Ext.form.TextArea();
 			    field.id = fields[f].name;
@@ -187,17 +192,33 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 			    }
 			    if (fieldset == null)
 				this.form.superclass().add.call(this.form,field);
-			    else
-				fieldset.add(field);
+			    else {
+				if (fieldsectionindex > (fieldsectioncount-1)/2)
+				    col2.add(field);
+				else
+				    col1.add(field);
+				fieldsectionindex ++;
+			    }
 			} else if (fields[f].type == 'section') {
 			    if (fieldset != null)
 				this.form.superclass().add.call(this.form,fieldset);
+			    
+			    var col1 = new Ext.Panel({columnWidth: '.50',layout:'form',defaults:{anchor:'100%'},bodyStyle:'padding:0 18px 0 0',items:[]});
+			    var col2 = new Ext.Panel({columnWidth: '.50',layout:'form',defaults:{anchor:'100%'},bodyStyle:'padding:0 18px 0 0',items:[]})
+			    var panel = new Ext.Panel({ columnWidth:0.5,layout:'column', bodyStyle:'padding:0 18px 0 0',items:[col1,col2]});
+
 			    fieldset = new Ext.form.FieldSet({
 				id:fields[f].name,
 				title:fields[f].header,
 				labelAlign:'left',
-				items:[]
+				items:[panel]
 			    });
+
+			    // calculate the number of fields in this section
+			    var start = f+1;
+			    for (fieldsectioncount = 0; start < fields.length && fields[start].type != 'section'; fieldsectioncount++) start++;
+			    fieldsectionindex =0;
+
 			} else if (fields[f].type == 'picklist') {
 			    var comboConfig = new Ext.form.ComboBox({
 				id:fields[f].name + 'combo',
@@ -230,8 +251,13 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 			    }
 			    if (fieldset == null) 
 				this.form.superclass().add.call(this.form,field);
-			    else
-				fieldset.add(comboConfig);
+			    else {
+				if (fieldsectionindex > (fieldsectioncount-1)/2)
+				    col2.add(comboConfig);
+				else
+				    col1.add(comboConfig);
+				fieldsectionindex ++;
+			    }
 			}
 		    }
 		    
