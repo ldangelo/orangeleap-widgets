@@ -283,7 +283,6 @@ var sponsorshipform =  {
 	    if (f.isFormField) {
 		f.setValue("");
 	    }
-
 	}
 	form.getForm().items.each(clearfield);
     },
