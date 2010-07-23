@@ -11,6 +11,7 @@ var win = null;
 var swin = null;
 var    pageSize = 10;
 var    pageStart = 0;
+var pattern = "sponsorship_status=Available;";
 
 var sponsorshipform =  {
 
@@ -89,15 +90,17 @@ var sponsorshipform =  {
 	    var records = mydatastore.data.items;
 	    for (var m=0; m < metaData.length; m++) {
 		var value = records[fldidx].get(metaData[m].name);
-		form.findById(metaData[m].name).setValue(value);
+		form.getForm().findField(metaData[m].name).setValue(value);
 	    }
 	} else {
 	    //
 	    // we need to backup the data
 	    if (pageStart > 0) {
+		sponsorshipform.clearForm();
 		pageStart = pageStart - pageSize ;
 		fldidx = pageSize -1;
-		mydatastore.load({params:{start:pageStart,limit:pageSize}});	    		
+
+		mydatastore.load({params:{start:pageStart,limit:pageSize,pattern:pattern}});	    		
 	    } else {
 		// we are back at the beginning of the data
 	    }
@@ -105,6 +108,22 @@ var sponsorshipform =  {
 
     },
     onSearch:function() {
+	sponsorshipform.clearForm();
+	pattern = "sponsorship_status=Available;";
+	var field = searchform.getForm().findField('searchcountry');
+	if (field.value != null)
+	    pattern=pattern+ "country=" + field.value + ';';
+
+	field = searchform.getForm().findField('searchage');
+	if (field.value != null)
+	    pattern=pattern+ "age=" + field.value + ';';
+	
+	field = searchform.getForm().findField('searchgender');
+	if (field.value != null)
+	    pattern=pattern+ "gender=" + field.value + ';';
+
+	fldidx = 0;
+	mydatastore.load({params:{start:0,limit:pageSize,pattern:pattern}});
     },
     onRecurringGift: function() {
     },
@@ -259,27 +278,37 @@ var sponsorshipform =  {
 	});
 	swin.show();
     },
+    clearForm:function() {
+	var clearfield = function(f) {
+	    if (f.isFormField) {
+		f.setValue("");
+	    }
+	}
+	form.getForm().items.each(clearfield);
+    },
     onNext: function() {
-	    if (fldidx == mydatastore.totalLength-1) {
-		if (mydatastore.totalLength == pageSize) {
+
+	if (fldidx == mydatastore.totalLength-1) {
+	    if (mydatastore.totalLength == pageSize) {
 		//
 		// we need to load the next page
+		sponsorshipform.clearForm();
 		pageStart = pageStart + pageSize ;
 		fldidx = 0;
-		mydatastore.load({params:{start:pageStart,limit:pageSize}});	    
+		mydatastore.load({params:{start:pageStart,limit:pageSize,pattern:pattern}});	    
 		} else {
 		    //
 		    // there is no more data...
 		}
-	    } else {
-		fldidx = fldidx + 1;
-		var metaData = mydatastore.reader.meta.fields;
-		var records = mydatastore.data.items;
-		for (var m=0; m < metaData.length; m++) {
-		    var value = records[fldidx].get(metaData[m].name);
-		    form.findById(metaData[m].name).setValue(value);
-		}
+	} else {
+	    fldidx = fldidx + 1;
+	    var metaData = mydatastore.reader.meta.fields;
+	    var records = mydatastore.data.items;
+	    for (var m=0; m < metaData.length; m++) {
+		var value = records[fldidx].get(metaData[m].name);
+		form.getForm().findField(metaData[m].name).setValue(value);
 	    }
+	}
     },
     generateWidget: function(widgetname,guid,authenticate, redirecturl) {
 	wname = widgetname;
@@ -389,7 +418,7 @@ var sponsorshipform =  {
 
 			    value = records[fldidx].get(metaData[m].name);
 
-			form.findById(metaData[m].name).setValue(value);
+			form.getForm().findField(metaData[m].name).setValue(value);
 		    }
 
 		    
@@ -397,14 +426,17 @@ var sponsorshipform =  {
 		    // only do this for the first page of data...
 		    if (pageStart == 0 && fldidx == 0) {
 			win.render(widgetname);		    
-			Ext.get('loading').remove();
-			Ext.get('loading-mask').fadeOut({remove:true});
+			var loading = Ext.get('loading');
+			if (loading != null) {
+			    loading.remove();
+			    Ext.get('loading-mask').fadeOut({remove:true});
+			}
 		    }
 		}}});
 
 	var countryComboConfig = {
 	    xtype:'combo',
-	    id:'countrycombo',
+	    id:'searchcountry',
 	    valueField:'Name',
 	    triggerAction:'all',
 	    hiddenName:'Name',
@@ -431,10 +463,11 @@ var sponsorshipform =  {
 
 	var genderStore = new Ext.data.ArrayStore({
 	    fields: ['gender'],
-	    data :[['Boy'],['Girl'],['Unspecified']]
+	    data :[['Male'],['Female'],['Unspecified']]
 	    
 	});
 	var genderCombo = new Ext.form.ComboBox({
+	    id: 'searchgender',
 	    store: genderStore,
 	    displayField: 'gender',
 	    typeAhead:true,
@@ -451,6 +484,7 @@ var sponsorshipform =  {
 	    
 	});
 	var ageCombo = new Ext.form.ComboBox({
+	    id:'searchage',
 	    store: ageStore,
 	    displayField: 'age',
 	    typeAhead:true,

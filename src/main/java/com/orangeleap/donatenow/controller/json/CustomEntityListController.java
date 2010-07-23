@@ -4,6 +4,7 @@ import com.orangeleap.client.AbstractCustomizableEntity.CustomFieldMap.Entry;
 import com.orangeleap.client.AbstractCustomizableEntity.CustomFieldMap;
 import com.orangeleap.client.AbstractCustomizableEntity;
 import com.orangeleap.client.CustomTable;
+import com.orangeleap.client.Filter;
 import com.orangeleap.client.CustomTableField;
 import com.orangeleap.client.CustomTableRow;
 import com.orangeleap.client.GetConstituentGiftRequest;
@@ -149,6 +150,19 @@ public class CustomEntityListController {
       rowRequest.setTablename(ceWidget.getCustomEntityName());
       rowRequest.setOffset(start);
       rowRequest.setLimit(limit);
+      List<Filter> filters = new ArrayList<Filter>();
+      if (pattern != null && pattern.equals("") == false) {
+        String args[] = pattern.split(";");
+
+        for (int i = 0 ; i < args.length; i++) {
+          String val[] = args[i].split("=");
+          Filter f = new Filter();
+          f.setName(val[0]);
+          f.setValue(val[1]);
+          rowRequest.getFilters().add(f);
+        }
+      }
+
       rowResponse = oleap.getCustomTableRows(rowRequest);
 
         if (rowResponse != null) {
