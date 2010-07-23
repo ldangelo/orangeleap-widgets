@@ -9,8 +9,11 @@ var searchform = null;
 var wname = null;
 var win = null;
 var swin = null;
+var    pageSize = 10;
+var    pageStart = 0;
 
 var sponsorshipform =  {
+
 
     include: function(filename)
     {
@@ -80,12 +83,24 @@ var sponsorshipform =  {
 	return "";
     },
     onPrevious: function() {
-	fldidx = fldidx - 1;
-	var metaData = mydatastore.reader.meta.fields;
-	var records = mydatastore.data.items;
-	for (var m=0; m < metaData.length; m++) {
-	    var value = records[fldidx].get(metaData[m].name);
-	    form.findById(metaData[m].name).setValue(value);
+	if (fldidx > 0) {
+	    fldidx = fldidx - 1;
+	    var metaData = mydatastore.reader.meta.fields;
+	    var records = mydatastore.data.items;
+	    for (var m=0; m < metaData.length; m++) {
+		var value = records[fldidx].get(metaData[m].name);
+		form.findById(metaData[m].name).setValue(value);
+	    }
+	} else {
+	    //
+	    // we need to backup the data
+	    if (pageStart > 0) {
+		pageStart = pageStart - pageSize ;
+		fldidx = pageSize -1;
+		mydatastore.load({params:{start:pageStart,limit:pageSize}});	    		
+	    } else {
+		// we are back at the beginning of the data
+	    }
 	}
 
     },
@@ -245,15 +260,26 @@ var sponsorshipform =  {
 	swin.show();
     },
     onNext: function() {
-	fldidx = fldidx + 1;
-	var metaData = mydatastore.reader.meta.fields;
-	var records = mydatastore.data.items;
-	for (var m=0; m < metaData.length; m++) {
-	    var value = records[fldidx].get(metaData[m].name);
-	    form.findById(metaData[m].name).setValue(value);
-	}
-
-//	form.load();
+	    if (fldidx == mydatastore.totalLength-1) {
+		if (mydatastore.totalLength == pageSize) {
+		//
+		// we need to load the next page
+		pageStart = pageStart + pageSize ;
+		fldidx = 0;
+		mydatastore.load({params:{start:pageStart,limit:pageSize}});	    
+		} else {
+		    //
+		    // there is no more data...
+		}
+	    } else {
+		fldidx = fldidx + 1;
+		var metaData = mydatastore.reader.meta.fields;
+		var records = mydatastore.data.items;
+		for (var m=0; m < metaData.length; m++) {
+		    var value = records[fldidx].get(metaData[m].name);
+		    form.findById(metaData[m].name).setValue(value);
+		}
+	    }
     },
     generateWidget: function(widgetname,guid,authenticate, redirecturl) {
 	wname = widgetname;
@@ -271,6 +297,8 @@ var sponsorshipform =  {
 	    proxy:proxy,
 	    listeners: {
 		'metachange': function (store, meta) {
+
+		    if (form.items.length > 0) return;  // we are paging through data and the fields already exist
 		    var fields = meta.fields;
 		    var col1 = new Ext.Panel({columnWidth: '.50',layout:'form',defaults:{anchor:'100%'},bodyStyle:'padding:0 18px 0 0',items:[]});
 		    var col2 = new Ext.Panel({columnWidth: '.50',layout:'form',defaults:{anchor:'100%'},bodyStyle:'padding:0 18px 0 0',items:[]})
@@ -364,10 +392,14 @@ var sponsorshipform =  {
 			form.findById(metaData[m].name).setValue(value);
 		    }
 
-		    win.render(widgetname);		    
-//		    win.show();
-		    Ext.get('loading').remove();
-		    Ext.get('loading-mask').fadeOut({remove:true});
+		    
+		    //
+		    // only do this for the first page of data...
+		    if (pageStart == 0 && fldidx == 0) {
+			win.render(widgetname);		    
+			Ext.get('loading').remove();
+			Ext.get('loading-mask').fadeOut({remove:true});
+		    }
 		}}});
 
 	var countryComboConfig = {
@@ -484,7 +516,7 @@ var sponsorshipform =  {
 	});
 
 
-	mydatastore.load();
+	mydatastore.load({params:{start:pageStart,limit:pageSize}});
     },    
 
     showError: function() {

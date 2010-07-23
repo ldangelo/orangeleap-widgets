@@ -50,7 +50,11 @@ public class CustomEntityListController {
 
   Map fieldMap = new HashMap<String,CustomTableField>();
 	@RequestMapping(method = RequestMethod.GET)
-   public void  getCustomEntityList(@RequestParam(required=true) String guid, ModelMap modelMap) {
+   public void  getCustomEntityList(@RequestParam(required=true) String guid, 
+      @RequestParam(required=true) Long start,
+      @RequestParam(required=true) Long limit,
+       @RequestParam(required=false) String pattern,
+       ModelMap modelMap) {
       List <Map<String,Object>> returnList = new ArrayList<Map<String,Object>>();
 
     WidgetExample example = new WidgetExample();
@@ -105,7 +109,7 @@ public class CustomEntityListController {
   public void postCustomEntityList(@RequestParam(required=true) String guid, 
       @RequestParam(required=true) Long start,
       @RequestParam(required=true) Long limit,
-      @RequestParam(required=true) String pattern,ModelMap modelMap) {
+      @RequestParam(required=false) String pattern,ModelMap modelMap) {
       List <Map<String,Object>> returnList = new ArrayList<Map<String,Object>>();
 
     WidgetExample example = new WidgetExample();
