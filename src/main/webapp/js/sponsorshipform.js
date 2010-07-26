@@ -284,6 +284,7 @@ var sponsorshipform =  {
 		f.setValue("");
 	    }
 	}
+
 	form.getForm().items.each(clearfield);
     },
     onNext: function() {
