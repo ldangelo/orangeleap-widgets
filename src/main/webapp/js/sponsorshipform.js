@@ -15,7 +15,6 @@ var pattern = "sponsorship_status=Available;";
 
 var sponsorshipform =  {
 
-
     include: function(filename)
     {
 	var head = document.getElementsByTagName('head')[0];
