@@ -40694,7 +40694,7 @@ Ext.form.BasicForm = Ext.extend(Ext.util.Observable, {
                 this.waitMsgTarget = Ext.get(this.waitMsgTarget);
                 this.waitMsgTarget.mask(o.waitMsg, 'x-mask-loading');
             }else{
-                Ext.MessageBox.wait(o.waitMsg, o.waitTitle || this.waitTitle);
+                msgBox = Ext.MessageBox.wait(o.waitMsg, o.waitTitle || this.waitTitle);
             }
         }
     },

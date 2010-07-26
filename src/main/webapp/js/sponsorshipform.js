@@ -2,6 +2,7 @@ var $j = jQuery.noConflict();
 
 Ext.ns("sponshorshipform");
 
+var msgBox = null;
 var fldidx = 0;
 var mydatastore = null;
 var form = null;
@@ -94,6 +95,7 @@ var sponsorshipform =  {
 	    //
 	    // we need to backup the data
 	    if (pageStart > 0) {
+		msgBox = Ext.MessageBox.wait("Loading...","Loading....");
 		sponsorshipform.clearForm();
 		pageStart = pageStart - pageSize ;
 		fldidx = pageSize -1;
@@ -121,6 +123,8 @@ var sponsorshipform =  {
 	    pattern=pattern+ "gender=" + field.value + ';';
 
 	fldidx = 0;
+	msgBox = Ext.MessageBox.wait("Searching...","Searching Sponships");
+
 	mydatastore.load({params:{start:0,limit:pageSize,pattern:pattern}});
     },
     onRecurringGift: function() {
@@ -289,6 +293,7 @@ var sponsorshipform =  {
 
 	if (fldidx == mydatastore.totalLength-1) {
 	    if (mydatastore.totalLength == pageSize) {
+		msgBox = Ext.MessageBox.wait("Loading...","Loading Sponships");
 		//
 		// we need to load the next page
 		sponsorshipform.clearForm();
@@ -431,6 +436,11 @@ var sponsorshipform =  {
 			    Ext.get('loading-mask').fadeOut({remove:true});
 			}
 		    }
+
+		    if (msgBox != null) {
+			msgBox.hide();
+			msgBox = null;
+		    }
 		}}});
 
 	var countryComboConfig = {
@@ -548,7 +558,7 @@ var sponsorshipform =  {
 	    items:[form,searchform]
 	});
 
-
+	msgBox = Ext.MessageBox.wait("Loading...","Loading Sponships");
 	mydatastore.load({params:{start:pageStart,limit:pageSize}});
     },    
 
