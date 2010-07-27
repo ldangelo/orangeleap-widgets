@@ -559,7 +559,7 @@ var sponsorshipform =  {
 	});
 
 	msgBox = Ext.MessageBox.wait("Loading...","Loading Sponships");
-	mydatastore.load({params:{start:pageStart,limit:pageSize}});
+	mydatastore.load({params:{start:pageStart,limit:pageSize,pattern:pattern}});
     },    
 
     showError: function() {

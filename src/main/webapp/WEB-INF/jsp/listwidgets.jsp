@@ -27,11 +27,7 @@
 	}
 		
 Ext.onReady(function() {
-	var myData = [
-		['1','1','General Presidents Fund','Donate Now','donateWidget.htm?id=1'],
-		['2','2','General Presidents Fund','God Tube','donateWidget.htm?id=2'],		
-		['3','3','General Presidents Fund','Google','donateWidget.htm?id=3']
-		];		
+
 
 	var proxy=new Ext.data.HttpProxy(    {url:'/donatenow/listWidgets.json'});
 

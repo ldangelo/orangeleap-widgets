@@ -115,14 +115,6 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 	    }
 	});
 	
-	var reader = new Ext.data.JsonReader({
-	    totalProperty: 'totalRows',
-	    successProperty: 'success',
-	    idProperty: 'id',
-	    root: 'rows',
-	    messageProperty: 'message'
-	});
-	
 	var writer = new Ext.data.JsonWriter({
 	    encode:true,
 	    writeAllFields:false

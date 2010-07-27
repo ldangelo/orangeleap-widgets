@@ -1,4 +1,0 @@
-<decorators>
-	<decorator name="main" page="/decorators/main.jsp">
-    </decorator>
-</decorators>
