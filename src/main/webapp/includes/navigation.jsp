@@ -11,8 +11,8 @@
 <span class="secondary active"><a class="" href="/donatenow/donationwidget.htm">Create Donation Widgets</a> </span>
 <span class="secondary active"> <a class="" href="/donatenow/listdonationwidget.htm">List Donation Widgets</a> </span>
 <a class="groupHeader groupActive">Login Widgets</a>
-<span class="secondary active"><a class="" href="/donatenow/loginwidget.htm">Create Login Widgets</a> </span>
-<span class="secondary active"> <a class="" href="/donatenow/listloginwidget.htm">List Login Widgets</a> </span>
+<span class="secondary active"><a class="" href="/donatenow/createloginwidget.htm">Create Login Widgets</a> </span>
+<span class="secondary active"> <a class="" href="/donatenow/listloginwidgets.htm">List Login Widgets</a> </span>
 <a class="groupHeader groupActive">Registration Widgets</a>
 <span class="secondary active"><a class="" href="/donatenow/registrationwidget.htm">Create Registration Widgets</a> </span>
 <span class="secondary active"> <a class="" href="/donatenow/listregistrationwidget.htm">List Registration Widgets</a> </span>
