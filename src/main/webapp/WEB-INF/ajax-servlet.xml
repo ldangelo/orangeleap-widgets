@@ -66,6 +66,14 @@
 		<property name="paramName" value="action"/>
 </bean>
 
+  <bean id="ajaxLoginWidgetController" class="com.orangeleap.donatenow.controller.AjaxLoginWidgetController">
+      <property name="methodNameResolver" ref="paramResolver"/>      
+  </bean>
+
+  <bean id="ajaxPlacementController" class="com.orangeleap.donatenow.controller.AjaxPlacementController">
+      <property name="methodNameResolver" ref="paramResolver"/>      
+  </bean>
+
   <bean id="customEntityController" class="com.orangeleap.donatenow.controller.CustomEntityController">
     <property name="methodNameResolver" ref="paramResolver"/>
 </bean>
@@ -74,7 +82,9 @@
   <bean id="handlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping" >
     <property name="mappings">
       <props>
-	<prop key="*.ajax">customEntityController</prop>
+          <prop key="customEntity.ajax">customEntityController</prop>
+          <prop key="loginwidget.ajax">ajaxLoginWidgetController</prop>
+          <prop key="placements.ajax">ajaxPlacementController</prop>
       </props>
     </property>
   </bean>

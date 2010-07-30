@@ -7,7 +7,8 @@ import com.orangeleap.donatenow.dao.PlacementsDAO;
 import com.orangeleap.donatenow.domain.Widget;
 
 public interface PlacementsService {
-  Placements updatePlacement(Widget widget, String referer);
+  Placements updateViewCount(Widget widget, String referer);
+  Placements updateErrorCount(Widget widget, String referer);
   List<Placements> listPlacementsByWidgetId(Long widgetId);
 }
 

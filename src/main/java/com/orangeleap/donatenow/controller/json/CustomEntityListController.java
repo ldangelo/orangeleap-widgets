@@ -17,9 +17,7 @@ import com.orangeleap.client.PicklistItem;
 import com.orangeleap.client.ReadCustomTableByNameRequest;
 import com.orangeleap.client.ReadCustomTableByNameResponse;
 import com.orangeleap.client.WSClient;
-import com.orangeleap.donatenow.dao.CustomEntityWidgetDAO;
 import com.orangeleap.donatenow.dao.WidgetDAO;
-import com.orangeleap.donatenow.domain.CustomEntityWidget;
 import com.orangeleap.donatenow.domain.Placements;
 import com.orangeleap.donatenow.domain.Widget;
 import com.orangeleap.donatenow.domain.WidgetExample;
@@ -43,8 +41,6 @@ public class CustomEntityListController {
     @Autowired
     WidgetDAO widgetDAO = null;
 
-  @Autowired
-  CustomEntityWidgetDAO customEntityWidgetDAO = null;
 
   @Autowired
   PicklistService picklistService;
@@ -68,8 +64,6 @@ public class CustomEntityListController {
       //
       // guid is a unique key so this will only return one widget
       Widget widget = widgets.get(0);
-      CustomEntityWidget ceWidget = null;
-      ceWidget = customEntityWidgetDAO.selectCustomEntityWidgetByPrimaryKey(widget.getWidgetId());
 
       String wsusername = widgets.get(0).getWidgetUsername();
       String wspassword = widgets.get(0).getWidgetPassword();
@@ -83,7 +77,7 @@ public class CustomEntityListController {
       // first get the table definition
       ReadCustomTableByNameRequest request = new ReadCustomTableByNameRequest();
       ReadCustomTableByNameResponse response = null;
-      request.setName(ceWidget.getCustomEntityName());
+      request.setName(widget.getCustomEntityName());
 
       response = oleap.readCustomTableByName(request);
 
@@ -92,7 +86,7 @@ public class CustomEntityListController {
       GetCustomTableRowsRequest rowRequest = new GetCustomTableRowsRequest();
       GetCustomTableRowsResponse rowResponse = null;
       
-      rowRequest.setTablename(ceWidget.getCustomEntityName());
+      rowRequest.setTablename(widget.getCustomEntityName());
       rowResponse = oleap.getCustomTableRows(rowRequest);
 
         if (rowResponse != null) {
@@ -123,8 +117,6 @@ public class CustomEntityListController {
       //
       // guid is a unique key so this will only return one widget
       Widget widget = widgets.get(0);
-      CustomEntityWidget ceWidget = null;
-      ceWidget = customEntityWidgetDAO.selectCustomEntityWidgetByPrimaryKey(widget.getWidgetId());
 
       String wsusername = widgets.get(0).getWidgetUsername();
       String wspassword = widgets.get(0).getWidgetPassword();
@@ -138,7 +130,7 @@ public class CustomEntityListController {
       // first get the table definition
       ReadCustomTableByNameRequest request = new ReadCustomTableByNameRequest();
       ReadCustomTableByNameResponse response = null;
-      request.setName(ceWidget.getCustomEntityName());
+      request.setName(widget.getCustomEntityName());
 
       response = oleap.readCustomTableByName(request);
 
@@ -147,7 +139,7 @@ public class CustomEntityListController {
       GetCustomTableRowsRequest rowRequest = new GetCustomTableRowsRequest();
       GetCustomTableRowsResponse rowResponse = null;
       
-      rowRequest.setTablename(ceWidget.getCustomEntityName());
+      rowRequest.setTablename(widget.getCustomEntityName());
       rowRequest.setOffset(start);
       rowRequest.setLimit(limit);
       List<Filter> filters = new ArrayList<Filter>();

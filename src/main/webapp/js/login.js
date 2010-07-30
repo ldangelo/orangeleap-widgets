@@ -54,7 +54,6 @@ var authentication = {
 	    else
 		this.setCookie("constituentId",constituentid);
 
-	    OrangeLeapWidget.updateViewCount(widgetid,document.referrer);
 	    if (successurl != null)
 		document.location = successurl;
 	}
@@ -142,7 +141,7 @@ var authentication = {
 	var renderElement = element.parentNode;
 	this.loginform.render("widget");
 
-//	loginform.render(renderElement);
+	OrangeLeapWidget.updateViewCount(widgetid,document.location.href);
     },
 
     showError: function() {
@@ -163,7 +162,7 @@ var authentication = {
     },
     handleError: function(widgetid, str) {
 	// update widget's error count
-	OrangeLeapWidget.updateErrorCount(widgetid,document.referrer);
+	OrangeLeapWidget.updateErrorCount(widgetid,document.location.href);
 
 	// display the error
 	Ext.Msg.show({

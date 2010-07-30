@@ -1,8 +1,9 @@
 package com.orangeleap.donatenow.controller.json;
 
-
 import com.orangeleap.client.GetConstituentGiftRequest;
+import com.orangeleap.client.GetConstituentGiftCountRequest;
 import com.orangeleap.client.GetConstituentGiftResponse;
+import com.orangeleap.client.GetConstituentGiftCountResponse;
 import com.orangeleap.client.Gift;
 import com.orangeleap.client.OrangeLeap;
 import com.orangeleap.client.WSClient;
@@ -47,6 +48,14 @@ public class GiftHistoryController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public void getGiftHistory(@RequestParam(required=true) String guid,@RequestParam(required=true) Long constituentid,ModelMap modelMap) {
+      if (guid == null || guid.equals("undefined") || guid.equals("")) {
+        return;
+      }
+
+      if (constituentid == null || constituentid.equals("undefined") || constituentid.equals("")) {
+        return;
+      }
+
       List<Map<String, Object>> returnList = new ArrayList<Map<String, Object>>();
 		
     WidgetExample example = new WidgetExample();
@@ -69,21 +78,40 @@ public class GiftHistoryController {
     wsClient = new WSClient();
     oleap = wsClient.getOrangeLeap(System.getProperty("donatenow.wsdllocation"),wsusername, wspassword);
 
-    GetConstituentGiftRequest request = new GetConstituentGiftRequest();
-    GetConstituentGiftResponse response = null;
+    GetConstituentGiftCountRequest giftCountRequest = new GetConstituentGiftCountRequest();
+    GetConstituentGiftCountResponse giftCountResponse = null;
+
+    giftCountRequest.setConstituentId(constituentid);
+
+    giftCountResponse = oleap.getConstituentGiftCount(giftCountRequest);
+
+    if (giftCountResponse.getCount() > 0) {
+      GetConstituentGiftRequest request = new GetConstituentGiftRequest();
+      GetConstituentGiftResponse response = null;
     
-    request.setConstituentId(constituentid);
-    request.setOffset(0);
-    request.setLimit(99);
+      int offset = 0;
+      int limit = 99;
 
-    response = oleap.getConstituentGift(request);
+      if (giftCountResponse.getCount() > 100) { 
+        offset =(int)  giftCountResponse.getCount() - 100;
+        limit = (int) giftCountResponse.getCount();
+      }
+      request.setConstituentId(constituentid);
+      request.setOffset(offset);
+      request.setLimit(limit);
 
-    if (response != null) {
-      addGifts(response.getGift(),returnList);
+      try {
+        response = oleap.getConstituentGift(request);
+
+        if (response != null) {
+          addGifts(response.getGift(),returnList);
+        }
+      }  catch (org.apache.cxf.binding.soap.SoapFault sfe) {
+
+      }
+
     }
-
     }
-
     modelMap.put("rows", returnList);
     modelMap.put("totalRows", returnList.size());
 	}

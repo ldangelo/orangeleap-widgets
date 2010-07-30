@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
-import com.orangeleap.donatenow.service.CustomEntityService;
+import com.orangeleap.donatenow.service.WidgetService;
 import com.orangeleap.donatenow.service.OrangeLeapClientService;
 import com.orangeleap.donatenow.domain.CustomEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 public class CustomEntityController extends MultiActionController {
 
   @Autowired
-  CustomEntityService customEntityService;
+  WidgetService widgetService;
 
   @Autowired
   OrangeLeapClientService orangeLeapClientService;
@@ -31,12 +31,12 @@ public class CustomEntityController extends MultiActionController {
     String guid = request.getParameter("guid");
     String constituentid = request.getParameter("constituentid");
 
-    if (constituentid == null || constituentid.equals("undefined")) {
+    if (constituentid == null || constituentid.equals("undefined") || constituentid.equals("")) {
       constituentid = "-1";
     }
 
     if (guid != null && !guid.equals("undefined")) {
-      List<CustomEntity> ceList = customEntityService.getCustomEntity(guid);
+      List<CustomEntity> ceList = widgetService.getCustomEntity(guid);
       return getModelMap(ceList,guid, new Long(constituentid));
     }
 
@@ -63,12 +63,12 @@ public class CustomEntityController extends MultiActionController {
     String guid = request.getParameter("guid");
     String constituentid = request.getParameter("constituentid");
 
-    if (constituentid != null && !constituentid.equals("undefined")) {
+    if (constituentid != null && !constituentid.equals("undefined") && !constituentid.equals("")) {
       orangeLeapClientService.removeFromCache(new Long(constituentid));
     }
 
     if (guid != null && !guid.equals("undefined")) {
-      CustomTableRow row = customEntityService.CreateCustomTableRow(guid,request);
+      CustomTableRow row = widgetService.CreateCustomTableRow(guid,request);
       if (row != null) {
         return getModelMap(row);
       }

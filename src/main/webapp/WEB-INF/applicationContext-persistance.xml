@@ -42,13 +42,6 @@
 		</property>
 	</bean>
 -->
-	<bean id="customEntityWidgetDAO" class="com.orangeleap.donatenow.dao.impl.CustomEntityWidgetDAOImpl">
-		<property name="sqlMapClient"><ref local="sqlMap"/></property>
-	</bean>
-
-	<bean id="donationWidgetDAO" class="com.orangeleap.donatenow.dao.impl.DonationWidgetDAOImpl">
-		<property name="sqlMapClient"><ref local="sqlMap"/></property>
-	</bean>
 
 	<bean id="widgetDAO" class="com.orangeleap.donatenow.dao.impl.WidgetDAOImpl">
 		<property name="sqlMapClient"><ref local="sqlMap"/></property>

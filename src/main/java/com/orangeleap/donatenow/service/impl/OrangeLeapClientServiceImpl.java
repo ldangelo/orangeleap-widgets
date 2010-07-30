@@ -16,7 +16,7 @@ import javax.annotation.Resource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.orangeleap.donatenow.dao.CustomEntityWidgetDAO;
+
 import com.orangeleap.donatenow.dao.WidgetDAO;
 import com.orangeleap.donatenow.domain.Widget;
 import com.orangeleap.donatenow.domain.WidgetData;
@@ -32,8 +32,6 @@ public class OrangeLeapClientServiceImpl implements OrangeLeapClientService {
   @Autowired
   WidgetDAO widgetDAO = null;
 
-  @Autowired
-  CustomEntityWidgetDAO customEntityWidgetDAO = null;
 
   public void removeFromCache(Long id) {
     constituentCache.remove(id);

@@ -3,7 +3,5 @@
 <sqlMapConfig>
   <settings useStatementNamespaces="true" />
   <sqlMap resource="sqlmap/PLACEMENTS_SqlMap.xml" />
-  <sqlMap resource="sqlmap/DONATION_WIDGET_SqlMap.xml" />
-  <sqlMap resource="sqlmap/CUSTOM_ENTITY_WIDGET_SqlMap.xml" />
   <sqlMap resource="sqlmap/WIDGET_SqlMap.xml" />
 </sqlMapConfig>

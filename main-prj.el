@@ -10,7 +10,9 @@
  '(jde-ant-home "/usr/share/ant")
  '(jde-ant-invocation-method (quote ("Java")))
  ;; Set name for your make program: ant or maybe maven?
- '(jde-build-function 'jde-ant-build)
+ '(jde-build-function 'jde-maven2-build)
+ '(compilation-directory "/Users/ldangelo/Development/orangeleap/orangeleap-donatenow")
+'(jde-maven-project-file-name "pom.xml")
  '(jde-jdk-registry (quote (("1.6" . "/System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/"))))
  '(jde-run-working-directory "/Users/ldangelo/Development/orangeleap/orangeleap-donatenow/")
  '(jde-compile-option-directory "/Users/ldangelo/Development/orangeleap/orangeleap-donatenow/build/stage/classes-jar") 

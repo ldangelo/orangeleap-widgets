@@ -103,6 +103,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 	
 	if (this.authenticate == true && this.constituentid == "") {
 	    window.location = this.loginurl;
+	    return;
 	}
 	OrangeLeap.CustomEntity.superclass.initComponent.call(this);
 
@@ -115,6 +116,8 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 	    }
 	});
 	
+	var reader=new Ext.data.JsonReader();
+
 	var writer = new Ext.data.JsonWriter({
 	    encode:true,
 	    writeAllFields:false
@@ -293,9 +296,13 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 	    this.showError(res.response.Text);
 	});
 	
+	OrangeLeapWidget.updateViewCount(this.guid,document.location.href);
+
 	this.mydatastore.load();
     },
     showError: function(str) {
+	OrangeLeapWidget.updateErrorCount(this.guid,document.location.href);
+
     	Ext.Msg.show({
     	    title: 'ERROR',
     	    msg: str,

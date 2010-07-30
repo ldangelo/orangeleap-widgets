@@ -266,6 +266,7 @@ store: mydatastore
 	
 	if (authenticate == true && constituentid == "") {
 	    window.location = loginurl;
+	    return;
 	}
 	var callbackproxy = function(dataFromServer) {
 	    customentitylist.handleReturn(dataFromServer,widgetid,constituentid,guid);

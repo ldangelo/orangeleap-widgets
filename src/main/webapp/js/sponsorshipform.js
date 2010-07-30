@@ -318,8 +318,12 @@ var sponsorshipform =  {
 	wname = widgetname;
 	var constituentId = this.getCookie("constituentId");
 
-	if (authenticate == true) 
-	    if (constituentId == "") window.location=redirecturl;
+	if (authenticate == true &&  constituentId == "") {
+	    window.location=redirecturl;
+	    return;
+	}
+	OrangeLeapWidget.updateViewCount(guid,document.location.href);
+
 	var proxy = new Ext.data.HttpProxy( {url:'/donatenow/customEntityList.json?guid=' + guid});
 
 	var reader=new Ext.data.JsonReader();

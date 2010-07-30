@@ -20,31 +20,26 @@
 </jdbcConnection>
 
 <javaModelGenerator targetPackage="com.orangeleap.donatenow.domain"
-  targetProject="/Users/ldangelo/Development/orangeleap/orangeleap-donatenow/src">
+  targetProject="/Users/ldangelo/Development/orangeleap/orangeleap-donatenow/src/main/java">
   <property name="enableSubPackages" value="true" />
   <property name="trimStrings" value="true" />
 </javaModelGenerator>
 
-<sqlMapGenerator targetPackage="com.orangeleap.donatenow.dao.maps"
-  targetProject="/Users/ldangelo/Development/orangeleap/orangeleap-donatenow/src">
+<sqlMapGenerator targetPackage="resources.sqlmap"
+  targetProject="/Users/ldangelo/Development/orangeleap/orangeleap-donatenow/src/main">
   <property name="enableSubPackages" value="true" />
 </sqlMapGenerator>
 
 <daoGenerator type="SPRING" 
 targetPackage="com.orangeleap.donatenow.dao"
 implementationPackage="com.orangeleap.donatenow.dao.impl"
-  targetProject="/Users/ldangelo/Development/orangeleap/orangeleap-donatenow/src">
+  targetProject="/Users/ldangelo/Development/orangeleap/orangeleap-donatenow/src/main/java">
   <property name="enableSubPackages" value="true" />
   <property name="methodNameCalculator" value="extended" />
 </daoGenerator>
 
-<table tableName="PLACEMENTS" domainObjectName="Placements"/>
+
 <table tableName="WIDGET" domainObjectName="Widget"/>
-<table tableName="LOGIN_WIDGET" domainObjectName="LoginWidget"/>
-<table tableName="CUSTOM_ENTITY_WIDGET" domainObjectName="CustomEntityWidget"/>
-<table tableName="DONATION_WIDGET" domainObjectName="DonationWidget">
-  <property name="rootClass" value="com.orangeleap.donatenow.domain.Widget"/>
-</table>
 
 </ibatorContext>
 </ibatorConfiguration>

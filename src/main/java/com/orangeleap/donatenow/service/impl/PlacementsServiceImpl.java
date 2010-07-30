@@ -18,10 +18,9 @@ public class PlacementsServiceImpl implements PlacementsService {
   @Autowired
   private PlacementsDAO placementsDAO;
 
-  public Placements updatePlacement(Widget widget, String referer) {
+  public Placements updateViewCount(Widget widget, String referer) {
     PlacementsExample example = new PlacementsExample();
-    example.createCriteria().andWidgetIdEqualTo(widget.getWidgetId());
-    example.createCriteria().andPlacementUrlEqualTo(referer);
+    example.createCriteria().andWidgetIdEqualTo(widget.getWidgetId()).andPlacementUrlEqualTo(referer);
     List<Placements> placements = placementsDAO.selectPlacementsByExample(example);
 
     Placements placement = null;
@@ -36,7 +35,32 @@ public class PlacementsServiceImpl implements PlacementsService {
       placement = new Placements();
       placement.setWidgetId(widget.getWidgetId());
       placement.setErrorCount(0L);
-      placement.setViewCount(0L);
+      placement.setViewCount(1L);
+      placement.setPlacementUrl(referer);
+      placementsDAO.insertPlacements(placement);
+    }
+    return placement;
+}
+
+  public Placements updateErrorCount(Widget widget, String referer) {
+    PlacementsExample example = new PlacementsExample();
+    example.createCriteria().andWidgetIdEqualTo(widget.getWidgetId()).andPlacementUrlEqualTo(referer);
+    List<Placements> placements = placementsDAO.selectPlacementsByExample(example);
+
+    Placements placement = null;
+    //
+    // this will only return a single placement since placementUrl is unique
+    if (placements.size() > 0) {
+      placement = placements.get(0);
+      placement.setErrorCount(placement.getErrorCount() + 1);
+      placement.setViewCount(placement.getViewCount() + 1);
+
+      placementsDAO.updatePlacementsByPrimaryKey(placement);
+    } else {
+      placement = new Placements();
+      placement.setWidgetId(widget.getWidgetId());
+      placement.setErrorCount(1L);
+      placement.setViewCount(1L);
       placement.setPlacementUrl(referer);
       placementsDAO.insertPlacements(placement);
     }

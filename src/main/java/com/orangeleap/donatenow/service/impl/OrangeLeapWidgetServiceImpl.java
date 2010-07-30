@@ -21,9 +21,7 @@ import com.orangeleap.client.ListCustomTablesResponse;
 import com.orangeleap.client.OrangeLeap;
 import com.orangeleap.client.PicklistItem;
 import com.orangeleap.client.WSClient;
-import com.orangeleap.donatenow.dao.CustomEntityWidgetDAO;
 import com.orangeleap.donatenow.dao.WidgetDAO;
-import com.orangeleap.donatenow.domain.CustomEntityWidget;
 import com.orangeleap.donatenow.domain.Widget;
 import com.orangeleap.donatenow.domain.WidgetData;
 import com.orangeleap.donatenow.domain.WidgetExample;
@@ -38,7 +36,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.Authentication;
 import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
+import com.orangeleap.donatenow.service.PlacementsService;
 
 public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
   private static final Log logger = LogFactory.getLog(OrangeLeapWidgetServiceImpl.class);
@@ -47,7 +45,7 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
   WidgetDAO widgetDAO = null;
 
   @Autowired
-  CustomEntityWidgetDAO customEntityWidgetDAO = null;
+  PlacementsService placementsService;
 
   private String customFieldMapValue(CustomFieldMap map,String fieldName) {
         List<Entry> entries = map.getEntry(); 
@@ -84,7 +82,7 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
       GetCustomTableRowsResponse webwidgetResponse = null;
 
       Filter filter = new Filter();
-      filter.setName("username");
+      filter.setName("user_name");
       filter.setValue(username);
       
       webwidgetRequest.setTablename("widget_authentication");
@@ -238,9 +236,6 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
       // guid is a unique key so this will only return one widget
       Widget widget = widgets.get(0);
     
-      CustomEntityWidget ceWidget = null;
-      ceWidget = customEntityWidgetDAO.selectCustomEntityWidgetByPrimaryKey(widget.getWidgetId());
-
     String wsusername = widgets.get(0).getWidgetUsername();
     String wspassword = widgets.get(0).getWidgetPassword();
 
@@ -258,7 +253,7 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
       Iterator<CustomTable> it = response.getCustomTable().iterator();
       while (it.hasNext()) {
         CustomTable table = it.next();
-        if (table.getCustomTableName().equals(ceWidget.getCustomEntityName())) {
+        if (table.getCustomTableName().equals(widget.getCustomEntityName())) {
           return table;
         }
 
@@ -294,6 +289,8 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
 
     widget.setWidgetViewCount(widget.getWidgetViewCount() + 1);
     widgetDAO.updateWidgetByPrimaryKey(widget);
+
+    placementsService.updateViewCount(widget,refererrer);
   }
 
   public void updateErrorCount(String guid, String refererrer)
@@ -308,6 +305,8 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
 
     widget.setWidgetErrorCount(widget.getWidgetErrorCount() + 1);
     widgetDAO.updateWidgetByPrimaryKey(widget);
+
+    placementsService.updateErrorCount(widget,refererrer);
   }
 
   public Widget saveOrUpdate(Widget widget) {

@@ -16,9 +16,7 @@ import com.orangeleap.client.PicklistItem;
 import com.orangeleap.client.ReadCustomTableByNameRequest;
 import com.orangeleap.client.ReadCustomTableByNameResponse;
 import com.orangeleap.client.WSClient;
-import com.orangeleap.donatenow.dao.CustomEntityWidgetDAO;
 import com.orangeleap.donatenow.dao.WidgetDAO;
-import com.orangeleap.donatenow.domain.CustomEntityWidget;
 import com.orangeleap.donatenow.domain.Placements;
 import com.orangeleap.donatenow.domain.Widget;
 import com.orangeleap.donatenow.domain.WidgetExample;
@@ -42,8 +40,6 @@ public class CustomEntityController {
     @Autowired
     WidgetDAO widgetDAO = null;
 
-  @Autowired
-  CustomEntityWidgetDAO customEntityWidgetDAO = null;
 
   @Autowired
   PicklistService picklistService;
@@ -63,8 +59,6 @@ public class CustomEntityController {
       //
       // guid is a unique key so this will only return one widget
       Widget widget = widgets.get(0);
-      CustomEntityWidget ceWidget = null;
-      ceWidget = customEntityWidgetDAO.selectCustomEntityWidgetByPrimaryKey(widget.getWidgetId());
 
       String wsusername = widgets.get(0).getWidgetUsername();
       String wspassword = widgets.get(0).getWidgetPassword();
@@ -78,7 +72,7 @@ public class CustomEntityController {
       // first get the table definition
       ReadCustomTableByNameRequest request = new ReadCustomTableByNameRequest();
       ReadCustomTableByNameResponse response = null;
-      request.setName(ceWidget.getCustomEntityName());
+      request.setName(widget.getCustomEntityName());
 
       response = oleap.readCustomTableByName(request);
 
@@ -107,8 +101,7 @@ public class CustomEntityController {
       //
       // guid is a unique key so this will only return one widget
       Widget widget = widgets.get(0);
-      CustomEntityWidget ceWidget = null;
-      ceWidget = customEntityWidgetDAO.selectCustomEntityWidgetByPrimaryKey(widget.getWidgetId());
+
 
       String wsusername = widgets.get(0).getWidgetUsername();
       String wspassword = widgets.get(0).getWidgetPassword();
@@ -122,7 +115,7 @@ public class CustomEntityController {
       // first get the table definition
       ReadCustomTableByNameRequest request = new ReadCustomTableByNameRequest();
       ReadCustomTableByNameResponse response = null;
-      request.setName(ceWidget.getCustomEntityName());
+      request.setName(widget.getCustomEntityName());
 
       response = oleap.readCustomTableByName(request);
 
