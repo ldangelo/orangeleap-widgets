@@ -19,5 +19,5 @@
     <bean name="viewNameTranslator"     class="com.orangeleap.json.JsonRequestToViewNameTranslator"
                 p:view="jsonView"/>
 
-    <bean name="jsonView" class="com.orangeleap.json.views.JsonMVCView" p:encodeNullBeanProperties="false"/>
+    <bean name="jsonView" class="com.orangeleap.json.views.JsonMVCView" p:encodeNullBeanProperties="true"/>
 </beans>

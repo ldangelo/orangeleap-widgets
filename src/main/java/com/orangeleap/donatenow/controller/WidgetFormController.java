@@ -17,53 +17,43 @@ import com.orangeleap.donatenow.service.WidgetService;
 
 @Controller
 
-public class ListWidgetController {
+public class WidgetFormController {
 
 	   @Autowired
 	    protected WidgetService widgetService = null;
 	   
 	  
-  @RequestMapping("/listwidgets.htm")
-  public void widgets(Model model) {
-    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			
-    String userName = auth.getName();
-    String password = (String) auth.getCredentials();
-    List<Widget> widgets = widgetService.listWidgets(userName, password);
-    model.addAttribute("widgets",widgets);
-  }
-
-  @RequestMapping("/listloginwidgets.htm")
+  @RequestMapping("/loginwidgetform.htm")
   public void loginwidgets(@RequestParam(required=false) Long id, Model model) {
     
   }
 
-  @RequestMapping("/listdonationwidgets.htm")
+  @RequestMapping("/donationwidgetform.htm")
   public void donationwidgets(@RequestParam(required=false) Long id, Model model) {
     
   }
 
-  @RequestMapping("/listdonorprofilewidgets.htm")
+  @RequestMapping("/donorprofilewidgetform.htm")
   public void donorprofilewidgets(@RequestParam(required=false) Long id, Model model) {
     
   }
 
-  @RequestMapping("/listgifthistorywidgets.htm")
+  @RequestMapping("/gifthistorywidgetform.htm")
   public void gifthistorywidgets(@RequestParam(required=false) Long id, Model model) {
     
   }
 
-  @RequestMapping("/listregistrationwidgets.htm")
+  @RequestMapping("/registrationwidgetform.htm")
   public void registrationwidgets(@RequestParam(required=false) Long id, Model model) {
     
   }
 
-  @RequestMapping("/listsponsorablewidgets.htm")
+  @RequestMapping("/sponsorablewidgetform.htm")
   public void sponsorablewidgets(@RequestParam(required=false) Long id, Model model) {
     
   }
 
-  @RequestMapping("/listsponsorshipwidgets.htm")
+  @RequestMapping("/sponsorshipwidgetform.htm")
   public void sponsorshipwidgets(@RequestParam(required=false) Long id, Model model) {
     
   }

@@ -12,7 +12,10 @@ import com.orangeleap.client.CustomTableRow;
 import javax.servlet.http.HttpServletRequest;
 
 public interface WidgetService {
+  public Widget saveWidget(Widget widget);
   public List<Widget> getLoginWidgets(String username,String password);
+  public Widget createWidget(String username,String password,String widgettype,String customentitytype);
+  public List<Widget> getWidgets(String username,String password,String widgettype,String customentitytype);
   public List<CustomEntity> getCustomEntity(String guid);
   public CustomTableRow CreateCustomTableRow(String guid, HttpServletRequest request);
   public Widget create();

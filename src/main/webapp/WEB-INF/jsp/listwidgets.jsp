@@ -12,6 +12,7 @@
 	<script type="text/javascript" src="js/extjs/ext-base.js"></script>
 	<!--<script type="text/javascript" src="js/extjs/ext-jquery-adapter.js"></script>-->
 	<script type="text/javascript" src="js/extjs/ext-all.js"></script>
+	<script type="text/javascript" src="js/listplacements.js"></script>
 	<script type="text/javascript">
 	
 	function add_thousands_separator(input) {
@@ -70,9 +71,19 @@ Ext.onReady(function() {
             emptyText: 'No Widgets Found'
         },
 		stripeRows: true,
+		frame:true,
 		title: 'Current Widgets',
-		height: 350,
-		width: 900
+		height: 250,
+		width: 655,
+	    listeners: {
+	    'rowclick': function(placementgrid,rowIndex, e) {
+	    //
+	    // need to load the placements
+	    var row = this.store.data.items[rowIndex].data;
+
+	    myplacementdatastore.load({params: {guid: row.guid}})
+	    }	    
+	    }
 	});
 
     grid.on('rowdblclick', function(grid, rowIndex, event) {
@@ -91,6 +102,7 @@ Ext.onReady(function() {
 	</script>
 </head>
 <body>
-	<div id='grid-example'/>
+	<div id='grid-example'></div>
+	<div id="placements-div"></div>
 </body>
 </page:applyDecorator>

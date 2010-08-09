@@ -18,6 +18,8 @@
     <result column="MOTIVATION_CODE" property="motivationCode" jdbcType="VARCHAR" />
     <result column="PROJECT_CODE" property="projectCode" jdbcType="VARCHAR" />
     <result column="CUSTOM_ENTITY_NAME" property="customEntityName" jdbcType="VARCHAR" />
+    <result column="LOGIN_SUCCESS_URL" property="widgetLoginSuccessURL" jdbcType="VARCHAR" />
+    <result column="LOGIN_FAILURE_URL" property="widgetLoginFailureURL" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="ibatorgenerated_Example_Where_Clause" >
     <!--
@@ -56,7 +58,7 @@
     -->
     select WIDGET_ID, WIDGET_GUID, WIDGET_USERNAME, WIDGET_PASSWORD, WIDGET_ERROR_COUNT,
       WIDGET_CREATE_DATE, WIDGET_HTML, WIDGET_VIEW_COUNT, WIDGET_TYPE, MOTIVATION_CODE,
-      PROJECT_CODE, CUSTOM_ENTITY_NAME
+      PROJECT_CODE, CUSTOM_ENTITY_NAME,LOGIN_SUCCESS_URL,LOGIN_FAILURE_URL
     from WIDGET
     <isParameterPresent >
       <include refid="WIDGET.ibatorgenerated_Example_Where_Clause" />
@@ -72,7 +74,7 @@
     -->
     select WIDGET_ID, WIDGET_GUID, WIDGET_USERNAME, WIDGET_PASSWORD, WIDGET_ERROR_COUNT,
       WIDGET_CREATE_DATE, WIDGET_HTML, WIDGET_VIEW_COUNT, WIDGET_TYPE, MOTIVATION_CODE,
-      PROJECT_CODE, CUSTOM_ENTITY_NAME
+      PROJECT_CODE, CUSTOM_ENTITY_NAME,LOGIN_SUCCESS_URL,LOGIN_FAILURE_URL
     from WIDGET
     where WIDGET_ID = #widgetId:BIGINT#
   </select>
@@ -99,11 +101,11 @@
     -->
     insert into WIDGET (WIDGET_ID, WIDGET_GUID, WIDGET_USERNAME, WIDGET_PASSWORD,
       WIDGET_ERROR_COUNT, WIDGET_CREATE_DATE, WIDGET_HTML, WIDGET_VIEW_COUNT, WIDGET_TYPE,
-      MOTIVATION_CODE, PROJECT_CODE, CUSTOM_ENTITY_NAME)
+      MOTIVATION_CODE, PROJECT_CODE, CUSTOM_ENTITY_NAME,LOGIN_SUCCESS_URL,LOGIN_FAILURE_URL)
     values (#widgetId:BIGINT#, #widgetGuid:VARCHAR#, #widgetUsername:VARCHAR#,
       #widgetPassword:VARCHAR#, #widgetErrorCount:BIGINT#, #widgetCreateDate:TIMESTAMP#,
       #widgetHtml:VARCHAR#, #widgetViewCount:BIGINT#, #widgetType:VARCHAR#,
-      #motivationCode:VARCHAR#, #projectCode:VARCHAR#, #customEntityName:VARCHAR#)
+      #motivationCode:VARCHAR#, #projectCode:VARCHAR#, #customEntityName:VARCHAR#,#widgetLoginSuccessURL:VARCHAR#,#widgetLoginFailureURL:VARCHAR#)
   </insert>
   <insert id="ibatorgenerated_insertSelective" parameterClass="com.orangeleap.donatenow.domain.Widget" >
     <!--
@@ -148,6 +150,12 @@
       <isNotNull prepend="," property="customEntityName" >
         CUSTOM_ENTITY_NAME
       </isNotNull>
+      <isNotNull prepend="," property="widgetLoginSuccessURL" >
+        LOGIN_SUCCESS_URL
+      </isNotNull>
+      <isNotNull prepend="," property="widgetLoginFailureURL" >
+	LOGIN_FAILURE_URL
+      </isNotNull>
       )
     </dynamic>
     values
@@ -187,6 +195,12 @@
       </isNotNull>
       <isNotNull prepend="," property="customEntityName" >
         #customEntityName:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="widgetLoginSuccessURL" >
+        #widgetLoginSuccess:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="widgetLoginFailureURL" >
+        #widgetLoginFailure:VARCHAR#
       </isNotNull>
       )
     </dynamic>
@@ -264,7 +278,9 @@
       WIDGET_TYPE = #record.widgetType:VARCHAR#,
       MOTIVATION_CODE = #record.motivationCode:VARCHAR#,
       PROJECT_CODE = #record.projectCode:VARCHAR#,
-      CUSTOM_ENTITY_NAME = #record.customEntityName:VARCHAR#
+      CUSTOM_ENTITY_NAME = #record.customEntityName:VARCHAR#,
+      LOGIN_SUCCESS_URL = #record.widgetLoginSuccessURL:VARCHAR#,
+      LOGIN_FAILURE_URL = #record.widgetLoginFailureURL:VARCHAR#
     <isParameterPresent >
       <include refid="WIDGET.ibatorgenerated_Example_Where_Clause" />
     </isParameterPresent>
@@ -328,7 +344,9 @@
       WIDGET_TYPE = #widgetType:VARCHAR#,
       MOTIVATION_CODE = #motivationCode:VARCHAR#,
       PROJECT_CODE = #projectCode:VARCHAR#,
-      CUSTOM_ENTITY_NAME = #customEntityName:VARCHAR#
+      CUSTOM_ENTITY_NAME = #customEntityName:VARCHAR#,
+      LOGIN_SUCCESS_URL = #widgetLoginSuccessURL:VARCHAR#,
+      LOGIN_FAILURE_URL = #widgetLoginFailureURL:VARCHAR#
     where WIDGET_ID = #widgetId:BIGINT#
   </update>
 </sqlMap>

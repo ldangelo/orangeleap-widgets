@@ -19,7 +19,7 @@
 	var mydatastore = null;
         
         var proxy = new Ext.data.HttpProxy( {api: {
-            read: 'loginwidget.ajax?action=read&widgettype=customentity&customentitytype=widget_authentication&guid=' + guid,
+            read: 'loginwidget.ajax?action=read&widgettype=gifthistory&customentitytype=undefined&guid=' + guid,
             create: 'loginwidget.ajax?action=create',
             update: 'loginwidget.ajax?action=update&guid=' + guid,
             destroy: 'loginwidget.ajax?action=save&guid=' + guid

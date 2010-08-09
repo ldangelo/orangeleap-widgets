@@ -327,4 +327,33 @@ public class WidgetServiceImpl implements WidgetService {
       List<Widget> widgets = widgetDAO.selectWidgetByExample(example);
       return widgets;
   }
+
+  public Widget createWidget(String userName,String passWord,String widgettype,String customentitytype) {
+    Widget widget = new Widget();
+    widget.setWidgetUsername(userName);
+    widget.setWidgetPassword(passWord);
+    widget.setWidgetType(widgettype);
+    widget.setCustomEntityName(customentitytype);
+    return widget;
+  }
+  public List<Widget> getWidgets(String userName,String passWord,String widgettype,String customentitytype) {
+      WidgetExample example = new WidgetExample();
+      example.createCriteria().andWidgetUsernameEqualTo(userName)
+      .andWidgetPasswordEqualTo(passWord)
+      .andWidgetTypeEqualTo(widgettype)
+      .andCustomEntityNameEqualTo(customentitytype);
+      
+      List<Widget> widgets = widgetDAO.selectWidgetByExample(example);
+      return widgets;
+  }
+  
+  public Widget saveWidget(Widget widget)
+  {
+    if (widget.getWidgetId() == 0) {
+      widgetDAO.insertWidget(widget);
+    } else {
+      widgetDAO.updateWidgetByPrimaryKey(widget);
+    }
+    return widget;
+  }
 }

@@ -73,12 +73,13 @@ var gifthistory = {
     generateWidget: function(widgetname,widgetid,authenticate, redirecturl) {
 	var constituentId = this.getCookie("constituentId");
 
-	if (authenticate == true) 
-	    if (constituentId == "") window.location=redirecturl;
+	if (authenticate == true && constituentId == "") {za
+	    window.location=redirecturl;
+	    return;
+	}
 
-	constituentid = this.getCookie("constituentId");
 
-	if (constituentid != "") window.location.redirecturl;
+	OrangeLeapWidget.updateViewCount(widgetid,document.location.href);
 
 	var mydatastore = new Ext.data.JsonStore({
 	    url:'/donatenow/giftHistory.json?guid=' + widgetid + '&constituentid=' + constituentId,

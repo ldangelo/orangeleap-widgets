@@ -62,11 +62,15 @@
                 p:view="jsonView"/>
 
     <bean name="jsonView" class="com.orangeleap.json.views.JsonMVCView" p:encodeNullBeanProperties="false"/>
-<bean id="paramResolver" class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
-		<property name="paramName" value="action"/>
+    <bean id="paramResolver" class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+      <property name="paramName" value="action"/>
 </bean>
 
   <bean id="ajaxLoginWidgetController" class="com.orangeleap.donatenow.controller.AjaxLoginWidgetController">
+      <property name="methodNameResolver" ref="paramResolver"/>      
+  </bean>
+
+  <bean id="ajaxWidgetFormController" class="com.orangeleap.donatenow.controller.AjaxWidgetFormController">
       <property name="methodNameResolver" ref="paramResolver"/>      
   </bean>
 
@@ -85,6 +89,7 @@
           <prop key="customEntity.ajax">customEntityController</prop>
           <prop key="loginwidget.ajax">ajaxLoginWidgetController</prop>
           <prop key="placements.ajax">ajaxPlacementController</prop>
+	  <prop key="widgetform.ajax">ajaxWidgetFormController</prop>
       </props>
     </property>
   </bean>

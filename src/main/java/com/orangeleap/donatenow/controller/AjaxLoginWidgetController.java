@@ -35,10 +35,12 @@ public class AjaxLoginWidgetController extends MultiActionController {
 
   public ModelAndView read(HttpServletRequest request,HttpServletResponse response) throws Exception {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    String widgettype = request.getParameter("widgettype");
+    String customentitytype = request.getParameter("customentitytype");
 	String userName = auth.getName();
 	String password = (String) auth.getCredentials();
 
-    List<Widget> ret = widgetService.getLoginWidgets(userName,password);
+    List<Widget> ret = widgetService.getWidgets(userName,password,widgettype,customentitytype);
 
     return getModelMap(ret);
   }
@@ -74,24 +76,28 @@ public class AjaxLoginWidgetController extends MultiActionController {
 
     map = new HashMap<String,Object>();
     map.put("name","widgetGuid");
+    map.put("type","text");
     map.put("header","GUID");
     fields.add(map);
     metaData.put("fields",fields);
 
     map = new HashMap<String,Object>();
     map.put("name","widgetCreateDate");
+    map.put("type","text");
     map.put("header","Create Date");
     fields.add(map);
     metaData.put("fields",fields);
 
     map = new HashMap<String,Object>();
     map.put("name","widgetViewCount");
+    map.put("type","text");
     map.put("header","View Count");
     fields.add(map);
     metaData.put("fields",fields);
 
     map = new HashMap<String,Object>();
     map.put("name","widgetErrorCount");
+    map.put("type","text");
     map.put("header","Error Count");
     fields.add(map);
     metaData.put("fields",fields);

@@ -22,13 +22,9 @@ import com.orangeleap.client.Constituent;
 import org.apache.commons.beanutils.PropertyUtils;
 
 @Controller
-@RequestMapping("/listloginwidgets.htm")
+
 public class ListLoginWidgetController extends MultiActionController {
   @Autowired
   WidgetService widgetService;
 
- @RequestMapping(method = RequestMethod.GET)
-  public void form(@RequestParam(required=false) Long id, Model model) {
-
-  }
 }
