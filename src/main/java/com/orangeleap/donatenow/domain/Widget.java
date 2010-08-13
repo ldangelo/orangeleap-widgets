@@ -100,6 +100,35 @@ public class Widget implements Serializable {
      */
     private String customEntityName;
 
+
+  private Boolean widgetAuthenticationRequired;
+  private String     widgetAuthenticationURL;
+  private String     sponsorshipURL;
+
+  public final String getSponsorshipURL() {
+    return sponsorshipURL;
+  }
+
+  public final void setSponsorshipURL(String url) {
+    sponsorshipURL = url;
+  }
+
+  public final String getWidgetAuthenticationURL() {
+    return widgetAuthenticationURL;
+  }
+
+  public void setWidgetAuthenticationURL(String url) {
+    widgetAuthenticationURL = url;
+  }
+
+  public final Boolean getWidgetAuthenticationRequired() {
+    return widgetAuthenticationRequired;
+  }
+
+  public final void setWidgetAuthenticationRequired(Boolean b) {
+    widgetAuthenticationRequired = b;
+  }
+
   /**
    * Get the <code>WidgetLoginSuccessURL</code> value.
    *

@@ -15,6 +15,7 @@ var    pageStart = 0;
 var pattern = "sponsorship_status=Available;";
 
 var sponsorshipform =  {
+    sponsorableurl:null,
     include: function(filename)
     {
 	var head = document.getElementsByTagName('head')[0];
@@ -314,7 +315,8 @@ var sponsorshipform =  {
 	    }
 	}
     },
-    generateWidget: function(widgetname,guid,authenticate, redirecturl) {
+    generateWidget: function(widgetname,guid,authenticate, redirecturl,sponsorshipformurl) {
+	sponsorshipform = sponsorshipformurl;
 	wname = widgetname;
 	var constituentId = this.getCookie("constituentId");
 
@@ -422,6 +424,7 @@ var sponsorshipform =  {
 		'load': function(store,records,options) {
 		    var metaData = store.reader.meta.fields;
 		    var value = null;
+		    if (records.length > 0) 
 		    for (var m=0; m < metaData.length; m++) {
 
 			    value = records[fldidx].get(metaData[m].name);

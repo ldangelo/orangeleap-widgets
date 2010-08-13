@@ -66,7 +66,7 @@ for (var f=0;f < fields.length; f++) {
 	    },
 	    stripeRows: true,
 	    frame:true,
-	    title: "Login Widgets",
+	    title: "Gift History Widgets",
 	    height: 250,
 	    width:655,
 	    listeners: {

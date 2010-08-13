@@ -18,6 +18,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.security.Authentication;
+import org.springframework.security.context.SecurityContextHolder;
 
 @Controller
 @RequestMapping("/picklistItems.json")
@@ -33,11 +35,23 @@ public class PickListItemsController {
     
     List<Widget> widgets = widgetDAO.selectWidgetByExample(example);
     
-    if (widgets.size() > 0) {
-      Widget widget = widgets.get(0);
+    String wsusername = null;
+    String wspassword = null;
+
+    if (widgets.size() > 0 || guid.equals("")) {
+      if (guid.equals("")) {
+        //
+        // get the authenticated user...
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        wsusername = auth.getName();
+        wspassword = (String) auth.getCredentials();
+      } else {
+        
+        Widget widget = widgets.get(0);
       
-      String wsusername = widget.getWidgetUsername();
-      String wspassword = widget.getWidgetPassword();
+        wsusername = widget.getWidgetUsername();
+        wspassword = widget.getWidgetPassword();
+      }
       
       WSClient wsClient = null;
       OrangeLeap oleap = null;

@@ -3,27 +3,17 @@
 <head>
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
 <title>Donor Portal</title>
-<link rel='stylesheet' href='css/main.css' />
-<link rel='stylesheet' href='css/pages.css' />
-<link rel='stylesheet' href='css/navigation.css' />
-<link rel="stylesheet" href='js/extjs/resources/css/ext-all.css'/>
-<link rel="stylesheet" href='css/widgets.css'/>
+<link rel='stylesheet' href='css/webtools.css'/> 
 <script type='text/javascript' src='/donatenow/dwr/interface/OrangeLeapWidget.js'></script>
 <script type='text/javascript' src='/donatenow/dwr/engine.js'></script>
 <script type='text/javascript' src='/donatenow/dwr/util.js'></script>
-<script type='text/javascript' src='/donatenow/js/jquery/jquery-1.3.2.js'></script>
-
-<script type="text/javascript" src="js/extjs/ext-base-debug.js"></script>
-<!--<script type="text/javascript" src="js/extjs/ext-jquery-adapter.js"></script>-->
-<script type="text/javascript" src="js/extjs/ext-all-debug.js"></script>
+<script type='text/javascript' src='/donatenow/js/webtools.js'></script>
 <script type='text/javascript' src='/donatenow/js/required-field.js'></script>
-<script type='text/javascript' src='/donatenow/js/customentity.js'></script>
-<script type='text/javascript' src='/donatenow/js/gifthistory.js'></script>
 </head>
 <body class='ext-gecko ext-gecko3 ext-mac'>
-<div id="loading-mask"></div>
-<div id="loading">
-<div class="loading-indicator">
+<div id='loading-mask'></div>
+<div id='loading'>
+<div class='loading-indicator'>
 Loading...
 </div>
 </div>
@@ -49,7 +39,7 @@ Loading...
     labelAlign:'left',
     labelWidth:100,
     monitorValid:true,
-    width:600,
+    width:655,
   items:[],
   buttons:[]
   });
@@ -60,7 +50,7 @@ Loading...
 </div>
  <script type='text/javascript'>
 Ext.onReady(function() {
-gifthistory.generateWidget("giftwidget", "TEST",true,"/donatenow/testlogin.html");
+gifthistory.generateWidget('giftwidget', 'TEST',true,'/donatenow/testlogin.html');
 });
 </script> 
 </body>
