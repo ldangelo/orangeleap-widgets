@@ -37,7 +37,7 @@ import org.springframework.security.Authentication;
 import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import com.orangeleap.donatenow.service.PlacementsService;
-
+import com.orangeleap.donatenow.service.OrangeLeapClientService;
 public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
   private static final Log logger = LogFactory.getLog(OrangeLeapWidgetServiceImpl.class);
 
@@ -46,6 +46,9 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
 
   @Autowired
   PlacementsService placementsService;
+
+  @Autowired
+  OrangeLeapClientService orangeLeapClientService;
 
   private String customFieldMapValue(CustomFieldMap map,String fieldName) {
         List<Entry> entries = map.getEntry(); 
@@ -121,147 +124,11 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
   }
 
   public Constituent getConstituent(String guid, Long id) {
-    WidgetExample example = new WidgetExample();
-    example.createCriteria().andWidgetGuidEqualTo(guid);
-    example.createCriteria().andWidgetTypeEqualTo("customentity");
-    List<Widget> widgets = widgetDAO.selectWidgetByExample(example);
-    
-    if (widgets.size() > 0) {
-
-      //
-      // guid is a unique key so this will only return one widget
-      Widget widget = widgets.get(0);
-    String wsusername = widgets.get(0).getWidgetUsername();
-    String wspassword = widgets.get(0).getWidgetPassword();
-
-      WSClient wsClient = null;
-      OrangeLeap oleap = null;
-
-      wsClient = new WSClient();
-      oleap = wsClient.getOrangeLeap(System.getProperty("donatenow.wsdllocation"),wsusername, wspassword);
-
-      GetConstituentByIdRequest request = new GetConstituentByIdRequest();
-      GetConstituentByIdResponse response = null;
-
-      request.setId(id);
-
-      response = oleap.getConstituentById(request);
-      if (response != null) {
-        return response.getConstituent();
-      }
-
-    }
-    return null;
-
+    return  orangeLeapClientService.getConstituentById(guid, id);
   }
 
   public List<Gift> getConstituentGifts(String guid, Long constituentId) {
-    WidgetExample example = new WidgetExample();
-    example.createCriteria().andWidgetGuidEqualTo(guid);
-    List<Widget> widgets = widgetDAO.selectWidgetByExample(example);
-    
-    if (widgets.size() > 0) {
-
-      //
-      // guid is a unique key so this will only return one widget
-      Widget widget = widgets.get(0);
-
-    String wsusername = widgets.get(0).getWidgetUsername();
-    String wspassword = widgets.get(0).getWidgetPassword();
-
-    WSClient wsClient = null;
-    OrangeLeap oleap = null;
-    
-    wsClient = new WSClient();
-    oleap = wsClient.getOrangeLeap(System.getProperty("donatenow.wsdllocation"),wsusername, wspassword);
-
-    GetConstituentGiftRequest request = new GetConstituentGiftRequest();
-    GetConstituentGiftResponse response = null;
-    
-    request.setConstituentId(constituentId);
-    request.setOffset(0);
-    request.setLimit(99);
-
-    response = oleap.getConstituentGift(request);
-
-    if (response != null) {
-      return response.getGift();
-    }
-
-    }
-    return null;
-  }
-
-  public List<PicklistItem> getPickListItems(String guid,String picklistname) {
-    WidgetExample example = new WidgetExample();
-    example.createCriteria().andWidgetGuidEqualTo(guid);
-    List<Widget> widgets = widgetDAO.selectWidgetByExample(example);
-    
-    if (widgets.size() > 0) {
-
-      //
-      // guid is a unique key so this will only return one widget
-      Widget widget = widgets.get(0);
-
-    String wsusername = widgets.get(0).getWidgetUsername();
-    String wspassword = widgets.get(0).getWidgetPassword();
-
-    WSClient wsClient = null;
-    OrangeLeap oleap = null;
-    
-    wsClient = new WSClient();
-    oleap = wsClient.getOrangeLeap(System.getProperty("donatenow.wsdllocation"),wsusername, wspassword);
-    GetPickListByNameRequest request = new GetPickListByNameRequest();
-    GetPickListByNameResponse response = null;
-
-    request.setName(picklistname);
-    response = oleap.getPickListByName(request);
-    if (response != null) {
-      return response.getPicklist().getPicklistItems();
-    }
-
-    }
-    return null;
-  }
-
-  public CustomTable getCustomEntity(String name) {
-        WidgetExample example = new WidgetExample();
-    example.createCriteria().andWidgetGuidEqualTo(name);
-    example.createCriteria().andWidgetTypeEqualTo("customentity");
-    List<Widget> widgets = widgetDAO.selectWidgetByExample(example);
-    
-    if (widgets.size() > 0) {
-
-      //
-      // guid is a unique key so this will only return one widget
-      Widget widget = widgets.get(0);
-    
-    String wsusername = widgets.get(0).getWidgetUsername();
-    String wspassword = widgets.get(0).getWidgetPassword();
-
-      WSClient wsClient = null;
-      OrangeLeap oleap = null;
-
-      wsClient = new WSClient();
-      oleap = wsClient.getOrangeLeap(System.getProperty("donatenow.wsdllocation"),wsusername, wspassword);
-      
-      ListCustomTablesRequest request = new ListCustomTablesRequest();
-      ListCustomTablesResponse response = null;
-
-      response = oleap.listCustomTables(request);
-
-      Iterator<CustomTable> it = response.getCustomTable().iterator();
-      while (it.hasNext()) {
-        CustomTable table = it.next();
-        if (table.getCustomTableName().equals(widget.getCustomEntityName())) {
-          return table;
-        }
-
-      }
-
-      
-    }
-    return null;
+      return orangeLeapClientService.getConstituentGifts(guid, constituentId);
   }
 
   public WidgetData process(WidgetData data) {

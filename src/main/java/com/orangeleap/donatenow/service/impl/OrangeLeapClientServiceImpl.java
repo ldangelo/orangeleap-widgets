@@ -6,6 +6,9 @@ import com.orangeleap.client.WSClient;
 import com.orangeleap.client.OrangeLeap;
 import com.orangeleap.client.GetConstituentByIdRequest;
 import com.orangeleap.client.GetConstituentByIdResponse;
+import com.orangeleap.client.GetConstituentGiftRequest;
+import com.orangeleap.client.GetConstituentGiftResponse;
+import com.orangeleap.client.Gift;
 import com.orangeleap.donatenow.service.OrangeLeapClientService;
 import org.springframework.stereotype.Service;
 import net.sf.ehcache.Cache;
@@ -76,6 +79,43 @@ public class OrangeLeapClientServiceImpl implements OrangeLeapClientService {
 
     }
 
+    return null;
+  }
+
+  public List<Gift> getConstituentGifts(String guid, Long constituentId) {
+    WidgetExample example = new WidgetExample();
+    example.createCriteria().andWidgetGuidEqualTo(guid);
+    List<Widget> widgets = widgetDAO.selectWidgetByExample(example);
+
+    if (widgets.size() > 0) {
+
+      //
+      // guid is a unique key so this will only return one widget
+      Widget widget = widgets.get(0);
+
+    String wsusername = widgets.get(0).getWidgetUsername();
+    String wspassword = widgets.get(0).getWidgetPassword();
+
+    WSClient wsClient = null;
+    OrangeLeap oleap = null;
+
+    wsClient = new WSClient();
+    oleap = wsClient.getOrangeLeap(System.getProperty("donatenow.wsdllocation"),wsusername, wspassword);
+
+    GetConstituentGiftRequest request = new GetConstituentGiftRequest();
+    GetConstituentGiftResponse response = null;
+
+    request.setConstituentId(constituentId);
+    request.setOffset(0);
+    request.setLimit(99);
+
+    response = oleap.getConstituentGift(request);
+
+    if (response != null) {
+      return response.getGift();
+    }
+
+    }
     return null;
   }
 }
