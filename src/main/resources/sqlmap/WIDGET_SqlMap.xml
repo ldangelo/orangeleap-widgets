@@ -297,7 +297,7 @@
       LOGIN_SUCCESS_URL = #record.widgetLoginSuccessURL:VARCHAR#,
       LOGIN_FAILURE_URL = #record.widgetLoginFailureURL:VARCHAR#,
       AUTHENTICATION_REQUIRED = #record.widgetAuthenticationRequired:BOOLEAN#,
-      AUTHENTICATION_URL = #record:widgetAuthenticationURL:VARCHAR#
+      AUTHENTICATION_URL = #record:widgetAuthenticationURL:VARCHAR#,
       SPONSORSHIP_URL = #record:sponsorshipURL:VARCHAR#
     <isParameterPresent >
       <include refid="WIDGET.ibatorgenerated_Example_Where_Clause" />
@@ -366,7 +366,7 @@
       LOGIN_SUCCESS_URL = #widgetLoginSuccessURL:VARCHAR#,
       LOGIN_FAILURE_URL = #widgetLoginFailureURL:VARCHAR#,
       AUTHENTICATION_REQUIRED = #widgetAuthenticationRequired:BOOLEAN#,
-      AUTHENTICATION_URL = #widgetAuthenticationURL#
+      AUTHENTICATION_URL = #widgetAuthenticationURL#,
       SPONSORSHIP_URL = #sponsorshipURL#
     where WIDGET_ID = #widgetId:BIGINT#
   </update>
