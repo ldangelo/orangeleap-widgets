@@ -38,7 +38,7 @@ public class OrangeLeapClientServiceImpl implements OrangeLeapClientService {
   }
 
   public Constituent getConstituentById(String guid, Long id) {
-    Element elem = constituentCache.get(id);
+    Element elem = constituentCache.get(guid+id);
     if (elem != null) {
       return (Constituent) elem.getObjectValue();
     }
@@ -70,7 +70,7 @@ public class OrangeLeapClientServiceImpl implements OrangeLeapClientService {
       response = oleap.getConstituentById(request);
       if (response != null) {
         Constituent c = response.getConstituent();
-        constituentCache.put(new Element(id,c));
+        constituentCache.put(new Element(guid+id,c));
         return response.getConstituent();
       }
 

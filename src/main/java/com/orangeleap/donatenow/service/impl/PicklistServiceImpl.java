@@ -27,7 +27,7 @@ public class PicklistServiceImpl implements PicklistService {
   {
     Cache cache = (Cache) picklistCache;
 
-    Element elem =  cache.get(picklistname);
+    Element elem =  cache.get(username+picklistname);
     if (elem!=null) {
       Picklist picklist = (Picklist) elem.getObjectValue();
       return picklist.getPicklistItems();
@@ -45,7 +45,7 @@ public class PicklistServiceImpl implements PicklistService {
     request.setName(picklistname);
     response = oleap.getPickListByName(request);
     if (response != null) {
-      cache.put(new Element(response.getPicklist().getPicklistName(),response.getPicklist()));
+      cache.put(new Element(username+response.getPicklist().getPicklistName(),response.getPicklist()));
       return response.getPicklist().getPicklistItems();
     }
 

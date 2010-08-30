@@ -222,7 +222,7 @@ public class WidgetServiceImpl implements WidgetService {
       Widget widget = widgets.get(0);
 
       Cache cache = (Cache) customTableCache;
-      Element elem = cache.get(widget.getCustomEntityName());
+      Element elem = cache.get(guid + widget.getCustomEntityName());
       if (elem != null) {
         return (CustomTable) elem.getObjectValue();
       }
@@ -245,7 +245,7 @@ public class WidgetServiceImpl implements WidgetService {
       response = oleap.readCustomTableByName(request);
 
       if (response != null) {
-        cache.put(new Element(response.getCustomTable().getCustomTableName(),response.getCustomTable()));
+        cache.put(new Element(guid + response.getCustomTable().getCustomTableName(),response.getCustomTable()));
       }
       return response.getCustomTable();
     }
