@@ -15,7 +15,7 @@ var    pageStart = 0;
 var pattern = "sponsorship_status=Available;";
 
 var sponsorshipform =  {
-    sponsorableurl:null,
+    sponsorshipurl:null,
     include: function(filename)
     {
 	var head = document.getElementsByTagName('head')[0];
@@ -131,6 +131,8 @@ var sponsorshipform =  {
     onRecurringGift: function() {
     },
     onSponsor: function() {
+	window.location=sponsorshipform.sponsorshipurl;
+	return;
 	var sponsorform = new Ext.FormPanel({
 	    id: 'sponsor',
 	    border:false,
@@ -316,7 +318,7 @@ var sponsorshipform =  {
 	}
     },
     generateWidget: function(widgetname,guid,authenticate, redirecturl,sponsorshipformurl) {
-	sponsorshipform = sponsorshipformurl;
+	this.sponsorshipurl = sponsorshipformurl;
 	wname = widgetname;
 	var constituentId = this.getCookie("constituentId");
 
