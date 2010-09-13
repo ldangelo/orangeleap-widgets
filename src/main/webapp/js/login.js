@@ -54,8 +54,10 @@ var authentication = {
 	    else
 		this.setCookie("constituentId",constituentid);
 
-	    if (successurl != null)
-		document.location = successurl;
+	    if (successurl != null) {
+		//document.location = successurl;
+		window.open(successurl,"_top");
+	    }
 	}
     },
 

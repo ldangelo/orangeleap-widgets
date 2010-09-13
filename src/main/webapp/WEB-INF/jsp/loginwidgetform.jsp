@@ -12,6 +12,7 @@
 	<!--<script type="text/javascript" src="js/extjs/ext-jquery-adapter.js"></script>-->
 	<script type="text/javascript" src="js/extjs/ext-all-debug.js"></script>
 	<script type="text/javascript" src="js/listplacements.js"></script>
+        <script type="text/javascript" src="js/dynamicform.js"></script>
 	<script type="text/javascript">
 
 	Ext.onReady(function() {

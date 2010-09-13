@@ -4,4 +4,5 @@
   <settings useStatementNamespaces="true" />
   <sqlMap resource="sqlmap/PLACEMENTS_SqlMap.xml" />
   <sqlMap resource="sqlmap/WIDGET_SqlMap.xml" />
+  <sqlMap resource="sqlmap/STYLE_SqlMap.xml" />
 </sqlMapConfig>

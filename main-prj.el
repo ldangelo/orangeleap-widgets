@@ -20,11 +20,11 @@
  '(jde-jdk (quote ("1.6")))
 
  ;; Nice feature sorting imports.
- '(jde-import-auto-sort t)
+;; '(jde-import-auto-sort t)
 
  ;; For syntax highlighting and basic syntax checking parse buffer
  ;; number of seconds from the time you changed the buffer.
- '(jde-auto-parse-buffer-interval 600)
+;; '(jde-auto-parse-buffer-interval 600)
 
  ;; Only for CygWin users it improves path resolving
 ;; '(jde-cygwin-path-converter (quote (jde-cygwin-path-converter-cygpath)))

@@ -25,15 +25,18 @@
 
 	<sec:http auto-config="true">
 		<sec:intercept-url pattern='/login*' access='IS_AUTHENTICATED_ANONYMOUSLY'/>
-		<sec:intercept-url pattern='/test.html' access='IS_AUTHENTICATED_ANONYMOUSLY'/>		
-    	<sec:intercept-url pattern='/logoutSuccess*' access='IS_AUTHENTICATED_ANONYMOUSLY'/>
-    	<sec:intercept-url pattern='/css/*' access='IS_AUTHENTICATED_ANONYMOUSLY'/>    	
-    	<sec:intercept-url pattern='/js/*' access='IS_AUTHENTICATED_ANONYMOUSLY'/>    	    	
-    	<sec:intercept-url pattern='/js/jquery/*' access='IS_AUTHENTICATED_ANONYMOUSLY'/>    	    	    	
-    	<sec:intercept-url pattern='/decorators/*' access='IS_AUTHENTICATED_ANONYMOUSLY'/>
-    	<sec:intercept-url pattern='/includes/*' access='IS_AUTHENTICATED_ANONYMOUSLY'/>    	    	
-    	<sec:intercept-url pattern='/images/*' access='IS_AUTHENTICATED_ANONYMOUSLY'/>    	    	    	
-    	<sec:intercept-url pattern='/dwr/**' access='IS_AUTHENTICATED_ANONYMOUSLY'/>    	    	    	    	
+		<sec:intercept-url pattern='/test.html' access='IS_AUTHENTICATED_ANONYMOUSLY'/>		    	<sec:intercept-url pattern='/includes/*' access='IS_AUTHENTICATED_ANONYMOUSLY'/>    	    	<sec:intercept-url pattern='/logoutSuccess*' access='IS_AUTHENTICATED_ANONYMOUSLY'/>
+		<sec:intercept-url pattern='/css/**' filters='none'/>
+		<sec:intercept-url pattern='/js/**' filters='none'/>
+		<sec:intercept-url pattern='/js/jquery/**' filters='none'/>
+		<sec:intercept-url pattern='/decorators/**' filters='none'/>
+		<sec:intercept-url pattern='/customEntity.ajax*' filters='none'/>
+		<sec:intercept-url pattern='/widget.ajax*' filters='none'/>
+		<sec:intercept-url pattern='/loginwidget.ajax*' filters='none'/>
+		<sec:intercept-url pattern='/picklistItems.json*' filters='none'/>
+		<sec:intercept-url pattern='/giftHistory.json*' filters='none'/>
+		<sec:intercept-url pattern='/images/**' filters='none'/>
+		<sec:intercept-url pattern='/dwr/**' filters='none'/>
 		<sec:intercept-url pattern='/**' access='ROLE_USER'/>
 		<sec:form-login login-page='/login.jsp' 
 			default-target-url='/index.jsp' 

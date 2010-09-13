@@ -43,6 +43,10 @@
 	</bean>
 -->
 
+<bean id="styleDAO" class="com.orangeleap.donatenow.dao.impl.StyleDAOImpl">
+		<property name="sqlMapClient"><ref local="sqlMap"/></property>
+</bean>
+
 	<bean id="widgetDAO" class="com.orangeleap.donatenow.dao.impl.WidgetDAOImpl">
 		<property name="sqlMapClient"><ref local="sqlMap"/></property>
 	</bean>

@@ -555,14 +555,9 @@ a.active:hover div.homeIcon {
 	background:url("../images/icons/homeIcon.gif") no-repeat center center;
 }
 
-/*!
- * Ext JS Library 3.0.0
- * Copyright(c) 2006-2009 Ext JS, LLC
- * licensing@extjs.com
- * http://www.extjs.com/license
- */
+
 html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,p,blockquote,th,td{margin:0;padding:0;}img,body,html{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}ol,ul {list-style:none;}caption,th {text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;}q:before,q:after{content:'';}.ext-el-mask {
-    z-index: 100;
+    z-index: 100;Å
     position: absolute;
     top:0;
     left:0;
@@ -613,7 +608,7 @@ html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,p,bloc
     line-height:16px;
 }
 
-/* class for hiding elements without using display:none */
+
 .x-hidden, .x-hide-offsets {
     position:absolute !important;
     left:-10000px;
@@ -749,20 +744,20 @@ html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,p,bloc
     zoom: 1;
 }
 
-/* top  bottom */
+
 .x-shadow .xstc, .x-shadow .xsbc {
     height: 6px;
     float: left;
 }
 
-/* corners */
+
 .x-shadow .xstl, .x-shadow .xstr, .x-shadow .xsbl, .x-shadow .xsbr {
     width: 6px;
     height: 6px;
     float: left;
 }
 
-/* sides */
+
 .x-shadow .xsc {
     width: 100%;
 }
@@ -884,7 +879,7 @@ html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,p,bloc
 .x-resizable-handle {
     position:absolute;
     z-index:100;
-    /* ie needs these */
+
     font-size:1px;
     line-height:6px;
     overflow:hidden;
@@ -902,7 +897,7 @@ html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,p,bloc
 }
 
 .ext-ie .x-resizable-handle-east {
-    margin-right:-1px; /*IE rounding error*/
+    margin-right:-1px; 
 }
 
 .x-resizable-handle-south{
@@ -914,7 +909,7 @@ html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,p,bloc
 }
 
 .ext-ie .x-resizable-handle-south {
-    margin-bottom:-1px; /*IE rounding error*/
+    margin-bottom:-1px; 
 }
 
 .x-resizable-handle-west{
@@ -1191,9 +1186,7 @@ ul.x-tab-strip li.x-tab-edge {
     margin-bottom:-1px;
 }
 
-/*
- * Horrible hack for IE8 in quirks mode
- */
+
 .ext-border-box .ext-ie8 .x-tab-strip .x-tab-right{
     top: 1px;
 }
@@ -1389,7 +1382,7 @@ ul.x-tab-strip li.x-tab-edge {
     border-top:0 none;
     overflow:hidden;
     padding:2px;
-}/* all fields */
+}
 .x-form-field{
     margin: 0 0 0 0;
 }
@@ -1398,7 +1391,7 @@ ul.x-tab-strip li.x-tab-edge {
     outline: none !important;
 }
 
-/* ---- text fields ---- */
+
 .x-form-text, textarea.x-form-field{
     padding:1px 3px;
     background:repeat-x 0 0;
@@ -1416,13 +1409,13 @@ textarea.x-form-field {
 }
 
 .ext-ie6 .x-form-text, .ext-ie7 .x-form-text {
-    margin:-1px 0; /* ie bogus margin bug */
-    height:22px; /* ie quirks */
+    margin:-1px 0; 
+    height:22px; 
     line-height:18px;
 }
 
 .ext-ie6 textarea.x-form-field, .ext-ie7 textarea.x-form-field {
-    margin:-1px 0; /* ie bogus margin bug */
+    margin:-1px 0; 
 }
 
 .ext-strict .x-form-text {
@@ -1430,7 +1423,7 @@ textarea.x-form-field {
 }
 
 .ext-safari.ext-mac textarea.x-form-field {
-    margin-bottom:-2px; /* another bogus margin bug, safari/mac only */
+    margin-bottom:-2px; 
 }
 
 .ext-strict .ext-ie8 .x-form-text, .ext-strict .ext-ie8 textarea.x-form-field {
@@ -1438,15 +1431,15 @@ textarea.x-form-field {
 }
 
 .ext-gecko .x-form-text , .ext-ie8 .x-form-text {
-    padding-top:2px; /* FF won't center the text vertically */
+    padding-top:2px; 
     padding-bottom:0;
 }
 
 textarea {
-    resize: none;  /* Disable browser resizable textarea */
+    resize: none;  
 }
 
-/* select boxes */
+
 .x-form-select-one {
     height:20px;
     line-height:18px;
@@ -1454,11 +1447,7 @@ textarea {
     border: 1px solid;
 }
 
-/* multi select boxes */
 
-/* --- TODO --- */
-
-/* 2.0.2 style */
 .x-form-check-wrap {
     line-height:18px;
 }
@@ -1483,7 +1472,7 @@ textarea {
     float: none !important;
 }
 
-/* wrapped fields and triggers */
+
 .x-form-field-wrap .x-form-trigger{
     width:17px;
     height:21px;
@@ -1554,12 +1543,12 @@ textarea {
     cursor:pointer;
 }
 
-/* field focus style */
+
 .x-form-focus, textarea.x-form-focus{
 	border: 1px solid;
 }
 
-/* invalid fields */
+
 .x-form-invalid, textarea.x-form-invalid{
 	background:repeat-x bottom;
 	border: 1px solid;
@@ -1573,7 +1562,7 @@ textarea {
 	background:repeat-x bottom;
 }
 
-/* editors */
+
 .x-editor {
     visibility:hidden;
     padding:0;
@@ -1617,7 +1606,7 @@ textarea {
     padding:0 !important;
 }
 
-/* Form Items CSS */
+
 
 .x-form-item {
     display:block;
@@ -1675,7 +1664,7 @@ textarea {
     padding-bottom:4px;
 }
 
-/* Editor small font for grid, toolbar and tree */
+
 .x-small-editor .x-form-text {
     height:20px;
     line-height:16px;
@@ -1683,9 +1672,9 @@ textarea {
 }
 
 .ext-ie6 .x-small-editor .x-form-text, .ext-ie7 .x-small-editor .x-form-text {
-    margin-top:-1px !important; /* ie bogus margin bug */
+    margin-top:-1px !important; 
     margin-bottom:-1px !important;
-    height:20px !important; /* ie quirks */
+    height:20px !important; 
     line-height:16px !important;
 }
 
@@ -1768,7 +1757,7 @@ textarea {
     zoom:1;
 }
 
-/* buttons */
+
 .x-form .x-form-btns-ct .x-btn{
 	float:right;
 	clear:none;
@@ -1790,11 +1779,11 @@ textarea {
 }
 
 .x-form .x-form-btns-ct .x-form-btns-center{
-	text-align:center; /*ie*/
+	text-align:center; 
 }
 
 .x-form .x-form-btns-ct .x-form-btns-center table{
-	margin:0 auto; /*everyone else*/
+	margin:0 auto; 
 }
 
 .x-form .x-form-btns-ct table td.x-form-btn-td{
@@ -1836,15 +1825,15 @@ textarea {
     background:transparent no-repeat 0 2px;
 }
 
-/* fieldsets */
+
 .x-fieldset {
     border:1px solid;
     padding:10px;
     margin-bottom:10px;
-    display:block; /* preserve margins in IE */
+    display:block; 
 }
 
-/* make top of checkbox/tools visible in webkit */
+
 .ext-webkit .x-fieldset-header {
     padding-top: 1px;
 }        
@@ -1904,7 +1893,7 @@ fieldset.x-panel-collapsed .x-fieldset-bwrap {
     margin-left:-3px;
 }
 
-/* IE legend positioing bug */
+
 .ext-ie .x-fieldset-noborder legend {
     position: relative;
     margin-bottom:23px;
@@ -1990,9 +1979,9 @@ fieldset.x-panel-collapsed .x-fieldset-bwrap {
     padding:0;
 }
 
-/* icon placement and sizing styles */
 
-/* Only text */
+
+
 .x-btn-noicon .x-btn-small .x-btn-text{
 	height: 16px;
 }
@@ -2005,7 +1994,7 @@ fieldset.x-panel-collapsed .x-fieldset-bwrap {
     height: 32px;
 }
 
-/* Only icons */
+
 .x-btn-icon .x-btn-text{
     background-position: center;
 	background-repeat: no-repeat;
@@ -2026,8 +2015,7 @@ fieldset.x-panel-collapsed .x-fieldset-bwrap {
 	width: 32px;
 }
 
-/* Icons and text */
-/* left */
+
 .x-btn-text-icon .x-btn-icon-small-left .x-btn-text{
     background-position: 0 center;
 	background-repeat: no-repeat;
@@ -2049,7 +2037,7 @@ fieldset.x-panel-collapsed .x-fieldset-bwrap {
     height:32px;
 }
 
-/* top */
+
 .x-btn-text-icon .x-btn-icon-small-top .x-btn-text{
     background-position: center 0;
 	background-repeat: no-repeat;
@@ -2068,7 +2056,7 @@ fieldset.x-panel-collapsed .x-fieldset-bwrap {
     padding-top:34px;
 }
 
-/* right */
+
 .x-btn-text-icon .x-btn-icon-small-right .x-btn-text{
     background-position: right center;
 	background-repeat: no-repeat;
@@ -2090,7 +2078,7 @@ fieldset.x-panel-collapsed .x-fieldset-bwrap {
     height:32px;
 }
 
-/* bottom */
+
 .x-btn-text-icon .x-btn-icon-small-bottom .x-btn-text{
     background-position: center bottom;
 	background-repeat: no-repeat;
@@ -2109,7 +2097,7 @@ fieldset.x-panel-collapsed .x-fieldset-bwrap {
     padding-bottom:34px;
 }
 
-/* background positioning */
+
 .x-btn-tr i, .x-btn-tl i, .x-btn-mr i, .x-btn-ml i, .x-btn-br i, .x-btn-bl i{
 	font-size:1px;
     line-height:1px;
@@ -2249,8 +2237,7 @@ fieldset.x-panel-collapsed .x-fieldset-bwrap {
 }
 
 
-/* With a menu arrow */
-/* right */
+
 .x-btn-mc em.x-btn-arrow {
     display:block;
     background:transparent no-repeat right center;
@@ -2263,7 +2250,7 @@ fieldset.x-panel-collapsed .x-fieldset-bwrap {
 	padding-right:14px;
 }
 
-/* bottom */
+
 .x-btn-mc em.x-btn-arrow-bottom {
     display:block;
     background:transparent no-repeat center bottom;
@@ -2276,14 +2263,14 @@ fieldset.x-panel-collapsed .x-fieldset-bwrap {
 	padding-bottom:14px;
 }
 
-/* height adjustment class */
+
 .x-btn-as-arrow .x-btn-mc em {
     display:block;
     background:transparent;
 	padding-bottom:14px;
 }
 
-/* groups */
+
 .x-btn-group {
     padding:1px;
 }
@@ -2426,7 +2413,7 @@ fieldset.x-panel-collapsed .x-fieldset-bwrap {
 	background-position: 500px 500px;
 }
 
-/* These rules are duplicated from button.css to give priority of x-toolbar rules above */
+
 .x-toolbar .x-btn-over .x-btn-tl{
 	background-position: -6px 0;
 }
@@ -2522,7 +2509,7 @@ fieldset.x-panel-collapsed .x-fieldset-bwrap {
     width:2px;
 }
 
-/* Paging Toolbar */
+
 .x-tbar-page-number{
 	width:30px;
 	height:14px;
@@ -2538,7 +2525,7 @@ fieldset.x-panel-collapsed .x-fieldset-bwrap {
     right: 8px;
 }
 
-/* floating */
+
 .x-toolbar-ct {
     width:100%;
 }
@@ -2572,7 +2559,7 @@ div.x-toolbar-no-items {
     padding:5px 10px !important;
 }
 
-/* fix ie toolbar form items */
+
 .ext-border-box .x-toolbar-cell .x-form-text {
     margin-bottom:-1px !important;
 }
@@ -2611,7 +2598,7 @@ div.x-toolbar-no-items {
     vertical-align: bottom;
 }
 
-/* StatusBar */
+
 .x-statusbar .x-status-text {
     height: 21px;
     line-height: 21px;
@@ -2678,7 +2665,7 @@ div.x-toolbar-no-items {
 	background-position: 500px 500px;
 }
 
-/* These rules are duplicated from button.css to give priority of x-toolbar rules above */
+
 .x-toolbar .x-btn-over .x-btn-tl{
 	background-position: -6px 0;
 }
@@ -2774,7 +2761,7 @@ div.x-toolbar-no-items {
     width:2px;
 }
 
-/* Paging Toolbar */
+
 .x-tbar-page-number{
 	width:30px;
 	height:14px;
@@ -2790,7 +2777,7 @@ div.x-toolbar-no-items {
     right: 8px;
 }
 
-/* floating */
+
 .x-toolbar-ct {
     width:100%;
 }
@@ -2824,7 +2811,7 @@ div.x-toolbar-no-items {
     padding:5px 10px !important;
 }
 
-/* fix ie toolbar form items */
+
 .ext-border-box .x-toolbar-cell .x-form-text {
     margin-bottom:-1px !important;
 }
@@ -2863,7 +2850,7 @@ div.x-toolbar-no-items {
     vertical-align: bottom;
 }
 
-/* StatusBar */
+
 .x-statusbar .x-status-text {
     height: 21px;
     line-height: 21px;
@@ -2882,7 +2869,7 @@ div.x-toolbar-no-items {
     border-bottom: 1px solid;
     border-left: 1px solid;
     padding: 2px 8px 2px 5px;
-}/* Grid3 styles */
+}
 .x-grid3 {
 	position:relative;
 	overflow:hidden;
@@ -2963,12 +2950,12 @@ div.x-toolbar-no-items {
     outline:0 none;
 }
 
-/* IE Quirks to clip */
+
 .ext-ie .x-grid3-cell-inner, .ext-ie .x-grid3-hd-inner{
 	width:100%;
 }
 
-/* reverse above in strict mode */
+
 .ext-strict .x-grid3-cell-inner, .ext-strict .x-grid3-hd-inner{
 	width:auto;
 }
@@ -3033,7 +3020,7 @@ div.x-toolbar-no-items {
     -webkit-user-select:ignore;
 }
 
-/* header styles */
+
 .x-grid3-header{
 	background: repeat-x 0 bottom;
 	cursor:default;
@@ -3096,7 +3083,7 @@ td.x-grid3-hd-over .x-grid3-hd-inner, td.sort-desc .x-grid3-hd-inner, td.sort-as
 	display: inline;
 }
 
-/* Header position fixes for IE strict mode */
+
 .ext-strict .ext-ie .x-grid3-header-inner, .ext-strict .ext-ie6 .x-grid3-hd {
     position:relative;
 }
@@ -3105,7 +3092,7 @@ td.x-grid3-hd-over .x-grid3-hd-inner, td.sort-desc .x-grid3-hd-inner, td.sort-as
     position:static;
 }
 
-/* Body Styles */
+
 .x-grid3-body {
 	zoom:1;
 }
@@ -3139,7 +3126,7 @@ td.x-grid3-hd-over .x-grid3-hd-inner, td.sort-desc .x-grid3-hd-inner, td.sort-as
 	z-index: 3;
 }
 
-/* Column Reorder DD */
+
 .x-dd-drag-proxy .x-grid3-hd-inner{
 	background: repeat-x left bottom;
 	width:120px;
@@ -3161,7 +3148,7 @@ td.x-grid3-hd-over .x-grid3-hd-inner, td.sort-desc .x-grid3-hd-inner, td.sort-as
     background:transparent no-repeat left top;
 }
 
-/* Selection Styles */
+
 .x-grid3-row-selected {
 	border:1px dotted;
 }
@@ -3181,12 +3168,12 @@ td.x-grid3-hd-over .x-grid3-hd-inner, td.sort-desc .x-grid3-hd-inner, td.sort-as
     text-align:center;
 }
 
-/* dirty cells */
+
 .x-grid3-dirty-cell {
     background: transparent no-repeat 0 0;
 }
 
-/* Grid Toolbars */
+
 .x-grid3-topbar, .x-grid3-bottombar{
     overflow:hidden;
 	display:none;
@@ -3204,7 +3191,7 @@ td.x-grid3-hd-over .x-grid3-hd-inner, td.sort-desc .x-grid3-hd-inner, td.sort-as
 	border-top:1px solid;
 }
 
-/* Props Grid Styles */
+
 .x-props-grid .x-grid3-cell{
 	padding:1px;
 }
@@ -3221,7 +3208,7 @@ td.x-grid3-hd-over .x-grid3-hd-inner, td.sort-desc .x-grid3-hd-inner, td.sort-as
     border-right:1px solid;
 }
 
-/* dd */
+
 .x-grid3-col-dd {
     border:0 none;
     padding:0;
@@ -3257,7 +3244,7 @@ a.x-grid3-hd-btn:hover {
     background-position:-14px center;
 }
 
-/* Expanders */
+
 .x-grid3-body .x-grid3-td-expander {
     background:transparent repeat-y right;
 }
@@ -3291,7 +3278,7 @@ a.x-grid3-hd-btn:hover {
     display:block !important;
 }
 
-/* Checkers */
+
 .x-grid3-body .x-grid3-td-checker {
     background:transparent repeat-y right;
 }
@@ -3325,7 +3312,7 @@ a.x-grid3-hd-btn:hover {
     background-position:-23px 3px;
 }
 
-/* Numberer */
+
 .x-grid3-body .x-grid3-td-numberer {
     background:transparent repeat-y right;
 }
@@ -3335,7 +3322,7 @@ a.x-grid3-hd-btn:hover {
     text-align:right;
 }
 
-/* Row Icon */
+
 
 .x-grid3-body .x-grid3-td-row-icon {
     background:transparent repeat-y right;
@@ -3353,7 +3340,7 @@ a.x-grid3-hd-btn:hover {
     margin-top:3px;
 }
 
-/* All specials */
+
 .x-grid3-body .x-grid3-row-selected .x-grid3-td-numberer,
 .x-grid3-body .x-grid3-row-selected .x-grid3-td-checker,
 .x-grid3-body .x-grid3-row-selected .x-grid3-td-expander {
@@ -3380,7 +3367,7 @@ a.x-grid3-hd-btn:hover {
     background-color:transparent;
 }
 
-/* Grouping classes */
+
 .x-grid-group, .x-grid-group-body, .x-grid-group-hd {
     zoom:1;
 }
@@ -3414,7 +3401,7 @@ a.x-grid3-hd-btn:hover {
     padding:10px;
 }
 
-/* fix floating toolbar issue */
+
 .ext-ie7 .x-grid-panel .x-panel-bbar {
     position:relative;
 }
@@ -3423,7 +3410,7 @@ a.x-grid3-hd-btn:hover {
     position: relative;
 }
 
-/* column lines */
+
 .x-grid-with-col-lines .x-grid3-row td.x-grid3-cell {
     padding-right:0;
     border-right:1px solid;
@@ -3512,7 +3499,7 @@ a.x-grid3-hd-btn:hover {
     vertical-align:middle !important;
 }
 
-/* checkboxes */
+
 .ext-ie input.x-tree-node-cb {
     width:15px;
     height:15px;
@@ -3530,13 +3517,13 @@ input.x-tree-node-cb {
 	width:0; height:0;
 }
 
-/* loading icon */
+
 .ext-ie .x-tree-node-el input {
     width:15px;
     height:15px;
 }
 
-/* No line styles */
+
 .x-tree-no-lines .x-tree-elbow{
 	background:transparent;
 }
@@ -3549,7 +3536,7 @@ input.x-tree-node-cb {
 	background:transparent;
 }
 
-/* Arrows */
+
 .x-tree-arrows .x-tree-elbow{
 	background:transparent;
 }
@@ -3675,7 +3662,7 @@ input.x-tree-node-cb {
 	display:none !important;
 }
 
-/* Fix for ie rootVisible:false issue */
+
 .x-tree-root-ct {
     zoom:1;
 }
@@ -3721,7 +3708,7 @@ input.x-tree-node-cb {
 .x-date-middle {
     padding-top:2px;
     padding-bottom:2px;
-    width:130px; /* FF3 */
+    width:130px; 
 }
 
 .x-date-right a, .x-date-left a{
@@ -4282,17 +4269,6 @@ a.x-menu-item {
 .x-menu-list-item-indent{
     padding-left: 27px;
 }
-/*
- Creates rounded, raised boxes like on the Ext website - the markup isn't pretty:
-  <div class="x-box-blue">
-        <div class="x-box-tl"><div class="x-box-tr"><div class="x-box-tc"></div></div></div>
-        <div class="x-box-ml"><div class="x-box-mr"><div class="x-box-mc">
-            <h3>YOUR TITLE HERE (optional)</h3>
-            <div>YOUR CONTENT HERE</div>
-        </div></div></div>
-        <div class="x-box-bl"><div class="x-box-br"><div class="x-box-bc"></div></div></div>
-    </div>
- */
 
 .x-box-tl {
 	background: transparent no-repeat 0 0;
@@ -4382,7 +4358,7 @@ a.x-menu-item {
 
 .x-combo-list-inner {
     overflow:auto;
-    position:relative; /* for calculating scroll offsets */
+    position:relative; 
     zoom:1;
     overflow-x:hidden;
 }
@@ -4430,7 +4406,7 @@ a.x-menu-item {
     border:1px solid;
     border-top:0 none;
     overflow:hidden;
-    position: relative; /* added for item scroll positioning */
+    position: relative; 
 }
 
 .x-panel-bbar .x-toolbar, .x-panel-tbar .x-toolbar {
@@ -4483,7 +4459,7 @@ a.x-menu-item {
 	overflow:hidden;
 }
 
-/* fix ie7 strict mode bug */
+
 .ext-strict .ext-ie7 .x-panel-tc {
     overflow: visible;
 }
@@ -4575,7 +4551,7 @@ a.x-menu-item {
     overflow:hidden !important;
 }
 
-/* Plain */
+
 .x-plain-body {
     overflow:hidden;
 }
@@ -4599,7 +4575,7 @@ a.x-menu-item {
     overflow:hidden;
 }
 
-/* Tools */
+
 .x-tool {
     overflow:hidden;
     width:15px;
@@ -4610,7 +4586,7 @@ a.x-menu-item {
     margin-left:2px;
 }
 
-/* expand / collapse tools */
+
 .x-tool-toggle {
     background-position:0 -60px;
 }
@@ -4772,7 +4748,7 @@ a.x-menu-item {
     background-position:-15px -315px;
 }
 
-/* Ghosting */
+
 .x-panel-ghost {
     z-index:12000;
     overflow:hidden;
@@ -4802,7 +4778,7 @@ a.x-menu-item {
     border:2px dashed;
 }
 
-/* Buttons */
+
 .x-panel-btns {
     padding:5px;
     overflow:hidden;
@@ -4818,11 +4794,11 @@ a.x-menu-item {
 }
 
 .x-panel-btns-center{
-	text-align:center; /*ie*/
+	text-align:center; 
 }
 
 .x-panel-btns-center .x-toolbar-ct {
-	margin:0 auto; /*everyone else*/
+	margin:0 auto; 
     text-align:left;
     width:auto;
 }
@@ -4874,12 +4850,7 @@ a.x-menu-item {
 .x-panel-fbar td,.x-panel-fbar span,.x-panel-fbar input,.x-panel-fbar div,.x-panel-fbar select,.x-panel-fbar label{
 	white-space: nowrap;
 }
-/**
- * W3C Suggested Default style sheet for HTML 4
- * http://www.w3.org/TR/CSS21/sample.html
- *
- * Resets for Ext.Panel @cfg normal: true
- */
+
 .x-panel-reset .x-panel-body html,
 .x-panel-reset .x-panel-body address,
 .x-panel-reset .x-panel-body blockquote,
@@ -4989,15 +4960,15 @@ a.x-menu-item {
 .x-panel-reset .x-panel-body ol ol    		  { margin-top: 0; margin-bottom: 0 }
 .x-panel-reset .x-panel-body u,
 .x-panel-reset .x-panel-body ins          	  { text-decoration: underline }
-.x-panel-reset .x-panel-body br:before       { content: "\A" }
+.x-panel-reset .x-panel-body br:before       { content: '\A' }
 .x-panel-reset .x-panel-body :before, .x-panel-reset .x-panel-body :after { white-space: pre-line }
 .x-panel-reset .x-panel-body center          { text-align: center }
 .x-panel-reset .x-panel-body :link, .x-panel-reset .x-panel-body :visited { text-decoration: underline }
 .x-panel-reset .x-panel-body :focus          { outline: thin dotted invert }
 
-/* Begin bidirectionality settings (do not change) */
-.x-panel-reset .x-panel-body BDO[DIR="ltr"]  { direction: ltr; unicode-bidi: bidi-override }
-.x-panel-reset .x-panel-body BDO[DIR="rtl"]  { direction: rtl; unicode-bidi: bidi-override }
+
+.x-panel-reset .x-panel-body BDO[DIR='ltr']  { direction: ltr; unicode-bidi: bidi-override }
+.x-panel-reset .x-panel-body BDO[DIR='rtl']  { direction: rtl; unicode-bidi: bidi-override }
 .x-window {
     zoom:1;
 }
@@ -5491,7 +5462,7 @@ body.ext-ie6.x-body-masked .x-window select {
     background-color:transparent;
 }
 
-/* IE6 strict won't drag w/out a color */
+
 .ext-strict .ext-ie6 .x-layout-split{
     background-color: #fff !important;
     filter: alpha(opacity=1);
@@ -5525,7 +5496,7 @@ body.ext-ie6.x-body-masked .x-window select {
     zoom:1;
 }
 
-/* mini mode */
+
 .x-layout-mini {
     position:absolute;
     top:0;
@@ -5748,7 +5719,7 @@ body.ext-ie6.x-body-masked .x-window select {
     border-width: 0 1px 1px;
     padding-bottom:3px;
 }
-/* Shared styles */
+
 .x-slider {
     zoom:1;
 }
@@ -5778,7 +5749,7 @@ body.ext-ie6.x-body-masked .x-window select {
 	overflow:hidden;  
 }
 
-/* Horizontal styles */
+
 .x-slider-horz {
     padding-left:7px;
     background:transparent no-repeat 0 -22px;
@@ -5812,7 +5783,7 @@ body.ext-ie6.x-body-masked .x-window select {
     background-position: -28px -30px;
 }
 
-/* Vertical styles */
+
 .x-slider-vert {
     padding-top:7px;
     background:transparent no-repeat -44px 0;
@@ -5886,7 +5857,7 @@ body.ext-ie6.x-body-masked .x-window select {
 }
 
 .ext-ie .x-window-dlg .ext-mb-icon {
-    width:44px; /* 3px IE margin issue */
+    width:44px; 
 }
 
 .x-window-dlg .x-dlg-icon .ext-mb-content{
@@ -6857,7 +6828,7 @@ td.x-grid3-hd-over .x-grid3-hd-inner, td.sort-desc .x-grid3-hd-inner, td.sort-as
 .x-date-middle,.x-date-left,.x-date-right {
 	background-image: url(../images/default/shared/hd-sprite.gif);
 	color:#fff;
-	font:bold 11px "sans serif", tahoma, verdana, helvetica;
+	font:bold 11px 'sans serif', tahoma, verdana, helvetica;
 }
 
 .x-date-middle .x-btn .x-btn-text {
@@ -7117,7 +7088,7 @@ a.x-menu-item {
 .x-box-mc {
 	background-color: #eee;
     background-image: url(../images/default/box/tb.gif);
-	font-family: "Myriad Pro","Myriad Web","Tahoma","Helvetica","Arial",sans-serif;
+	font-family: 'Myriad Pro','Myriad Web','Tahoma','Helvetica','Arial',sans-serif;
 	color: #393939;
 	font-size: 12px;
 }
@@ -7168,7 +7139,7 @@ a.x-menu-item {
 }#x-debug-browser .x-tree .x-tree-node a span {
     color:#222297;
     font-size:11px;
-    font-family:"monotype","courier new",sans-serif;
+    font-family:'monotype','courier new',sans-serif;
 }
 
 #x-debug-browser .x-tree a i {

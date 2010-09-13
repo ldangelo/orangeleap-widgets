@@ -14,6 +14,7 @@
 	</parent>
 
 	<build>
+		<defaultGoal>jetty:run</defaultGoal>
 		<testResources>
 			<testResource>
 				<directory>${basedir}/src/main/webapp/WEB-INF</directory>
@@ -46,6 +47,7 @@
 			  </executions>        
 			  <configuration>
 			    <nosuffix>true</nosuffix>
+			    <jswarn>false</jswarn>
 			    <aggregations>
 			      <aggregation>
 				<!-- remove files after aggregation (default: false)
@@ -72,10 +74,20 @@
 				     </excludes>
 				-->
 			      </aggregation>
+                              			      <aggregation>
+				<insertNewLine>true</insertNewLine>
+				<output>${basedir}/src/main/webapp/css/webtools.css</output>
+				<includes>
+				  <include>pages.css</include>
+				  <include>navigation.css</include>
+				  <include>ext-all.css</include>
+				</includes>
+			      </aggregation>
+
 			    </aggregations>
 			  </configuration>
 			</plugin>
-
+<!--
 			<plugin>
 			  <groupId>net.sf.alchim</groupId>
 			  <artifactId>yuicompressor-maven-plugin</artifactId>
@@ -91,29 +103,18 @@
 			    <nosuffix>true</nosuffix>
 			    <aggregations>
 			      <aggregation>
-				<!-- remove files after aggregation (default: false)
-				     <removeIncluded>true</removeIncluded>
-				-->
-				<!-- insert new line after each concatenation (default: false) -->
 				<insertNewLine>true</insertNewLine>
 				<output>${basedir}/src/main/webapp/css/webtools.css</output>
-				<!-- files to include, path relative to output's directory or absolute path-->
 				<includes>
 				  <include>pages.css</include>
 				  <include>navigation.css</include>
 				  <include>ext-all.css</include>
 				</includes>
-				<!-- files to exclude, path relative to output's directory
-				     <excludes>
-				     <exclude>**/*.pack.js</exclude>
-				     <exclude>**/compressed.css</exclude>
-				     </excludes>
-				-->
 			      </aggregation>
 			    </aggregations>
 			  </configuration>
 			</plugin>
-
+-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-antrun-plugin</artifactId>
@@ -317,6 +318,12 @@
 						<artifactId>maven-jetty-plugin</artifactId>
 						<version>6.1.11</version>
 						<configuration>
+						<systemProperties>	
+							<systemProperty>
+								<name>org.mortbay.jetty.Request.maxFormContentSize</name>
+								<value>5000000</value>
+							</systemProperty>
+						</systemProperties>				
 						  <connectors>
 						    <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
 						      <port>8081</port>
@@ -329,27 +336,7 @@
 						  </webAppConfig>
                             
                            
-							<jettyEnvXml>${basedir}/src/main/config/jetty-local/jetty-env.xml</jettyEnvXml>
-<!--							<contextHandlers>
-								<contextHandler implementation="org.mortbay.jetty.webapp.WebAppContext">
-									<war>${basedir}/../cas/target/cas-${project.version}.war</war>
-									<contextPath>/cas</contextPath>
-								</contextHandler>
-                                <contextHandler implementation="org.mortbay.jetty.webapp.WebAppContext">
-									<war>${basedir}/../tangerine/target/tangerine-${project.version}.war</war>
-									<contextPath>/orangeleap</contextPath>
-                                    <extractWAR>true</extractWAR>
-                                    <ConfigurationClasses>
-
-  <Item>org.mortbay.jetty.webapp.WebInfConfiguration</Item>
-  <Item>org.mortbay.jetty.plus.webapp.EnvConfiguration</Item>
-  <Item>org.mortbay.jetty.plus.webapp.Configuration</Item>
-  <Item>org.mortbay.jetty.webapp.JettyWebXmlConfiguration</Item>
-  <Item>org.mortbay.jetty.webapp.TagLibConfiguration</Item>
-
-                                    </ConfigurationClasses>
-								</contextHandler>
-							</contextHandlers> -->
+ 						   <jettyEnvXml>${basedir}/src/main/config/jetty-local/jetty-env.xml</jettyEnvXml>
 						</configuration>
 						<dependencies>
 							<dependency>

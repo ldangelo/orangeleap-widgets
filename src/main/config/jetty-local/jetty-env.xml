@@ -3,6 +3,10 @@
 
 
 <Configure id="wac" class="org.mortbay.jetty.webapp.WebAppContext">
+     <Call class="java.lang.System" name="setProperty">
+      <Arg>org.mortbay.jetty.Request.maxFormContentSize</Arg>
+      <Arg>12345</Arg>
+    </Call>
     
 	<New id="MPowerOpen" class="org.mortbay.jetty.plus.naming.Resource">
 		<Arg>jdbc/MPowerOpen</Arg>

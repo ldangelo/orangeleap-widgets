@@ -111,6 +111,9 @@ var gifthistory = {
 	    width:655
 	});
 	mydatastore.load();
+        Ext.get('loading').remove();
+	Ext.get('loading-mask').fadeOut({remove:true});
+
 	giftGrid.render(widgetname);
     },
 

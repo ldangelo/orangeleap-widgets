@@ -22,7 +22,11 @@ public class WidgetFormController {
 	   @Autowired
 	    protected WidgetService widgetService = null;
 	   
-	  
+  @RequestMapping("/styleform.htm")
+  public void styleform(Model model) {
+
+  }
+
   @RequestMapping("/loginwidgetform.htm")
   public void loginwidgets(@RequestParam(required=false) Long id, Model model) {
     
