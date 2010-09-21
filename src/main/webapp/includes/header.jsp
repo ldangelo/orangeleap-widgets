@@ -10,3 +10,17 @@
 </li>
 </ol>
 </div>
+
+<div id="navmain">
+<ul>
+	<li>
+	<a href="listwidgets.htm">Widgets</a>
+	</li>
+	<li>
+	<a href="reports.htm">Reports</a>
+	</li>
+	<li>
+	<a href="styleform.htm">Styles</a>
+	</li>
+</ul>
+</div>

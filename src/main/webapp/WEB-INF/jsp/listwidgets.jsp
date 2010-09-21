@@ -62,6 +62,10 @@
 		return "<a class='sprite view'></a>";
 	}
 
+	function newForm() {
+		window.location = 'createwidget.htm';
+	}
+
 	Ext.onReady(function() {
 
 
@@ -137,12 +141,14 @@
     });
 
     var panel = new Ext.Panel({
-    	height: 300,
-    	width: 655,
+    	height: 350,
+    	width: 660,
+    	border: false,
     	items:[ {
     		xtype: 'button',
     		text: 'New Form',
-    		height: 50
+    		height: 50,
+    		handler: newForm
     	}, grid ]
     });
 	panel.render('grid-example');

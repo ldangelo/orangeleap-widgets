@@ -59,7 +59,7 @@ var form=null;
                 function onSave() {
                 	form.getForm().submit({url:'style.ajax?action=save',waitMsg:'Saving Style...',submitEmptyText:false});
                 }
-                
+
 
 	    var reader = new Ext.data.JsonReader({
                 idProperty: 'Id',
@@ -88,7 +88,7 @@ var form=null;
                         name: 'Style',
                         width:400,
                         height:200
-                }, 
+                },
                 {
                 	id: 'Id',
                 	name: 'Id',
@@ -102,14 +102,14 @@ var form=null;
 			 ]
 	    });
         form.render('styleform-div');
-        
+
         form.getForm().load({url:'style.ajax?action=read',method: 'GET',waitMsg: 'Loading'});
-        
+
         form.on({
         actioncomplete: function(form, action){
             if(action.type == 'load'){
     			form.items.get("Style").setValue(form.items.get("Style").value.replace(/\\n/gi,String.fromCharCode(10)));
-    			form.items.get("Style").setValue(form.items.get("Style").value.replace(/&quot;/gi,''));    			
+    			form.items.get("Style").setValue(form.items.get("Style").value.replace(/&quot;/gi,''));
             }
         }
     });

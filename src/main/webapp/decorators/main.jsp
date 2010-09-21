@@ -20,10 +20,10 @@
  </tr>
  <tr>
  <td width="1%" nowrap> </td>
- <td width="16%" valign="top" nowrap>
+ <!-- <td width="16%" valign="top" nowrap>
  <script type="text/javascript">window.status = "Loading: Navigation...";</script>
  <%@ include file="/includes/navigation.jsp" %>
- </td>
+ </td>-->
  <td width="2%" nowrap> </td>
  <td valign="top">
  <br>

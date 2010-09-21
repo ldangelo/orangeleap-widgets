@@ -21,6 +21,11 @@ public class WidgetFormController {
 	@Autowired
 	protected WidgetService widgetService = null;
 
+	@RequestMapping("/createwidget.htm")
+	public void createwidget(Model model) {
+
+	}
+
 	@RequestMapping("/styleform.htm")
 	public void styleform(Model model) {
 
