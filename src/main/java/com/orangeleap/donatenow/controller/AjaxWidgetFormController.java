@@ -175,14 +175,14 @@ public class AjaxWidgetFormController extends MultiActionController {
 
   public ModelAndView read(HttpServletRequest request,HttpServletResponse response) throws Exception {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    String widgettype = request.getParameter("widgettype");
-    String customentitytype = request.getParameter("customentitytype");
+    String guid = request.getParameter("guid");
 	String userName = auth.getName();
 	String password = (String) auth.getCredentials();
+	
+	Widget w = widgetService.selectWidgetByGuid(guid);
 
-    List<Widget> ret = widgetService.getWidgets(userName,password,widgettype,customentitytype);
 
-    return getModelMap(ret,widgettype,customentitytype);
+    return getModelMap(w,w.getWidgetType(),w.getCustomEntityName());
   }
 
   public ModelAndView create(HttpServletRequest request,HttpServletResponse response) throws Exception {

@@ -51,6 +51,7 @@ public class JsonListWidgetController {
             map.put("type",widget.getWidgetType());
             returnList.add(map);
 			
+            map.put("entityname", widget.getCustomEntityName());
 			// add errocount
 //			map = new HashMap<String, Object>();
 //			map.put("ID", "errorcount");

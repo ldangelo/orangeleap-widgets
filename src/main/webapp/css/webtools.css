@@ -357,6 +357,53 @@ margin-right:30px;
 	color:#000;
 }
 
+.edit {
+	background-image: url('../images/sprite.png');
+	background-repeat: no-repeat;
+	background-position: 0px 20px;
+}
+
+.sprite {
+	background: url('../images/sprite.png') no-repeat top left;
+	display:inline-block;
+	width: 25px;
+	height: 25px;
+	padding: 0px 5px 0px 35px;
+	margin: 0px 0px 0px -4px;
+//	line-height: 20px;
+	text-decoration: none;
+}
+
+.sprite.code  {
+	position: relative;
+	top: -10;
+	left: 0;
+	background-position: 0px -398px;
+}
+
+.sprite.view  {
+	position: relative;
+	top: -10;
+	left: 0;
+	background-position: 0px -325px;
+}
+
+.sprite.notifications  {
+	position: relative;
+	top: -10;
+	left: 0;
+	background-position: 0px -360px;
+}
+
+.sprite.ocean img {
+	left: -106px;
+	clip: rect(0px 212px 39px 106px);
+}
+.sprite.sky img {
+	left: -212px;
+	clip: rect(0px 318px 39px 212px);
+}
+
 #greeting {
 	color:#d46400;
 }

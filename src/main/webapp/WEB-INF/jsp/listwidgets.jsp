@@ -14,7 +14,7 @@
 	<script type="text/javascript" src="js/extjs/ext-all.js"></script>
 	<script type="text/javascript" src="js/listplacements.js"></script>
 	<script type="text/javascript">
-	
+
 	function add_thousands_separator(input) {
 		var s = input.toString(), l = s.length, o = '';
 		while (l > 3) {
@@ -26,8 +26,43 @@
 		o = s + o;
 		return o;
 	}
-		
-Ext.onReady(function() {
+
+	function renderNotificationIcon(val,metaData, record, rowIndex, colIndex, store) {
+ 	   return "<a class='sprite notifications'></a>";
+	}
+
+	function renderCodeIcon(val,metaData, record, rowIndex, colIndex, store) {
+		//
+		// find out what 'type' of widget we are sitting on custom entity, etc... and set the href accordingly.
+
+		var url = "";
+		//
+		// find out what 'type' of widget we are sitting on custom entity, etc... and set the href accordingly...
+		if (record.data.type == "customentity") {
+			if (record.data.entityname == 'online_donation')
+				url = 'donationwidgetform.htm?guid=' + val;
+			else if (record.data.entityname == 'widget_authentication')
+				url = 'loginwidgetform.htm?guid=' + val;
+			else if (record.data.entityname == 'donor_profile')
+				url= 'donorprofilewidgetform.htm?guid=' + val;
+			else if (record.data.entityname == 'sponsorable')
+				url = 'sponsorablewidgetform.htm?guid=' + val;
+			else if (record.data.entityname == 'sponsorship')
+				url = 'sponsorshipwidgetform.htm?guid=' + val;
+		} else {
+			if (record.data.type == 'gifthistory')
+				url = 'gifthistorywidgetform.htm?guid=' + val;
+		}
+ 	   return "<a class='sprite code' href='" + url +"'></a>";
+	}
+
+	function renderViewIcon(val,metaData, record, rowIndex, colIndex, store) {
+		var url = '';
+
+		return "<a class='sprite view'></a>";
+	}
+
+	Ext.onReady(function() {
 
 
 	var proxy=new Ext.data.HttpProxy(    {url:'/donatenow/listWidgets.json'});
@@ -36,14 +71,15 @@ Ext.onReady(function() {
 			{
 				totalProperty: 'totalRows',
 				root: 'rows',
-				id: 'widgetid'
-			},[
+				id: 'widgetid',
+			fields: [
 				{name: 'widgetid', mapping: 'widgetid'},
 				{name: 'guid'},
 				{name: 'type'},
+				{name: 'entityname'},
 				{name: 'errorcount'},
 				{name: 'viewcount'}
-			]
+			]}
 		)
 
 		var store=new Ext.data.Store(    {
@@ -54,17 +90,20 @@ Ext.onReady(function() {
 	store.load();
 
 
-	
+
 	//
 	// create the grid
 	var grid = new Ext.grid.GridPanel({
 		store: store,
 		columns: [
-			{id:'widgetid',width: 80,header:'Widget Id',dataIndex:'widgetid'},
-			{id:'guid',width: 250,header:'Widget GUID',dataIndex:'guid'},		
-			{id:'type',width: 80,header:'Widget Type',dataIndex:'type'},
-			{id:'errorcount',width: 80,header:'Error Count',dataIndex:'errorcount', renderer: add_thousands_separator },			
-			{id:'viewcount',width:80,header:'View Count',dataIndex:'viewcount',renderer: add_thousands_separator }				
+			{id:'widgetid',width: 80,header:'Id',dataIndex:'widgetid'},
+			{id:'type',width: 80,header:'Type',dataIndex:'type'},
+			{id:'entityname',width: 80,header:'Entity Name',dataIndex:'entityname'},
+			{id:'view',width:80,header:'View',renderer: renderViewIcon,dataIndex:'guid'},
+			{id:'notifications',width:80,header:'Notifications',renderer: renderNotificationIcon,dataIndex:'guid'},
+			{id:'code',width:80,header:'Code',renderer: renderCodeIcon,dataIndex:'guid'}
+//			{id:'errorcount',width: 80,header:'Error Count',dataIndex:'errorcount', renderer: add_thousands_separator },
+//			{id:'viewcount',width:80,header:'View Count',dataIndex:'viewcount',renderer: add_thousands_separator }
 		],
 	       viewConfig: {
             forceFit: false,
@@ -82,7 +121,7 @@ Ext.onReady(function() {
 	    var row = this.store.data.items[rowIndex].data;
 
 	    myplacementdatastore.load({params: {guid: row.guid}})
-	    }	    
+	    }
 	    }
 	});
 
@@ -96,8 +135,17 @@ Ext.onReady(function() {
             window.location = thisUrl;
         }
     });
-	
-	grid.render('grid-example');
+
+    var panel = new Ext.Panel({
+    	height: 300,
+    	width: 655,
+    	items:[ {
+    		xtype: 'button',
+    		text: 'New Form',
+    		height: 50
+    	}, grid ]
+    });
+	panel.render('grid-example');
 });
 	</script>
 </head>
