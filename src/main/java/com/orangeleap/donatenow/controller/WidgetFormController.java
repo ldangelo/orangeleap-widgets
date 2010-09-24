@@ -31,6 +31,16 @@ public class WidgetFormController {
 
 	}
 
+	@RequestMapping("/stylelist.htm")
+	public void stylelist(Model model) {
+
+	}
+
+	@RequestMapping("/donatewidget.htm")
+	public void donatewidget(Model model) {
+
+	}
+
 	@RequestMapping("/widgetform.htm")
 	public void widgets(@RequestParam(required = false) Long id, Model model) {
 

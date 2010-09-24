@@ -44,8 +44,8 @@
 		    // Return "null" if no parameter has been found
 		    return "null";
 		}
-	    } 
-	    
+	    }
+
 	    function onSuccess() {
 		Ext.Msg.show({
         	    title:'Success'
@@ -64,29 +64,29 @@
 		    ,buttons:Ext.Msg.OK
 		});
 	    }
-	    
+
 	    function onGenerate() {
 	    	var params = new Object();
 		params.action = "update";
 		params.widgettype='customentity';
 		params.customentitytype='widget_authentication';
-		
-		for (var f = 0; f < mydatastore.reader.meta.fields.length; f++) 
+
+		for (var f = 0; f < mydatastore.reader.meta.fields.length; f++)
 		{
 		params[mydatastore.reader.meta.fields[f].name] = form.findById(mydatastore.reader.meta.fields[f].name).getValue();
 		}
-		
+
 		mydatastore.load({
 		    url:'widgetform.ajax'
 		    ,success:onSuccess
 		    ,failure:onFailure
 		    ,params: params
 	       	    ,waitMsg:'Generating Widget...'
-		});	
-	    }	        
+		});
+	    }
             var proxy = new Ext.data.HttpProxy( {url: 'widgetform.ajax'}
             ); // Ext.data.HttpProxy
-	    
+
 	    var reader = new Ext.data.JsonReader({
 		totalProperty: 'totalRows',
 		successProperty: 'success',
@@ -94,29 +94,29 @@
 		root: 'rows',
 		messageProperty: 'message'
 	    });
-	    
+
 	    mydatastore = new Ext.data.Store({
 		metaData:true,
 		reader:reader,
 		proxy:proxy,
 		autoSave:false,
 		listeners: {
-		    
+
     	    	    'metachange':function(store,meta) {
-			generateForm(form,store,meta);		    
+			generateForm(form,store,meta);
 		    },
 		    'load':function(store,records,options) {
 			var metaData = store.reader.meta.fields;
 			var value = null;
 			for (var m=0; m < metaData.length; m++) {
-			    
+
 			    value = records[records.length-1].get(metaData[m].name);
 			    var fld = form.getForm().findField(metaData[m].name);
 			    if (fld != null) fld.setValue(value);
 			}
 			form.render("widgetform-div");
 		    }}});
-	    
+
 	    // need a form here....
 	    form = new Ext.FormPanel({
 		id: 'form',
@@ -138,7 +138,7 @@
 	    
 	    guid = getParameter(queryString,'widgetId');
 	    if (guid != null)
-			mydatastore.doRequest({url:'widgetform.ajax',params: {action:'read',widgettype:'customentitytype',customentitytype:'widget_authentication',guid:guid}});
+			mydatastore.load({url:'widgetform.ajax',params: {action:'read',widgettype:'customentitytype',customentitytype:'widget_authentication',guid:guid}});
 	});  // Ext.onReady
 	</script>
 	</head>

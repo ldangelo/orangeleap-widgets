@@ -129,24 +129,13 @@
 	    }
 	});
 
-    grid.on('rowdblclick', function(grid, rowIndex, event) {
-
-        var record = store.getAt(rowIndex);
-        if (record) {
-            // open window to view record
-            var thisUrl = 'donatewidget.htm?id=' + record.get('widgetid');
-
-            window.location = thisUrl;
-        }
-    });
-
     var panel = new Ext.Panel({
     	height: 350,
     	width: 660,
     	border: false,
     	items:[ {
     		xtype: 'button',
-    		text: 'New Form',
+    		text: 'New Widget',
     		height: 50,
     		handler: newForm
     	}, grid ]

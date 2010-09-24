@@ -16,7 +16,17 @@ public class Style implements Serializable {
    */
   private String Style;
 
-  /**
+  private String StyleName;
+
+  public String getStyleName() {
+	return StyleName;
+}
+
+public void setStyleName(String styleName) {
+	StyleName = styleName;
+}
+
+/**
    * Get the <code>Style</code> value.
    *
    * @return a <code>String</code> value

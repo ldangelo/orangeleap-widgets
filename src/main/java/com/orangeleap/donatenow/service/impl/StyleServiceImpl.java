@@ -28,7 +28,7 @@ public class StyleServiceImpl implements StyleService {
     return style;
   }
 
-  public Style selectByUserName(String userName) 
+  public List<Style> selectByUserName(String userName)
   {
     Style style = new Style();
 
@@ -36,14 +36,19 @@ public class StyleServiceImpl implements StyleService {
 
     List<Style> list = styleDAO.selectStyleByUserName(style);
 
-    if (list.size() > 0)
-        return list.get(0);
-    else {
-    	return null;
-    }
+    return list;
   }
 
   public Style selectById(Long id) {
-    return null;
+    Style style = new Style();
+
+    style.setId(id);
+
+    List <Style> list = styleDAO.selectStyleById(style);
+
+    if (list.size() > 0)
+    	return list.get(0);
+    else
+    	return null;
   }
 }

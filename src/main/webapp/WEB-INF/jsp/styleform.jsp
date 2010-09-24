@@ -12,7 +12,8 @@
 
         <script type="text/javascript">
         	Ext.onReady(function() {
-var form=null;
+
+    		var form=null;
 
 	    function getParameter ( queryString, parameterName ) {
 		// Add "=" to the parameter name (i.e. parameterName=value)
@@ -66,7 +67,7 @@ var form=null;
                 root:'rows',
                 totalProperty: 'rows',
 	            fields: [
-    	            "Id","Style"
+    	            "Id","Style","StyleName"
         	    ]});
 
 
@@ -83,6 +84,11 @@ var form=null;
 		trackResetOnLoad:true,
 		defaultType: 'textarea',
 		items: [{
+				fieldLabel: 'StyleName',
+				id: 'StyleName',
+				xtype: 'textfield'
+				},
+		        {
                         fieldLabel: 'Style',
                         id: 'Style',
                         name: 'Style',
@@ -101,9 +107,14 @@ var form=null;
 		}
 			 ]
 	    });
+
         form.render('styleform-div');
 
-        form.getForm().load({url:'style.ajax?action=read',method: 'GET',waitMsg: 'Loading'});
+        var id = getParameter(window.top.location.search.substring(1),'id');
+        if (id != null)
+        	form.getForm().load({url:'style.ajax?action=read&Id='+ id,method: 'GET',waitMsg: 'Loading'});
+        else
+        	form.getForm().load({url:'style.ajax?action=create',method:'GET',waitMsg: 'Loading'});
 
         form.on({
         actioncomplete: function(form, action){
@@ -121,6 +132,7 @@ var form=null;
     </head>
     <body>
     <div id="styleform-div"></div>
+    <div id="styles-div"></div>
 
     </body>
     </page:applyDecorator>

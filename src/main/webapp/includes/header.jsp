@@ -20,7 +20,7 @@
 	<a href="reports.htm">Reports</a>
 	</li>
 	<li>
-	<a href="styleform.htm">Styles</a>
+	<a href="stylelist.htm">Styles</a>
 	</li>
 </ul>
 </div>

@@ -1,10 +1,10 @@
-	var myplacementdatasource = null;
+	var mystyledatasource = null;
 
-        var placementproxy = new Ext.data.HttpProxy( {api: {
-            read: 'placements.ajax?action=read'
+        var styleproxy = new Ext.data.HttpProxy( {api: {
+            read: 'styles.ajax?action=read'
         }}); // Ext.data.HttpProxy
 
-	var placementreader = new Ext.data.JsonReader({
+	var stylereader = new Ext.data.JsonReader({
 	    totalProperty: 'totalRows',
 	    successProperty: 'success',
 	    idProperty: 'id',
@@ -12,10 +12,10 @@
 	    messageProperty: 'message'
 	});
 
-	myplacementdatastore = new Ext.data.Store({
+	mystyledatastore = new Ext.data.Store({
 	    metaData:true,
-	    reader:placementreader,
-	    proxy:placementproxy,
+	    reader:stylereader,
+	    proxy:styleproxy,
 	    autoSave:false,
 	    listeners: {
 
@@ -28,15 +28,15 @@
                     	columns.push({header: fields[f].header, dataIndex: fields[f].name,sortable:true});
 		    }
 
-                    placementgrid.reconfigure(store,new Ext.grid.ColumnModel(columns));
+                    stylegrid.reconfigure(store,new Ext.grid.ColumnModel(columns));
 		},
 		'load':function(store,records,options) {
-				placementgrid.render("placements-div");
+				stylegrid.render("styles-div");
 }
 		}});
 
-	var placementgrid = new Ext.grid.GridPanel({
-	    store: myplacementdatastore,
+	var stylegrid = new Ext.grid.GridPanel({
+	    store: mystyledatastore,
 	    columns: [],
 	    viewConfig: {
 		forceFit: false,
@@ -44,7 +44,7 @@
 	    },
 	    stripeRows: true,
 	    frame:true,
-	    title: "Widget Placement",
+	    title: "Widget Style",
 	    height: 250,
 	    width:655,
 	});

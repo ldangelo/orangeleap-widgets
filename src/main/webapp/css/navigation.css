@@ -48,12 +48,24 @@
 
 #navmain {
 	position:relative;
-	background: #5987b3 url("../images/navGradientBoth.gif");
+	background-color: #FFAB4E;
+	//background: #5987b3 url("../images/navGradientBoth.gif");
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14px;
 	font-weight: bold;
 	/*height:57px;*/
 	height:33px;
+	border: 1px solid gray;
+	border-bottom-left-radius: 5px 5px;
+	border-bottom-right-radius: 5px 5px;
+	border-top-left-radius: 5px 5px;
+	border-top-right-radius: 5px 5px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	height: 33px;
+	margin: 0px 10px;
+	position: relative;
 	/*padding-top:2px;*/
     z-index: 8900;
 }
@@ -131,7 +143,7 @@
 	padding:2px;
 }
 #navmain ul.primaryNav li ul li {
-	float:none; 
+	float:none;
 }
 #navmain ul.primaryNav li ul li.sectionTitle {
 	font-size:12px;
@@ -141,7 +153,7 @@
 }
 #navmain ul.primaryNav li ul li a {
 	padding:0px 20px 0px 15px;
-	font-size:12px; 
+	font-size:12px;
 }
 #navmain ul.primaryNav li ul li a:hover {
 	background:#316ac5;
@@ -172,7 +184,7 @@
 #banner ol li a {
 	color: #333;
 	text-decoration: none;
-	padding: 1px;	
+	padding: 1px;
 }
 #banner ol li a:hover {
 	background-color: #ff8518;
