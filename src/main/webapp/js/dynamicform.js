@@ -1,5 +1,5 @@
 function generateForm(form,store,meta) {
-			if (form.items.length > 0) return;  // we are paging through data and the fields already exist
+			if (form.items.length > 1) return;  // we are paging through data and the fields already exist
 			var fields = meta.fields;
 			var col1 = new Ext.Panel({columnWidth: '.50',layout:'form',defaults:{anchor:'100%'},bodyStyle:'padding:0 18px 0 0',items:[]}); 
 			var col2 = null;

@@ -293,7 +293,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 	
 	
 	Ext.data.DataProxy.addListener('exception', function(proxy, type, action, options, res) {
-	    this.showError(res.response.Text);
+	    this.showError(res.responseText);
 	});
 	
 	OrangeLeapWidget.updateViewCount(this.guid,document.location.href);

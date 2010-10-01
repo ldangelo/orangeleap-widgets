@@ -123,9 +123,15 @@ public class AjaxStyleController extends MultiActionController {
         HashMap model = new HashMap();
         List rows = new LinkedList();
 
+       	HashMap row = new HashMap();
+        row.put("Id","0");
+        row.put("Style", "");
+        row.put("StyleName","Default");
+        rows.add(row);
+
         Iterator<Style> it = styles.iterator();
         while (it.hasNext()) {
-        	HashMap row = new HashMap();
+        	row = new HashMap();
         	Style s = it.next();
         	row.put("Id",s.getId());
         	row.put("Style",net.sf.json.util.JSONUtils.quote(s.getStyle()));

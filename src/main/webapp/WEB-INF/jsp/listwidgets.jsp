@@ -57,9 +57,9 @@
 	}
 
 	function renderViewIcon(val,metaData, record, rowIndex, colIndex, store) {
-		var url = '';
+		var url = 'widget.ajax?action=view&guid=' + val;
 
-		return "<a class='sprite view'></a>";
+		return "<a class='sprite view' href='" + url + "'></a>";
 	}
 
 	function newForm() {

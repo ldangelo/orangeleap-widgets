@@ -73,7 +73,31 @@ WidgetForm = Ext.extend(Ext.form.FormPanel, {
 	    },
 	    initComponent: function() {
 
-	    this.items = [];
+	    this.items = [ new Ext.form.ComboBox({
+            id:'styleId',
+            fieldLabel: 'Style',
+            hiddenName: 'styleIdHidden',
+            triggerAction: 'all',
+            emptyText: 'Select Style...',
+            displayField:'StyleName',
+            valueField: 'Id',
+            store:new Ext.data.JsonStore({
+                id:'Id',
+                root:'rows',
+                totalProperty:'totalRows',
+                fields: [
+                {name:'Id',type:'string'},
+                {name:'Style',type:'string'},
+                {name: 'StyleName',type: 'string'}
+                ],
+                url:'style.ajax',
+                baseParams: {
+                    action: "list"
+                }
+            })
+
+
+	    })];
 
 	    this.buttons =  [{
 	    	text: 'Generate',
@@ -107,7 +131,7 @@ WidgetForm = Ext.extend(Ext.form.FormPanel, {
 			var metaData = store.reader.meta.fields;
 			var value = null;
 			for (var m=0; m < metaData.length; m++) {
-			    if (metaData[m].type != 'boolean') {
+			    if (metaData[m].type != 'boolean' && metaData[m].type != 'style') {
      			      value = records[records.length-1].get(metaData[m].name);
 			      value = value.replace(/&lt;/g,"<");
 			      value = value.replace(/&gt;/g,">");

@@ -100,10 +100,38 @@ public class Widget implements Serializable {
      */
     private String customEntityName;
 
+    private Long StyleId;
+
 
   private Boolean widgetAuthenticationRequired;
   private String     widgetAuthenticationURL;
   private String     sponsorshipURL;
+
+  /**
+   * Get the <code>IframeHtml</code> value.
+   *
+   * @return a <code>String</code> value
+   */
+  public final String getIframeHtml() {
+    return iframeHtml;
+  }
+
+  /**
+   * Set the <code>IframeHtml</code> value.
+   *
+   * @param iframeHtml The new IframeHtml value.
+   */
+  public final void setIframeHtml(final String iframeHtml) {
+    this.iframeHtml = iframeHtml;
+  }
+
+  public Long getStyleId() {
+        return StyleId;
+    }
+
+  public void setStyleId(Long StyleId) {
+        this.StyleId = StyleId;
+    }
 
   public final String getSponsorshipURL() {
     return sponsorshipURL;
@@ -162,6 +190,10 @@ public class Widget implements Serializable {
    * Describe widgetLoginFailureURL here.
    */
   private String widgetLoginFailureURL;
+  /**
+   * Describe iframeHtml here.
+   */
+  private String iframeHtml;
 
   /**
    * Get the <code>WidgetLoginFailureURL</code> value.
