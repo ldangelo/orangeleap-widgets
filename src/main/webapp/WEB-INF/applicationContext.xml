@@ -12,7 +12,7 @@
            http://www.springframework.org/schema/tx           http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
            http://www.springframework.org/schema/context           http://www.springframework.org/schema/context/spring-context-2.5.xsd">
   <context:annotation-config />
-	<context:component-scan base-package="com.orangeleap.donatenow" />
+	<context:component-scan base-package="com.orangeleap.webtools" />
 
     <!-- Load EHCache bean here, since it is needed by messageSource -->
     <bean id="cacheManager"
@@ -39,14 +39,14 @@
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basenames">
-			<value>donatenow-messages</value>
+			<value>webtools-messages</value>
 		</property>
 	</bean>
 
   <dwr:configuration />
   <dwr:controller id="dwrController" debug="true" />
 
-  <bean id="orangeLeapWidget" class="com.orangeleap.donatenow.service.impl.OrangeLeapWidgetServiceImpl">
+  <bean id="orangeLeapWidget" class="com.orangeleap.webtools.service.impl.OrangeLeapWidgetServiceImpl">
     <dwr:remote javascript="OrangeLeapWidget">
       <dwr:include method="create" />
       <dwr:include method="authenticate" />
@@ -58,7 +58,7 @@
       <dwr:include method="getPickListItems"/>
       <dwr:include method="getConstituentGifts"/>
       <dwr:include method="addCustomTableRow"/>
-      <dwr:convert type="bean"  class="com.orangeleap.donatenow.domain.WidgetData" />
+      <dwr:convert type="bean"  class="com.orangeleap.webtools.domain.WidgetData" />
       <dwr:convert type="bean"  class="com.orangeleap.client.*"/>
       <dwr:convert type="bean"  class="com.orangeleap.client.CustomTable"/>
       <dwr:convert type="bean"  class="com.orangeleap.client.CustomTableField"/>

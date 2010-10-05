@@ -60,7 +60,7 @@ WidgetForm = Ext.extend(Ext.form.FormPanel, {
 
 		for (var f = 0; f < mydatastore.reader.meta.fields.length; f++)
 		{
-		params[mydatastore.reader.meta.fields[f].name] = mydatastore.widgetForm.findById(mydatastore.reader.meta.fields[f].name).getValue();
+		    params[mydatastore.reader.meta.fields[f].name] = mydatastore.widgetForm.findById(mydatastore.reader.meta.fields[f].name).getValue();
 		}
 
 		mydatastore.load({

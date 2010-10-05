@@ -4592,6 +4592,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
     mydatastore : null,
 //    form:null,
     constituentid:null,
+    args: null,
 
     setCookie: function(c_name,value,expiredays)
     {
@@ -4599,6 +4600,22 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 	exdate.setDate(exdate.getDate()+expiredays);
 	document.cookie=c_name+ "=" +escape(value)+
 	    ((expiredays==null) ? "" : ";expires="+exdate.toUTCString());
+    },
+    populateArgs: function(form,args)  {
+	var referer = args.split('?');
+	var parms = referer[1].split('&');
+
+	for (x in parms) {
+	    if (x == 'remove') return;
+
+	    var keyval = parms[x].split('=');
+
+	    if (keyval[0] == 'id') continue; //skip id's
+
+	    var f = form.findById(keyval[0]);
+	    if (f != null)
+		f.setValue(keyval[1]);
+	}
     },
     populateWidget: function(constituent,table) {
 	for (x in table.fields) {
@@ -4861,15 +4878,21 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 
 			if (metaData[m].type != 'section') {
 			    value = records[0].get(metaData[m].name);
-			    
-			    if (metaData[m].type == 'picklist') 
-				this.form.findById(metaData[m].name + 'combo').setValue(value);
-			    else
-				this.form.findById(metaData[m].name).setValue(value);
+
+			    if (metaData[m].type == 'picklist') {
+				if (this.form.findById(metaData[m].name + 'combo') != null)
+				    this.form.findById(metaData[m].name + 'combo').setValue(value);
+			    } else {
+				if (this.form.findById(metaData[m].name) != null)
+				    this.form.findById(metaData[m].name).setValue(value);
+			    }
 			}
 		    }
-		    Ext.get('loading').remove();
-		    Ext.get('loading-mask').fadeOut({remove:true});
+		if (this.form.args != null)
+		    this.form.populateArgs(this.form,this.form.args);
+
+		Ext.get('loading').remove();
+		Ext.get('loading-mask').fadeOut({remove:true});
 	    }}
 	});
 	
@@ -4979,7 +5002,7 @@ var customentitylist = {
 	}
 
 	
-	var proxy = new Ext.data.HttpProxy( {url:'/donatenow/customEntityList.json?guid=' + guid});
+	var proxy = new Ext.data.HttpProxy( {url:'/webtools/customEntityList.json?guid=' + guid});
 
 	var reader=new Ext.data.JsonReader();
 
@@ -5282,7 +5305,7 @@ var gifthistory = {
 	OrangeLeapWidget.updateViewCount(widgetid,document.location.href);
 
 	var mydatastore = new Ext.data.JsonStore({
-	    url:'/donatenow/giftHistory.json?guid=' + widgetid + '&constituentid=' + constituentId,
+	    url:'/webtools/giftHistory.json?guid=' + widgetid + '&constituentid=' + constituentId,
 	    root:'rows',
 	    fields:['id','donationdate','amount','status','paymentstatus'],
 	    sortInfo:{field:'id',direction:'ASC'}
@@ -5432,7 +5455,10 @@ var sponsorshipform =  {
 	    var records = mydatastore.data.items;
 	    for (var m=0; m < metaData.length; m++) {
 		var value = records[fldidx].get(metaData[m].name);
-		form.getForm().findField(metaData[m].name).setValue(value);
+		var ffield = 		form.getForm().findField(metaData[m].name).setValue(value);
+
+		if (ffield != null)
+		    ffield.setValue(value);
 	    }
 	} else {
 	    //
@@ -5473,157 +5499,15 @@ var sponsorshipform =  {
     onRecurringGift: function() {
     },
     onSponsor: function() {
-	window.location=sponsorshipform.sponsorshipurl;
-	return;
-	var sponsorform = new Ext.FormPanel({
-	    id: 'sponsor',
-	    border:false,
-	    frame:true,
-	    labelWidth:150,
-	    width:500,
-	    autoHeight:true,
-	    items:[
-		{
-		    xtype:'fieldset',
-		    title:'Contact Information',
-		    collapsible: true,
-		    autoHeight: true,
-		    defaultType:'textfield',
-		    items: [
-			{
-			    xtype:'textfield',
-			    fieldLabel:'First Name',
-			    name:'firstName',
-			    allowBlank:false
-			},
-			{
-			    xtype:'textfield',
-			    fieldLabel:'Last Name',
-			    name:'lastName',
-			    allowBlank:false
-			},
-			{
-			    xtype:'textfield',
-			    fieldLabel:'Email Address',
-			    name:'emailAddress',
-			    allowBlank:false
-			}]},
-		{
-		    xtype:'fieldset',
-		    title:'Registration Information',
-		    collapsible:true,
-		    autoHeight:true,
-		    defaultType:'textfield',
-		    items: [
-			{
-			    xtype:'textfield',
-			    fieldLabel:'User Name',
-			    name:'userName',
-			    allowBlank:false
-			},
-			{
-			    xtype:'textfield',
-			    fieldLabel:'Password',
-			    name:'password',
-			    inputType:'password',
-			    allowBlank:false
-			},
-			{
-			    xtype:'textfield',
-			    fieldLabel:'Verify Password',
-			    name:'verifypassword',
-			    inputType:'password',
-			    allowBlank:false
-			}
-		    ]},
-		{
-		    xtype:'fieldset',
-		    title:'Billing Address',
-		    collapsible:true,
-		    autoHeight:true,
-		    defaultType:'textfield',
-		    items: [
-			{
-			    xtype:'textfield',
-			    fieldLabel:'Address Line 1',
-			    name:'addressLine1',
-			    allowBlank:false
-			},
-			{
-			    xtype:'textfield',
-			    fieldLabel:'Address Line 2',
-			    name:'addressLine2'
-			},
-			{
-			    xtype:'textfield',
-			    fieldLabel:'City',
-			    name:'city',
-			    allowBlank:false
-			},
-			{
-			    xtype:'textfield',
-			    fieldLabel:'State',
-			    name:'state',
-			    allowBlank:false
-			},
-			{
-			    xtype:'textfield',
-			    fieldLabel:'Postal Code',
-			    name:'postalcode',
-			    allowBlank:false
-			}]},
-		{xtype:'fieldset',
-		 title:'Payment Information',
-		 collapsible:true,
-		 autoHeight:true,
-		 defaultType:'textfield',
-		 items: [
-		     {
-			 xtype:'textfield',
-			 fieldLabel:'Credit Card Type',
-			 name:'cctype',
-			 allowBlank:false
-		     },
-		     {
-			 xtype:'textfield',
-			 fieldLabel:'Credit Card Number',
-			 name:'ccnumber',
-			 allowBlank:false
-		     },
-		     {
-			 xtype:'textfield',
-			 fieldLabel:'Expiration Month',
-			 name:'expMonth',
-			 allowBlank:false
-		     },
-		     {
-			 xtype:'textfield',
-			 fieldLabel:'Expiration Month',
-			 name:'expYear',
-			 allowBlank:false
-		     }]}
-],
-	    buttons: [
-		{text: 'Sponsor',
-		 handler:sponsorshipform.onRecurringGift,
-		 align:'center'
-		}
-	    ]
-	});
-	swin = new Ext.Window({
-//	    el:'win-req-in',
-	    id: 'sponsorshipform-win',
-	    title:'Sponsor',
- 	    modal:true,
-    	    layout:'fit',
-	    width:400,
-	    autoHeight:true,
-	    closable:true,
-	    border:false,
-	    plain:true,
-	    items:[sponsorform]
-	});
-	swin.show();
+	var query = '?';
+	var items = form.getForm().items.items;
+
+	for (var i =0 ; i < items.length; i++) {
+	    if (i > 0) query = query + '&';
+
+	    query=query + items[i].name + '=' + items[i].value;
+	}
+	window.location=sponsorshipform.sponsorshipurl + query
     },
     clearForm:function() {
 	var clearfield = function(f) {
@@ -5655,7 +5539,9 @@ var sponsorshipform =  {
 	    var records = mydatastore.data.items;
 	    for (var m=0; m < metaData.length; m++) {
 		var value = records[fldidx].get(metaData[m].name);
-		form.getForm().findField(metaData[m].name).setValue(value);
+		var ffield = form.getForm().findField(metaData[m].name);
+		if (ffield != null)
+		    ffield.setValue(value);
 	    }
 	}
     },
@@ -5670,7 +5556,7 @@ var sponsorshipform =  {
 	}
 	OrangeLeapWidget.updateViewCount(guid,document.location.href);
 
-	var proxy = new Ext.data.HttpProxy( {url:'/donatenow/customEntityList.json?guid=' + guid});
+	var proxy = new Ext.data.HttpProxy( {url:'/webtools/customEntityList.json?guid=' + guid});
 
 	var reader=new Ext.data.JsonReader();
 
@@ -5770,10 +5656,11 @@ var sponsorshipform =  {
 		    var value = null;
 		    if (records.length > 0) 
 		    for (var m=0; m < metaData.length; m++) {
+			var ffield = form.getForm().findField(metaData[m].name);
+			value = records[fldidx].get(metaData[m].name);
 
-			    value = records[fldidx].get(metaData[m].name);
-
-			form.getForm().findField(metaData[m].name).setValue(value);
+			if (ffield != null)
+			    ffield.setValue(value);
 		    }
 
 		    

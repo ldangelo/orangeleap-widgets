@@ -85,7 +85,7 @@ NewWidgetPanelUi = Ext.extend(Ext.Panel, {
                         handler: function () {
 							var formpanel = Ext.getCmp("formpanel");
 							formpanel.removeAll();
-							formpanel.add(new WidgetForm({widgettype:'gifthistory',customentitytype:'unknown'}));
+							formpanel.add(new WidgetForm({widgettype:'gifthistory',customentitytype:'undefined'}));
 							formpanel.doLayout();
                         }
                     },
@@ -96,7 +96,7 @@ NewWidgetPanelUi = Ext.extend(Ext.Panel, {
                         handler: function () {
 							var formpanel = Ext.getCmp("formpanel");
 							formpanel.removeAll();
-							formpanel.add(new WidgetForm({widgettype:'customentity',customentitytype:'sponsorship'}));
+							formpanel.add(new WidgetForm({widgettype:'customentity',customentitytype:'online_sponsorship'}));
 							formpanel.doLayout();
                         }
                     },

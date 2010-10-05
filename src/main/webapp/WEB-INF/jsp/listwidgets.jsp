@@ -47,7 +47,7 @@
 				url= 'donorprofilewidgetform.htm?guid=' + val;
 			else if (record.data.entityname == 'sponsorable')
 				url = 'sponsorablewidgetform.htm?guid=' + val;
-			else if (record.data.entityname == 'sponsorship')
+			else if (record.data.entityname == 'online_sponsorship')
 				url = 'sponsorshipwidgetform.htm?guid=' + val;
 		} else {
 			if (record.data.type == 'gifthistory')
@@ -69,7 +69,7 @@
 	Ext.onReady(function() {
 
 
-	var proxy=new Ext.data.HttpProxy(    {url:'/donatenow/listWidgets.json'});
+	var proxy=new Ext.data.HttpProxy(    {url:'/webtools/listWidgets.json'});
 
 		  var reader=new Ext.data.JsonReader(
 			{

@@ -55,9 +55,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "userCreated"
 })
 @XmlSeeAlso({
-    Address.class,
     Phone.class,
-    Email.class
+    Email.class,
+    Address.class
 })
 public abstract class AbstractCommunicationEntity
     extends AbstractCustomizableEntity

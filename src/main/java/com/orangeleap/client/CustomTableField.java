@@ -36,6 +36,11 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="customTableFieldOrder" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
  *         &lt;element name="customTableFieldParentFieldName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="customTableFieldParentFieldValue" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="customTableFieldFieldFkFilter" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="customTableFieldTakeConstituentContext" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
+ *         &lt;element name="customTableFieldFieldPersisted" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
+ *         &lt;element name="customTableFieldDefaultReadonly" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
+ *         &lt;element name="customTableFieldDefaultHidden" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *         &lt;element name="customTableFieldPicklistNameId" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="customTableFieldRegex" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="customTableFieldRequired" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
@@ -75,6 +80,11 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "customTableFieldOrder",
     "customTableFieldParentFieldName",
     "customTableFieldParentFieldValue",
+    "customTableFieldFieldFkFilter",
+    "customTableFieldTakeConstituentContext",
+    "customTableFieldFieldPersisted",
+    "customTableFieldDefaultReadonly",
+    "customTableFieldDefaultHidden",
     "customTableFieldPicklistNameId",
     "customTableFieldRegex",
     "customTableFieldRequired",
@@ -108,6 +118,11 @@ public class CustomTableField {
     protected Long customTableFieldOrder;
     protected String customTableFieldParentFieldName;
     protected String customTableFieldParentFieldValue;
+    protected String customTableFieldFieldFkFilter;
+    protected Boolean customTableFieldTakeConstituentContext;
+    protected Boolean customTableFieldFieldPersisted;
+    protected Boolean customTableFieldDefaultReadonly;
+    protected Boolean customTableFieldDefaultHidden;
     protected String customTableFieldPicklistNameId;
     protected String customTableFieldRegex;
     protected boolean customTableFieldRequired;
@@ -459,6 +474,126 @@ public class CustomTableField {
      */
     public void setCustomTableFieldParentFieldValue(String value) {
         this.customTableFieldParentFieldValue = value;
+    }
+
+    /**
+     * Gets the value of the customTableFieldFieldFkFilter property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCustomTableFieldFieldFkFilter() {
+        return customTableFieldFieldFkFilter;
+    }
+
+    /**
+     * Sets the value of the customTableFieldFieldFkFilter property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCustomTableFieldFieldFkFilter(String value) {
+        this.customTableFieldFieldFkFilter = value;
+    }
+
+    /**
+     * Gets the value of the customTableFieldTakeConstituentContext property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isCustomTableFieldTakeConstituentContext() {
+        return customTableFieldTakeConstituentContext;
+    }
+
+    /**
+     * Sets the value of the customTableFieldTakeConstituentContext property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setCustomTableFieldTakeConstituentContext(Boolean value) {
+        this.customTableFieldTakeConstituentContext = value;
+    }
+
+    /**
+     * Gets the value of the customTableFieldFieldPersisted property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isCustomTableFieldFieldPersisted() {
+        return customTableFieldFieldPersisted;
+    }
+
+    /**
+     * Sets the value of the customTableFieldFieldPersisted property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setCustomTableFieldFieldPersisted(Boolean value) {
+        this.customTableFieldFieldPersisted = value;
+    }
+
+    /**
+     * Gets the value of the customTableFieldDefaultReadonly property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isCustomTableFieldDefaultReadonly() {
+        return customTableFieldDefaultReadonly;
+    }
+
+    /**
+     * Sets the value of the customTableFieldDefaultReadonly property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setCustomTableFieldDefaultReadonly(Boolean value) {
+        this.customTableFieldDefaultReadonly = value;
+    }
+
+    /**
+     * Gets the value of the customTableFieldDefaultHidden property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isCustomTableFieldDefaultHidden() {
+        return customTableFieldDefaultHidden;
+    }
+
+    /**
+     * Sets the value of the customTableFieldDefaultHidden property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setCustomTableFieldDefaultHidden(Boolean value) {
+        this.customTableFieldDefaultHidden = value;
     }
 
     /**

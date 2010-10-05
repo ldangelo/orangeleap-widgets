@@ -10,6 +10,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
     mydatastore : null,
 //    form:null,
     constituentid:null,
+    args: null,
 
     setCookie: function(c_name,value,expiredays)
     {
@@ -17,6 +18,22 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 	exdate.setDate(exdate.getDate()+expiredays);
 	document.cookie=c_name+ "=" +escape(value)+
 	    ((expiredays==null) ? "" : ";expires="+exdate.toUTCString());
+    },
+    populateArgs: function(form,args)  {
+	var referer = args.split('?');
+	var parms = referer[1].split('&');
+
+	for (x in parms) {
+	    if (x == 'remove') return;
+
+	    var keyval = parms[x].split('=');
+
+	    if (keyval[0] == 'id') continue; //skip id's
+
+	    var f = form.findById(keyval[0]);
+	    if (f != null)
+		f.setValue(keyval[1]);
+	}
     },
     populateWidget: function(constituent,table) {
 	for (x in table.fields) {
@@ -279,15 +296,21 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 
 			if (metaData[m].type != 'section') {
 			    value = records[0].get(metaData[m].name);
-			    
-			    if (metaData[m].type == 'picklist') 
-				this.form.findById(metaData[m].name + 'combo').setValue(value);
-			    else
-				this.form.findById(metaData[m].name).setValue(value);
+
+			    if (metaData[m].type == 'picklist') {
+				if (this.form.findById(metaData[m].name + 'combo') != null)
+				    this.form.findById(metaData[m].name + 'combo').setValue(value);
+			    } else {
+				if (this.form.findById(metaData[m].name) != null)
+				    this.form.findById(metaData[m].name).setValue(value);
+			    }
 			}
 		    }
-		    Ext.get('loading').remove();
-		    Ext.get('loading-mask').fadeOut({remove:true});
+		if (this.form.args != null)
+		    this.form.populateArgs(this.form,this.form.args);
+
+		Ext.get('loading').remove();
+		Ext.get('loading-mask').fadeOut({remove:true});
 	    }}
 	});
 	

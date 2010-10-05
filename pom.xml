@@ -2,9 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>donatenow</artifactId>
+	<artifactId>webtools</artifactId>
 	<packaging>war</packaging>
-	<name>Orange Leap (donatenow) project</name>
+	<name>Orange Leap (Web Tools) Project</name>
 
 	<parent>
 		<groupId>com.orangeleap</groupId>
@@ -180,7 +180,7 @@
 
 						<configuration>
 							<driver>com.mysql.jdbc.Driver</driver>
-							<url>jdbc:mysql://localhost:3306/donatenowtest</url>
+							<url>jdbc:mysql://localhost:3306/webtoolstest</url>
 							<driverProperties>autoReconnect=true,useUnicode=true,characterEncoding=UTF8</driverProperties>
 							<username>orangeleap</username>
 							<password>orangeleap</password>
@@ -271,14 +271,14 @@
 						<artifactId>maven-antrun-plugin</artifactId>
 						<executions>
 							<execution>
-								<id>delete donatenow.properties</id>
+								<id>delete webtools.properties</id>
 								<phase>process-classes</phase>
 								<goals>
 									<goal>run</goal>
 								</goals>
 								<configuration>
 									<tasks>
-										<delete failonerror="false" file="target/classes/donatenow.properties" />
+										<delete failonerror="false" file="target/classes/webtools.properties" />
 									</tasks>
 								</configuration>
 							</execution>
@@ -299,14 +299,14 @@
 						<artifactId>maven-antrun-plugin</artifactId>
 						<executions>
 							<execution>
-								<id>copy donatenow.properties</id>
+								<id>copy webtools.properties</id>
 								<phase>process-classes</phase>
 								<goals>
 									<goal>run</goal>
 								</goals>
 								<configuration>
 									<tasks>
-										<copy file="src/main/config/jetty-local/donatenow.properties" todir="target/classes" filtering="true" overwrite="true" />
+										<copy file="src/main/config/jetty-local/webtools.properties" todir="target/classes" filtering="true" overwrite="true" />
 									</tasks>
 								</configuration>
 							</execution>
@@ -332,7 +332,7 @@
 						  </connectors>
 						  <scanIntervalSeconds>5</scanIntervalSeconds>
 						  <webAppConfig>
-						    <contextPath>/donatenow</contextPath>
+						    <contextPath>/webtools</contextPath>
 						  </webAppConfig>
                             
                            
@@ -367,16 +367,16 @@
 						<artifactId>maven-antrun-plugin</artifactId>
 						<executions>
 							<execution>
-								<id>delete donatenow.properties</id>
+								<id>delete webtools.properties</id>
 								<phase>process-classes</phase>
 								<goals>
 									<goal>run</goal>
 								</goals>
 								<configuration>
 									<tasks>
-										<delete failonerror="false" file="target/classes/donatenow.properties" />
-										<delete failonerror="false" dir="${tomcat.path}/webapps/donatenow" />
-										<delete failonerror="false" dir="${tomcat.path}/work/Catalina/localhost/donatenow" />
+										<delete failonerror="false" file="target/classes/webtools.properties" />
+										<delete failonerror="false" dir="${tomcat.path}/webapps/webtools" />
+										<delete failonerror="false" dir="${tomcat.path}/work/Catalina/localhost/webtools" />
 									</tasks>
 								</configuration>
 							</execution>
@@ -400,7 +400,7 @@
 								<deployables>
 									<deployable>
 										<properties>
-											<context>donatenow</context>
+											<context>webtools</context>
 										</properties>
 									</deployable>
 								</deployables>
@@ -447,16 +447,16 @@
 						<artifactId>maven-antrun-plugin</artifactId>
 						<executions>
 							<execution>
-								<id>delete donatenow.properties</id>
+								<id>delete webtools.properties</id>
 								<phase>process-classes</phase>
 								<goals>
 									<goal>run</goal>
 								</goals>
 								<configuration>
 									<tasks>
-										<delete failonerror="false" file="target/classes/donatenow.properties" />
-										<delete failonerror="false" dir="${tomcat.path}/webapps/donatenow" />
-										<delete failonerror="false" dir="${tomcat.path}/work/Catalina/localhost/donatenow" />
+										<delete failonerror="false" file="target/classes/webtools.properties" />
+										<delete failonerror="false" dir="${tomcat.path}/webapps/webtools" />
+										<delete failonerror="false" dir="${tomcat.path}/work/Catalina/localhost/webtools" />
 									</tasks>
 								</configuration>
 							</execution>
@@ -478,7 +478,7 @@
 								<deployables>
 									<deployable>
 										<properties>
-											<context>donatenow</context>
+											<context>webtools</context>
 										</properties>
 									</deployable>
 								</deployables>
@@ -522,7 +522,7 @@
 								<deployables>
 									<deployable>
 										<properties>
-											<context>donatenow</context>
+											<context>webtools</context>
 										</properties>
 									</deployable>
 								</deployables>

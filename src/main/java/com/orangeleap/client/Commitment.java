@@ -57,8 +57,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "startDate"
 })
 @XmlSeeAlso({
-    RecurringGift.class,
-    Pledge.class
+    Pledge.class,
+    RecurringGift.class
 })
 public abstract class Commitment
     extends AbstractPaymentInfoEntity

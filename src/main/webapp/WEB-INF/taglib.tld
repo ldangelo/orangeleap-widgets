@@ -9,7 +9,7 @@
 
 <tag>
 	<name>customentity</name>
-	<tagclass>com.orangeleap.donatenow.web.tag.CustomEntityTag</tagclass>
+	<tagclass>com.orangeleap.webtools.web.tag.CustomEntityTag</tagclass>
 	<bodycontent>empty</bodycontent>
 	<info>Custom Entity Tag for Orange Leap Widget's</info>
 	<attribute>
@@ -21,7 +21,7 @@
 
 <tag>
 	<name>authcustomentity</name>
-	<tagclass>com.orangeleap.donatenow.web.tag.AuthCustomEntityTag</tagclass>
+	<tagclass>com.orangeleap.webtools.web.tag.AuthCustomEntityTag</tagclass>
 	<bodycontent>empty</bodycontent>
 	<info>Authorization Required Custom Entity Tag for Orange Leap Widget's</info>
 	<attribute>

@@ -16,7 +16,7 @@
     <script type="text/javascript" src="js/widgetform.js"></script>
 	<script type="text/javascript">
 		Ext.onReady(function() {
-			var sponsorshipform = new WidgetForm({widgettype:'customentity',customentitytype:'sponsorship'});
+			var sponsorshipform = new WidgetForm({widgettype:'customentity',customentitytype:'online_sponsorship'});
 			sponsorshipform.render('sponsorshipform-div');
 		});
 </script>

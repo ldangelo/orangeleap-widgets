@@ -13,7 +13,7 @@
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
-				<value>classpath:donatenow.properties</value>
+				<value>classpath:webtools.properties</value>
 			</list>
 		</property>
 	</bean>
@@ -23,7 +23,7 @@
 			<value>com.mysql.jdbc.Driver</value>
 		</property>
 		<property name="url">
-			<value>${donatenow.jdbc.url}</value>
+			<value>${webtools.jdbc.url}</value>
 		</property>
 		<property name="username">
 			<value>${jdbc.user}</value>
@@ -34,7 +34,7 @@
 	</bean>
 
 <!--
-	<bean id="donateWidgetDao" class="com.orangeleap.donatenow.dao.impl.DonateWidgetDaoImpl">
+	<bean id="donateWidgetDao" class="com.orangeleap.webtools.dao.impl.DonateWidgetDaoImpl">
 		
 		<property name="sqlMapClient"><ref local="sqlMap"/></property>
 		<property name="htmlCode">
@@ -43,15 +43,15 @@
 	</bean>
 -->
 
-<bean id="styleDAO" class="com.orangeleap.donatenow.dao.impl.StyleDAOImpl">
+<bean id="styleDAO" class="com.orangeleap.webtools.dao.impl.StyleDAOImpl">
 		<property name="sqlMapClient"><ref local="sqlMap"/></property>
 </bean>
 
-	<bean id="widgetDAO" class="com.orangeleap.donatenow.dao.impl.WidgetDAOImpl">
+	<bean id="widgetDAO" class="com.orangeleap.webtools.dao.impl.WidgetDAOImpl">
 		<property name="sqlMapClient"><ref local="sqlMap"/></property>
 	</bean>
 
-	<bean id="placementsDAO" class="com.orangeleap.donatenow.dao.impl.PlacementsDAOImpl">
+	<bean id="placementsDAO" class="com.orangeleap.webtools.dao.impl.PlacementsDAOImpl">
 		<property name="sqlMapClient"><ref local="sqlMap"/></property>
 	</bean>
 

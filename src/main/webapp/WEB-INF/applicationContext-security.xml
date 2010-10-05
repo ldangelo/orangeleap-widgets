@@ -12,7 +12,7 @@
 	class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
     <property name="locations">
       <list>
-	<value>classpath:donatenow.properties</value>
+	<value>classpath:webtools.properties</value>
       </list>
     </property>
   </bean>
@@ -34,6 +34,7 @@
 		<sec:intercept-url pattern='/decorators/**' filters='none'/>
 		<sec:intercept-url pattern='/customEntity.ajax*' filters='none'/>
 		<sec:intercept-url pattern='/widget.ajax*' filters='none'/>
+		<sec:intercept-url pattern='/customEntityList.json*' filters='none'/>
 		<sec:intercept-url pattern='/picklistItems.json' access='IS_AUTHENTICATED_ANONYMOUSLY, ROLE_USER'/>
 <!-- 		<sec:intercept-url pattern='/loginwidget.ajax*' filters='none'/> -->
 		<sec:intercept-url pattern='/giftHistory.json*' filters='none'/>
