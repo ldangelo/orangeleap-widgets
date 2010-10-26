@@ -63,7 +63,7 @@ NewWidgetPanelUi = Ext.extend(Ext.Panel, {
                         handler: function () {
 							var formpanel = Ext.getCmp("formpanel");
 							formpanel.removeAll();
-							formpanel.add(new WidgetForm({width: 600, height: 300, widgettype:'customentity',customentitytype:'donor_profile'}));
+							formpanel.add(new WidgetForm({width: 600, height: 300, widgettype:'customentity',customentitytype:'online_registration'}));
 							formpanel.doLayout();
                         }
                     },

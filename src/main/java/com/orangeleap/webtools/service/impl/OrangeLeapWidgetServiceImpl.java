@@ -105,9 +105,9 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
       if (webwidgetResponse != null) {
         if (webwidgetResponse.getCustomTableRow().size() > 0) {
           CustomTableRow row = webwidgetResponse.getCustomTableRow().get(0);
-          String val = customFieldMapValue(row.getCustomFieldMap(),"password");
-        if (val.equals(password)) {
-          return Long.parseLong(customFieldMapValue(row.getCustomFieldMap(),"constituentid"));
+          String val = customFieldMapValue(row.getCustomFieldMap(),"user_password");
+        if (val != null && val.equals(password)) {
+          return Long.parseLong(customFieldMapValue(row.getCustomFieldMap(),"constituent_id"));
         }
         }
       }

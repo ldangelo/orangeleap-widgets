@@ -266,6 +266,8 @@ public class AjaxWidgetFormController extends MultiActionController {
       widget.setWidgetHtml(sponsorshipWidgetHTML);
     }     else if (customentitytype.equals("online_donation")) {
       widget.setWidgetHtml(donationWidgetHTML);
+    } else if (customentitytype.equals("online_registration")) {
+      widget.setWidgetHtml(registrationWidgetHTML);
     } else if (customentitytype.equals("undefined") && widgettype.equals("gifthistory")) {
       widget.setWidgetHtml(giftHistoryWidgetHTML);
     }

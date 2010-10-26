@@ -16,7 +16,7 @@
     <script type="text/javascript" src="js/widgetform.js"></script>
 	<script type="text/javascript">
 	Ext.onReady(function() {
-		var registrationform = new WidgetForm({widgettype:'customentity',customentitytype:'donor_profile'});
+		var registrationform = new WidgetForm({widgettype:'customentity',customentitytype:'online_registration'});
 		registrationform.render('donorprofileform-div');
 	});  // Ext.onReady
 

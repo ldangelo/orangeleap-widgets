@@ -2,8 +2,8 @@
 (jde-set-variables
  '(jde-project-name "orangeleap-donatenow")
  '(jdibug-connect-host (quote "localhost"))
- '(jdibug-connect-port 4000)
- '(jde-db-option-connect-socket '(nil "4000"))
+ '(jdibug-connect-port 8000)
+ '(jde-db-option-connect-socket '(nil "8000"))
  '(jde-ant-buildfile "/Users/ldangelo/Development/orangeleap/orangeleap-donatenow/build/build.xml")
  '(jde-ant-enable-find nil)
  '(jde-ant-read-target t)
@@ -31,6 +31,9 @@
  ;; You can set different user name and e-mail address for each project
  '(user-mail-address "ldangelo@orangeleap.com") )
 
+(jde-maven2-set-current-profile "deploy")
+(jde-maven2-set-current-goal "install")
+(jde-maven2-set-current-arguments "-Dmaven.test.skip=true")
 
 
 

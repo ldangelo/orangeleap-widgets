@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
 	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:context="http://www.springframework.org/schema/context"
@@ -9,7 +9,7 @@
 	   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
 
-  
+
   <bean id="propertyConfigurer"
 	class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
     <property name="locations">
@@ -49,7 +49,7 @@
 		</property>
 	</bean>
 
-	
+
   <context:component-scan base-package="com.orangeleap.webtools"/>
 
 
@@ -67,14 +67,14 @@
 </bean>
 
   <bean id="ajaxLoginWidgetController" class="com.orangeleap.webtools.controller.AjaxLoginWidgetController">
-      <property name="methodNameResolver" ref="paramResolver"/>      
+      <property name="methodNameResolver" ref="paramResolver"/>
   </bean>
 
   <bean id="ajaxWidgetFormController" class="com.orangeleap.webtools.controller.AjaxWidgetFormController">
-      <property name="methodNameResolver" ref="paramResolver"/>      
+      <property name="methodNameResolver" ref="paramResolver"/>
       <property name="loginWidgetHTML"> <value><![CDATA[<html><head><link rel='stylesheet' href='@APPLOCATION@/css/webtools.css' /><script type='text/javascript' src='@APPLOCATION@/dwr/interface/OrangeLeapWidget.js'></script><script type='text/javascript' src='@APPLOCATION@/dwr/engine.js'></script><script type='text/javascript' src='@APPLOCATION@/dwr/util.js'></script><script type='text/javascript' src='@APPLOCATION@/js/webtools.js'></script><script type='text/javascript' src='@APPLOCATION@/js/required-field.js'></script><style type='text/css'>@STYLE@</style></head><body><script type='text/javascript'>Ext.onReady(function() {authentication.generateWidget('@GUID@','@SUCCESSURL@','@FAILUREURL');});</script><div id='widget'></div></body>]]></value></property>
       <property name="donationWidgetHTML">
-	<value><![CDATA[<html><head><link rel='stylesheet' href='@APPLOCATION@/css/webtools.css' /><script type='text/javascript' src='@APPLOCATION@/dwr/interface/OrangeLeapWidget.js'></script><script type='text/javascript' src='@APPLOCATION@/dwr/engine.js'></script><script type='text/javascript' src='@APPLOCATION@/dwr/util.js'></script><script type='text/javascript' src='@APPLOCATION@/js/webtools.js'></script><script type='text/javascript' src='@APPLOCATION@/js/required-field.js'></script><style type='text/css'>@STYLE@</style></head><body>	<!-- Your widget code --><div id='loading-mask'></div><div id='loading'><div class='loading-indicator'>Loading...</div></div><div id='widget'>	</div>	<script type='text/javascript'>  	Ext.onReady(function() {  var customentity = new OrangeLeap.CustomEntity({  widgetid:'widget',  labelAlign: 'left',  layout:'form',  monitorPoll:200,  monitorValid:true,  minButtonWidth:75,  guid:'@GUID@',  authenticate:@AUTHENTICATE@,  loginurl:'@LOGINURL@',  buttonLabel:'Donate',    id: 'form',    border:false,    frame:true,    labelAlign:'left',    labelWidth:100,    monitorValid:true,    width:600,  items:[new Ext.form.Hidden({id:'projectCode',hidden:'true',value:'@PROJECTCODE@'})],  buttons:[]  });  });</script></body>]]></value>
+	<value><![CDATA[<html><head><link rel='stylesheet' href='@APPLOCATION@/css/webtools.css' /><script type='text/javascript' src='@APPLOCATION@/dwr/interface/OrangeLeapWidget.js'></script><script type='text/javascript' src='@APPLOCATION@/dwr/engine.js'></script><script type='text/javascript' src='@APPLOCATION@/dwr/util.js'></script><script type='text/javascript' src='@APPLOCATION@/js/webtools.js'></script><script type='text/javascript' src='@APPLOCATION@/js/required-field.js'></script><style type='text/css'>@STYLE@</style></head><body>	<!-- Your widget code --><div id='loading-mask'></div><div id='loading'><div class='loading-indicator'>Loading...</div></div><div id='widget'>	</div>	<script type='text/javascript'>  	Ext.onReady(function() {  var customentity = new OrangeLeap.CustomEntity({  widgetid:'widget',  labelAlign: 'left',  layout:'form',  monitorPoll:200,  monitorValid:true,  minButtonWidth:75,  guid:'@GUID@',  authenticate:@AUTHENTICATE@,  loginurl:'@LOGINURL@',  buttonLabel:'Donate',    id: 'form',    border:false,    frame:true,    labelAlign:'left',    labelWidth:100,    monitorValid:true,    width:600,  items:[new Ext.form.Hidden({id:'gift_designation',hidden:'true',value:'@PROJECTCODE@'})],  buttons:[]  });  });</script></body>]]></value>
       </property>
       <property name="registrationWidgetHTML">
 	<value><![CDATA[<html><head><link rel='stylesheet' href='@APPLOCATION@/css/webtools.css' /><script type='text/javascript' src='@APPLOCATION@/dwr/interface/OrangeLeapWidget.js'></script><script type='text/javascript' src='@APPLOCATION@/dwr/engine.js'></script><script type='text/javascript' src='@APPLOCATION@/dwr/util.js'></script><script type='text/javascript' src='@APPLOCATION@/js/webtools.js'></script><script type='text/javascript' src='@APPLOCATION@/js/required-field.js'></script><style type='text/css'>@STYLE@</style></head><body>	<!-- Your widget code --><div id='loading-mask'></div><div id='loading'><div class='loading-indicator'>Loading...</div></div><div id='widget'>	</div>	<script type='text/javascript'>  	Ext.onReady(function() {  var customentity = new OrangeLeap.CustomEntity({  widgetid:'widget',  labelAlign: 'left',  layout:'form',  monitorPoll:200,  monitorValid:true,  minButtonWidth:75,  guid:'@GUID@',  authenticate:@AUTHENTICATE@,  loginurl:'@LOGINURL@',  buttonLabel:'Register',    id: 'form',    border:false,    frame:true,    labelAlign:'left',    labelWidth:100,    monitorValid:true,    width:600,  items:[],  buttons:[]  });  });</script></body>]]></value>
@@ -95,7 +95,7 @@
   </bean>
 
   <bean id="ajaxPlacementController" class="com.orangeleap.webtools.controller.AjaxPlacementController">
-      <property name="methodNameResolver" ref="paramResolver"/>      
+      <property name="methodNameResolver" ref="paramResolver"/>
   </bean>
 
   <bean id="customEntityController" class="com.orangeleap.webtools.controller.CustomEntityController">

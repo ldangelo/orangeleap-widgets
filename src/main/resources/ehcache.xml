@@ -59,14 +59,14 @@
     to this area and then asynchronously written to disk. The default size is 30MB.
     Each spool buffer is used only by its cache. If you get OutOfMemory errors consider
     lowering this value. To improve DiskStore performance consider increasing it. Trace level
-    logging in the DiskStore will show if put back ups are occurring. 
+    logging in the DiskStore will show if put back ups are occurring.
 
     memoryStoreEvictionPolicy:
     Policy would be enforced upon reaching the maxElementsInMemory limit. Default
     policy is Least Recently Used (specified as LRU). Other policies available -
     First In First Out (specified as FIFO) and Less Frequently Used
     (specified as LFU)
- 
+
     Mandatory Default Cache configuration. These settings will be applied to caches
     created programmtically using CacheManager.add(String cacheName).
 
@@ -92,8 +92,8 @@
            eternal="false"
            overflowToDisk="true"
            diskSpoolBufferSizeMB="10"
-           timeToIdleSeconds="1800"
-           timeToLiveSeconds="3600"
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="120"
            diskExpiryThreadIntervalSeconds="600"
            memoryStoreEvictionPolicy="LRU"
             />
@@ -104,8 +104,8 @@
            eternal="false"
            overflowToDisk="true"
            diskSpoolBufferSizeMB="10"
-           timeToIdleSeconds="1800"
-           timeToLiveSeconds="3600"
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="120"
            diskExpiryThreadIntervalSeconds="600"
            memoryStoreEvictionPolicy="LRU"
             />
@@ -116,8 +116,8 @@
            eternal="false"
            overflowToDisk="true"
            diskSpoolBufferSizeMB="10"
-           timeToIdleSeconds="1800"
-           timeToLiveSeconds="3600"
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="120"
            diskExpiryThreadIntervalSeconds="600"
            memoryStoreEvictionPolicy="LRU"
             />
