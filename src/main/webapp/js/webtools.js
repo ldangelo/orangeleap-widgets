@@ -5378,6 +5378,7 @@ var swin = null;
 var    pageSize = 10;
 var    pageStart = 0;
 var pattern = "sponsorship_status=Available;";
+var panel = null;
 
 var sponsorshipform =  {
     sponsorshipurl:null,
@@ -5455,10 +5456,16 @@ var sponsorshipform =  {
 	    var records = mydatastore.data.items;
 	    for (var m=0; m < metaData.length; m++) {
 		var value = records[fldidx].get(metaData[m].name);
-		var ffield = 		form.getForm().findField(metaData[m].name).setValue(value);
+		var ffield = form.getForm().findField(metaData[m].name);
 
+		if (metaData[m].type != 'url') {
 		if (ffield != null)
 		    ffield.setValue(value);
+		} else {
+		    if (value != null && value != '') {
+			$j("#picture").attr("src",value);
+		    }
+		}
 	    }
 	} else {
 	    //
@@ -5510,6 +5517,11 @@ var sponsorshipform =  {
 	window.location=sponsorshipform.sponsorshipurl + query
     },
     clearForm:function() {
+	//
+	// clear the picture
+	if (panel.items.length == 3)
+	    panel.remove(panel.items.items[0],true);
+
 	var clearfield = function(f) {
 	    if (f.isFormField) {
 		f.setValue("");
@@ -5540,8 +5552,24 @@ var sponsorshipform =  {
 	    for (var m=0; m < metaData.length; m++) {
 		var value = records[fldidx].get(metaData[m].name);
 		var ffield = form.getForm().findField(metaData[m].name);
-		if (ffield != null)
-		    ffield.setValue(value);
+		if (metaData[m].type != 'url') {
+		    if (ffield != null)
+			ffield.setValue(value);
+		} else {
+		    if (value != null && value != '') {
+			$j("#picture").attr("src",value);
+//			panel.items.items[0].autoEl = {
+//				tag:'div',children:{
+//				    tag:'img',
+//				    id: metaData[m].name,
+//				    src: value,
+//				    height: '211',
+//				    width: '180',
+//				    hspace: '10'
+//				}
+//			}
+		    }	    
+    		}
 	    }
 	}
     },
@@ -5569,9 +5597,9 @@ var sponsorshipform =  {
 
 		    if (form.items.length > 0) return;  // we are paging through data and the fields already exist
 		    var fields = meta.fields;
-		    var col1 = new Ext.Panel({columnWidth: '.50',layout:'form',defaults:{anchor:'100%'},bodyStyle:'padding:0 18px 0 0',items:[]});
-		    var col2 = new Ext.Panel({columnWidth: '.50',layout:'form',defaults:{anchor:'100%'},bodyStyle:'padding:0 18px 0 0',items:[]})
-		    var panel = new Ext.Panel({ columnWidth:0.5,layout:'column', bodyStyle:'padding:0 18px 0 0',items:[col1,col2]});
+		    var col1 = new Ext.Panel({columnWidth: '.38',layout:'form',defaults:{anchor:'100%'},bodyStyle:'padding:0 18px 0 0',items:[]});
+		    var col2 = new Ext.Panel({columnWidth: '.38',layout:'form',defaults:{anchor:'100%'},bodyStyle:'padding:0 18px 0 0',items:[]})
+		    panel = new Ext.Panel({ layout:'column', bodyStyle:'padding:0 18px 0 0',items:[col1,col2]});
 		    
 		    for (var f=0;f < fields.length; f++) {
 			if (fields[f].hidden == true) {
@@ -5647,9 +5675,10 @@ var sponsorshipform =  {
 			    else
 				col1.add(field);
 
-	    }
+	    } 
 		    }
-			form.add(panel);
+		    
+		    form.add(panel);
 		},
 		'load': function(store,records,options) {
 		    var metaData = store.reader.meta.fields;
@@ -5659,8 +5688,29 @@ var sponsorshipform =  {
 			var ffield = form.getForm().findField(metaData[m].name);
 			value = records[fldidx].get(metaData[m].name);
 
-			if (ffield != null)
-			    ffield.setValue(value);
+
+			if (metaData[m].type != 'url') {
+				if (ffield != null) 
+				    ffield.setValue(value);
+			}   else {
+				var fldImage = new Ext.Panel({
+				    isFormField:true,
+				    columnWidth:'.24',
+				    layout: 'form',
+				    autoEl : {
+				    tag:'div',children:{
+					tag:'img',
+					id: metaData[m].name,
+					src: value,
+					height: '211',
+					width: '180',
+					hspace: '10'
+				    }
+				}
+				});
+				panel.insert(0,fldImage);
+			    win.doLayout();
+			}
 		    }
 
 		    
@@ -5750,7 +5800,7 @@ var sponsorshipform =  {
 	    frame:true,
 	    labelWidth:100,
 	    monitorValid:true,
-	    width:600,
+	    width:900,
 	    items:[
 		countryComboConfig,genderCombo,ageCombo
 	    ],
@@ -5767,7 +5817,7 @@ var sponsorshipform =  {
 	    frame: true,
 	    labelWidth: 100,
 	    monitorValid:true,
-	    width: 600,
+	    width: 900,
 	    items: [],
 	    buttons: [{
 		text: 'Previous',
