@@ -10,9 +10,19 @@
 	<script type="text/javascript" src="js/extjs/ext-all-debug.js"></script>
 	<script type="text/javascript" src="js/dynamicform.js"></script>
 	<script type="text/javascript" src="js/widgetform.js"></script>
-
+	<script type='text/javascript' src='dwr/interface/OrangeLeapWidget.js'></script>
+	<script type='text/javascript' src='dwr/engine.js'>
+	<script type="text/javascript" src=""></script>
         <script type="text/javascript">
         	Ext.onReady(function() {
+        		var roles = null;
+
+        		function handleReturn(data) {
+        			roles = data;
+        		}
+
+        		OrangeLeapWidget.getRoles(handleReturn);
+
 NewWidgetPanelUi = Ext.extend(Ext.Panel, {
     title: 'Create New Widget',
     width: 750,
@@ -39,6 +49,18 @@ NewWidgetPanelUi = Ext.extend(Ext.Panel, {
                         text: 'Login',
                         width: 125,
                         handler: function () {
+                        	if (roles.match("WEBTOOLS_DONORPORTAL") == null) {
+                        		// display the error
+								Ext.Msg.show({
+		    						title: 'ERROR',
+	    							msg: "You do not have permission to access this feature.",
+	    							icon: Ext.MessageBox.ERROR,
+	    							buttons: Ext.Msg.OK,
+	    							modal: true,
+	    							fn: this.errorHandlerFinished
+								});
+                        		return;
+                        	}
 							var formpanel = Ext.getCmp("formpanel");
 							formpanel.removeAll();
 							formpanel.add(new WidgetForm({widgettype:'customentity',customentitytype:'widget_authentication'}));
@@ -50,6 +72,18 @@ NewWidgetPanelUi = Ext.extend(Ext.Panel, {
                         text: 'Donation',
                         width: 125,
                         handler: function () {
+                        	if (roles.match("WEBTOOLS_DONATION") == null) {
+                        		// display the error
+								Ext.Msg.show({
+		    						title: 'ERROR',
+	    							msg: "You do not have permission to access this feature.",
+	    							icon: Ext.MessageBox.ERROR,
+	    							buttons: Ext.Msg.OK,
+	    							modal: true,
+	    							fn: this.errorHandlerFinished
+								});
+                        		return;
+                        	}
 							var formpanel = Ext.getCmp("formpanel");
 							formpanel.removeAll();
 							formpanel.add(new WidgetForm({widgettype:'customentity',customentitytype:'online_donation'}));
@@ -61,6 +95,18 @@ NewWidgetPanelUi = Ext.extend(Ext.Panel, {
                         text: 'Registration',
                         width: 125,
                         handler: function () {
+							if (roles.match("WEBTOOLS_DONORPORTAL") == null) {
+                        		// display the error
+								Ext.Msg.show({
+		    						title: 'ERROR',
+	    							msg: "You do not have permission to access this feature.",
+	    							icon: Ext.MessageBox.ERROR,
+	    							buttons: Ext.Msg.OK,
+	    							modal: true,
+	    							fn: this.errorHandlerFinished
+								});
+                        		return;
+                        	}
 							var formpanel = Ext.getCmp("formpanel");
 							formpanel.removeAll();
 							formpanel.add(new WidgetForm({width: 600, height: 300, widgettype:'customentity',customentitytype:'online_registration'}));
@@ -72,6 +118,18 @@ NewWidgetPanelUi = Ext.extend(Ext.Panel, {
                         text: 'Donor Profile',
                         width: 125,
                         handler: function () {
+							if (roles.match("WEBTOOLS_DONORPORTAL") == null) {
+                        		// display the error
+								Ext.Msg.show({
+		    						title: 'ERROR',
+	    							msg: "You do not have permission to access this feature.",
+	    							icon: Ext.MessageBox.ERROR,
+	    							buttons: Ext.Msg.OK,
+	    							modal: true,
+	    							fn: this.errorHandlerFinished
+								});
+                        		return;
+                        	}
 							var formpanel = Ext.getCmp("formpanel");
 							formpanel.removeAll();
 							formpanel.add(new WidgetForm({widgettype:'customentity',customentitytype:'donor_profile'}));
@@ -83,6 +141,18 @@ NewWidgetPanelUi = Ext.extend(Ext.Panel, {
                         text: 'Gift History',
                         width: 125,
                         handler: function () {
+							if (roles.match("WEBTOOLS_DONORPORTAL") == null) {
+                        		// display the error
+								Ext.Msg.show({
+		    						title: 'ERROR',
+	    							msg: "You do not have permission to access this feature.",
+	    							icon: Ext.MessageBox.ERROR,
+	    							buttons: Ext.Msg.OK,
+	    							modal: true,
+	    							fn: this.errorHandlerFinished
+								});
+                        		return;
+                        	}
 							var formpanel = Ext.getCmp("formpanel");
 							formpanel.removeAll();
 							formpanel.add(new WidgetForm({widgettype:'gifthistory',customentitytype:'undefined'}));
@@ -94,6 +164,18 @@ NewWidgetPanelUi = Ext.extend(Ext.Panel, {
                         text: 'Sponsorship',
                         width: 125,
                         handler: function () {
+							if (roles.match("WEBTOOLS_SPONSORSHIP") == null) {
+                        		// display the error
+								Ext.Msg.show({
+		    						title: 'ERROR',
+	    							msg: "You do not have permission to access this feature.",
+	    							icon: Ext.MessageBox.ERROR,
+	    							buttons: Ext.Msg.OK,
+	    							modal: true,
+	    							fn: this.errorHandlerFinished
+								});
+                        		return;
+                        	}
 							var formpanel = Ext.getCmp("formpanel");
 							formpanel.removeAll();
 							formpanel.add(new WidgetForm({widgettype:'customentity',customentitytype:'online_sponsorship'}));
@@ -105,6 +187,18 @@ NewWidgetPanelUi = Ext.extend(Ext.Panel, {
                         text: 'Sponsorable',
                         width: 125,
                         handler: function () {
+                        	if (roles.match("WEBTOOLS_SPONSORSHIP") == null) {
+                        		// display the error
+								Ext.Msg.show({
+		    						title: 'ERROR',
+	    							msg: "You do not have permission to access this feature.",
+	    							icon: Ext.MessageBox.ERROR,
+	    							buttons: Ext.Msg.OK,
+	    							modal: true,
+	    							fn: this.errorHandlerFinished
+								});
+                        		return;
+                        	}
 							var formpanel = Ext.getCmp("formpanel");
 							formpanel.removeAll();
 							formpanel.add(new WidgetForm({widgettype:'customentity',customentitytype:'sponsorable'}));

@@ -5,8 +5,14 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.Element;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,6 +20,8 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 import com.orangeleap.webtools.service.WidgetService;
 import com.orangeleap.webtools.service.OrangeLeapClientService;
 import com.orangeleap.webtools.domain.CustomEntity;
+import com.orangeleap.webtools.domain.Widget;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import com.orangeleap.client.CustomTableRow;
 import com.orangeleap.client.Constituent;
@@ -21,143 +29,192 @@ import org.apache.commons.beanutils.PropertyUtils;
 
 public class CustomEntityController extends MultiActionController {
 
-  @Autowired
-  WidgetService widgetService;
+	@Autowired
+	WidgetService widgetService;
 
-  @Autowired
-  OrangeLeapClientService orangeLeapClientService;
+	@Autowired
+	OrangeLeapClientService orangeLeapClientService;
 
-  public ModelAndView view(HttpServletRequest request,HttpServletResponse response) throws Exception {
-    String guid = request.getParameter("guid");
-    String constituentid = request.getParameter("constituentid");
+	@Resource(name = "sessionCache")
+	Cache sessionCache;
 
-    if (constituentid == null || constituentid.equals("undefined") || constituentid.equals("")) {
-      constituentid = "-1";
-    }
+	public ModelAndView view(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String guid = request.getParameter("guid");
+		String sessionId = request.getParameter("sessionId");
+		Long constituentid = -1L;
 
-    if (guid != null && !guid.equals("undefined")) {
-      List<CustomEntity> ceList = widgetService.getCustomEntity(guid);
-      return getModelMap(ceList,guid, new Long(constituentid));
-    }
+		Widget w = widgetService.getWidget(guid);
+		if (w == null) {
+			return getModelMapError("Invalid guid");
+		}
 
-    return getModelMapError("Error trying to retrieve customEntity");
-  }
+		if (w.getWidgetAuthenticationRequired() == true) {
+			//
+			// get the constituent id out of the session cache
+			Element elem = sessionCache.get(sessionId);
+			if (elem == null) {
+				return getModelMapError("Invalid Session ID");
+			} else {
+				constituentid = (Long) elem.getObjectValue();
+			}
+		}
+
+		if (guid != null && !guid.equals("undefined")) {
+			List<CustomEntity> ceList = widgetService.getCustomEntity(guid);
+			return getModelMap(ceList, guid, new Long(constituentid));
+		}
+
+		return getModelMapError("Error trying to retrieve customEntity");
+	}
 
 	/**
 	 * Generates modelMap to return in the modelAndView
+	 *
 	 * @param contacts
 	 * @return
 	 */
-	private ModelAndView getModelMap(CustomTableRow row){
-		
-		Map<String,Object> modelMap = new HashMap<String,Object>(3);
+	private ModelAndView getModelMap(CustomTableRow row) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>(3);
 		modelMap.put("total", 1);
 		modelMap.put("data", row);
 		modelMap.put("success", true);
-		
+
 		return new ModelAndView("jsonView", modelMap);
 	}
 
-  public ModelAndView create(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
-    String guid = request.getParameter("guid");
-    String constituentid = request.getParameter("constituentid");
+	public ModelAndView create(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String guid = request.getParameter("guid");
+		String sessionId = request.getParameter("sessionId");
+		Long constituentid = -1L;
 
-    if (constituentid != null && !constituentid.equals("undefined") && !constituentid.equals("")) {
-      orangeLeapClientService.removeFromCache(new Long(constituentid));
-    }
+		Widget w = widgetService.getWidget(guid);
+		if (w == null) {
+			return getModelMapError("Invalid guid");
+		}
 
-    if (guid != null && !guid.equals("undefined")) {
-      CustomTableRow row = widgetService.CreateCustomTableRow(guid,request);
-      if (row != null) {
-        return getModelMap(row);
-      }
+		if (w.getWidgetAuthenticationRequired() == true) {
+			//
+			// get the constituent id out of the session cache
+			Element elem = sessionCache.get(sessionId);
+			if (elem == null) {
+				return getModelMapError("Invalid Session ID");
+			} else {
+				constituentid = (Long) elem.getObjectValue();
+			}
+		}
 
-    }
-    return getModelMapError("Error trying to create customEntity.");
-  }
+		if (constituentid != null && !constituentid.equals("undefined")
+				&& !constituentid.equals("")) {
+			orangeLeapClientService.removeFromCache(new Long(constituentid));
+		}
 
-  public ModelAndView update(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
-    return getModelMapError("Error trying to update customEntity");
-  }
+		if (guid != null && !guid.equals("undefined")) {
+			CustomTableRow row = widgetService.CreateCustomTableRow(guid,
+					request);
+			if (row != null) {
+				return getModelMap(row);
+			}
 
-  public ModelAndView delete(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
-    return getModelMapError("Error trying to delete customEntity");
-  }
+		}
+		return getModelMapError("Error trying to create customEntity.");
+	}
 
-  private ModelAndView getModelMap(List<CustomEntity> ceList,String guid,Long constituentid) {
-      List <Map<String,Object>> returnList = new ArrayList<Map<String,Object>>();   
-      Map<String,Object> modelMap = new HashMap<String,Object>();
-      Map<String,Object> metaData = new HashMap<String,Object>();
+	public ModelAndView update(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		return getModelMapError("Error trying to update customEntity");
+	}
 
-    metaData.put("idProperty","id");
-    metaData.put("root","rows");
-    metaData.put("totalProperty","totalRows");
-    metaData.put("successProperty","success");
-    metaData.put("fields",ceList);
+	public ModelAndView delete(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		return getModelMapError("Error trying to delete customEntity");
+	}
 
-    modelMap.put("metaData",metaData);
-    modelMap.put("success",true);
-    
-    Constituent constituent = null;
+	private ModelAndView getModelMap(List<CustomEntity> ceList, String guid,
+			Long constituentid) {
+		List<Map<String, Object>> returnList = new ArrayList<Map<String, Object>>();
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		Map<String, Object> metaData = new HashMap<String, Object>();
 
-    if (constituentid != -1) {
-      //
-      // get the constituent associated with this custom entity
-      constituent = orangeLeapClientService.getConstituentById(guid,constituentid);
-    }
+		metaData.put("idProperty", "id");
+		metaData.put("root", "rows");
+		metaData.put("totalProperty", "totalRows");
+		metaData.put("successProperty", "success");
+		metaData.put("fields", ceList);
 
-    //
-    // add a row into the modelMap
-    Iterator<CustomEntity> it = ceList.iterator();
-    Map<String,Object> row = new HashMap<String,Object>();
-    row.put("id",0);
-    while (it.hasNext()) {
-      CustomEntity ce = it.next();
+		modelMap.put("metaData", metaData);
+		modelMap.put("success", true);
 
-      //
-      // skip the id as we already put it in...
-      if (ce.getName().equals("id")) continue;
+		Constituent constituent = null;
 
-        try {
-          String ceName = ce.getName();
-          
-          if (ce.getExpression().startsWith("constituent")) {
-            //
-            // split the string on instances of '.'
-            String args[] = ce.getExpression().split("\\.",-1);
-            if (args.length == 2) {
-              row.put(ce.getName(),PropertyUtils.getSimpleProperty(constituent,args[1]));
-            } else if (args.length == 3) {
-              Object obj = PropertyUtils.getSimpleProperty(constituent,args[1]);
-              row.put(ce.getName(),PropertyUtils.getSimpleProperty(obj,args[2]));
-            }
-          }
-        } catch (Exception e ) {
-            row.put(ce.getName(),"");
-        }
-    }
-    returnList.add(row);
-    modelMap.put("rows",returnList);
-    modelMap.put("totalRows",returnList.size()) ;
+		if (constituentid != -1) {
+			//
+			// get the constituent associated with this custom entity
+			constituent = orangeLeapClientService.getConstituentById(guid,
+					constituentid);
+		}
 
-    return new ModelAndView("jsonView",modelMap);
-  }
+		//
+		// add a row into the modelMap
+		Iterator<CustomEntity> it = ceList.iterator();
+		Map<String, Object> row = new HashMap<String, Object>();
+		row.put("id", 0);
+		while (it.hasNext()) {
+			CustomEntity ce = it.next();
+
+			//
+			// skip the id as we already put it in...
+			if (ce.getName().equals("id"))
+				continue;
+
+			try {
+				String ceName = ce.getName();
+
+				if (constituent != null) {
+					if (ce.getExpression().startsWith("constituent")) {
+						//
+						// split the string on instances of '.'
+						String args[] = ce.getExpression().split("\\.", -1);
+						if (args.length == 2) {
+							row.put(ce.getName(), PropertyUtils
+									.getSimpleProperty(constituent, args[1]));
+						} else if (args.length == 3) {
+							Object obj = PropertyUtils.getSimpleProperty(
+									constituent, args[1]);
+							row.put(ce.getName(), PropertyUtils
+									.getSimpleProperty(obj, args[2]));
+						}
+					}
+				} else {
+					// we don't have a constituent
+					row.put(ce.getName(), "");
+				}
+			} catch (Exception e) {
+				row.put(ce.getName(), "");
+			}
+		}
+		returnList.add(row);
+		modelMap.put("rows", returnList);
+		modelMap.put("totalRows", returnList.size());
+
+		return new ModelAndView("jsonView", modelMap);
+	}
 
 	/**
-	 * Generates modelMap to return in the modelAndView in case
-	 * of exception
-	 * @param msg message
+	 * Generates modelMap to return in the modelAndView in case of exception
+	 *
+	 * @param msg
+	 *            message
 	 * @return
 	 */
-	private ModelAndView getModelMapError(String msg){
+	private ModelAndView getModelMapError(String msg) {
 
-		Map<String,Object> modelMap = new HashMap<String,Object>(2);
+		Map<String, Object> modelMap = new HashMap<String, Object>(2);
 		modelMap.put("message", msg);
 		modelMap.put("success", false);
 
-		return new ModelAndView("jsonView",modelMap);
-	} 
+		return new ModelAndView("jsonView", modelMap);
+	}
 }

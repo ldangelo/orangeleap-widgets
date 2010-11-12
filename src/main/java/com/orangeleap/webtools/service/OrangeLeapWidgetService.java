@@ -10,9 +10,11 @@ import java.util.List;
 import javax.xml.datatype.DatatypeConfigurationException;
 
 public interface OrangeLeapWidgetService {
-  public List<Gift> getConstituentGifts(String guid, Long constituentId);
+  public List<Gift> getConstituentGifts(String guid, String sessionId);
 
-  public Long authenticate(String guid, String username, String password);
+  public String authenticate(String guid, String username, String password);
+
+  public String getRoles();
 
   public WidgetData create();
 
@@ -20,7 +22,7 @@ public interface OrangeLeapWidgetService {
 
   public void updateViewCount(String guid, String referrer);
 
-  public Constituent getConstituent(String guid,Long id);
+  public Constituent getConstituent(String guid,String sessionId);
 
   public CustomTableRow addCustomTableRow(String guid,Entry[] row);
 }

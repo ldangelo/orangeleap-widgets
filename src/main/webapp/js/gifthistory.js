@@ -2,18 +2,6 @@ var $j = jQuery.noConflict();
 
 var gifthistory = {
 
-    include: function(filename)
-    {
-	var head = document.getElementsByTagName('head')[0];
-
-	script = document.createElement('script');
-	script.src = filename;
-	script.type = 'text/javascript';
-
-	head.appendChild(script)
-    },
-
-
     setCookie: function(c_name,value,expiredays)
     {
 	var exdate=new Date();
@@ -71,9 +59,9 @@ var gifthistory = {
     },
 
     generateWidget: function(widgetname,widgetid,authenticate, redirecturl) {
-	var constituentId = this.getCookie("constituentId");
+	var sessionId = this.getCookie("sessionId");
 
-	if (authenticate == true && constituentId == "") {za
+	if (authenticate == true && sessionId == "") {
 	    window.location=redirecturl;
 	    return;
 	}
@@ -82,7 +70,7 @@ var gifthistory = {
 	OrangeLeapWidget.updateViewCount(widgetid,document.location.href);
 
 	var mydatastore = new Ext.data.JsonStore({
-	    url:'/webtools/giftHistory.json?guid=' + widgetid + '&constituentid=' + constituentId,
+	    url:'/webtools/giftHistory.json?guid=' + widgetid + '&sessionId=' + sessionId,
 	    root:'rows',
 	    fields:['id','donationdate','amount','status','paymentstatus'],
 	    sortInfo:{field:'id',direction:'ASC'}

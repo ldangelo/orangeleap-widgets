@@ -49,6 +49,8 @@
 				url = 'sponsorablewidgetform.htm?guid=' + val;
 			else if (record.data.entityname == 'online_sponsorship')
 				url = 'sponsorshipwidgetform.htm?guid=' + val;
+		        else if(record.data.entityname == 'online_registration')
+			        url = 'registrationwidgetform.htm?guid=' + val;
 		} else {
 			if (record.data.type == 'gifthistory')
 				url = 'gifthistorywidgetform.htm?guid=' + val;

@@ -98,7 +98,7 @@ public class WidgetServiceImpl implements WidgetService {
     WidgetExample example = new WidgetExample();
     example.createCriteria().andWidgetGuidEqualTo(guid);
     List<Widget> widgets = widgetDAO.selectWidgetByExample(example);
-    
+
     //
     // guid is a unique key so this will only return one widget
     Widget widget = widgets.get(0);
@@ -110,23 +110,23 @@ public class WidgetServiceImpl implements WidgetService {
   public Widget saveOrUpdate(Widget widget) {
 	if (widget.getWidgetCreateDate() == null)
 	    widget.setWidgetCreateDate(new Date());
-	
+
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	
+
 	String userName = auth.getName();
 	String password = (String) auth.getCredentials();
 	String siteName = userName.substring(userName.indexOf('@') + 1);
 	widget.setWidgetUsername(userName);
 	widget.setWidgetPassword(password);
 
-	
+
 	Widget result = null;
-	
+
 	if (widget.getWidgetId() != null)
 		widgetDAO.updateWidgetByPrimaryKey(widget);
 	else
 		widgetDAO.insertWidget(widget);
-	
+
     return widget;
   }
 
@@ -158,25 +158,25 @@ public class WidgetServiceImpl implements WidgetService {
     CustomTable table = getCustomTable(guid);
     WidgetExample example = new WidgetExample();
     example.createCriteria().andWidgetGuidEqualTo(guid);
-      
+
     List<Widget> widgets = widgetDAO.selectWidgetByExample(example);
-      
+
     if (widgets.size() > 0) {
 
       //
       // guid is a unique key so this will only return one widget
       Widget widget = widgets.get(0);
-      
+
       String wsusername = widgets.get(0).getWidgetUsername();
       String wspassword = widgets.get(0).getWidgetPassword();
-      
+
       WSClient wsClient = null;
       OrangeLeap oleap = null;
-      
+
       wsClient = new WSClient();
       oleap = wsClient.getOrangeLeap(System.getProperty("webtools.wsdllocation"),wsusername, wspassword);
-      
-      
+
+
       row.setCustomTableId(table.getId());
       row.setCustomTableRowActive(true);
 
@@ -205,16 +205,16 @@ public class WidgetServiceImpl implements WidgetService {
       }
 
     }
-    
+
     return null;
   }
 
     public CustomTable getCustomTable(String guid) {
       WidgetExample example = new WidgetExample();
       example.createCriteria().andWidgetGuidEqualTo(guid);
-      
+
       List<Widget> widgets = widgetDAO.selectWidgetByExample(example);
-      
+
     if (widgets.size() > 0) {
 
       //
@@ -230,10 +230,10 @@ public class WidgetServiceImpl implements WidgetService {
 
       String wsusername = widgets.get(0).getWidgetUsername();
       String wspassword = widgets.get(0).getWidgetPassword();
-      
+
       WSClient wsClient = null;
       OrangeLeap oleap = null;
-      
+
       wsClient = new WSClient();
       oleap = wsClient.getOrangeLeap(System.getProperty("webtools.wsdllocation"),wsusername, wspassword);
       //
@@ -259,19 +259,19 @@ public class WidgetServiceImpl implements WidgetService {
       List<CustomEntity> entities = generateCustomEntities(table);
 
       return entities;
-    }    
+    }
     return null;
   }
 
   private List<CustomEntity> generateCustomEntities(CustomTable table)
   {
-  
+
     List<CustomTableField> ctfields = table.getFields();
     Iterator<CustomTableField> ctit = ctfields.iterator();
 
     List<CustomEntity> retList = new ArrayList<CustomEntity>();
     CustomEntity ce = new CustomEntity();
-    
+
     //
     // add the id
     ce.setName("id");
@@ -283,11 +283,11 @@ public class WidgetServiceImpl implements WidgetService {
     ce.setRequired(false);
     ce.setExpression("");
     retList.add(ce);
-    
+
     while (ctit.hasNext()) {
       CustomTableField ctfield = ctit.next();
 
-      
+
       //
       // don't list section definitions or items with a '.' in their name...
       // only list item's that are marked as 'Include in web widgets'
@@ -295,7 +295,7 @@ public class WidgetServiceImpl implements WidgetService {
           || ctfield.isCustomTableFieldWWViewable() == false) {
         continue;
       }
-      
+
       ce = new CustomEntity();
       ce.setName(ctfield.getCustomTableFieldName());
       ce.setType(ctfield.getCustomTableFieldDatatype());
@@ -326,7 +326,7 @@ public class WidgetServiceImpl implements WidgetService {
       .andWidgetPasswordEqualTo(passWord)
       .andWidgetTypeEqualTo("customentity")
       .andCustomEntityNameEqualTo("widget_authentication");
-      
+
       List<Widget> widgets = widgetDAO.selectWidgetByExample(example);
       return widgets;
   }
@@ -339,17 +339,26 @@ public class WidgetServiceImpl implements WidgetService {
     widget.setCustomEntityName(customentitytype);
     return widget;
   }
+
+  public Widget getWidget(String guid) {
+	  WidgetExample example = new WidgetExample();
+	  example.createCriteria().andWidgetGuidEqualTo(guid);
+	  List<Widget> widgets = widgetDAO.selectWidgetByExample(example);
+
+	  return widgets.get(0);
+
+  }
   public List<Widget> getWidgets(String userName,String passWord,String widgettype,String customentitytype) {
       WidgetExample example = new WidgetExample();
       example.createCriteria().andWidgetUsernameEqualTo(userName)
       .andWidgetPasswordEqualTo(passWord)
       .andWidgetTypeEqualTo(widgettype)
       .andCustomEntityNameEqualTo(customentitytype);
-      
+
       List<Widget> widgets = widgetDAO.selectWidgetByExample(example);
       return widgets;
   }
-  
+
   public Widget saveWidget(Widget widget)
   {
     if (widget.getWidgetId() == 0) {

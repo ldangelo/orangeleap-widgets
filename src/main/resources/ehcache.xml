@@ -86,14 +86,14 @@
             />
 
 
-    <cache name="picklistCache"
+    <cache name="sessionCache"
            maxElementsInMemory="1000"
            maxElementsOnDisk="5000"
            eternal="false"
            overflowToDisk="true"
            diskSpoolBufferSizeMB="10"
            timeToIdleSeconds="120"
-           timeToLiveSeconds="120"
+           timeToLiveSeconds="3600"
            diskExpiryThreadIntervalSeconds="600"
            memoryStoreEvictionPolicy="LRU"
             />
@@ -110,7 +110,7 @@
            memoryStoreEvictionPolicy="LRU"
             />
 
-    <cache name="constituentCache"
+<cache name="constituentCache"
            maxElementsInMemory="1000"
            maxElementsOnDisk="5000"
            eternal="false"
@@ -121,6 +121,4 @@
            diskExpiryThreadIntervalSeconds="600"
            memoryStoreEvictionPolicy="LRU"
             />
-
-
 </ehcache>

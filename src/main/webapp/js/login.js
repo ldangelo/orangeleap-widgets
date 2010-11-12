@@ -3,16 +3,6 @@ var $j = jQuery.noConflict();
 var authentication = {
     failureurl: null,
     loginform:null,
-    include: function(filename)
-    {
-	var head = document.getElementsByTagName('head')[0];
-
-	script = document.createElement('script');
-	script.src = filename;
-	script.type = 'text/javascript';
-
-	head.appendChild(script)
-    },
 
 
     setCookie: function(c_name,value,expiredays)
@@ -45,14 +35,14 @@ var authentication = {
 	}
     },
 
-    handleReturn: function(constituentid,widgetid,successurl,failureurl) {
-	if (constituentid == -1) {
+    handleReturn: function(sessionId,widgetid,successurl,failureurl) {
+	if (sessionId == null) {
 	    this.handleError(widgetid,"Authentication Failed!");
 	} else {
 	    if (Ext.get("remember").dom.value == "on")
-		this.setCookie("constituentId",constituentid,5);
+		this.setCookie("sessionId",sessionId,5);
 	    else
-		this.setCookie("constituentId",constituentid);
+		this.setCookie("sessionId",sessionId);
 
 	    if (successurl != null) {
 		//document.location = successurl;
@@ -79,9 +69,9 @@ var authentication = {
     },
 
     generateWidget: function(widgetid, successurl, failureurl) {
-	constituentid = this.getCookie("constituentId");
+	sessionId = this.getCookie("sessionId");
 
-	if (constituentid != "") window.location.successurl;
+	if (sessionId != "") window.location.successurl;
 
 	this.failureurl = failureurl;
 
@@ -113,29 +103,37 @@ var authentication = {
 		maxLength: 12,
 		blankText: 'Enter your Password Please.',
 		minLengthText: 'Password must be at least 6 characters'
-		
+
 	    },
 		    {id: 'remember',
 		     xtype:'checkbox',
 		     boxLabel: 'Rember Me'
+		    },
+		    {
+		    	xtype: "box",
+		    	autoEl: {
+		    		tag: 'a',
+		    		href: 'http://www.orangeleap.com/',
+		    		html: 'Powerd by Orange Leap.'
+		    	}
 		    }],
 	    buttons: [{
 		text: 'Login',
 		formBind:true,
 		handler: function(b,e) {
-		    
+
 		    //
 		    // call authenticate through DWR
 		    var callbackproxy = function(dataFromServer) {
 			authentication.handleReturn(dataFromServer,widgetid,successurl,failureurl);
 		    }
-		    
+
 		    var callMetaData = {callback:callbackproxy};
-		    
+
 		    OrangeLeapWidget.authenticate(widgetid,$j("input[name=username]").val(),$j("input[name=password]").val(),callMetaData);
 		}
             }]
-	    
+
         });
 
 

@@ -111,7 +111,7 @@ var sponsorshipform =  {
 		pageStart = pageStart - pageSize ;
 		fldidx = pageSize -1;
 
-		mydatastore.load({params:{start:pageStart,limit:pageSize,pattern:pattern}});	    		
+		mydatastore.load({params:{start:pageStart,limit:pageSize,pattern:pattern}});
 	    } else {
 		// we are back at the beginning of the data
 	    }
@@ -128,7 +128,7 @@ var sponsorshipform =  {
 	field = searchform.getForm().findField('searchage');
 	if (field.value != null)
 	    pattern=pattern+ "age=" + field.value + ';';
-	
+
 	field = searchform.getForm().findField('searchgender');
 	if (field.value != null)
 	    pattern=pattern+ "gender=" + field.value + ';';
@@ -175,7 +175,7 @@ var sponsorshipform =  {
 		sponsorshipform.clearForm();
 		pageStart = pageStart + pageSize ;
 		fldidx = 0;
-		mydatastore.load({params:{start:pageStart,limit:pageSize,pattern:pattern}});	    
+		mydatastore.load({params:{start:pageStart,limit:pageSize,pattern:pattern}});
 		} else {
 		    //
 		    // there is no more data...
@@ -203,7 +203,7 @@ var sponsorshipform =  {
 //				    hspace: '10'
 //				}
 //			}
-		    }	    
+		    }
     		}
 	    }
 	}
@@ -235,7 +235,7 @@ var sponsorshipform =  {
 		    var col1 = new Ext.Panel({columnWidth: '.38',layout:'form',defaults:{anchor:'100%'},bodyStyle:'padding:0 18px 0 0',items:[]});
 		    var col2 = new Ext.Panel({columnWidth: '.38',layout:'form',defaults:{anchor:'100%'},bodyStyle:'padding:0 18px 0 0',items:[]})
 		    panel = new Ext.Panel({ layout:'column', bodyStyle:'padding:0 18px 0 0',items:[col1,col2]});
-		    
+
 		    for (var f=0;f < fields.length; f++) {
 			if (fields[f].hidden == true) {
 			    var field = new Ext.form.Hidden();
@@ -273,7 +273,7 @@ var sponsorshipform =  {
 		field.fieldLabel = fields[f].header;
 		field.store = mydatastore;
 		field.mode = 'local';
-		field.readOnly = true;			    
+		field.readOnly = true;
 		field.border = false;
 		field.width = 350;
 		field.height = 150;
@@ -310,22 +310,31 @@ var sponsorshipform =  {
 			    else
 				col1.add(field);
 
-	    } 
+	    }
 		    }
-		    
+
 		    form.add(panel);
+		    var linkConfig = {
+		    	xtype: "box",
+		    	autoEl: {
+		    		tag: 'a',
+		    		href: 'http://www.orangeleap.com/',
+		    		html: 'Powerd by Orange Leap.'
+		    	}
+		    };
+		    form.add(linkConfig);
 		},
 		'load': function(store,records,options) {
 		    var metaData = store.reader.meta.fields;
 		    var value = null;
-		    if (records.length > 0) 
+		    if (records.length > 0)
 		    for (var m=0; m < metaData.length; m++) {
 			var ffield = form.getForm().findField(metaData[m].name);
 			value = records[fldidx].get(metaData[m].name);
 
 
 			if (metaData[m].type != 'url') {
-				if (ffield != null) 
+				if (ffield != null)
 				    ffield.setValue(value);
 			}   else {
 				var fldImage = new Ext.Panel({
@@ -348,11 +357,11 @@ var sponsorshipform =  {
 			}
 		    }
 
-		    
+
 		    //
 		    // only do this for the first page of data...
 		    if (pageStart == 0 && fldidx == 0) {
-			win.render(widgetname);		    
+			win.render(widgetname);
 			var loading = Ext.get('loading');
 			if (loading != null) {
 			    loading.remove();
@@ -396,7 +405,7 @@ var sponsorshipform =  {
 	var genderStore = new Ext.data.ArrayStore({
 	    fields: ['gender'],
 	    data :[['Male'],['Female'],['Unspecified']]
-	    
+
 	});
 	var genderCombo = new Ext.form.ComboBox({
 	    id: 'searchgender',
@@ -413,7 +422,7 @@ var sponsorshipform =  {
 	var ageStore = new Ext.data.ArrayStore({
 	    fields: ['age'],
 	    data :[['<1'],['1'],['2'],['3'],['4'],['5'],['6'],['7'],['8'],['9'],['10'],['11'],['12'],['13'],['14']]
-	    
+
 	});
 	var ageCombo = new Ext.form.ComboBox({
 	    id:'searchage',
@@ -483,7 +492,7 @@ var sponsorshipform =  {
 
 	msgBox = Ext.MessageBox.wait("Loading...","Loading Sponships");
 	mydatastore.load({params:{start:pageStart,limit:pageSize,pattern:pattern}});
-    },    
+    },
 
     showError: function() {
 	$j("div#globalErrors").show();

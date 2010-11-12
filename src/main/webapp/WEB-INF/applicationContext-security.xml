@@ -35,12 +35,12 @@
 		<sec:intercept-url pattern='/customEntity.ajax*' filters='none'/>
 		<sec:intercept-url pattern='/widget.ajax*' filters='none'/>
 		<sec:intercept-url pattern='/customEntityList.json*' filters='none'/>
-		<sec:intercept-url pattern='/picklistItems.json' access='IS_AUTHENTICATED_ANONYMOUSLY, ROLE_USER'/>
+		<sec:intercept-url pattern='/picklistItems.json' access='IS_AUTHENTICATED_ANONYMOUSLY, ROLE_WEBTOOLS'/>
 <!-- 		<sec:intercept-url pattern='/loginwidget.ajax*' filters='none'/> -->
 		<sec:intercept-url pattern='/giftHistory.json*' filters='none'/>
-		<sec:intercept-url pattern='/images/**' access='IS_AUTHENTICATED_ANONYMOUSLY, ROLE_USER'/>
-		<sec:intercept-url pattern='/dwr/**' filters='none'/>
-		<sec:intercept-url pattern='/**' access='ROLE_USER'/>
+		<sec:intercept-url pattern='/images/**' access='IS_AUTHENTICATED_ANONYMOUSLY, ROLE_WEBTOOLS'/>
+		<sec:intercept-url pattern='/dwr/**' access='IS_AUTHENTICATED_ANONYMOUSLY,ROLE_WEBTOOLS'/>
+		<sec:intercept-url pattern='/**' access='ROLE_WEBTOOLS'/>
 		<sec:form-login login-page='/login.jsp'
 			default-target-url='/index.jsp'
 			login-processing-url='/loginProcess'

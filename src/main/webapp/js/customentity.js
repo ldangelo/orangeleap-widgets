@@ -9,7 +9,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
     buttonLabel:null,
     mydatastore : null,
 //    form:null,
-    constituentid:null,
+    sessionId:null,
     args: null,
 
     setCookie: function(c_name,value,expiredays)
@@ -43,14 +43,14 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 		    //
 		// this is a sub object like primaryEmail, etc...
 		    var obj = constituent[fieldName.substring(0,fieldName.indexOf("."))];
-		    $j("[name=" + table.fields[x].customTableFieldName + "]").val(obj[fieldName.substring(fieldName.indexOf(".") +1, fieldName.length)]);	    
-		} else { 
+		    $j("[name=" + table.fields[x].customTableFieldName + "]").val(obj[fieldName.substring(fieldName.indexOf(".") +1, fieldName.length)]);
+		} else {
 		$j("[name=" + table.fields[x].customTableFieldName + "]").val(constituent[table.fields[x].customTableFieldName]);
 		}
 	    }
     }
     },
-    
+
     getCookie:function(c_name)
     {
 	if (document.cookie.length>0)
@@ -75,7 +75,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
             ,buttons:Ext.Msg.OK
 	});
     },
-    
+
     onFailure: function(form,action) {
 	Ext.Msg.show({
              title:'Error'
@@ -85,10 +85,10 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
             ,buttons:Ext.Msg.OK
 	});
     },
-    
+
     onSubmit:function() {
 	this.getForm().submit({
-            url: 'customEntity.ajax?action=create&guid=' + this.guid + '&constituentid=' + this.constituentid
+            url: 'customEntity.ajax?action=create&guid=' + this.guid + '&sessionId' + this.sessionId
             ,scope:this
             ,success:this.onSuccess
             ,failure:this.onFailure
@@ -106,7 +106,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
     initComponent:function() {
 	Ext.QuickTips.init();
 	Ext.form.Field.prototype.msgTarget = 'under';
-	
+
 	if (this.guid == null)
 	    this.showError("Guid id undefinded");
 	if (this.authenticate == null)
@@ -115,10 +115,10 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 	    this.showError("Login URL is undefined");
 	if (this.buttonLabel == null)
 	    this.showError("Button Label is undefined");
-	
-	this.constituentid = this.getCookie("constituentId");
-	
-	if (this.authenticate == true && this.constituentid == "") {
+
+	this.sessionId = this.getCookie("sessionId");
+
+	if (this.authenticate == true && this.sessionId == "") {
 	    window.location = this.loginurl;
 	    return;
 	}
@@ -126,20 +126,20 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 
 	var proxy = new Ext.data.HttpProxy({
 	    api: {
-		read: 'customEntity.ajax?action=view&guid=' + this.guid + '&constituentid=' + this.constituentid,
-		create: 'customEntity.ajax?action=create&guid=' + this.guid+ '&constituentid=' + this.constituentid,
-		update: 'customEntity.ajax?action=update&guid=' + this.guid + '&constituentid=' + this.constituentid,
-		destroy: 'customEntity.ajax?action=delete&guid=' + this.guid+ '&constituentid=' + this.constituentid
+		read: 'customEntity.ajax?action=view&guid=' + this.guid + '&sessionId=' + this.sessionId,
+		create: 'customEntity.ajax?action=create&guid=' + this.guid+ '&sessionId=' + this.sessionId,
+		update: 'customEntity.ajax?action=update&guid=' + this.guid + '&sessionId=' + this.sessionId,
+		destroy: 'customEntity.ajax?action=delete&guid=' + this.guid+ '&sessionId=' + this.sessionId
 	    }
 	});
-	
+
 	var reader=new Ext.data.JsonReader();
 
 	var writer = new Ext.data.JsonWriter({
 	    encode:true,
 	    writeAllFields:false
 	});
-	
+
 	this.mydatastore = new Ext.data.Store({
 	    form:this,
 	    metaData:true,
@@ -156,7 +156,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 
 		    for (var f=0;f < fields.length; f++) {
 			if (fields[f].hidden == true) {
-			    
+
 			    var field = new Ext.form.Hidden();
 			    field.id = fields[f].name;
 			    field.name = fields[f].name;
@@ -164,7 +164,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 			    field.fieldLabel = fields[f].header;
 			    field.store = store;
 			    field.border = false;
-			    if (fieldset == null) 
+			    if (fieldset == null)
 				this.form.superclass().add.call(this.form,field);
 			} else if (fields[f].type == 'text' || fields[f].type == 'date' || fields[f].type == 'integer' || fields[f].type == 'number') {
 			    var field = new Ext.form.TextField();
@@ -214,7 +214,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 			} else if (fields[f].type == 'section') {
 			    if (fieldset != null)
 				this.form.superclass().add.call(this.form,fieldset);
-			    
+
 			    var col1 = new Ext.Panel({columnWidth: '.50',layout:'form',defaults:{anchor:'100%'},bodyStyle:'padding:0 18px 0 0',items:[]});
 			    var col2 = new Ext.Panel({columnWidth: '.50',layout:'form',defaults:{anchor:'100%'},bodyStyle:'padding:0 18px 0 0',items:[]})
 			    var panel = new Ext.Panel({ columnWidth:0.5,layout:'column', bodyStyle:'padding:0 18px 0 0',items:[col1,col2]});
@@ -238,7 +238,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 				valueField:'Name',
 				triggerAction:'all',
 				hiddenName:fields[f].name ,
-				displayField:'Name',
+				displayField:'Description',
 				forceSelection:true,
 				emptyText: 'Select ' + fields[f].header + '...',
 				store:new Ext.data.JsonStore({
@@ -261,7 +261,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 				comboConfig.allowBlank=false,
 				comboConfig.blankText="Enter a " + fields[f].header;
 			    }
-			    if (fieldset == null) 
+			    if (fieldset == null)
 				this.form.superclass().add.call(this.form,field);
 			    else {
 				if (fieldsectionindex > (fieldsectioncount-1)/2)
@@ -272,19 +272,28 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 			    }
 			}
 		    }
-		    
-		    if (fieldset != null)
-			this.form.superclass().add.call(this.form,fieldset);
 
-		    var btnConfig = { 
+		    if (fieldset != null)
+		    	this.form.superclass().add.call(this.form,fieldset);
+
+		    var btnConfig = {
 			text: this.form.buttonLabel,
 			handler: this.form.onSubmit,
 			align: 'center',
 			formBind:true
 		    };
 
+		    var linkConfig = {
+		    	xtype: "box",
+		    	autoEl: {
+		    		tag: 'a',
+		    		href: 'http://www.orangeleap.com/',
+		    		html: 'Powerd by Orange Leap.'
+		    	}
+		    };
 		    this.form.superclass().addButton.call(this.form,btnConfig,this.form.onSubmit,this.form);
-		    
+		    this.form.superclass().add.call(this.form,linkConfig);
+
 		    var element = Ext.query('script[src$=required-field.js]')[0];
 		    var renderElement = element.parentNode;
 		    this.form.superclass().render.call(this.form,this.form.widgetid);
@@ -313,12 +322,12 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 		Ext.get('loading-mask').fadeOut({remove:true});
 	    }}
 	});
-	
-	
+
+
 	Ext.data.DataProxy.addListener('exception', function(proxy, type, action, options, res) {
 	    this.showError(res.responseText);
 	});
-	
+
 	OrangeLeapWidget.updateViewCount(this.guid,document.location.href);
 
 	this.mydatastore.load();
@@ -333,6 +342,6 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
     	    buttons: Ext.Msg.OK
     	});
     }
-    
+
 });
 Ext.reg('customentity', OrangeLeap.CustomEntity);

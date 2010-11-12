@@ -32,9 +32,9 @@ public class PickListItemsController {
     List <Map<String,Object>> returnList = new ArrayList<Map<String,Object>>();
     WidgetExample example = new WidgetExample();
     example.createCriteria().andWidgetGuidEqualTo(guid);
-    
+
     List<Widget> widgets = widgetDAO.selectWidgetByExample(example);
-    
+
     String wsusername = null;
     String wspassword = null;
 
@@ -46,21 +46,21 @@ public class PickListItemsController {
         wsusername = auth.getName();
         wspassword = (String) auth.getCredentials();
       } else {
-        
+
         Widget widget = widgets.get(0);
-      
+
         wsusername = widget.getWidgetUsername();
         wspassword = widget.getWidgetPassword();
       }
-      
+
       WSClient wsClient = null;
       OrangeLeap oleap = null;
-      
+
       wsClient = new WSClient();
       oleap = wsClient.getOrangeLeap(System.getProperty("webtools.wsdllocation"),wsusername, wspassword);
       GetPickListByNameRequest request = new GetPickListByNameRequest();
       GetPickListByNameResponse response = null;
-      
+
       request.setName(picklistname);
       response = oleap.getPickListByName(request);
       if (response != null) {
@@ -71,15 +71,19 @@ public class PickListItemsController {
       }
     }
   }
-  
+
   private  void populateMetaData(List<PicklistItem> picklistitems,List<Map<String,Object>> returnList) {
     Iterator<PicklistItem> it = picklistitems.iterator();
 
     while (it.hasNext()) {
       PicklistItem item = it.next();
-      Map<String, Object> map = new HashMap<String, Object>();    
+      Map<String, Object> map = new HashMap<String, Object>();
       map.put("Name",item.getItemName());
-      map.put("Description",item.getLongDescription());
+
+      if (item.getLongDescription() != null && !item.getLongDescription().equals(""))
+    	  map.put("Description",item.getLongDescription());
+      else
+    	  map.put("Name",item.getItemName());
 
       returnList.add(map);
     }
