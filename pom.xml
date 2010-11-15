@@ -44,7 +44,7 @@
 				<goal>compress</goal>
 			      </goals>
 			    </execution>
-			  </executions>        
+			  </executions>
 			  <configuration>
 			    <nosuffix>true</nosuffix>
 			    <jswarn>false</jswarn>
@@ -98,7 +98,7 @@
 				<goal>compress</goal>
 			      </goals>
 			    </execution>
-			  </executions>        
+			  </executions>
 			  <configuration>
 			    <nosuffix>true</nosuffix>
 			    <aggregations>
@@ -164,88 +164,6 @@
 	</build>
 
 	<profiles>
-		<profile>
-			<id>test</id>
-			<activation>
-				<property>
-					<name>!maven.test.skip</name>
-				</property>
-			</activation>
-
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>sql-maven-plugin</artifactId>
-
-						<configuration>
-							<driver>com.mysql.jdbc.Driver</driver>
-							<url>jdbc:mysql://localhost:3306/webtoolstest</url>
-							<driverProperties>autoReconnect=true,useUnicode=true,characterEncoding=UTF8</driverProperties>
-							<username>orangeleap</username>
-							<password>orangeleap</password>
-							<encoding>UTF-8</encoding>
-						</configuration>
-
-						<executions>
-							<execution>
-								<id>clear test schema</id>
-								<phase>process-test-resources</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<srcFiles>
-										<srcFile>${basedir}/db-scripts/src/main/resources/db/test/clearTestSchema.sql</srcFile>
-									</srcFiles>
-								</configuration>
-							</execution>
-
-							<execution>
-								<id>create test schema</id>
-								<phase>process-test-resources</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<srcFiles>
-										<srcFile>${basedir}/db-scripts/src/main/resources/db/prod/tangerine.ddl</srcFile>
-									</srcFiles>
-								</configuration>
-							</execution>
-
-							<execution>
-								<id>create functions</id>
-								<phase>process-test-resources</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<delimiter>$$$$</delimiter>
-									<!-- Maven needs the $ sign to be escaped to recognize - so use $ 4 times for 2 -->
-									<srcFiles>
-										<srcFile>${basedir}/db-scripts/src/main/resources/db/prod/tangerine-functions.sql</srcFile>
-									</srcFiles>
-								</configuration>
-							</execution>
-
-							<execution>
-								<id>populate test data</id>
-								<phase>process-test-resources</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<srcFiles>
-										<srcFile>${basedir}/db-scripts/src/main/resources/db/test/testData.sql</srcFile>
-									</srcFiles>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
 
 
 		<!-- Does JSP pre-compilation for releases -->
@@ -318,12 +236,12 @@
 						<artifactId>maven-jetty-plugin</artifactId>
 						<version>6.1.11</version>
 						<configuration>
-						<systemProperties>	
+						<systemProperties>
 							<systemProperty>
 								<name>org.mortbay.jetty.Request.maxFormContentSize</name>
 								<value>5000000</value>
 							</systemProperty>
-						</systemProperties>				
+						</systemProperties>
 						  <connectors>
 						    <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
 						      <port>8081</port>
@@ -334,8 +252,8 @@
 						  <webAppConfig>
 						    <contextPath>/webtools</contextPath>
 						  </webAppConfig>
-                            
-                           
+
+
  						   <jettyEnvXml>${basedir}/src/main/config/jetty-local/jetty-env.xml</jettyEnvXml>
 						</configuration>
 						<dependencies>
@@ -638,7 +556,7 @@
 			<artifactId>orangeleap-common-security</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.orangeleap</groupId>
 			<artifactId>jsonView</artifactId>
@@ -952,7 +870,7 @@
 			<artifactId>hamcrest-library</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 	</dependencies>
 
 </project>
