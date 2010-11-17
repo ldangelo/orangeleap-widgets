@@ -5009,7 +5009,7 @@ var customentitylist = {
 	}
 
 	
-	var proxy = new Ext.data.HttpProxy( {url:'/webtools/customEntityList.json?guid=' + guid});
+	var proxy = new Ext.data.HttpProxy( {url:'/donorwidgets/customEntityList.json?guid=' + guid});
 
 	var reader=new Ext.data.JsonReader();
 
@@ -5300,7 +5300,7 @@ var gifthistory = {
 	OrangeLeapWidget.updateViewCount(widgetid,document.location.href);
 
 	var mydatastore = new Ext.data.JsonStore({
-	    url:'/webtools/giftHistory.json?guid=' + widgetid + '&sessionId=' + sessionId,
+	    url:'/donorwidgets/giftHistory.json?guid=' + widgetid + '&sessionId=' + sessionId,
 	    root:'rows',
 	    fields:['id','donationdate','amount','status','paymentstatus'],
 	    sortInfo:{field:'id',direction:'ASC'}
@@ -5579,7 +5579,7 @@ var sponsorshipform =  {
 	}
 	OrangeLeapWidget.updateViewCount(guid,document.location.href);
 
-	var proxy = new Ext.data.HttpProxy( {url:'/webtools/customEntityList.json?guid=' + guid});
+	var proxy = new Ext.data.HttpProxy( {url:'/donorwidgets/customEntityList.json?guid=' + guid});
 
 	var reader=new Ext.data.JsonReader();
 

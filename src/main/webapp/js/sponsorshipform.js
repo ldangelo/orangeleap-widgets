@@ -219,7 +219,7 @@ var sponsorshipform =  {
 	}
 	OrangeLeapWidget.updateViewCount(guid,document.location.href);
 
-	var proxy = new Ext.data.HttpProxy( {url:'/webtools/customEntityList.json?guid=' + guid});
+	var proxy = new Ext.data.HttpProxy( {url:'/donorwidgets/customEntityList.json?guid=' + guid});
 
 	var reader=new Ext.data.JsonReader();
 

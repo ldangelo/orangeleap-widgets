@@ -54,6 +54,9 @@ public class WidgetController extends MultiActionController {
       w.setWidgetHtml(w.getWidgetHtml().replaceAll("@APPLOCATION@",appLocation).replaceAll("@GUID@",w.getWidgetGuid()).replaceAll("@SUCCESSURL@",w.getWidgetLoginSuccessURL()).replaceAll("@FAILUREURL@",w.getWidgetLoginFailureURL()).replaceAll("@AUTHENTICATE@",w.getWidgetAuthenticationRequired().toString()).replaceAll("@LOGINURL@",w.getWidgetAuthenticationURL()).replaceAll("@PROJECTCODE@",w.getProjectCode()).replaceAll("@SPONSORSHIPFORMURL@",w.getSponsorshipURL()).replaceAll("@ARGS@",request.getHeader("referer")).replaceAll("@STYLE@",(style != null) ? style.getStyle() : ""));
 
 
+      response.setIntHeader("Content-Length",w.getWidgetHtml().length());
+      response.setHeader("Content-Type","text/html; charset=UTF-8");
+
       OutputStream out = response.getOutputStream();
       out.write(w.getWidgetHtml().getBytes());
     }

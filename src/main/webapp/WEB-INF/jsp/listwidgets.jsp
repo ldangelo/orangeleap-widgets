@@ -71,7 +71,7 @@
 	Ext.onReady(function() {
 
 
-	var proxy=new Ext.data.HttpProxy(    {url:'/webtools/listWidgets.json'});
+	var proxy=new Ext.data.HttpProxy(    {url:'/donorwidgets/listWidgets.json'});
 
 		  var reader=new Ext.data.JsonReader(
 			{

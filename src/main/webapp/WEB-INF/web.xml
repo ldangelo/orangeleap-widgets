@@ -3,9 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 
-  <display-name>Orange Leap Web Tools</display-name>
+  <display-name>Orange Leap Donor Widgets</display-name>
 
-  <description>Web Tools Application</description>
+  <description>Donor Widgets Application</description>
 	
   <context-param>
     <param-name>webAppRootKey</param-name>
@@ -83,7 +83,7 @@
     </servlet>
 
 	<servlet>
-		<servlet-name>webtools</servlet-name>
+		<servlet-name>donorwidgets</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
@@ -95,7 +95,7 @@
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>webtools</servlet-name>
+		<servlet-name>donorwidgets</servlet-name>
 		<url-pattern>*.htm</url-pattern>
 	</servlet-mapping>
 

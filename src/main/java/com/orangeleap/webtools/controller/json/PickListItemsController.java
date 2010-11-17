@@ -83,7 +83,7 @@ public class PickListItemsController {
       if (item.getLongDescription() != null && !item.getLongDescription().equals(""))
     	  map.put("Description",item.getLongDescription());
       else
-    	  map.put("Name",item.getItemName());
+    	  map.put("Description",item.getItemName());
 
       returnList.add(map);
     }

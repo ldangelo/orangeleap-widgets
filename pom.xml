@@ -2,9 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>webtools</artifactId>
+	<artifactId>donorwidgets</artifactId>
 	<packaging>war</packaging>
-	<name>Orange Leap (Web Tools) Project</name>
+	<name>Orange Leap (Donor Widgets) Project</name>
 
 	<parent>
 		<groupId>com.orangeleap</groupId>
@@ -250,7 +250,7 @@
 						  </connectors>
 						  <scanIntervalSeconds>5</scanIntervalSeconds>
 						  <webAppConfig>
-						    <contextPath>/webtools</contextPath>
+						    <contextPath>/donorwidgets</contextPath>
 						  </webAppConfig>
 
 
@@ -293,8 +293,8 @@
 								<configuration>
 									<tasks>
 										<delete failonerror="false" file="target/classes/webtools.properties" />
-										<delete failonerror="false" dir="${tomcat.path}/webapps/webtools" />
-										<delete failonerror="false" dir="${tomcat.path}/work/Catalina/localhost/webtools" />
+										<delete failonerror="false" dir="${tomcat.path}/webapps/donorwidgets" />
+										<delete failonerror="false" dir="${tomcat.path}/work/Catalina/localhost/donorwidgets" />
 									</tasks>
 								</configuration>
 							</execution>
@@ -318,7 +318,7 @@
 								<deployables>
 									<deployable>
 										<properties>
-											<context>webtools</context>
+											<context>donorwidgets</context>
 										</properties>
 									</deployable>
 								</deployables>
@@ -373,8 +373,8 @@
 								<configuration>
 									<tasks>
 										<delete failonerror="false" file="target/classes/webtools.properties" />
-										<delete failonerror="false" dir="${tomcat.path}/webapps/webtools" />
-										<delete failonerror="false" dir="${tomcat.path}/work/Catalina/localhost/webtools" />
+										<delete failonerror="false" dir="${tomcat.path}/webapps/donorwidgets" />
+										<delete failonerror="false" dir="${tomcat.path}/work/Catalina/localhost/donorwidgets" />
 									</tasks>
 								</configuration>
 							</execution>
@@ -396,7 +396,7 @@
 								<deployables>
 									<deployable>
 										<properties>
-											<context>webtools</context>
+											<context>donorwidgets</context>
 										</properties>
 									</deployable>
 								</deployables>
@@ -440,7 +440,7 @@
 								<deployables>
 									<deployable>
 										<properties>
-											<context>webtools</context>
+											<context>donorwidgets</context>
 										</properties>
 									</deployable>
 								</deployables>
