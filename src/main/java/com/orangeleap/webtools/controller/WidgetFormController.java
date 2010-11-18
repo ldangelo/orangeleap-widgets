@@ -1,7 +1,6 @@
 package com.orangeleap.webtools.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.Authentication;
 import org.springframework.security.context.SecurityContextHolder;

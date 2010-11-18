@@ -40,6 +40,7 @@ public class AjaxLoginWidgetController extends MultiActionController {
 	String userName = auth.getName();
 	String password = (String) auth.getCredentials();
 
+
     List<Widget> ret = widgetService.getWidgets(userName,password,widgettype,customentitytype);
 
     return getModelMap(ret);
