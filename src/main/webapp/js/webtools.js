@@ -4509,7 +4509,7 @@ var authentication = {
 		    	autoEl: {
 		    		tag: 'a',
 		    		href: 'http://www.orangeleap.com/',
-		    		html: 'Powerd by Orange Leap.'
+		    		html: 'Powered by Orange Leap.'
 		    	}
 		    }],
 	    buttons: [{
@@ -4868,7 +4868,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 		    	autoEl: {
 		    		tag: 'a',
 		    		href: 'http://www.orangeleap.com/',
-		    		html: 'Powerd by Orange Leap.'
+		    		html: 'Powered by Orange Leap.'
 		    	}
 		    };
 		    this.form.superclass().addButton.call(this.form,btnConfig,this.form.onSubmit,this.form);
@@ -5679,7 +5679,7 @@ var sponsorshipform =  {
 		    	autoEl: {
 		    		tag: 'a',
 		    		href: 'http://www.orangeleap.com/',
-		    		html: 'Powerd by Orange Leap.'
+		    		html: 'Powered by Orange Leap.'
 		    	}
 		    };
 		    form.add(linkConfig);

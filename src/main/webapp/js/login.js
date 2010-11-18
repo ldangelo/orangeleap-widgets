@@ -107,14 +107,14 @@ var authentication = {
 	    },
 		    {id: 'remember',
 		     xtype:'checkbox',
-		     boxLabel: 'Rember Me'
+		     boxLabel: 'Remember Me'
 		    },
 		    {
 		    	xtype: "box",
 		    	autoEl: {
 		    		tag: 'a',
 		    		href: 'http://www.orangeleap.com/',
-		    		html: 'Powerd by Orange Leap.'
+		    		html: 'Powered by Orange Leap.'
 		    	}
 		    }],
 	    buttons: [{

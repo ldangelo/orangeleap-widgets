@@ -169,7 +169,7 @@ var sponsorshipform =  {
 
 	if (fldidx == mydatastore.totalLength-1) {
 	    if (mydatastore.totalLength == pageSize) {
-		msgBox = Ext.MessageBox.wait("Loading...","Loading Sponships");
+		msgBox = Ext.MessageBox.wait("Loading...","Loading Sponsorships");
 		//
 		// we need to load the next page
 		sponsorshipform.clearForm();
@@ -319,7 +319,7 @@ var sponsorshipform =  {
 		    	autoEl: {
 		    		tag: 'a',
 		    		href: 'http://www.orangeleap.com/',
-		    		html: 'Powerd by Orange Leap.'
+		    		html: 'Powered by Orange Leap.'
 		    	}
 		    };
 		    form.add(linkConfig);
