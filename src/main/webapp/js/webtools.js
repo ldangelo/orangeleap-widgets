@@ -4475,6 +4475,7 @@ var authentication = {
 
         this.loginform = new Ext.form.FormPanel({
 	    id:'loginform',
+	    border:false,
 	    frame:true,
 	    title: 'Authenticate',
 	    width:350,
@@ -5323,7 +5324,7 @@ var gifthistory = {
 		emptyText: 'No Gift History To Display'
 	    },
 	    stripeRows:true,
-	    frame:true,
+	    frame:false,
 	    title:'Gift History',
 	    height:350,
 	    width:655

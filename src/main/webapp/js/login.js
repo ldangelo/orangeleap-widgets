@@ -80,6 +80,7 @@ var authentication = {
 
         this.loginform = new Ext.form.FormPanel({
 	    id:'loginform',
+	    border:false,
 	    frame:true,
 	    title: 'Authenticate',
 	    width:350,

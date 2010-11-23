@@ -7,11 +7,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
- <title><decorator:title default="DonateNow Portal" /></title>
+ <title><decorator:title default="Donor Widgets Portal" /></title>
  <decorator:head />
  <%@ include file="/includes/style.jsp" %>
  </head>
- <body bgcolor="#FFFFFF" background="<%=request.getContextPath()%>/images/bg.gif">
+ <body bgcolor="#FFFFFF">
  <script type="text/javascript">window.status = "Loading: <decorator:title default="INTRANET" />...";</script>
  <%@ include file="/includes/header.jsp"%>
  <table width="100%" border="0" cellspacing="0" cellpadding="0">

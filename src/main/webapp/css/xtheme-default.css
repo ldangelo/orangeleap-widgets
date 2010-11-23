@@ -4,8 +4,8 @@
     Author      : Sergei Chentsov aka Ivan Ekker
     email       : sergchentsov@gmail.com
     Description:
-        ExtJS 3.3 theme default 
-    Ext Theme Builder form parameters - 
+        ExtJS 3.3 theme default
+    Ext Theme Builder form parameters -
     Template:'gray',
     Base color:'FFFFFF',
     Header color:'FFA600',
@@ -21,7 +21,7 @@
     Font Size:'11',
     Window Transparency:'130',
     Toolset:'default',
-    ExtJS version:'3.3' 
+    ExtJS version:'3.3'
     License    : Dual Licensed
                  1.- GNU GPL Licensed, Free of charge for any non-commercial products.
                  2.- Contact me if you are using the theme in a commercial project.
@@ -1189,10 +1189,10 @@ background-color:#ffffff;
 }
 *.x-panel-ml{
 background-color:#ffffff;
-background-image:none;
+background-image:url(https://go.orangeleap.com/donorwidgets/images/default/panel/left-right.gif);
 }
 *.x-panel-mr{
-background-image:none;
+background-image:url(https://go.orangeleap.com/donorwidgets/images/default/panel/left-right.gif);
 }
 *.x-tool{
 background-image:url(../images/default/panel/tool-sprites.gif);
