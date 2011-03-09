@@ -112,12 +112,15 @@ public class CustomEntityController extends MultiActionController {
 		}
 
 		if (guid != null && !guid.equals("undefined")) {
+			try {
 			CustomTableRow row = widgetService.CreateCustomTableRow(guid,
 					request);
 			if (row != null) {
 				return getModelMap(row);
 			}
-
+			} catch (Exception e) {
+				return getModelMapError(e.getMessage());
+			}
 		}
 		return getModelMapError("Error trying to create customEntity.");
 	}

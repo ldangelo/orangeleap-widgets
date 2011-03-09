@@ -42,7 +42,8 @@ import com.orangeleap.client.Gift;
 import com.orangeleap.client.OrangeLeap;
 import com.orangeleap.client.PicklistItem;
 import com.orangeleap.client.WSClient;
-import javax.xml.rpc.soap.SOAPFaultException;
+
+import javax.xml.ws.soap.SOAPFaultException;
 import javax.xml.soap.SOAPFault;
 import javax.xml.soap.Detail;
 import javax.xml.soap.DetailEntry;
@@ -130,7 +131,7 @@ public class WidgetServiceImpl implements WidgetService {
     return widget;
   }
 
-  public CustomTableRow CreateCustomTableRow(String guid, HttpServletRequest request) {
+  public CustomTableRow CreateCustomTableRow(String guid, HttpServletRequest request) throws Exception {
     List<CustomEntity> ceList = getCustomEntity(guid);
     Iterator<CustomEntity> it = ceList.iterator();
 
@@ -188,13 +189,12 @@ public class WidgetServiceImpl implements WidgetService {
       } catch (Exception e ) {
         if (e instanceof SOAPFaultException) {
 				SOAPFaultException sfe = (SOAPFaultException)e;
-				Throwable t = ((SOAPFaultException)e).getCause();
-                Detail d = sfe.getDetail();
-                Iterator<DetailEntry> dit = d.getDetailEntries();
-                while (dit.hasNext()) {
-                  DetailEntry dte = dit.next();
-                  logger.error(dte.getTextContent());
-                }
+				logger.error(sfe.getMessage());
+				String message = sfe.getMessage();
+				if (message.contains(":")) {
+					message = message.substring(message.lastIndexOf(":") + 1);
+				}
+				throw new Exception(message);
 			}
 
       }

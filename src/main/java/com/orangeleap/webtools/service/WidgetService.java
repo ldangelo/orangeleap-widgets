@@ -18,7 +18,7 @@ public interface WidgetService {
   public List<Widget> getWidgets(String username,String password,String widgettype,String customentitytype);
   public Widget getWidget(String guid);
   public List<CustomEntity> getCustomEntity(String guid);
-  public CustomTableRow CreateCustomTableRow(String guid, HttpServletRequest request);
+  public CustomTableRow CreateCustomTableRow(String guid, HttpServletRequest request) throws Exception;
   public Widget create();
   public Widget selectWidgetById(Long id);
   public Widget selectWidgetByGuid(String guid);
