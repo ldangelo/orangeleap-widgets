@@ -79,11 +79,11 @@ public class PickListItemsController {
       PicklistItem item = it.next();
       Map<String, Object> map = new HashMap<String, Object>();
       map.put("Name",item.getItemName());
-
-      if (item.getLongDescription() != null && !item.getLongDescription().equals(""))
-    	  map.put("Description",item.getLongDescription());
-      else
-    	  map.put("Description",item.getItemName());
+      map.put("Description", item.getDefaultDisplayValue());
+//      if (item.getLongDescription() != null && !item.getLongDescription().equals(""))
+//    	  map.put("Description",item.getLongDescription());
+//      else
+//    	  map.put("Description",item.getItemName());
 
       returnList.add(map);
     }
