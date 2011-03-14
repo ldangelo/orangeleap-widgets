@@ -186,6 +186,4 @@ public class CustomEntityController {
       //      metaData.put("limit",20);
       modelMap.put("metaData",metaData);
   }
-
-   
 }

@@ -9,17 +9,28 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * Retrieve the list of existing payment sources for a given constituent id.
- * 		    
- * 		    Requires a valid constituentid.
- * 		    
- * 		    Returns the list of existing payment sources.
- * 		    
- * 		    The recommendation by the orange leap team is that before you try and add a payment source to a gift, you
- * 		    first do a lookup of existing payment sources to determine it does not currently exist.  If it does currently
- * 		    exist you would use this payment source instead of creating a new one.
- * 		    
- * 		    If you try and create a new payment source that already exists you will receive a SoapFault.
+ * 
+ * 						Retrieve the list of existing payment sources for a
+ * 						given constituent id.
+ * 
+ * 						Requires a valid constituentid.
+ * 
+ * 						Returns the
+ * 						list of existing payment sources.
+ * 
+ * 						The recommendation by the orange
+ * 						leap team is that before you try and
+ * 						add a payment source to a
+ * 						gift, you
+ * 						first do a lookup of existing payment sources to
+ * 						determine it does not
+ * 						currently exist. If it does currently
+ * 						exist
+ * 						you would use this payment source instead of creating a new one.
+ * 
+ * 						If you try and create a new payment source that already exists you
+ * 						will receive a SoapFault.
+ * 		  
  * 
  * 
  * 

@@ -22,8 +22,15 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="tablename" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="offset" type="{http://www.w3.org/2001/XMLSchema}long"/>
- *         &lt;element name="limit" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="limit">
+ *           &lt;simpleType>
+ *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}long">
+ *               &lt;pattern value="[0-9][0-9]"/>
+ *             &lt;/restriction>
+ *           &lt;/simpleType>
+ *         &lt;/element>
  *         &lt;element name="filters" type="{http://www.orangeleap.com/orangeleap/services3.0/}filter" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="dateFilters" type="{http://www.orangeleap.com/orangeleap/services3.0/}dateFilter" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,7 +44,8 @@ import javax.xml.bind.annotation.XmlType;
     "tablename",
     "offset",
     "limit",
-    "filters"
+    "filters",
+    "dateFilters"
 })
 @XmlRootElement(name = "GetCustomTableRowsRequest")
 public class GetCustomTableRowsRequest {
@@ -47,6 +55,7 @@ public class GetCustomTableRowsRequest {
     protected long offset;
     protected long limit;
     protected List<Filter> filters;
+    protected List<DateFilter> dateFilters;
 
     /**
      * Gets the value of the tablename property.
@@ -131,6 +140,35 @@ public class GetCustomTableRowsRequest {
             filters = new ArrayList<Filter>();
         }
         return this.filters;
+    }
+
+    /**
+     * Gets the value of the dateFilters property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the dateFilters property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getDateFilters().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link DateFilter }
+     * 
+     * 
+     */
+    public List<DateFilter> getDateFilters() {
+        if (dateFilters == null) {
+            dateFilters = new ArrayList<DateFilter>();
+        }
+        return this.dateFilters;
     }
 
 }
