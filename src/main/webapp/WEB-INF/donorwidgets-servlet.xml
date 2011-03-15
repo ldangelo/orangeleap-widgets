@@ -86,7 +86,10 @@
 <bean id="messageSource"
 	class="org.springframework.context.support.ResourceBundleMessageSource">
 	<property name="basenames">
-		<value>webtools-messages</value>
+		<list>
+			<value>app</value>
+			<value>webtools-messages</value>
+		</list>
 	</property>
 </bean>
 
