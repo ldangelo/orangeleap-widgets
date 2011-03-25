@@ -25,10 +25,19 @@ import com.orangeleap.webtools.domain.WidgetExample;
 import com.orangeleap.webtools.service.PicklistService;
 import com.orangeleap.webtools.service.PlacementsService;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Calendar;
+import java.util.Date;
+
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -104,7 +113,7 @@ public class CustomEntityListController {
   @RequestMapping(method = RequestMethod.POST)
   public void postCustomEntityList(@RequestParam(required=true) String guid, 
       @RequestParam(required=true) Long start,
-      @RequestParam(required=true) Long limit,
+      @RequestParam(required=true) int limit,
       @RequestParam(required=false) String pattern,ModelMap modelMap) {
       List <Map<String,Object>> returnList = new ArrayList<Map<String,Object>>();
 
@@ -156,12 +165,32 @@ public class CustomEntityListController {
         	  rowRequest.getFilters().add(f);
           } else {
         	  DateFilter f = new DateFilter();
-        	  f.setMinDate();
+        	  GregorianCalendar today = new GregorianCalendar();
+        	  GregorianCalendar birth = new GregorianCalendar();
+        	  
+        	  // back up current date by age...
+        	  birth.set(GregorianCalendar.YEAR, birth.get(GregorianCalendar.YEAR) - (new Integer(val[1]) + 1));
+        	  XMLGregorianCalendar xmltoday;
+			try {
+				xmltoday = DatatypeFactory.newInstance().newXMLGregorianCalendar(today);
+				XMLGregorianCalendar xmlbirth = DatatypeFactory.newInstance().newXMLGregorianCalendar(birth);        	  
+				f.setMinDate(xmlbirth);
+				f.setMaxDate(xmltoday);
+				f.setName("birthdate");
+				rowRequest.getDateFilters().add(f);
+			} catch (DatatypeConfigurationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
           }
         }
       }
 
+      try {
       rowResponse = oleap.getCustomTableRows(rowRequest);
+      } catch (Exception e) {
+    	  e.printStackTrace();
+      }
 
         if (rowResponse != null) {
           populateMetaData(response.getCustomTable(),modelMap);

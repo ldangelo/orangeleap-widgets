@@ -396,7 +396,7 @@ var sponsorshipform =  {
 		url:'picklistItems.json',
 		baseParams: {
 		    guid: guid,
-		    picklistname: 'country'
+		    picklistname: 'sponsorablecountry'
 		}
 	    }),
 	    fieldLabel:'Country'

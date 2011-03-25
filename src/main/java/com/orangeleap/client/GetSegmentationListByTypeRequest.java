@@ -23,7 +23,8 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="limit">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}int">
- *               &lt;pattern value="[0-9][0-9]"/>
+ *               &lt;minInclusive value="1"/>
+ *               &lt;maxInclusive value="100"/>
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>

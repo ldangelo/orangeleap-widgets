@@ -25,7 +25,8 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="limit">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}long">
- *               &lt;pattern value="[0-9][0-9]"/>
+ *               &lt;minInclusive value="1"/>
+ *               &lt;maxInclusive value="100"/>
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
@@ -53,7 +54,7 @@ public class GetCustomTableRowsRequest {
     @XmlElement(required = true)
     protected String tablename;
     protected long offset;
-    protected long limit;
+    protected int limit;
     protected List<Filter> filters;
     protected List<DateFilter> dateFilters;
 
@@ -101,7 +102,7 @@ public class GetCustomTableRowsRequest {
      * Gets the value of the limit property.
      * 
      */
-    public long getLimit() {
+    public int getLimit() {
         return limit;
     }
 
@@ -109,7 +110,7 @@ public class GetCustomTableRowsRequest {
      * Sets the value of the limit property.
      * 
      */
-    public void setLimit(long value) {
+    public void setLimit(int value) {
         this.limit = value;
     }
 

@@ -113,20 +113,6 @@
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 
-	<jsp-config>
-	  <taglib>
-	    <taglib-uri>/olwidget</taglib-uri>
-	    <taglib-location>/WEB-INF/taglib.tld</taglib-location>
-	  </taglib>
-		<taglib>
-			<taglib-uri>/spring</taglib-uri>
-			<taglib-location>/WEB-INF/tld/spring.tld</taglib-location>
-		</taglib>
-		<taglib>
-			<taglib-uri>/spring-form</taglib-uri>
-			<taglib-location>/WEB-INF/tld/spring-form.tld</taglib-location>
-		</taglib>
-	</jsp-config>
 
       <filter>
           <filter-name>sitemesh</filter-name>

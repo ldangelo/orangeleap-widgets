@@ -65,6 +65,8 @@
       <dwr:include method="getPickListItems"/>
       <dwr:include method="getConstituentGifts"/>
       <dwr:include method="addCustomTableRow"/>
+      <dwr:include method="changePassword"/>
+      <dwr:include method="forgotPassword"/>
       <dwr:convert type="bean"  class="com.orangeleap.webtools.domain.WidgetData" />
       <dwr:convert type="bean"  class="com.orangeleap.client.*"/>
       <dwr:convert type="bean"  class="com.orangeleap.client.CustomTable"/>

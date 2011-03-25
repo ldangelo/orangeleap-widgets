@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>donorwidgets</artifactId>
@@ -9,7 +10,7 @@
 	<parent>
 		<groupId>com.orangeleap</groupId>
 		<artifactId>masterPOM</artifactId>
-  		<version>11.0-SNAPSHOT</version>
+		<version>11.0-SNAPSHOT</version>
 		<relativePath>../</relativePath>
 	</parent>
 
@@ -35,87 +36,74 @@
 			</plugin>
 
 			<plugin>
-			  <groupId>net.sf.alchim</groupId>
-			  <artifactId>yuicompressor-maven-plugin</artifactId>
-			  <executions>
-			    <execution>
-			      <phase>process-resources</phase>
-			      <goals>
-				<goal>compress</goal>
-			      </goals>
-			    </execution>
-			  </executions>
-			  <configuration>
-			    <nosuffix>true</nosuffix>
-			    <jswarn>false</jswarn>
-			    <aggregations>
-			      <aggregation>
-				<!-- remove files after aggregation (default: false)
-				     <removeIncluded>true</removeIncluded>
-				-->
-				<!-- insert new line after each concatenation (default: false) -->
-				<insertNewLine>true</insertNewLine>
-				<output>${basedir}/src/main/webapp/js/webtools.js</output>
-				<!-- files to include, path relative to output's directory or absolute path-->
-				<includes>
-				  <include>jquery/jquery-1.3.2.js</include>
-				  <include>extjs/adapter/jquery/ext-jquery-adapter.js</include>
-				  <include>extjs/ext-all.js</include>
-				  <include>login.js</include>
-				  <include>customentity.js</include>
-				  <include>customentitylist.js</include>
-				  <include>gifthistory.js</include>
-				  <include>sponsorshipform.js</include>
-				</includes>
-				<!-- files to exclude, path relative to output's directory
-				     <excludes>
-				     <exclude>**/*.pack.js</exclude>
-				     <exclude>**/compressed.css</exclude>
-				     </excludes>
-				-->
-			      </aggregation>
-                              			      <aggregation>
-				<insertNewLine>true</insertNewLine>
-				<output>${basedir}/src/main/webapp/css/webtools.css</output>
-				<includes>
-				  <include>pages.css</include>
-				  <include>navigation.css</include>
-				  <include>ext-all.css</include>
-				  <include>xtheme-default.css</include>
-				</includes>
-			      </aggregation>
-
-			    </aggregations>
-			  </configuration>
+				<groupId>org.zeroturnaround</groupId>
+				<artifactId>jrebel-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>generate-rebel-xml</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
-<!--
 			<plugin>
-			  <groupId>net.sf.alchim</groupId>
-			  <artifactId>yuicompressor-maven-plugin</artifactId>
-			  <executions>
-			    <execution>
-			      <phase>process-resources</phase>
-			      <goals>
-				<goal>compress</goal>
-			      </goals>
-			    </execution>
-			  </executions>
-			  <configuration>
-			    <nosuffix>true</nosuffix>
-			    <aggregations>
-			      <aggregation>
-				<insertNewLine>true</insertNewLine>
-				<output>${basedir}/src/main/webapp/css/webtools.css</output>
-				<includes>
-				  <include>pages.css</include>
-				  <include>navigation.css</include>
-				  <include>ext-all.css</include>
-				</includes>
-			      </aggregation>
-			    </aggregations>
-			  </configuration>
+				<groupId>net.sf.alchim</groupId>
+				<artifactId>yuicompressor-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>compress</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<nosuffix>true</nosuffix>
+					<jswarn>false</jswarn>
+					<aggregations>
+						<aggregation>
+							<!-- remove files after aggregation (default: false) <removeIncluded>true</removeIncluded> -->
+							<!-- insert new line after each concatenation (default: false) -->
+							<insertNewLine>true</insertNewLine>
+							<output>${basedir}/src/main/webapp/js/webtools.js</output>
+							<!-- files to include, path relative to output's directory or absolute 
+								path -->
+							<includes>
+								<include>jquery/jquery-1.3.2.js</include>
+								<include>extjs/adapter/jquery/ext-jquery-adapter.js</include>
+								<include>extjs/ext-all.js</include>
+								<include>login.js</include>
+								<include>customentity.js</include>
+								<include>customentitylist.js</include>
+								<include>gifthistory.js</include>
+								<include>sponsorshipform.js</include>
+							</includes>
+							<!-- files to exclude, path relative to output's directory <excludes> 
+								<exclude>**/*.pack.js</exclude> <exclude>**/compressed.css</exclude> </excludes> -->
+						</aggregation>
+						<aggregation>
+							<insertNewLine>true</insertNewLine>
+							<output>${basedir}/src/main/webapp/css/webtools.css</output>
+							<includes>
+								<include>pages.css</include>
+								<include>navigation.css</include>
+								<include>ext-all.css</include>
+								<include>xtheme-default.css</include>
+							</includes>
+						</aggregation>
+
+					</aggregations>
+				</configuration>
 			</plugin>
--->
+			<!-- <plugin> <groupId>net.sf.alchim</groupId> <artifactId>yuicompressor-maven-plugin</artifactId> 
+				<executions> <execution> <phase>process-resources</phase> <goals> <goal>compress</goal> 
+				</goals> </execution> </executions> <configuration> <nosuffix>true</nosuffix> 
+				<aggregations> <aggregation> <insertNewLine>true</insertNewLine> <output>${basedir}/src/main/webapp/css/webtools.css</output> 
+				<includes> <include>pages.css</include> <include>navigation.css</include> 
+				<include>ext-all.css</include> </includes> </aggregation> </aggregations> 
+				</configuration> </plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-antrun-plugin</artifactId>
@@ -128,7 +116,8 @@
 						</goals>
 						<configuration>
 							<tasks>
-								<replace file="${basedir}/target/classes/app.properties" token="$${build.info}" value="${project.version}-${maven.build.timestamp}" />
+								<replace file="${basedir}/target/classes/app.properties"
+									token="$${build.info}" value="${project.version}-${maven.build.timestamp}" />
 							</tasks>
 						</configuration>
 					</execution>
@@ -153,9 +142,7 @@
 								<directory>target/classes</directory>
 							</resource>
 							<resource>
-							  <!--
-								Empty resource element marks default configuration.
-							  -->
+								<!-- Empty resource element marks default configuration. -->
 							</resource>
 						</resources>
 					</classpath>
@@ -197,7 +184,8 @@
 								</goals>
 								<configuration>
 									<tasks>
-										<delete failonerror="false" file="target/classes/webtools.properties" />
+										<delete failonerror="false"
+											file="target/classes/webtools.properties" />
 									</tasks>
 								</configuration>
 							</execution>
@@ -208,7 +196,8 @@
 			</build>
 		</profile>
 
-		<!-- Run a Jetty server in place from the source code - no jetty installation or war creation needed -->
+		<!-- Run a Jetty server in place from the source code - no jetty installation 
+			or war creation needed -->
 		<profile>
 			<id>jetty</id>
 			<build>
@@ -225,7 +214,8 @@
 								</goals>
 								<configuration>
 									<tasks>
-										<copy file="src/main/config/jetty-local/webtools.properties" todir="target/classes" filtering="true" overwrite="true" />
+										<copy file="src/main/config/jetty-local/webtools.properties"
+											todir="target/classes" filtering="true" overwrite="true" />
 									</tasks>
 								</configuration>
 							</execution>
@@ -237,25 +227,25 @@
 						<artifactId>maven-jetty-plugin</artifactId>
 						<version>6.1.11</version>
 						<configuration>
-						<systemProperties>
-							<systemProperty>
-								<name>org.mortbay.jetty.Request.maxFormContentSize</name>
-								<value>5000000</value>
-							</systemProperty>
-						</systemProperties>
-						  <connectors>
-						    <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-						      <port>8081</port>
-						      <maxIdleTime>3600000</maxIdleTime>
-						    </connector>
-						  </connectors>
-						  <scanIntervalSeconds>5</scanIntervalSeconds>
-						  <webAppConfig>
-						    <contextPath>/donorwidgets</contextPath>
-						  </webAppConfig>
+							<systemProperties>
+								<systemProperty>
+									<name>org.mortbay.jetty.Request.maxFormContentSize</name>
+									<value>5000000</value>
+								</systemProperty>
+							</systemProperties>
+							<connectors>
+								<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+									<port>8081</port>
+									<maxIdleTime>3600000</maxIdleTime>
+								</connector>
+							</connectors>
+							<scanIntervalSeconds>5</scanIntervalSeconds>
+							<webAppConfig>
+								<contextPath>/donorwidgets</contextPath>
+							</webAppConfig>
 
 
- 						   <jettyEnvXml>${basedir}/src/main/config/jetty-local/jetty-env.xml</jettyEnvXml>
+							<jettyEnvXml>${basedir}/src/main/config/jetty-local/jetty-env.xml</jettyEnvXml>
 						</configuration>
 						<dependencies>
 							<dependency>
@@ -293,9 +283,12 @@
 								</goals>
 								<configuration>
 									<tasks>
-										<delete failonerror="false" file="target/classes/webtools.properties" />
-										<delete failonerror="false" dir="${tomcat.path}/webapps/donorwidgets" />
-										<delete failonerror="false" dir="${tomcat.path}/work/Catalina/localhost/donorwidgets" />
+										<delete failonerror="false"
+											file="target/classes/webtools.properties" />
+										<delete failonerror="false"
+											dir="${tomcat.path}/webapps/donorwidgets" />
+										<delete failonerror="false"
+											dir="${tomcat.path}/work/Catalina/localhost/donorwidgets" />
 									</tasks>
 								</configuration>
 							</execution>
@@ -328,7 +321,13 @@
 								<type>existing</type>
 								<home>${tomcat.path}</home>
 								<properties>
-									<cargo.jvmargs>-Xshare:off -Dcatalina.home=${tomcat.path} -D${cas.alias} -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.port=8069 -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n -Xms128M -Xmx512m -XX:MaxPermSize=512M</cargo.jvmargs>
+									<cargo.jvmargs>-Xshare:off -Dcatalina.home=${tomcat.path}
+										-D${cas.alias} -Dcom.sun.management.jmxremote
+										-Dcom.sun.management.jmxremote.ssl=false
+										-Dcom.sun.management.jmxremote.authenticate=false
+										-Dcom.sun.management.jmxremote.port=8069 -Xdebug
+										-Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n
+										-Xms128M -Xmx512m -XX:MaxPermSize=512M</cargo.jvmargs>
 								</properties>
 							</configuration>
 						</configuration>
@@ -373,9 +372,12 @@
 								</goals>
 								<configuration>
 									<tasks>
-										<delete failonerror="false" file="target/classes/webtools.properties" />
-										<delete failonerror="false" dir="${tomcat.path}/webapps/donorwidgets" />
-										<delete failonerror="false" dir="${tomcat.path}/work/Catalina/localhost/donorwidgets" />
+										<delete failonerror="false"
+											file="target/classes/webtools.properties" />
+										<delete failonerror="false"
+											dir="${tomcat.path}/webapps/donorwidgets" />
+										<delete failonerror="false"
+											dir="${tomcat.path}/work/Catalina/localhost/donorwidgets" />
 									</tasks>
 								</configuration>
 							</execution>
@@ -450,7 +452,13 @@
 								<type>existing</type>
 								<home>${tomcat.path}</home>
 								<properties>
-									<cargo.jvmargs>-Xshare:off -Dcatalina.home=${tomcat.path} -D${cas.alias} -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.port=8069 -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n -Xms128M -Xmx512m -XX:MaxPermSize=512M</cargo.jvmargs>
+									<cargo.jvmargs>-Xshare:off -Dcatalina.home=${tomcat.path}
+										-D${cas.alias} -Dcom.sun.management.jmxremote
+										-Dcom.sun.management.jmxremote.ssl=false
+										-Dcom.sun.management.jmxremote.authenticate=false
+										-Dcom.sun.management.jmxremote.port=8069 -Xdebug
+										-Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n
+										-Xms128M -Xmx512m -XX:MaxPermSize=512M</cargo.jvmargs>
 								</properties>
 							</configuration>
 						</configuration>
@@ -601,7 +609,7 @@
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
-            <version>1.6.1</version>
+			<version>1.6.1</version>
 		</dependency>
 
 		<dependency>
@@ -637,7 +645,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<!--<scope>compile</scope>-->
+			<!--<scope>compile</scope> -->
 		</dependency>
 
 		<dependency>
@@ -828,12 +836,12 @@
 		</dependency>
 
 		<dependency>
-		    <groupId>velocity</groupId>
-		    <artifactId>velocity</artifactId>
-    		<version>1.5</version>
+			<groupId>velocity</groupId>
+			<artifactId>velocity</artifactId>
+			<version>1.5</version>
 		</dependency>
 
-		<!-- ########################   Provided ONLY below   #############################  -->
+		<!-- ######################## Provided ONLY below ############################# -->
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>servlet-api</artifactId>
@@ -847,7 +855,7 @@
 		</dependency>
 
 
-		<!-- ########################   TEST ONLY below   #############################  -->
+		<!-- ######################## TEST ONLY below ############################# -->
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>

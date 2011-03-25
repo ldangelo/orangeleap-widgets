@@ -25,4 +25,8 @@ public interface OrangeLeapWidgetService {
   public Constituent getConstituent(String guid,String sessionId);
 
   public CustomTableRow addCustomTableRow(String guid,Entry[] row);
+  
+  public String changePassword(String guid,String username, String oldpassword, String newpassword);
+  
+  public String forgotPassword(String guid,String username);
 }
