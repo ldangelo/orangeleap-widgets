@@ -89,7 +89,13 @@ public class CustomEntityController extends MultiActionController {
 		String guid = request.getParameter("guid");
 		String sessionId = request.getParameter("sessionId");
 		Long constituentid = -1L;
+		
+		
+		//
+		// incase a successurl is set and we are going to redirect
+		response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
 
+		
 		Widget w = widgetService.getWidget(guid);
 		if (w == null) {
 			return getModelMapError("Invalid guid");
@@ -122,6 +128,8 @@ public class CustomEntityController extends MultiActionController {
 				return getModelMapError(e.getMessage());
 			}
 		}
+
+		
 		return getModelMapError("Error trying to create customEntity.");
 	}
 

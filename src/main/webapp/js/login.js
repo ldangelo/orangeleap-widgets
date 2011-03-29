@@ -1,10 +1,43 @@
 var $j = jQuery.noConflict();
 
 var authentication = {
-    failureurl: null,
+	successurl:null,
     loginform:null,
 
+postToUrl: function(url, params, newWindow)
+{
+    var form = $('<form>');
+    form.attr('action', url);
+    form.attr('method', 'POST');
+    if(newWindow){ form.attr('target', '_blank'); }
 
+    var addParam = function(paramName, paramValue){
+        var input = $('<input type="hidden">');
+        input.attr({ 'id':     paramName,
+                     'name':   paramName,
+                     'value':  paramValue });
+        form.append(input);
+    };
+
+    // Params is an Array.
+    if(params instanceof Array){
+        for(var i=0; i<params.length; i++){
+            addParam(i, params[i]);
+        }
+    }
+
+    // Params is an Associative array or Object.
+    if(params instanceof Object){
+        for(var key in params){
+            addParam(key, params[key]);
+        }
+    }
+
+    // Submit the form, then remove it from the page
+    form.appendTo(document.body);
+    form.submit();
+    form.remove();
+},
     setCookie: function(c_name,value,expiredays)
     {
 	var exdate=new Date();
@@ -56,7 +89,7 @@ var authentication = {
     	});
     	
     },
-    handleReturn: function(sessionId,widgetid,successurl,failureurl) {
+    handleReturn: function(sessionId,widgetid,successurl) {
 	if (sessionId == null) {
 	    this.handleError(widgetid,"Authentication Failed!");
 	} else {
@@ -66,8 +99,7 @@ var authentication = {
 		this.setCookie("sessionId",sessionId);
 
 	    if (successurl != null) {
-		//document.location = successurl;
-		window.open(successurl,"_top");
+	    	window.open(successurl);
 	    }
 	}
     },
@@ -89,12 +121,12 @@ var authentication = {
 	return "";
     },
 
-    generateWidget: function(widgetid, successurl, failureurl) {
+    generateWidget: function(widgetid, successurl) {
 	sessionId = this.getCookie("sessionId");
 
 	if (sessionId != "") window.location.successurl;
 
-	this.failureurl = failureurl;
+	this.successurl = successurl;
 
 	Ext.QuickTips.init();
 	Ext.form.Field.prototype.msgTarget = 'under';
@@ -147,7 +179,7 @@ var authentication = {
 		    //
 		    // call authenticate through DWR
 		    var callbackproxy = function(dataFromServer) {
-			authentication.handleReturn(dataFromServer,widgetid,successurl,failureurl);
+			authentication.handleReturn(dataFromServer,widgetid,successurl);
 		    }
 
 		    var callMetaData = {callback:callbackproxy};
@@ -318,8 +350,6 @@ var changepass = new Ext.form.FormPanel({
     },
 
     errorHandlerFinished: function() {
-	    if (authentication.failureurl != null)
-		document.location = authentication.failureurl;
     },
     handleError: function(widgetid, str) {
 	// update widget's error count

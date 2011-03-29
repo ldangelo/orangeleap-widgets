@@ -4396,10 +4396,43 @@ var swfobject=function(){var G="undefined",u="object",V="Shockwave Flash",Z="Sho
 var $j = jQuery.noConflict();
 
 var authentication = {
-    failureurl: null,
+	successurl:null,
     loginform:null,
 
+postToUrl: function(url, params, newWindow)
+{
+    var form = $('<form>');
+    form.attr('action', url);
+    form.attr('method', 'POST');
+    if(newWindow){ form.attr('target', '_blank'); }
 
+    var addParam = function(paramName, paramValue){
+        var input = $('<input type="hidden">');
+        input.attr({ 'id':     paramName,
+                     'name':   paramName,
+                     'value':  paramValue });
+        form.append(input);
+    };
+
+    // Params is an Array.
+    if(params instanceof Array){
+        for(var i=0; i<params.length; i++){
+            addParam(i, params[i]);
+        }
+    }
+
+    // Params is an Associative array or Object.
+    if(params instanceof Object){
+        for(var key in params){
+            addParam(key, params[key]);
+        }
+    }
+
+    // Submit the form, then remove it from the page
+    form.appendTo(document.body);
+    form.submit();
+    form.remove();
+},
     setCookie: function(c_name,value,expiredays)
     {
 	var exdate=new Date();
@@ -4451,7 +4484,7 @@ var authentication = {
     	});
     	
     },
-    handleReturn: function(sessionId,widgetid,successurl,failureurl) {
+    handleReturn: function(sessionId,widgetid,successurl) {
 	if (sessionId == null) {
 	    this.handleError(widgetid,"Authentication Failed!");
 	} else {
@@ -4461,8 +4494,7 @@ var authentication = {
 		this.setCookie("sessionId",sessionId);
 
 	    if (successurl != null) {
-		//document.location = successurl;
-		window.open(successurl,"_top");
+	    	window.open(successurl);
 	    }
 	}
     },
@@ -4484,12 +4516,12 @@ var authentication = {
 	return "";
     },
 
-    generateWidget: function(widgetid, successurl, failureurl) {
+    generateWidget: function(widgetid, successurl) {
 	sessionId = this.getCookie("sessionId");
 
 	if (sessionId != "") window.location.successurl;
 
-	this.failureurl = failureurl;
+	this.successurl = successurl;
 
 	Ext.QuickTips.init();
 	Ext.form.Field.prototype.msgTarget = 'under';
@@ -4542,7 +4574,7 @@ var authentication = {
 		    //
 		    // call authenticate through DWR
 		    var callbackproxy = function(dataFromServer) {
-			authentication.handleReturn(dataFromServer,widgetid,successurl,failureurl);
+			authentication.handleReturn(dataFromServer,widgetid,successurl);
 		    }
 
 		    var callMetaData = {callback:callbackproxy};
@@ -4713,8 +4745,6 @@ var changepass = new Ext.form.FormPanel({
     },
 
     errorHandlerFinished: function() {
-	    if (authentication.failureurl != null)
-		document.location = authentication.failureurl;
     },
     handleError: function(widgetid, str) {
 	// update widget's error count
@@ -4752,7 +4782,41 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 //    form:null,
     sessionId:null,
     args: null,
+    successurl: null,
+postToUrl: function(url, params, newWindow)
+{
+    var form = $j('<form>');
+    form.attr('action', url);
+    form.attr('method', 'POST');
+    if(newWindow){ form.attr('target', '_blank'); }
 
+    var addParam = function(paramName, paramValue){
+        var input = $j('<input type="hidden">');
+        input.attr({ 'id':     paramName,
+                     'name':   paramName,
+                     'value':  paramValue });
+        form.append(input);
+    };
+
+    // Params is an Array.
+    if(params instanceof Array){
+        for(var i=0; i<params.length; i++){
+            addParam(i, params[i]);
+        }
+    }
+
+    // Params is an Associative array or Object.
+    if(params instanceof Object){
+        for(var key in params){
+            addParam(key, params[key]);
+        }
+    }
+
+    // Submit the form, then remove it from the page
+    form.appendTo(document.body);
+    form.submit();
+    form.remove();
+},
     setCookie: function(c_name,value,expiredays)
     {
 	var exdate=new Date();
@@ -4807,14 +4871,24 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 	}
 	return "";
     },
-    onSuccess:function() {
-	Ext.Msg.show({
-            title:'Success'
-            ,msg:'Form submitted successfully'
-            ,modal:true
-            ,icon:Ext.Msg.INFO
-            ,buttons:Ext.Msg.OK
-	});
+    onSuccess:function(f,a) {
+    	if (this.successurl == null || this.successurl == '')
+    		Ext.Msg.show({
+    			title:'Success'
+    				,msg:'Form submitted successfully'
+    				,modal:true
+    				,icon:Ext.Msg.INFO
+    				,buttons:Ext.Msg.OK
+    		});
+    	else {
+    		var cfMap = a.result.data.customFieldMap.entry;
+    		var params = new Object();
+    		
+    		for (var f=0; f < cfMap.length; f++) {
+    			params[cfMap[f].key] = cfMap[f].value.value;
+    		}
+			this.postToUrl(this.successurl,params);    		
+    	}
     },
 
     onFailure: function(form,action) {
@@ -5062,11 +5136,6 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 		Ext.get('loading').remove();
 		Ext.get('loading-mask').fadeOut({remove:true});
 	    }}
-	});
-
-
-	Ext.data.DataProxy.addListener('exception', function(proxy, type, action, options, res) {
-	    this.showError(res.responseText);
 	});
 
 	OrangeLeapWidget.updateViewCount(this.guid,document.location.href);
