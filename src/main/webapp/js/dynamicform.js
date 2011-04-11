@@ -99,7 +99,7 @@ function generateForm(form,store,meta) {
 				    url:'picklistItems.json',
 				    baseParams: {
 					guid: "",
-					picklistname: "projectCode"
+					picklistname: fields[f].name
 				    }
 				}),
 				fieldLabel:fields[f].header

@@ -11,7 +11,6 @@ import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor;
 import org.apache.ws.security.WSConstants;
 import org.apache.ws.security.handler.WSHandlerConstants;
-import com.orangeleap.client.*;
 
 public class WSClient  {
 	

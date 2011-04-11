@@ -51,7 +51,7 @@ public class WidgetController extends MultiActionController {
       if (w.getStyleId() != null) 
         style = styleService.selectById(w.getStyleId());
 
-      w.setWidgetHtml(w.getWidgetHtml().replaceAll("@APPLOCATION@",appLocation).replaceAll("@GUID@",w.getWidgetGuid()).replaceAll("@SUCCESSURL@",w.getWidgetLoginSuccessURL()).replaceAll("@AUTHENTICATE@",w.getWidgetAuthenticationRequired().toString()).replaceAll("@LOGINURL@",w.getWidgetAuthenticationURL()).replaceAll("@PROJECTCODE@",w.getProjectCode()).replaceAll("@SPONSORSHIPFORMURL@",w.getSponsorshipURL()).replaceAll("@ARGS@",request.getHeader("referer")).replaceAll("@STYLE@",(style != null) ? style.getStyle() : ""));
+      w.setWidgetHtml(w.getWidgetHtml().replaceAll("@APPLOCATION@",appLocation).replaceAll("@GUID@",w.getWidgetGuid()).replaceAll("@SUCCESSURL@",w.getWidgetLoginSuccessURL()).replaceAll("@AUTHENTICATE@",w.getWidgetAuthenticationRequired().toString()).replaceAll("@LOGINURL@",w.getWidgetAuthenticationURL()).replaceAll("@PROJECTCODE@",w.getProjectCode()).replaceAll("@MOTIVATIONCODE@",w.getMotivationCode()).replaceAll("@SPONSORSHIPFORMURL@",w.getSponsorshipURL()).replaceAll("@ARGS@",request.getHeader("referer")).replaceAll("@STYLE@",(style != null) ? style.getStyle() : ""));
 
 
       response.setIntHeader("Content-Length",w.getWidgetHtml().length());

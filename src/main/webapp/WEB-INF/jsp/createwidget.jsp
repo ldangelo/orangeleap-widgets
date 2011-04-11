@@ -12,8 +12,8 @@
 	<script type="text/javascript" src="js/dynamicform.js"></script>
 	<script type="text/javascript" src="js/widgetform.js"></script>
 	<script type='text/javascript' src='dwr/interface/OrangeLeapWidget.js'></script>
-	<script type='text/javascript' src='dwr/engine.js'>
-	<script type="text/javascript" src=""></script>
+	<script type='text/javascript' src='dwr/engine.js'></script>
+
         <script type="text/javascript">
         	Ext.onReady(function() {
         		var roles = null;
@@ -88,6 +88,29 @@ NewWidgetPanelUi = Ext.extend(Ext.Panel, {
 							var formpanel = Ext.getCmp("formpanel");
 							formpanel.removeAll();
 							formpanel.add(new WidgetForm({widgettype:'customentity',customentitytype:'online_donation'}));
+							formpanel.doLayout();
+                        }
+                    },
+                        {
+                        xtype: 'button',
+                        text: 'Recurring Gift',
+                        width: 125,
+                        handler: function () {
+                        	if (roles.match("WEBTOOLS_DONATION") == null) {
+                        		// display the error
+								Ext.Msg.show({
+		    						title: 'ERROR',
+	    							msg: "You do not have permission to access this feature.",
+	    							icon: Ext.MessageBox.ERROR,
+	    							buttons: Ext.Msg.OK,
+	    							modal: true,
+	    							fn: this.errorHandlerFinished
+								});
+                        		return;
+                        	}
+							var formpanel = Ext.getCmp("formpanel");
+							formpanel.removeAll();
+							formpanel.add(new WidgetForm({widgettype:'customentity',customentitytype:'online_recurringgift'}));
 							formpanel.doLayout();
                         }
                     },
