@@ -48,7 +48,7 @@
     	<spring:message code="release"/>: ${build.version} <!-- ${build.time}  -->
 	</div>
 </div>
-</script>
+
 <%-->
 <br />
 <br />

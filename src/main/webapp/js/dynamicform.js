@@ -85,7 +85,7 @@ function generateForm(form,store,meta) {
 				valueField:'Name',
 				triggerAction:'all',
 				hiddenName:fields[f].name + 'hidden' ,
-				displayField:'Name',
+				displayField:'Description',
 				forceSelection:true,
 				emptyText: 'Select ' + fields[f].header + '...',
 				store:new Ext.data.JsonStore({
