@@ -74,14 +74,16 @@ public class PickListItemsController {
 
   private  void populateMetaData(List<PicklistItem> picklistitems,List<Map<String,Object>> returnList) {
     Iterator<PicklistItem> it = picklistitems.iterator();
-
+    String desc; 
     while (it.hasNext()) {
       PicklistItem item = it.next();
       Map<String, Object> map = new HashMap<String, Object>();
       
       if (!item.isInactive()) {
       	map.put("Name",item.getItemName());
-      	map.put("Description", item.getDefaultDisplayValue());
+      	desc = item.getLongDescription();
+      	if (desc == null) desc = item.getDefaultDisplayValue();
+      	map.put("Description", desc);
       }
 
       returnList.add(map);
