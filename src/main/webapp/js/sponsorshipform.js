@@ -98,7 +98,12 @@ var sponsorshipform =  {
 		    ffield.setValue(value);
 		} else {
 		    if (value != null && value != '') {
-			$j("#picture").attr("src",value);
+		    	$j("#picture").attr("src",value);
+		    	$j("#picture").show();
+		    } else {
+		    	//
+		    	// hide the picture panel....
+		    	$j("#picture").hide();
 		    }
 		}
 	    }
@@ -142,6 +147,11 @@ var sponsorshipform =  {
     },
     onSponsor: function() {
 	var query = '?';
+	var field = form.getForm().findField("id");
+	
+	if (field == null) {
+		query=query + "sponsorable_id=" + field.value + "&";
+	}
 	var items = form.getForm().items.items;
 
 	for (var i =0 ; i < items.length; i++) {
@@ -193,16 +203,19 @@ var sponsorshipform =  {
 		} else {
 		    if (value != null && value != '') {
 			$j("#picture").attr("src",value);
-//			panel.items.items[0].autoEl = {
-//				tag:'div',children:{
-//				    tag:'img',
-//				    id: metaData[m].name,
-//				    src: value,
-//				    height: '211',
-//				    width: '180',
-//				    hspace: '10'
-//				}
-//			}
+			$j("#picture").show();
+			panel.items.items[0].autoEl = {
+				tag:'div',children:{
+				    tag:'img',
+				    id: metaData[m].name,
+				    src: value,
+				    height: '211',
+				    width: '180',
+				    hspace: '10'
+				}
+			}
+		    } else {
+			$j("#picture").hide();
 		    }
     		}
 	    }

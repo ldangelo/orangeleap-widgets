@@ -62,7 +62,13 @@ postToUrl: function(url, params, newWindow)
 
 	    var keyval = parms[x].split('=');
 
-	    if (keyval[0] == 'id') continue; //skip id's
+	    if (keyval[0] == 'id') {
+	    	var f = form.findById("sponsorable_id");
+	    	if (f!=null) {
+	    		f.setValue(keyval[1]);
+	    	}
+	    	continue; //skip id's
+	    }
 
 	    var f = form.findById(keyval[0]);
 	    if (f != null)
@@ -174,7 +180,8 @@ postToUrl: function(url, params, newWindow)
 		create: 'customEntity.ajax?action=create&guid=' + this.guid+ '&sessionId=' + this.sessionId,
 		update: 'customEntity.ajax?action=update&guid=' + this.guid + '&sessionId=' + this.sessionId,
 		destroy: 'customEntity.ajax?action=delete&guid=' + this.guid+ '&sessionId=' + this.sessionId
-	    }
+	    },
+	    timeout: 90000
 	});
 
 	var reader=new Ext.data.JsonReader();
@@ -208,7 +215,7 @@ postToUrl: function(url, params, newWindow)
 			    field.fieldLabel = fields[f].header;
 			    field.store = store;
 			    field.border = false;
-			    if (fieldset == null)
+			    //if (fieldset == null)
 				this.form.superclass().add.call(this.form,field);
 			} else if (fields[f].type == 'text' || fields[f].type == 'date' || fields[f].type == 'integer' || fields[f].type == 'number') {
 			    var field = new Ext.form.TextField();

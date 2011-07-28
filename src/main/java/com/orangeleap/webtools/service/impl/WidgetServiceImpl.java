@@ -146,7 +146,8 @@ public class WidgetServiceImpl implements WidgetService {
       if (ce.getType().equals("section")) continue;
       CustomField val = new CustomField();
       val.setName(ce.getName());
-      val.setValue(request.getParameter(ce.getName()));
+      String value = request.getParameter(ce.getName());
+      val.setValue((value == null) ? "" : value);
       val.setEntityType("customtablerow");
       val.setSequenceNumber(0);
       entry.setKey(ce.getName());

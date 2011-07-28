@@ -4833,7 +4833,13 @@ postToUrl: function(url, params, newWindow)
 
 	    var keyval = parms[x].split('=');
 
-	    if (keyval[0] == 'id') continue; //skip id's
+	    if (keyval[0] == 'id') {
+	    	var f = form.findById("sponsorable_id");
+	    	if (f!=null) {
+	    		f.setValue(keyval[1]);
+	    	}
+	    	continue; //skip id's
+	    }
 
 	    var f = form.findById(keyval[0]);
 	    if (f != null)
@@ -4945,7 +4951,8 @@ postToUrl: function(url, params, newWindow)
 		create: 'customEntity.ajax?action=create&guid=' + this.guid+ '&sessionId=' + this.sessionId,
 		update: 'customEntity.ajax?action=update&guid=' + this.guid + '&sessionId=' + this.sessionId,
 		destroy: 'customEntity.ajax?action=delete&guid=' + this.guid+ '&sessionId=' + this.sessionId
-	    }
+	    },
+	    timeout: 90000
 	});
 
 	var reader=new Ext.data.JsonReader();
@@ -4979,7 +4986,7 @@ postToUrl: function(url, params, newWindow)
 			    field.fieldLabel = fields[f].header;
 			    field.store = store;
 			    field.border = false;
-			    if (fieldset == null)
+			    //if (fieldset == null)
 				this.form.superclass().add.call(this.form,field);
 			} else if (fields[f].type == 'text' || fields[f].type == 'date' || fields[f].type == 'integer' || fields[f].type == 'number') {
 			    var field = new Ext.form.TextField();
@@ -5688,7 +5695,12 @@ var sponsorshipform =  {
 		    ffield.setValue(value);
 		} else {
 		    if (value != null && value != '') {
-			$j("#picture").attr("src",value);
+		    	$j("#picture").attr("src",value);
+		    	$j("#picture").show();
+		    } else {
+		    	//
+		    	// hide the picture panel....
+		    	$j("#picture").hide();
 		    }
 		}
 	    }
@@ -5732,6 +5744,11 @@ var sponsorshipform =  {
     },
     onSponsor: function() {
 	var query = '?';
+	var field = form.getForm().findField("id");
+	
+	if (field == null) {
+		query=query + "sponsorable_id=" + field.value + "&";
+	}
 	var items = form.getForm().items.items;
 
 	for (var i =0 ; i < items.length; i++) {
@@ -5783,16 +5800,19 @@ var sponsorshipform =  {
 		} else {
 		    if (value != null && value != '') {
 			$j("#picture").attr("src",value);
-//			panel.items.items[0].autoEl = {
-//				tag:'div',children:{
-//				    tag:'img',
-//				    id: metaData[m].name,
-//				    src: value,
-//				    height: '211',
-//				    width: '180',
-//				    hspace: '10'
-//				}
-//			}
+			$j("#picture").show();
+			panel.items.items[0].autoEl = {
+				tag:'div',children:{
+				    tag:'img',
+				    id: metaData[m].name,
+				    src: value,
+				    height: '211',
+				    width: '180',
+				    hspace: '10'
+				}
+			}
+		    } else {
+			$j("#picture").hide();
 		    }
     		}
 	    }

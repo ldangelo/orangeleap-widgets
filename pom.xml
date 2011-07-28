@@ -10,7 +10,7 @@
 	<parent>
 		<groupId>com.orangeleap</groupId>
 		<artifactId>masterPOM</artifactId>
-		<version>11.0-SNAPSHOT</version>
+		<version>14.0-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
 
@@ -594,6 +594,12 @@
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
+			<exclusions>
+			  <exclusion>
+			    <groupId>javax.activation</groupId>
+			    <artifactId>activation</artifactId>
+			  </exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -751,6 +757,12 @@
 		<dependency>
 			<groupId>com.sun.xml.messaging.saaj</groupId>
 			<artifactId>saaj-impl</artifactId>
+			<exclusions>
+			  <exclusion>
+			    <groupId>javax.activation</groupId>
+			    <artifactId>activation</artifactId>
+			  </exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -793,13 +805,19 @@
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>javamail</artifactId>
+			<exclusions>
+			  <exclusion>
+			    <groupId>javax.activation</groupId>
+			    <artifactId>activation</artifactId>
+			  </exclusion>
+			</exclusions>
 		</dependency>
-
+<!--
 		<dependency>
 			<groupId>javax.activation</groupId>
 			<artifactId>activation</artifactId>
 		</dependency>
-
+-->
 		<dependency>
 			<groupId>com.paymentech.orbital.sdk</groupId>
 			<artifactId>paymentechsdk</artifactId>
