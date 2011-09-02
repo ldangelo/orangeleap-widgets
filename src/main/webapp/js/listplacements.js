@@ -46,7 +46,7 @@
 	    frame:true,
 	    title: "Widget Placement",
 	    height: 250,
-	    width:655,
+	    width:655
 	});
 
 
