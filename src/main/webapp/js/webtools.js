@@ -4979,15 +4979,17 @@ postToUrl: function(url, params, newWindow)
 		    for (var f=0;f < fields.length; f++) {
 			if (fields[f].hidden == true) {
 
-			    var field = new Ext.form.Hidden();
-			    field.id = fields[f].name;
-			    field.name = fields[f].name;
-			    field.dataIndex = fields[f].name;
-			    field.fieldLabel = fields[f].header;
-			    field.store = store;
-			    field.border = false;
+			    if (this.form.findById(fields[f].name) == null) {
+				var field = new Ext.form.Hidden();
+				field.id = fields[f].name;
+				field.name = fields[f].name;
+				field.dataIndex = fields[f].name;
+				field.fieldLabel = fields[f].header;
+				field.store = store;
+				field.border = false;
 			    //if (fieldset == null)
 				this.form.superclass().add.call(this.form,field);
+			    }
 			} else if (fields[f].type == 'text' || fields[f].type == 'date' || fields[f].type == 'integer' || fields[f].type == 'number') {
 			    var field = new Ext.form.TextField();
 			    field.id = fields[f].name;
@@ -5053,7 +5055,7 @@ postToUrl: function(url, params, newWindow)
 			    for (fieldsectioncount = 0; start < fields.length && fields[start].type != 'section'; fieldsectioncount++) start++;
 			    fieldsectionindex =0;
 
-			} else if (fields[f].type == 'picklist') {
+			} else if (fields[f].type == 'picklist' || fields[f].type== 'multi-picklist') {
 			    var comboConfig = new Ext.form.ComboBox({
 				id:fields[f].name + 'combo',
 				dataIndex : fields[f].name,
