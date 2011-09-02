@@ -4779,6 +4779,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
     loginurl:null,
     buttonLabel:null,
     mydatastore : null,
+    referer:"Unknown",
 //    form:null,
     sessionId:null,
     args: null,
@@ -5147,12 +5148,12 @@ postToUrl: function(url, params, newWindow)
 	    }}
 	});
 
-	OrangeLeapWidget.updateViewCount(this.guid,document.location.href);
+	OrangeLeapWidget.updateViewCount(this.guid,this.referer);
 
 	this.mydatastore.load();
     },
     showError: function(str) {
-	OrangeLeapWidget.updateErrorCount(this.guid,document.location.href);
+	OrangeLeapWidget.updateErrorCount(this.guid,this.referer);
 
     	Ext.Msg.show({
     	    title: 'ERROR',

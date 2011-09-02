@@ -16,6 +16,7 @@ var pattern = "sponsorship_status=Available;";
 var panel = null;
 
 var sponsorshipform =  {
+    referer:"Unknown",
     sponsorshipurl:null,
     include: function(filename)
     {
@@ -221,8 +222,9 @@ var sponsorshipform =  {
 	    }
 	}
     },
-    generateWidget: function(widgetname,guid,authenticate, redirecturl,sponsorshipformurl) {
+    generateWidget: function(widgetname,guid,authenticate, redirecturl,sponsorshipformurl,referer) {
 	this.sponsorshipurl = sponsorshipformurl;
+	this.referer = referer;
 	wname = widgetname;
 	var constituentId = this.getCookie("constituentId");
 
@@ -230,7 +232,7 @@ var sponsorshipform =  {
 	    window.location=redirecturl;
 	    return;
 	}
-	OrangeLeapWidget.updateViewCount(guid,document.location.href);
+	OrangeLeapWidget.updateViewCount(guid,this.referer);
 
 	var proxy = new Ext.data.HttpProxy( {url:'/donorwidgets/customEntityList.json?guid=' + guid});
 

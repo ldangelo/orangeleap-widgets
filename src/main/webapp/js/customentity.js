@@ -8,6 +8,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
     loginurl:null,
     buttonLabel:null,
     mydatastore : null,
+    referer:"Unknown",
 //    form:null,
     sessionId:null,
     args: null,
@@ -181,7 +182,7 @@ postToUrl: function(url, params, newWindow)
 		update: 'customEntity.ajax?action=update&guid=' + this.guid + '&sessionId=' + this.sessionId,
 		destroy: 'customEntity.ajax?action=delete&guid=' + this.guid+ '&sessionId=' + this.sessionId
 	    },
-	    timeout: 90000
+	    timeout: 120000
 	});
 
 	var reader=new Ext.data.JsonReader();
@@ -376,12 +377,12 @@ postToUrl: function(url, params, newWindow)
 	    }}
 	});
 
-	OrangeLeapWidget.updateViewCount(this.guid,document.location.href);
+	OrangeLeapWidget.updateViewCount(this.guid,this.referer);
 
 	this.mydatastore.load();
     },
     showError: function(str) {
-	OrangeLeapWidget.updateErrorCount(this.guid,document.location.href);
+	OrangeLeapWidget.updateErrorCount(this.guid,this.referer);
 
     	Ext.Msg.show({
     	    title: 'ERROR',

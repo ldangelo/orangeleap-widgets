@@ -58,7 +58,7 @@ var gifthistory = {
 	return "";
     },
 
-    generateWidget: function(widgetname,widgetid,authenticate, redirecturl) {
+    generateWidget: function(widgetname,widgetid,authenticate, redirecturl, referer) {
 	var sessionId = this.getCookie("sessionId");
 
 	if (authenticate == true && sessionId == "") {
@@ -67,7 +67,7 @@ var gifthistory = {
 	}
 
 
-	OrangeLeapWidget.updateViewCount(widgetid,document.location.href);
+	OrangeLeapWidget.updateViewCount(widgetid,referer);
 
 	var mydatastore = new Ext.data.JsonStore({
 	    url:'/donorwidgets/giftHistory.json?guid=' + widgetid + '&sessionId=' + sessionId,

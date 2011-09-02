@@ -38,10 +38,13 @@ public class WidgetController extends MultiActionController {
     String constituentid = request.getParameter("constituentId");
     Style style = null;
     String appLocation = System.getProperty("webtools.applocation");
+    String refererUrl = request.getHeader("Referer");
 
     if (constituentid == null || constituentid.equals("undefined") || constituentid.equals("")) {
       constituentid = "-1";
     }
+
+    if (refererUrl == null || refererUrl.equals("")) refererUrl = "unknown";
 
     if (guid != null && !guid.equals("undefined")) {
       Widget w = widgetService.selectWidgetByGuid(guid);
@@ -51,7 +54,7 @@ public class WidgetController extends MultiActionController {
       if (w.getStyleId() != null) 
         style = styleService.selectById(w.getStyleId());
 
-      w.setWidgetHtml(w.getWidgetHtml().replaceAll("@APPLOCATION@",appLocation).replaceAll("@GUID@",w.getWidgetGuid()).replaceAll("@SUCCESSURL@",w.getWidgetLoginSuccessURL()).replaceAll("@AUTHENTICATE@",w.getWidgetAuthenticationRequired().toString()).replaceAll("@LOGINURL@",w.getWidgetAuthenticationURL()).replaceAll("@PROJECTCODE@",w.getProjectCode()).replaceAll("@MOTIVATIONCODE@",w.getMotivationCode()).replaceAll("@SPONSORSHIPFORMURL@",w.getSponsorshipURL()).replaceAll("@ARGS@",request.getHeader("referer")).replaceAll("@STYLE@",(style != null) ? style.getStyle() : ""));
+      w.setWidgetHtml(w.getWidgetHtml().replaceAll("@REFERER@",refererUrl).replaceAll("@APPLOCATION@",appLocation).replaceAll("@GUID@",w.getWidgetGuid()).replaceAll("@SUCCESSURL@",w.getWidgetLoginSuccessURL()).replaceAll("@AUTHENTICATE@",w.getWidgetAuthenticationRequired().toString()).replaceAll("@LOGINURL@",w.getWidgetAuthenticationURL()).replaceAll("@PROJECTCODE@",w.getProjectCode()).replaceAll("@MOTIVATIONCODE@",w.getMotivationCode()).replaceAll("@SPONSORSHIPFORMURL@",w.getSponsorshipURL()).replaceAll("@ARGS@",request.getHeader("Referer")).replaceAll("@STYLE@",(style != null) ? style.getStyle() : ""));
 
 
       response.setIntHeader("Content-Length",w.getWidgetHtml().length());
