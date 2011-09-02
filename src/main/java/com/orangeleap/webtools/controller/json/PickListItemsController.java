@@ -78,15 +78,15 @@ public class PickListItemsController {
     while (it.hasNext()) {
       PicklistItem item = it.next();
       Map<String, Object> map = new HashMap<String, Object>();
-      
-      if (!item.isInactive()) {
-      	map.put("Name",item.getItemName());
-      	desc = item.getLongDescription();
-      	if (desc == null) desc = item.getDefaultDisplayValue();
-      	map.put("Description", desc);
-      }
 
-      returnList.add(map);
+      if (item.isInactive() != true) {
+      	map.put("Name",item.getItemName());
+
+      	desc = item.getDefaultDisplayValue();
+      	map.put("Description", desc);
+
+        returnList.add(map);
+      }
     }
   }
 }
