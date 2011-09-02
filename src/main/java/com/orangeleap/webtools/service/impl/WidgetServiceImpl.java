@@ -300,7 +300,7 @@ public class WidgetServiceImpl implements WidgetService {
       ce = new CustomEntity();
       ce.setName(ctfield.getCustomTableFieldName());
       ce.setType(ctfield.getCustomTableFieldDatatype());
-      if (ctfield.getCustomTableFieldDatatype().equals("picklist")) {
+      if (ctfield.getCustomTableFieldDatatype().equals("picklist") || ctfield.getCustomTableFieldDatatype().equals("multi-picklist")) {
         ce.setPicklistId(ctfield.getCustomTableFieldPicklistNameId());
       } else {
         ce.setPicklistId("");
