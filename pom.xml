@@ -62,6 +62,7 @@
 				<configuration>
 					<nosuffix>true</nosuffix>
 					<jswarn>false</jswarn>
+					<nomunge>true</nomunge>
 					<aggregations>
 						<aggregation>
 							<!-- remove files after aggregation (default: false) <removeIncluded>true</removeIncluded> -->
@@ -350,7 +351,6 @@
 							</execution>
 						</executions>
 					</plugin>
-
 				</plugins>
 			</build>
 		</profile>
