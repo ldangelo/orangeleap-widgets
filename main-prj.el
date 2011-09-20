@@ -31,9 +31,9 @@
  ;; You can set different user name and e-mail address for each project
  '(user-mail-address "ldangelo@orangeleap.com") )
 
-(jde-maven2-set-current-profile "deploy")
-(jde-maven2-set-current-goal "install")
-(jde-maven2-set-current-arguments "-Dmaven.test.skip=true")
+(jde-maven2-set-current-profile "tomcat")
+(jde-maven2-set-current-goal "compile")
+(jde-maven2-set-current-arguments "-Dmaven.test.skip=false")
 
 
 
