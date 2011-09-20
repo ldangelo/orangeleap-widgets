@@ -236,7 +236,7 @@
 							</systemProperties>
 							<connectors>
 								<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-									<port>8081</port>
+									<port>8080</port>
 									<maxIdleTime>3600000</maxIdleTime>
 								</connector>
 							</connectors>
@@ -247,6 +247,17 @@
 
 
 							<jettyEnvXml>${basedir}/src/main/config/jetty-local/jetty-env.xml</jettyEnvXml>
+							<contextHandlers>
+								<contextHandler implementation="org.mortbay.jetty.webapp.WebAppContext">
+									<war>${basedir}/../cas/target/cas-${project.version}.war</war>
+									<contextPath>/cas</contextPath>
+								</contextHandler>
+								<contextHandler implementation="org.mortbay.jetty.webapp.WebAppContext">
+									<war>${basedir}/../tangerine/target/tangerine-${project.version}.war</war>
+									<contextPath>/orangeleap</contextPath>
+								</contextHandler>
+							</contextHandlers>
+
 						</configuration>
 						<dependencies>
 							<dependency>
