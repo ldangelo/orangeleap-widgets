@@ -4879,22 +4879,33 @@ postToUrl: function(url, params, newWindow)
 	return "";
     },
     onSuccess:function(f,a) {
-    	if (this.successurl == null || this.successurl == '')
+    	var cfMap = a.result.data.customFieldMap.entry;
+
+    	if (this.successurl == null || this.successurl == '') {
+	    var user_message = null;
+	    for (var f=0; f < cfMap.length; f++) {
+		if (cfMap[f].key == 'user_message') {
+		    user_message = cfMap[f].value.value;
+		    break;
+		}
+	    }
+	    
+	    if (user_message == null) user_message = 'Form submitted successfully';
+
     		Ext.Msg.show({
     			title:'Success'
-    				,msg:'Form submitted successfully'
+    				,msg:user_message
     				,modal:true
     				,icon:Ext.Msg.INFO
     				,buttons:Ext.Msg.OK
     		});
-    	else {
-    		var cfMap = a.result.data.customFieldMap.entry;
+    	} else {
     		var params = new Object();
     		
     		for (var f=0; f < cfMap.length; f++) {
     			params[cfMap[f].key] = cfMap[f].value.value;
     		}
-			this.postToUrl(this.successurl,params);    		
+		this.postToUrl(this.successurl,params);    		
     	}
     },
 
@@ -4953,7 +4964,7 @@ postToUrl: function(url, params, newWindow)
 		update: 'customEntity.ajax?action=update&guid=' + this.guid + '&sessionId=' + this.sessionId,
 		destroy: 'customEntity.ajax?action=delete&guid=' + this.guid+ '&sessionId=' + this.sessionId
 	    },
-	    timeout: 90000
+	    timeout: 120000
 	});
 
 	var reader=new Ext.data.JsonReader();
@@ -5528,7 +5539,7 @@ var gifthistory = {
 	return "";
     },
 
-    generateWidget: function(widgetname,widgetid,authenticate, redirecturl) {
+    generateWidget: function(widgetname,widgetid,authenticate, redirecturl, referer) {
 	var sessionId = this.getCookie("sessionId");
 
 	if (authenticate == true && sessionId == "") {
@@ -5537,7 +5548,7 @@ var gifthistory = {
 	}
 
 
-	OrangeLeapWidget.updateViewCount(widgetid,document.location.href);
+	OrangeLeapWidget.updateViewCount(widgetid,referer);
 
 	var mydatastore = new Ext.data.JsonStore({
 	    url:'/donorwidgets/giftHistory.json?guid=' + widgetid + '&sessionId=' + sessionId,
@@ -5616,6 +5627,7 @@ var pattern = "sponsorship_status=Available;";
 var panel = null;
 
 var sponsorshipform =  {
+    referer:"Unknown",
     sponsorshipurl:null,
     include: function(filename)
     {
@@ -5821,8 +5833,9 @@ var sponsorshipform =  {
 	    }
 	}
     },
-    generateWidget: function(widgetname,guid,authenticate, redirecturl,sponsorshipformurl) {
+    generateWidget: function(widgetname,guid,authenticate, redirecturl,sponsorshipformurl,referer) {
 	this.sponsorshipurl = sponsorshipformurl;
+	this.referer = referer;
 	wname = widgetname;
 	var constituentId = this.getCookie("constituentId");
 
@@ -5830,7 +5843,7 @@ var sponsorshipform =  {
 	    window.location=redirecturl;
 	    return;
 	}
-	OrangeLeapWidget.updateViewCount(guid,document.location.href);
+	OrangeLeapWidget.updateViewCount(guid,this.referer);
 
 	var proxy = new Ext.data.HttpProxy( {url:'/donorwidgets/customEntityList.json?guid=' + guid});
 

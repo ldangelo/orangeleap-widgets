@@ -108,22 +108,33 @@ postToUrl: function(url, params, newWindow)
 	return "";
     },
     onSuccess:function(f,a) {
-    	if (this.successurl == null || this.successurl == '')
+    	var cfMap = a.result.data.customFieldMap.entry;
+
+    	if (this.successurl == null || this.successurl == '') {
+	    var user_message = null;
+	    for (var f=0; f < cfMap.length; f++) {
+		if (cfMap[f].key == 'user_message') {
+		    user_message = cfMap[f].value.value;
+		    break;
+		}
+	    }
+	    
+	    if (user_message == null) user_message = 'Form submitted successfully';
+
     		Ext.Msg.show({
     			title:'Success'
-    				,msg:'Form submitted successfully'
+    				,msg:user_message
     				,modal:true
     				,icon:Ext.Msg.INFO
     				,buttons:Ext.Msg.OK
     		});
-    	else {
-    		var cfMap = a.result.data.customFieldMap.entry;
+    	} else {
     		var params = new Object();
     		
     		for (var f=0; f < cfMap.length; f++) {
     			params[cfMap[f].key] = cfMap[f].value.value;
     		}
-			this.postToUrl(this.successurl,params);    		
+		this.postToUrl(this.successurl,params);    		
     	}
     },
 
