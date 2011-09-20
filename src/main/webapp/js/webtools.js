@@ -5076,9 +5076,12 @@ postToUrl: function(url, params, newWindow)
 				hiddenName:fields[f].name ,
 				displayField:'Description',
 				forceSelection:true,
+				lazyInit:false,
+				mode:'local',
 				emptyText: 'Select ' + fields[f].header + '...',
 				store:new Ext.data.JsonStore({
 				    id:'Name',
+				    autoLoad: true,
 				    root:'rows',
 				    totalProperty:'totalRows',
 				    fields: [
