@@ -33,10 +33,17 @@ public class JsonPledge {
 
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("id", pledge.getId());
-			map.put("donationdate",pledge.getDonationDate().toString());
-			map.put("amount",pledge.getAmount());
-			map.put("status",pledge.getGiftStatus());
-			map.put("paymentstatus", pledge.getPaymentStatus());
+			map.put("donationdate",pledge.getPledgeDate().toString());
+            map.put("recurring",pledge.isRecurring());
+
+            if (pledge.isRecurring()) {
+			    map.put("amount",pledge.getAmountPerGift() == null ? 0 : pledge.getAmountPerGift());
+            } else {
+                map.put("amount",pledge.getAmountRemaining());
+            }
+			map.put("status",pledge.getPledgeStatus());
+
+
 			returnList.add(map);
 		}
 	}
@@ -84,33 +91,33 @@ public class JsonPledge {
     wsClient = new WSClient();
     oleap = wsClient.getOrangeLeap(System.getProperty("webtools.wsdllocation"),wsusername, wspassword);
 
-    GetConstituentGiftCountRequest giftCountRequest = new GetConstituentGiftCountRequest();
-    GetConstituentGiftCountResponse giftCountResponse = null;
+    GetConstituentPledgeCountRequest countRequest = new GetConstituentPledgeCountRequest();
+    GetConstituentPledgeCountResponse countResponse = null;
 
-    giftCountRequest.setConstituentId(constituentid);
+    countRequest.setConstituentId(constituentid);
 
-    giftCountResponse = oleap.getConstituentGiftCount(giftCountRequest);
+    countResponse = oleap.getConstituentPledgeCount(countRequest);
 
-    if (giftCountResponse.getCount() > 0) {
-      GetConstituentGiftRequest request = new GetConstituentGiftRequest();
-      GetConstituentGiftResponse response = null;
+    if (countResponse.getCount() > 0) {
+      GetConstituentPledgeRequest request = new GetConstituentPledgeRequest();
+      GetConstituentPledgeResponse response = null;
 
       int offset = 0;
       int limit = 99;
 
-      if (giftCountResponse.getCount() > 100) {
-        offset =(int)  giftCountResponse.getCount() - 100;
-        limit = (int) giftCountResponse.getCount();
+      if (countResponse.getCount() > 100) {
+        offset =(int)  countResponse.getCount() - 100;
+        limit = (int) countResponse.getCount();
       }
       request.setConstituentId(constituentid);
       request.setOffset(offset);
       request.setLimit(limit);
 
       try {
-        response = oleap.getConstituentGift(request);
+        response = oleap.getConstituentPledge(request);
 
         if (response != null) {
-          addGifts(response.getGift(),returnList);
+          addPledges(response.getPledge(),returnList);
         }
       }  catch (org.apache.cxf.binding.soap.SoapFault sfe) {
 

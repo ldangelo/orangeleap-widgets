@@ -1,7 +1,40 @@
 var $j = jQuery.noConflict();
 
-var gifthistory = {
+var pledges = {
+postToUrl: function(url, params, newWindow)
+{
+    var form = $('<form>');
+    form.attr('action', url);
+    form.attr('method', 'POST');
+    if(newWindow){ form.attr('target', '_blank'); }
 
+    var addParam = function(paramName, paramValue){
+        var input = $('<input type="hidden">');
+        input.attr({ 'id':     paramName,
+                     'name':   paramName,
+                     'value':  paramValue });
+        form.append(input);
+    };
+
+    // Params is an Array.
+    if(params instanceof Array){
+        for(var i=0; i<params.length; i++){
+            addParam(i, params[i]);
+        }
+    }
+
+    // Params is an Associative array or Object.
+    if(params instanceof Object){
+        for(var key in params){
+            addParam(key, params[key]);
+        }
+    }
+
+    // Submit the form, then remove it from the page
+    form.appendTo(document.body);
+    form.submit();
+    form.remove();
+},
     setCookie: function(c_name,value,expiredays)
     {
 	var exdate=new Date();
@@ -58,7 +91,7 @@ var gifthistory = {
 	return "";
     },
 
-    generateWidget: function(widgetname,widgetid,authenticate, redirecturl, referer) {
+    generateWidget: function(widgetname,widgetid,authenticate, redirecturl, referer, donationurl) {
 	var sessionId = this.getCookie("sessionId");
 
 	if (authenticate == true && sessionId == "") {
@@ -70,31 +103,34 @@ var gifthistory = {
 	OrangeLeapWidget.updateViewCount(widgetid,referer);
 
 	var mydatastore = new Ext.data.JsonStore({
-	    url:'/donorwidgets/giftHistory.json?guid=' + widgetid + '&sessionId=' + sessionId,
+	    url:'/donorwidgets/pledges.json?guid=' + widgetid + '&sessionId=' + sessionId,
 	    root:'rows',
-	    fields:['id','donationdate','amount','status','paymentstatus'],
+	    fields:['id','donationdate','recurring','amount','status'],
 	    sortInfo:{field:'id',direction:'ASC'}
 	});
 
 
 
-	var giftGrid = new Ext.grid.GridPanel({
-	    id:'giftgrid',
+	var pledgesGrid = new Ext.grid.GridPanel({
+	    id:'pledgegrid',
 	    store:mydatastore,
 	    columns:	[
-	    {id:'id', header: 'Gift Id', dataIndex: 'id',sortable:false},
-	    {id:'donationdate',header: 'Donation Date', dataIndex:'donationdate',sortable:false},
-	    {id:'amount',header: 'Gift Amount',dataIndex:'amount',sortable:false},
-	    {id:'status',header:'Gift Status',dataIndex:'status',sortable:false},
-	    {id:'paymentstatus',header:'Payment Status',dataIndex:'paymentstatus',sortable:false}
-	],
+	    {id:'id', header: 'Pledge Id', dataIndex: 'id',sortable:true},
+	    {id:'donationdate',xtype: 'datecolumn', header: 'Pledge Date', dataIndex:'donationdate',sortable:true},
+            {id: 'recurring',header: 'Recurring',dataIndex: 'recurring'},
+	    {id:'amount',xtype: 'numbercolumn', header: 'Pledge Amount',dataIndex:'amount',sortable:true},
+	    {id:'status',header:'Pledge Status',dataIndex:'status',sortable:true},
+
+        {header: "Actions", width: 60, sortable: false, renderer: function() {
+            return '<div class="controlBtn"><img src="images/money.png" class="make_payment"></div>';
+        }, dataIndex: 'Id'}],
 	    viewConfig: {
 		forceFit: false,
-		emptyText: 'No Gift History To Display'
+		emptyText: 'No Pledges To Display'
 	    },
 	    stripeRows:true,
 	    frame:false,
-	    title:'Gift History',
+	    title:'Pledges',
 	    height:350,
 	    width:655
 	});
@@ -102,7 +138,29 @@ var gifthistory = {
         Ext.get('loading').remove();
 	Ext.get('loading-mask').fadeOut({remove:true});
 
-	giftGrid.render(widgetname);
+    pledgesGrid.on("click", function(e) {
+         var btn = e.getTarget('.controlBtn');
+        if (btn) {
+            var t = e.getTarget();
+            var v = this.getView();
+            var rowIdx = v.findRowIndex(t);
+            var record = this.getStore().getAt(rowIdx);
+            var control = t.className.split('_')[1];
+            switch (control) {
+                case 'payment':
+                    console.log('make a payment - ' + record.id);
+                    var params = {};
+                    window.open(donationurl + "?pledge_id=" + record.id +"&gift_amount=" + record.data.amount);
+                    //pledges.postToUrl('http://localhost/~ldangelo/donation.html',params);
+                    break;
+                case 'go':
+                    console.log('go to this record - ' + record.id);
+                    break;
+            }
+        }
+    },pledgesGrid);
+
+	pledgesGrid.render(widgetname);
     },
 
     showError: function() {

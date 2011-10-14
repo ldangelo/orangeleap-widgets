@@ -40,6 +40,11 @@ public class WidgetFormController {
 
 	}
 
+    @RequestMapping("/pledgewidgetform.htm")
+    public void pledgelist(@RequestParam(required = false) Long id, Model model) {
+
+    }
+
 	@RequestMapping("/widgetform.htm")
 	public void widgets(@RequestParam(required = false) Long id, Model model) {
 
@@ -56,6 +61,11 @@ public class WidgetFormController {
 			Model model) {
 
 	}
+
+    @RequestMapping("/recurringgiftwidgetform.htm")
+    public void recurringgiftwidget(@RequestParam(required = false) Long id, Model model) {
+
+    }
 
 	@RequestMapping("/donorprofilewidgetform.htm")
 	public void donorprofilewidgets(@RequestParam(required = false) Long id,

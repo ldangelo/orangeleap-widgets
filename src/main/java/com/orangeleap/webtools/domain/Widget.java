@@ -103,11 +103,20 @@ public class Widget implements Serializable {
     private Long StyleId;
 
 
-  private Boolean widgetAuthenticationRequired;
-  private String     widgetAuthenticationURL;
-  private String     sponsorshipURL;
+    private Boolean widgetAuthenticationRequired;
+    private String     widgetAuthenticationURL;
+    private String     sponsorshipURL;
+    private String     donationURL;
 
-  /**
+    public String getDonationUrl() {
+        return donationURL;
+    }
+
+    public void setDonationUrl(String donationURL) {
+        this.donationURL = donationURL;
+    }
+
+    /**
    * Get the <code>IframeHtml</code> value.
    *
    * @return a <code>String</code> value

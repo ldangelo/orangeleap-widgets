@@ -22,6 +22,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="activationStatus" type="{http://www.orangeleap.com/orangeleap/typesv3}activationType" minOccurs="0"/>
  *         &lt;element name="comments" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="effectiveDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
+ *         &lt;element name="throughDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="inactive" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="primary" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="receiveCorrespondence" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
@@ -44,6 +45,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "activationStatus",
     "comments",
     "effectiveDate",
+    "throughDate",
     "inactive",
     "primary",
     "receiveCorrespondence",
@@ -67,6 +69,8 @@ public abstract class AbstractCommunicationEntity
     protected String comments;
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar effectiveDate;
+    @XmlSchemaType(name = "dateTime")
+    protected XMLGregorianCalendar throughDate;
     protected boolean inactive;
     protected boolean primary;
     protected boolean receiveCorrespondence;
@@ -151,6 +155,30 @@ public abstract class AbstractCommunicationEntity
      */
     public void setEffectiveDate(XMLGregorianCalendar value) {
         this.effectiveDate = value;
+    }
+
+    /**
+     * Gets the value of the throughDate property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link XMLGregorianCalendar }
+     *     
+     */
+    public XMLGregorianCalendar getThroughDate() {
+        return throughDate;
+    }
+
+    /**
+     * Sets the value of the throughDate property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link XMLGregorianCalendar }
+     *     
+     */
+    public void setThroughDate(XMLGregorianCalendar value) {
+        this.throughDate = value;
     }
 
     /**

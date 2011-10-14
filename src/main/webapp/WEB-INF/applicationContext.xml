@@ -56,6 +56,8 @@
   <dwr:controller id="dwrController" debug="true" />
 
   <bean id="orangeLeapWidget" class="com.orangeleap.webtools.service.impl.OrangeLeapWidgetServiceImpl">
+      <property name="baseUri" value="http://localhost:8080/jasperserver"/>
+      <property name="repositoryUri" value="/services/repository"/>
     <dwr:remote javascript="OrangeLeapWidget">
       <dwr:include method="create" />
       <dwr:include method="authenticate" />
@@ -70,6 +72,7 @@
       <dwr:include method="addCustomTableRow"/>
       <dwr:include method="changePassword"/>
       <dwr:include method="forgotPassword"/>
+      <dwr:include method="sendGiftReceipt"/>
       <dwr:convert type="bean"  class="com.orangeleap.webtools.domain.WidgetData" />
       <dwr:convert type="bean"  class="com.orangeleap.client.*"/>
       <dwr:convert type="bean"  class="com.orangeleap.client.CustomTable"/>

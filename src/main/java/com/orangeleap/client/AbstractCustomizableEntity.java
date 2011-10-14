@@ -61,8 +61,8 @@ import javax.xml.bind.annotation.XmlType;
     PicklistItem.class,
     DistributionLine.class,
     AbstractCommunicationEntity.class,
-    AbstractPaymentInfoEntity.class,
     CustomTableRow.class,
+    AbstractPaymentInfoEntity.class,
     Picklist.class
 })
 public abstract class AbstractCustomizableEntity

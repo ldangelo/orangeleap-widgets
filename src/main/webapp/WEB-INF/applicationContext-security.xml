@@ -35,6 +35,7 @@
 		<sec:intercept-url pattern='/customEntity.ajax*' filters='none'/>
 		<sec:intercept-url pattern='/widget.ajax*' filters='none'/>
 		<sec:intercept-url pattern='/customEntityList.json*' filters='none'/>
+        <sec:intercept-url pattern="/pledges.json" filters="none"/>
 		<sec:intercept-url pattern='/picklistItems.json' access='IS_AUTHENTICATED_ANONYMOUSLY, ROLE_WEBTOOLS'/>
 <!-- 		<sec:intercept-url pattern='/loginwidget.ajax*' filters='none'/> -->
 		<sec:intercept-url pattern='/giftHistory.json*' filters='none'/>

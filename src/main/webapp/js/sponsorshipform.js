@@ -151,7 +151,7 @@ var sponsorshipform =  {
 	var field = form.getForm().findField("id");
 	
 	if (field == null) {
-		query=query + "sponsorable_id=" + field.value + "&";
+		query=query + "account_number=" + field.value + "&";
 	}
 	var items = form.getForm().items.items;
 

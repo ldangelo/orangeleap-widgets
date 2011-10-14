@@ -82,12 +82,16 @@
 								<include>jquery/jquery-1.3.2.js</include>
 								<include>extjs/adapter/jquery/ext-jquery-adapter.js</include>
 								<include>extjs/ext-all.js</include>
-								<include>login.js</include>
-								<include>customentity.js</include>
-								<include>customentitylist.js</include>
-								<include>gifthistory.js</include>
-								<include>sponsorshipform.js</include>
+                                <include>required-field.js</include>
 							</includes>
+                            <excludes>
+                                <exclude>required-field.js</exclude>
+                                <exclude>customentity.js</exclude>
+                                <exclude>sponsorshipform.js</exclude>
+                                <exclude>pledges.js</exclude>
+                                <exclude>gifthistory.js</exclude>
+                                <exclude>login.js</exclude>
+                            </excludes>
 							<!-- files to exclude, path relative to output's directory <excludes> 
 								<exclude>**/*.pack.js</exclude> <exclude>**/compressed.css</exclude> </excludes> -->
 						</aggregation>
@@ -101,7 +105,6 @@
 								<include>xtheme-default.css</include>
 							</includes>
 						</aggregation>
-
 					</aggregations>
 				</configuration>
 			</plugin>
@@ -499,7 +502,10 @@
 	</profiles>
 
 	<dependencies>
-
+ 		<dependency>
+			<groupId>com.lowagie</groupId>
+			<artifactId>itext</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>com.orangeleap</groupId>
 			<artifactId>asm-dep</artifactId>
@@ -754,23 +760,18 @@
 			<artifactId>axis2</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>com.jaspersoft.jasperserver.irplugin</groupId>
-			<artifactId>jasperserver-ireport-plugin</artifactId>
-			<version>3.0.0</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.jaspersoft.jasperserver</groupId>
-			<artifactId>jasperserver-common-ws</artifactId>
-			<version>3.0.0</version>
-		</dependency>
-
-		<dependency>
-			<groupId>net.sf.jasperreports</groupId>
-			<artifactId>jasperreports</artifactId>
-			<version>3.0.0</version>
-		</dependency>
+        <dependency>
+            <groupId>com.orangeleap</groupId>
+            <artifactId>jaspersoft-dep</artifactId>
+            <type>pom</type>
+            <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.activation</groupId>
+                    <artifactId>activation</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
 		<dependency>
 			<groupId>com.sun.xml.messaging.saaj</groupId>

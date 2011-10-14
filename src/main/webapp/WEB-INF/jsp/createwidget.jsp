@@ -91,6 +91,29 @@ NewWidgetPanelUi = Ext.extend(Ext.Panel, {
 							formpanel.doLayout();
                         }
                     },
+                    {
+                        xtype: 'button',
+                        text: 'Pleges',
+                        width: 125,
+                        handler: function () {
+                        	if (roles.match("WEBTOOLS_DONORPORTAL") == null) {
+                        		// display the error
+								Ext.Msg.show({
+		    						title: 'ERROR',
+	    							msg: "You do not have permission to access this feature.",
+	    							icon: Ext.MessageBox.ERROR,
+	    							buttons: Ext.Msg.OK,
+	    							modal: true,
+	    							fn: this.errorHandlerFinished
+								});
+                        		return;
+                        	}
+							var formpanel = Ext.getCmp("formpanel");
+							formpanel.removeAll();
+							formpanel.add(new WidgetForm({widgettype:'pledges',customentitytype:'undefined'}));
+							formpanel.doLayout();
+                        }
+                    },
                         {
                         xtype: 'button',
                         text: 'Recurring Gift',

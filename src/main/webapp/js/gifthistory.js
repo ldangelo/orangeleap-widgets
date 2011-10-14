@@ -1,6 +1,8 @@
 var $j = jQuery.noConflict();
 
 var gifthistory = {
+    sessionId: null,
+    widgetId: null,
 
     setCookie: function(c_name,value,expiredays)
     {
@@ -32,13 +34,14 @@ var gifthistory = {
 	}
     },
 
-    handleReturn: function(constituentid,widetid,redirecturl) {
-	if (constituentid == -1) {
-	    this.handlerError("Authentication Failed!");
-	} else {
-	    this.setCookie("constituentId",constituentid);
-	    document.location = redirecturl;
-	}
+    handleReturn: function(datafromserver) {
+        	Ext.Msg.show({
+    			title:'Success'
+    				,msg:datafromserver
+    				,modal:true
+    				,icon:Ext.Msg.INFO
+    				,buttons:Ext.Msg.OK
+    		});
     },
 
 
@@ -59,9 +62,10 @@ var gifthistory = {
     },
 
     generateWidget: function(widgetname,widgetid,authenticate, redirecturl, referer) {
-	var sessionId = this.getCookie("sessionId");
+	this.sessionId = this.getCookie("sessionId");
+    this.widgetId = widgetid;
 
-	if (authenticate == true && sessionId == "") {
+	if (authenticate == true && this.sessionId == "") {
 	    window.location=redirecturl;
 	    return;
 	}
@@ -70,7 +74,7 @@ var gifthistory = {
 	OrangeLeapWidget.updateViewCount(widgetid,referer);
 
 	var mydatastore = new Ext.data.JsonStore({
-	    url:'/donorwidgets/giftHistory.json?guid=' + widgetid + '&sessionId=' + sessionId,
+	    url:'/donorwidgets/giftHistory.json?guid=' + widgetid + '&sessionId=' + this.sessionId,
 	    root:'rows',
 	    fields:['id','donationdate','amount','status','paymentstatus'],
 	    sortInfo:{field:'id',direction:'ASC'}
@@ -86,7 +90,10 @@ var gifthistory = {
 	    {id:'donationdate',header: 'Donation Date', dataIndex:'donationdate',sortable:false},
 	    {id:'amount',header: 'Gift Amount',dataIndex:'amount',sortable:false},
 	    {id:'status',header:'Gift Status',dataIndex:'status',sortable:false},
-	    {id:'paymentstatus',header:'Payment Status',dataIndex:'paymentstatus',sortable:false}
+	    {id:'paymentstatus',header:'Payment Status',dataIndex:'paymentstatus',sortable:false},
+                   {header: "Actions", width: 60, sortable: false, renderer: function() {
+            return '<div class="controlBtn"><img src="images/inboxSmall.png" class="make_receipt"></div>';
+        }, dataIndex: 'Id'}
 	],
 	    viewConfig: {
 		forceFit: false,
@@ -101,6 +108,33 @@ var gifthistory = {
 	mydatastore.load();
         Ext.get('loading').remove();
 	Ext.get('loading-mask').fadeOut({remove:true});
+
+        giftGrid.on("click", function(e) {
+             var btn = e.getTarget('.controlBtn');
+            if (btn) {
+                var t = e.getTarget();
+                var v = this.getView();
+                var rowIdx = v.findRowIndex(t);
+                var record = this.getStore().getAt(rowIdx);
+                var control = t.className.split('_')[1];
+                switch (control) {
+                    case 'receipt':
+                        console.log('send receipt for gift - ' + record.id);
+                        var callbackproxy = function(dataFromServer) {
+				            gifthistory.handleReturn(dataFromServer);
+			            }
+
+			            var callMetaData={callback:callbackproxy};
+
+			            OrangeLeapWidget.sendGiftReceipt(record.id,gifthistory.sessionId,gifthistory.widgetId,callMetaData);
+
+                        break;
+                    case 'go':
+                        console.log('go to this record - ' + record.id);
+                        break;
+                }
+            }
+        },giftGrid);
 
 	giftGrid.render(widgetname);
     },

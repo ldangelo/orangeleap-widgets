@@ -29,4 +29,6 @@ public interface OrangeLeapWidgetService {
   public String changePassword(String guid,String username, String oldpassword, String newpassword);
   
   public String forgotPassword(String guid,String username);
+
+  public String sendGiftReceipt(Long giftId,String sessionId, String guid);
 }

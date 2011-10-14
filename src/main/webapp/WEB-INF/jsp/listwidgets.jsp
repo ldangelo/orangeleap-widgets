@@ -49,11 +49,16 @@
 				url = 'sponsorablewidgetform.htm?guid=' + val;
 			else if (record.data.entityname == 'online_sponsorship')
 				url = 'sponsorshipwidgetform.htm?guid=' + val;
-		        else if(record.data.entityname == 'online_registration')
-			        url = 'registrationwidgetform.htm?guid=' + val;
+		    else if(record.data.entityname == 'online_registration')
+			    url = 'registrationwidgetform.htm?guid=' + val;
+            else if(record.data.entityname == 'online_recurringgift')
+                url = 'recurringgiftwidgetform.htm?guid=' + val;
 		} else {
-			if (record.data.type == 'gifthistory')
+			if (record.data.type == 'gifthistory') {
 				url = 'gifthistorywidgetform.htm?guid=' + val;
+            } else if (record.data.type == 'pledges') {
+                url = 'pledgewidgetform.htm?guid=' + val;
+            }
 		}
  	   return "<a class='sprite code' href='" + url +"'></a>";
 	}

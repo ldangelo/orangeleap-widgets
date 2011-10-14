@@ -26,6 +26,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="lastName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="suffix" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="title" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="maritalStatus" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="addresses" type="{http://www.orangeleap.com/orangeleap/typesv3}address" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="emails" type="{http://www.orangeleap.com/orangeleap/typesv3}email" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="phones" type="{http://www.orangeleap.com/orangeleap/typesv3}phone" maxOccurs="unbounded" minOccurs="0"/>
@@ -56,6 +57,7 @@ import javax.xml.bind.annotation.XmlType;
     "lastName",
     "suffix",
     "title",
+    "maritalStatus",
     "addresses",
     "emails",
     "phones",
@@ -83,6 +85,7 @@ public class Constituent
     protected String lastName;
     protected String suffix;
     protected String title;
+    protected String maritalStatus;
     @XmlElement(nillable = true)
     protected List<Address> addresses;
     @XmlElement(nillable = true)
@@ -266,6 +269,30 @@ public class Constituent
      */
     public void setTitle(String value) {
         this.title = value;
+    }
+
+    /**
+     * Gets the value of the maritalStatus property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getMaritalStatus() {
+        return maritalStatus;
+    }
+
+    /**
+     * Sets the value of the maritalStatus property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setMaritalStatus(String value) {
+        this.maritalStatus = value;
     }
 
     /**

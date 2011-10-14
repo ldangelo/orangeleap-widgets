@@ -9,8 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * 
- * 						Retrieve the list of existing payment sources for a
+ * Retrieve the list of existing payment sources for a
  * 						given constituent id.
  * 
  * 						Requires a valid constituentid.
@@ -30,7 +29,6 @@ import javax.xml.bind.annotation.XmlType;
  * 
  * 						If you try and create a new payment source that already exists you
  * 						will receive a SoapFault.
- * 		  
  * 
  * 
  * 

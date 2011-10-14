@@ -362,8 +362,8 @@ postToUrl: function(url, params, newWindow)
 		    this.form.superclass().addButton.call(this.form,btnConfig,this.form.onSubmit,this.form);
 		    this.form.superclass().add.call(this.form,linkConfig);
 
-		    var element = Ext.query('script[src$=required-field.js]')[0];
-		    var renderElement = element.parentNode;
+//		    var element = Ext.query('script[src$=required-field.js]')[0];
+//		    var renderElement = element.parentNode;
 		    this.form.superclass().render.call(this.form,this.form.widgetid);
 		},
 	    'load': function(store,records,options) {

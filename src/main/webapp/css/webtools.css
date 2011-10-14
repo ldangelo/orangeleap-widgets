@@ -363,6 +363,7 @@ margin-right:30px;
 	background-position: 0px 20px;
 }
 
+
 .sprite {
 	background: url('../images/sprite.png') no-repeat top left;
 	display:inline-block;
@@ -402,6 +403,10 @@ margin-right:30px;
 .sprite.sky img {
 	left: -212px;
 	clip: rect(0px 318px 39px 212px);
+}
+
+#grid-example .x-grid3-cell-inner, #grid-example .x-grid3-hd-inner {
+    text-overflow: inherit;
 }
 
 #greeting {

@@ -27,4 +27,5 @@ public interface WidgetService {
   public Widget saveOrUpdate(Widget widget);
   public CustomTable getCustomTable(String name);
   public WidgetData process(WidgetData data);
+
 }

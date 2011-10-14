@@ -10,8 +10,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
- * 
- * 						CommunicationHistory is used to update/add any type of
+ * CommunicationHistory is used to update/add any type of
  * 						communication with a
  * 						constituent. It will map to the
  * 						"touch points"
@@ -41,7 +40,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * 						abstractCustomizableEntity
  * 						that we inherit
  * 						from.
- * 				
  * 
  * 
  * 

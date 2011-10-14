@@ -330,8 +330,8 @@ var changepass = new Ext.form.FormPanel({
         });
 
 
-	var element = Ext.query('script[src$=required-field.js]')[0];
-	var renderElement = element.parentNode;
+//	var element = Ext.query('script[src$=required-field.js]')[0];
+//	var renderElement = element.parentNode;
 	this.loginform.render("widget");
 
 	OrangeLeapWidget.updateViewCount(widgetid,document.location.href);

@@ -63,7 +63,11 @@ public class AjaxWidgetFormController extends MultiActionController {
 	 * Describe sponsorshipWidgetHTML here.
 	 */
 	private String sponsorshipWidgetHTML;
-	/**
+
+    private String pledgesWidgetHTML;
+
+
+    /**
 	 * Describe iframeHTML here.
 	 */
 	private String iframeHTML;
@@ -86,6 +90,14 @@ public class AjaxWidgetFormController extends MultiActionController {
 	public final String getIframeHTML() {
 		return iframeHTML;
 	}
+
+    public String getPledgesWidgetHTML() {
+        return pledgesWidgetHTML;
+    }
+
+    public void setPledgesWidgetHTML(String pledgesWidgetHTML) {
+        this.pledgesWidgetHTML = pledgesWidgetHTML;
+    }
 
 	/**
 	 * Set the <code>IframeHTML</code> value.
@@ -302,7 +314,9 @@ public class AjaxWidgetFormController extends MultiActionController {
 		} else if (customentitytype.equals("undefined")
 				&& widgettype.equals("gifthistory")) {
 			widget.setWidgetHtml(giftHistoryWidgetHTML);
-		}
+		} else if (customentitytype.equals("undefined") && widgettype.equals("pledges")) {
+            widget.setWidgetHtml(pledgesWidgetHTML);
+        }
 
 		widget.setIframeHtml(this.getIframeHTML()
 				.replaceAll("@APPLOCATION@", appLocation)
@@ -395,7 +409,16 @@ public class AjaxWidgetFormController extends MultiActionController {
 			map.put("header", "Sponsorship URL");
 			map.put("pickListId", "");
 			fields.add(map);
-		}
+		} else if (widgettype.equals("pledges")) {
+            map = new HashMap<String, Object>();
+			map.put("name", "donationUrl");
+			map.put("readonly", false);
+			map.put("required", true);
+			map.put("type", "text");
+			map.put("header", "Donation URL");
+			map.put("pickListId", "");
+			fields.add(map);
+        }
 
 		map = new HashMap<String, Object>();
 		map.put("name", "iframeHtml");
@@ -500,7 +523,16 @@ public class AjaxWidgetFormController extends MultiActionController {
 			map.put("header", "Sponsorship URL");
 			map.put("pickListId", "");
 			fields.add(map);
-		}
+		}  else if (widgettype.equals("pledges")) {
+            map = new HashMap<String, Object>();
+			map.put("name", "donationUrl");
+			map.put("readonly", false);
+			map.put("required", true);
+			map.put("type", "text");
+			map.put("header", "Donation URL");
+			map.put("pickListId", "");
+			fields.add(map);
+        }
 
 		map = new HashMap<String, Object>();
 		map.put("name", "iframeHtml");
