@@ -38,6 +38,7 @@
 			<plugin>
 				<groupId>org.zeroturnaround</groupId>
 				<artifactId>jrebel-maven-plugin</artifactId>
+                <version>1.0.7</version>
 				<dependencies>
 			  		<dependency>
 					    <groupId>commons-lang</groupId>

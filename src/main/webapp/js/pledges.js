@@ -95,7 +95,8 @@ postToUrl: function(url, params, newWindow)
 	var sessionId = this.getCookie("sessionId");
 
 	if (authenticate == true && sessionId == "") {
-	    window.location=redirecturl;
+        window.open(redirecturl, "_blank");
+//	    window.location=redirecturl;
 	    return;
 	}
 

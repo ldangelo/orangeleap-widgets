@@ -56,6 +56,8 @@ postToUrl: function(url, params, newWindow)
     },
     populateArgs: function(form,args)  {
 	var referer = args.split('?');
+
+    if (referer[1] != null) {
 	var parms = referer[1].split('&');
 
 	for (x in parms) {
@@ -75,6 +77,7 @@ postToUrl: function(url, params, newWindow)
 	    if (f != null)
 		f.setValue(keyval[1]);
 	}
+    }
     },
     populateWidget: function(constituent,table) {
 	for (x in table.fields) {
@@ -181,7 +184,8 @@ postToUrl: function(url, params, newWindow)
 	this.sessionId = this.getCookie("sessionId");
 
 	if (this.authenticate == true && this.sessionId == "") {
-	    window.location = this.loginurl;
+        window.open(this.loginurl,"_blank");
+//	    window.location = this.loginurl;
 	    return;
 	}
 	OrangeLeap.CustomEntity.superclass.initComponent.call(this);

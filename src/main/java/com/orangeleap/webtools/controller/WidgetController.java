@@ -45,7 +45,19 @@ public class WidgetController extends MultiActionController {
                 if (w.getStyleId() != null)
                     style = styleService.selectById(w.getStyleId());
 
-                w.setWidgetHtml(w.getWidgetHtml().replaceAll("@REFERER@", refererUrl).replaceAll("@APPLOCATION@", appLocation).replaceAll("@GUID@", w.getWidgetGuid()).replaceAll("@SUCCESSURL@", w.getWidgetLoginSuccessURL()).replaceAll("@AUTHENTICATE@", w.getWidgetAuthenticationRequired().toString()).replaceAll("@LOGINURL@", w.getWidgetAuthenticationURL()).replaceAll("@PROJECTCODE@", w.getProjectCode()).replaceAll("@MOTIVATIONCODE@", w.getMotivationCode()).replaceAll("@SPONSORSHIPFORMURL@", w.getSponsorshipURL()).replaceAll("@ARGS@", request.getHeader("Referer")).replaceAll("@STYLE@", (style != null) ? style.getStyle() : "").replaceAll("@DONATIONURL@",w.getDonationUrl()));
+                
+                w.setWidgetHtml(w.getWidgetHtml().replace("@REFERER@", (refererUrl != null) ? refererUrl : ""));
+                w.setWidgetHtml(w.getWidgetHtml().replace("@APPLOCATION@", (appLocation != null) ? appLocation : ""));
+                w.setWidgetHtml(w.getWidgetHtml().replace("@GUID@", w.getWidgetGuid()));
+                w.setWidgetHtml(w.getWidgetHtml().replace("@SUCCESSURL@", (w.getWidgetLoginSuccessURL() != null? w.getWidgetLoginSuccessURL() : "")));
+                w.setWidgetHtml(w.getWidgetHtml().replace("@AUTHENTICATE@", w.getWidgetAuthenticationRequired().toString()));
+                w.setWidgetHtml(w.getWidgetHtml().replace("@LOGINURL@", (w.getWidgetAuthenticationURL() != null) ? w.getWidgetAuthenticationURL() : ""));
+                w.setWidgetHtml(w.getWidgetHtml().replace("@PROJECTCODE@", (w.getProjectCode() != null) ? w.getProjectCode() : ""));
+                w.setWidgetHtml(w.getWidgetHtml().replace("@MOTIVATIONCODE@", (w.getMotivationCode() != null) ? w.getMotivationCode() : ""));
+                w.setWidgetHtml(w.getWidgetHtml().replace("@SPONSORSHIPFORMURL@", (w.getSponsorshipURL() != null) ? w.getSponsorshipURL() : ""));
+                w.setWidgetHtml(w.getWidgetHtml().replace("@ARGS@", (request.getHeader("Referer") != null) ? request.getHeader("Referer"): ""));
+                w.setWidgetHtml(w.getWidgetHtml().replace("@STYLE@", (style != null) ? style.getStyle() : ""));
+                w.setWidgetHtml(w.getWidgetHtml().replace("@DONATIONURL@",(w.getDonationUrl() != null) ? w.getDonationUrl():""));
 
 
                 response.setIntHeader("Content-Length", w.getWidgetHtml().length());

@@ -237,8 +237,6 @@ public class AjaxWidgetFormController extends MultiActionController {
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		String guid = request.getParameter("guid");
-		String userName = auth.getName();
-		String password = (String) auth.getCredentials();
 
 		Widget w = widgetService.selectWidgetByGuid(guid);
 
@@ -265,14 +263,13 @@ public class AjaxWidgetFormController extends MultiActionController {
 		Map paramaterMap = request.getParameterMap();
 		Set keySet = paramaterMap.keySet();
 		Iterator it = keySet.iterator();
-		HashMap map = new HashMap();
 		while (it.hasNext()) {
 			String key = (String) it.next();
 			String value = request.getParameter(key);
 			try {
 				BeanUtils.setProperty(widget, key, value);
 			} catch (Exception e) {
-				int i = 0;
+				logger.error(e.getMessage());
 			}
 		}
 	}
@@ -288,7 +285,6 @@ public class AjaxWidgetFormController extends MultiActionController {
 		String appLocation = System.getProperty("webtools.applocation");
 		Widget widget = widgetService.createWidget(userName, password,
 				widgettype, customentitytype);
-		Style style = null;
 
 		populateWidget(widget, request);
 
@@ -336,7 +332,6 @@ public class AjaxWidgetFormController extends MultiActionController {
 
 	private ModelAndView getModelMap(List<Widget> widgets, String widgettype,
 			String customentitytype) {
-		List<Map<String, Object>> returnList = new ArrayList<Map<String, Object>>();
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		Map<String, Object> metaData = new HashMap<String, Object>();
 
@@ -346,7 +341,6 @@ public class AjaxWidgetFormController extends MultiActionController {
 		metaData.put("successProperty", "success");
 
 		List<Map<String, Object>> fields = new ArrayList<Map<String, Object>>();
-		List<Map<String, Object>> rows = new ArrayList<Map<String, Object>>();
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		map = new HashMap<String, Object>();
@@ -439,7 +433,7 @@ public class AjaxWidgetFormController extends MultiActionController {
 
 	private ModelAndView getModelMap(Widget widget, String widgettype,
 			String customentitytype) {
-		List<Map<String, Object>> returnList = new ArrayList<Map<String, Object>>();
+
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		Map<String, Object> metaData = new HashMap<String, Object>();
 
@@ -449,7 +443,6 @@ public class AjaxWidgetFormController extends MultiActionController {
 		metaData.put("successProperty", "success");
 
 		List<Map<String, Object>> fields = new ArrayList<Map<String, Object>>();
-		List<Map<String, Object>> rows = new ArrayList<Map<String, Object>>();
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		map = new HashMap<String, Object>();
@@ -460,21 +453,23 @@ public class AjaxWidgetFormController extends MultiActionController {
 		map.put("header", "Widget GUID");
 		fields.add(map);
 
-		map = new HashMap<String, Object>();
-		map.put("name", "widgetAuthenticationRequired");
-		map.put("readonly", false);
-		map.put("required", true);
-		map.put("type", "boolean");
-		map.put("header", "Authentication Required");
-		fields.add(map);
+        if (widgettype.equals("pledges") || widgettype.equals("gifthistory") || customentitytype.equals("donor_profile")) {
+            map = new HashMap<String, Object>();
+            map.put("name", "widgetAuthenticationRequired");
+            map.put("readonly", false);
+            map.put("required", true);
+            map.put("type", "boolean");
+            map.put("header", "Authentication Required");
+            fields.add(map);
 
-		map = new HashMap<String, Object>();
-		map.put("name", "widgetAuthenticationURL");
-		map.put("readonly", false);
-		map.put("required", false);
-		map.put("type", "text");
-		map.put("header", "Authentication URL");
-		fields.add(map);
+            map = new HashMap<String, Object>();
+            map.put("name", "widgetAuthenticationURL");
+            map.put("readonly", false);
+            map.put("required", true);
+            map.put("type", "text");
+            map.put("header", "Authentication URL");
+            fields.add(map);
+        }
 
 		map = new HashMap<String, Object>();
 		map.put("name", "styleId");

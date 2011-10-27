@@ -41,7 +41,7 @@
 	    Style = #Style:LONGTEEXT#
 	  </isNotNull>
 	  <isNotNull prepend="," property="StyleName">
-	    StyleName = #StyleName:VARCHAR#
+	    STYLE_NAME = #StyleName:VARCHAR#
 	  </isNotNull>
 	</dynamic>
 	  where Id=#Id:BIGINT#

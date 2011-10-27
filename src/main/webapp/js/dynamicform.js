@@ -96,7 +96,13 @@ function generateForm(form,store,meta) {
 					{name:'Name',type:'string'},
 					{name:'Description',type:'string'}
 				    ],
-				    url:'picklistItems.json',
+//				    url:'picklistItems.json',
+                    proxy: new Ext.data.HttpProxy({
+                        api: {
+                            read: 'picklistItems.json'
+                        },
+                        timeout: 120000
+                    }),
 				    baseParams: {
 					guid: "",
 					picklistname: fields[f].name

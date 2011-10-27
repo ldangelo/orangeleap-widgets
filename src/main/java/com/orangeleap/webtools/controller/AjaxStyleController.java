@@ -54,7 +54,7 @@ public class AjaxStyleController extends MultiActionController {
         	style.setStyle("");
 
         if (strId != null && !strId.equals("")) {
-        	style.setId(Long.getLong(strId));
+        	style.setId(new Long(strId));
         	styleService.update(style);
         } else {
         	styleService.insert(style);

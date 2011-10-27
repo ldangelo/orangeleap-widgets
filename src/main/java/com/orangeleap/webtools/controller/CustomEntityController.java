@@ -71,7 +71,7 @@ public class CustomEntityController extends MultiActionController {
 	/**
 	 * Generates modelMap to return in the modelAndView
 	 *
-	 * @param contacts
+	 * @param row
 	 * @return
 	 */
 	private ModelAndView getModelMap(CustomTableRow row) {
