@@ -152,7 +152,7 @@ public class CustomEntityController {
         // don't list section definitions or items with a '.' in their name...
         // only list item's that are marked as 'Include in web widgets'
         if (ctfield.getCustomTableFieldName().contains(".")
-            || ctfield.isCustomTableFieldWWViewable() == false) {
+            || !(ctfield.isCustomTableFieldWWViewable())) {
             continue;
           }
 

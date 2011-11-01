@@ -33,6 +33,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/giftHistory.json")
 public class GiftHistoryController {
+	
+	
     @Autowired
     WidgetDAO widgetDAO = null;
 

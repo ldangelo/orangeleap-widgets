@@ -153,7 +153,7 @@ public class CustomEntityListController {
       rowRequest.setOffset(start);
       rowRequest.setLimit(limit);
 
-      if (pattern != null && pattern.equals("") == false) {
+      if (pattern != null && !(pattern.equals(""))) {
         String args[] = pattern.split(";");
 
         for (int i = 0 ; i < args.length; i++) {
@@ -228,7 +228,7 @@ public class CustomEntityListController {
         // only list item's that are marked as 'Include in web widgets'
         if (ctfield.getCustomTableFieldDatatype().compareTo("section") == 0 
             || ctfield.getCustomTableFieldName().contains(".")
-            || ctfield.isCustomTableFieldWWViewable() == false) {
+            || !(ctfield.isCustomTableFieldWWViewable())) {
             continue;
           }
 

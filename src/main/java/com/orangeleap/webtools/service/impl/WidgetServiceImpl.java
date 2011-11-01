@@ -8,7 +8,7 @@ import com.orangeleap.webtools.dao.WidgetDAO;
 import com.orangeleap.webtools.domain.Widget;
 import com.orangeleap.webtools.domain.WidgetExample;
 import com.orangeleap.webtools.service.WidgetService;
-import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.security.Authentication;
@@ -32,7 +32,7 @@ import com.orangeleap.client.ReadCustomTableByNameRequest;
 import com.orangeleap.client.ReadCustomTableByNameResponse;
 import com.orangeleap.client.AbstractCustomizableEntity;
 import com.orangeleap.client.CustomField;
-import com.orangeleap.client.CustomTable;
+
 import com.orangeleap.client.CustomTableField;
 import com.orangeleap.client.CustomTableRow;
 import com.orangeleap.client.AbstractCustomizableEntity.CustomFieldMap.Entry;
