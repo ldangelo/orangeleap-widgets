@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>db-scripts</artifactId>
+	<name>Orange Leap (DonorWidgets) project to initialize DB schema &amp; data</name>
+	<description>
+		Drop, create, &amp; load schema, functions, and data; 
+		run 'mvn initialize  -Dport=3006 -Dhost=localhost' to override default properties.
+		
+		Default properties are:
+		schema=WEBTOOLS
+		port=3306
+		host=localhost
+	</description>
+
+	<parent>
+		<groupId>com.orangeleap</groupId>
+		<artifactId>masterPOM</artifactId>
+		<version>14.0-SNAPSHOT</version>
+		<relativePath>../../</relativePath>
+	</parent>
+
+	<!--
+		*******************************************
+		
+		run 'mvn initialize -Dschema=company2 -Dport=3006 -Dhost=localhost' to override default properties shown below
+		 
+		*******************************************
+	-->
+	<properties>
+		<schema>WEBTOOLS</schema>
+		<port>3306</port>
+		<host>localhost</host>
+		<mysqldirectory>/usr/bin</mysqldirectory>
+		<mysqldumpdirectory>/usr/bin</mysqldumpdirectory>
+		<seddirectory>/usr/bin</seddirectory>
+	</properties>
+
+	<profiles>
+		<profile>
+			<id>loadSchema</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>1.6</version>
+						<executions>
+							<execution>
+								<id>echo schema init</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<tasks>
+										<echo>*********************************************************************</echo>
+										<echo>*********** Initializing Schema ${host}:${port}/${schema} ***********</echo>
+										<echo>*********************************************************************</echo>
+									</tasks>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>sql-maven-plugin</artifactId>
+
+						<configuration>
+							<driver>com.mysql.jdbc.Driver</driver>
+							<url>jdbc:mysql://${host}:${port}/</url>
+							<driverProperties>autoReconnect=true,useUnicode=true,characterEncoding=UTF8</driverProperties>
+							<username>orangeleap</username>
+							<password>orangeleap</password>
+							<encoding>UTF-8</encoding>
+							<autocommit>true</autocommit>
+						</configuration>
+
+						<executions>
+							<execution>
+								<id>drop schema</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<sqlCommand>DROP schema IF EXISTS `${schema}`</sqlCommand>
+								</configuration>
+							</execution>
+
+							<execution>
+								<id>create schema</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<sqlCommand>create schema ${schema}</sqlCommand>
+								</configuration>
+							</execution>
+
+							<execution>
+								<id>load schema</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<url>jdbc:mysql://${host}:${port}/${schema}</url>
+									<srcFiles>
+										<srcFile>${basedir}/src/main/resources/db/prod/donor-widgets.ddl</srcFile>
+									</srcFiles>
+								</configuration>
+							</execution>
+						</executions>
+						</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<!-- Publish test rules -->
+		<profile>
+			<id>publishrules</id>
+			<build>
+				<plugins>
+					<plugin>
+
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>sql-maven-plugin</artifactId>
+
+						<configuration>
+							<driver>com.mysql.jdbc.Driver</driver>
+							<url>jdbc:mysql://${host}:${port}/</url>
+							<driverProperties>autoReconnect=true,useUnicode=true,characterEncoding=UTF8</driverProperties>
+							<username>orangeleap</username>
+							<password>orangeleap</password>
+							<encoding>UTF-8</encoding>
+							<autocommit>true</autocommit>
+						</configuration>
+
+						<executions>
+							<execution>
+								<id>execute-publish</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<url>jdbc:mysql://${host}:${port}/${schema}</url>
+									<srcFiles>
+										<srcFile>${basedir}/src/main/resources/db/test/publishRules.sql</srcFile>
+									</srcFiles>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>createbaseline</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>1.2</version>
+						<executions>
+							<execution>
+								<id>dump baseline</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<configuration>
+									<executable>${mysqldumpdirectory}/mysqldump</executable>
+									<arguments>
+										<argument>-u</argument>
+										<argument>orangeleap</argument>
+										<argument>--password=orangeleap</argument>
+										<argument>--protocol</argument>
+										<argument>TCP</argument>
+										<argument>--host</argument>
+										<argument>${host}</argument>
+										<argument>--port</argument>
+										<argument>${port}</argument>
+										<argument>${schema}</argument>
+										<argument>-r</argument>
+										<argument>${basedir}/src/main/resources/db/prod/baseline/tangerine_baseline.sql</argument>
+										<argument>--skip-triggers</argument>
+									</arguments>
+								</configuration>
+							</execution>
+							<execution>
+								<id>modify baseline - remove views</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<configuration>
+									<executable>${seddirectory}/sed</executable>
+									<arguments>
+										<argument>-i</argument>
+										<argument>"/Temporary table structure for view/,/SET TIME_ZONE/{//p;d;}"</argument>
+										<argument>${basedir}/src/main/resources/db/prod/baseline/tangerine_baseline.sql</argument>
+									</arguments>
+								</configuration>
+							</execution>
+							<execution>
+								<id>modify baseline - replace company1 with DATABASE()</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<configuration>
+									<executable>${seddirectory}/sed</executable>
+									<arguments>
+										<argument>-i</argument>
+										<argument>"s/'company1'/DATABASE()/g"</argument>
+										<argument>${basedir}/src/main/resources/db/prod/baseline/tangerine_baseline.sql</argument>
+									</arguments>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+
+				</plugins>
+			</build>
+		</profile>
+
+	</profiles>
+
+</project>

@@ -283,6 +283,7 @@ public class WidgetServiceImpl implements WidgetService {
     ce.setPicklistId("");
     ce.setRequired(false);
     ce.setExpression("");
+    ce.setValue("");
     retList.add(ce);
 
     while (ctit.hasNext()) {
@@ -313,7 +314,7 @@ public class WidgetServiceImpl implements WidgetService {
         ce.setHidden(false);
       else
         ce.setHidden(ctfield.isCustomTableFieldDefaultHidden());
-      ce.setValue("");
+      ce.setValue(ctfield.getCustomTableFieldDefaultValue());
       ce.setRequired(ctfield.isCustomTableFieldRequired());
       ce.setExpression(ctfield.getCustomTableFieldExpression());
       retList.add(ce);

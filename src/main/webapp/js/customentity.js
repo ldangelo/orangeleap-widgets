@@ -243,7 +243,7 @@ postToUrl: function(url, params, newWindow)
 			    field.fieldLabel = fields[f].header;
 			    field.store = store;
 			    field.border = false;
-			    field.value='';
+			    field.value=fields[f].value;
 			    if (fields[f].required == true) {
 				field.allowBlank=false,
 				field.blankText="Enter a " + fields[f].header;
@@ -329,10 +329,12 @@ postToUrl: function(url, params, newWindow)
 				}),
 				fieldLabel:fields[f].header
 			    });
+			    
 			    if (fields[f].required == true) {
 				comboConfig.allowBlank=false,
 				comboConfig.blankText="Enter a " + fields[f].header;
 			    }
+//			    comboConfig.selectByValu(fields[f].value,true);
 			    if (fieldset == null)
 				this.form.superclass().add.call(this.form,field);
 			    else {
