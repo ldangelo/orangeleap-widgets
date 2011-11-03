@@ -102,7 +102,8 @@ WidgetForm = Ext.extend(Ext.form.FormPanel, {
 	    this.buttons =  [{
 	    	text: 'Generate',
 	    	handler: this.onGenerate,
-	    	align:'center'
+	    	align:'center',
+	    	formBind: true
 	    }];
 	    WidgetForm.superclass.initComponent.call(this);
 

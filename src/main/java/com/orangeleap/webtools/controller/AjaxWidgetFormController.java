@@ -47,6 +47,8 @@ public class AjaxWidgetFormController extends MultiActionController {
 	 * Describe donationWidgetHTML here.
 	 */
 	private String donationWidgetHTML;
+	private String donorProfileWidgetHTML;
+	
 	/**
 	 * Describe registrationWidgetHTML here.
 	 */
@@ -189,6 +191,14 @@ public class AjaxWidgetFormController extends MultiActionController {
 		this.registrationWidgetHTML = registrationWidgetHTML;
 	}
 
+	public String getDonorProfileWidgetHTML() {
+		return donorProfileWidgetHTML;
+	}
+
+	public void setDonorProfileWidgetHTML(String donorProfileWidgetHTML) {
+		this.donorProfileWidgetHTML = donorProfileWidgetHTML;
+	}
+
 	/**
 	 * Get the <code>DonationWidgetHTML</code> value.
 	 * 
@@ -290,13 +300,12 @@ public class AjaxWidgetFormController extends MultiActionController {
 
 		widget.setWidgetId(0L);
 		widget.setWidgetGuid(UUID.randomUUID().toString());
-		widget.setWidgetLoginSuccessURL(request
-				.getParameter("widgetLoginSuccessURL"));
+		widget.setWidgetLoginSuccessURL(request.getParameter("widgetLoginSuccessURL"));
 
 		if (customentitytype.equals("widget_authentication")) {
 			widget.setWidgetHtml(loginWidgetHTML);
 		} else if (customentitytype.equals("donor_profile")) {
-			widget.setWidgetHtml(registrationWidgetHTML);
+			widget.setWidgetHtml(donorProfileWidgetHTML);
 		} else if (customentitytype.equals("sponsorable")) {
 			widget.setWidgetHtml(sponsorableWidgetHTML);
 		} else if (customentitytype.equals("online_sponsorship")) {

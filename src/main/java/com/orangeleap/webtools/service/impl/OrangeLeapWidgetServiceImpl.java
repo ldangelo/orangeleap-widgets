@@ -595,7 +595,7 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
         } else {
             return "Unable to find constituent.";
         }
-        return "Your receipt has been e-mailed too " + c.getPrimaryEmail().getEmailAddress() ;
+        return "Your receipt has been e-mailed to " + c.getPrimaryEmail().getEmailAddress() ;
     }
 
     public String getBaseUri

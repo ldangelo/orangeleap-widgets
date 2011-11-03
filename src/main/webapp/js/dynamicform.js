@@ -154,7 +154,10 @@ function generateForm(form,store,meta) {
 				if (fields[f].readonly == true) 
 				   field.readOnly=true;			    
 
-
+				if (fields[f].required == true) {
+					field.checked=true;
+					field.disabled=true;
+				}
 				if (col2 != null && f > fields.length/2)
 				    col2.add(field);
 				else
