@@ -42,7 +42,8 @@ public class JsonPledge {
                 map.put("amount",pledge.getAmountRemaining());
             }
 			map.put("status",pledge.getPledgeStatus());
-
+			map.put("projectCode", pledge.getDistributionLines().get(0).getProjectCode());
+			map.put("motivationCode", pledge.getDistributionLines().get(0).getMotivationCode());
 
 			returnList.add(map);
 		}

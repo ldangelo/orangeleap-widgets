@@ -49,7 +49,7 @@ public class CustomEntityController extends MultiActionController {
 			return getModelMapError("Invalid guid");
 		}
 
-		if (w.getWidgetAuthenticationRequired()) {
+//		if (w.getWidgetAuthenticationRequired()) {
 			//
 			// get the constituent id out of the session cache
 			Element elem = sessionCache.get(sessionId);
@@ -58,7 +58,7 @@ public class CustomEntityController extends MultiActionController {
 			} else {
 				constituentid = (Long) elem.getObjectValue();
 			}
-		}
+//		}
 
 		if (guid != null && !guid.equals("undefined")) {
 			List<CustomEntity> ceList = widgetService.getCustomEntity(guid);

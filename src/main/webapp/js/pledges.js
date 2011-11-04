@@ -106,7 +106,7 @@ postToUrl: function(url, params, newWindow)
 	var mydatastore = new Ext.data.JsonStore({
 	    url:'/donorwidgets/pledges.json?guid=' + widgetid + '&sessionId=' + sessionId,
 	    root:'rows',
-	    fields:['id','donationdate','recurring','amount','status'],
+	    fields:['id','donationdate','recurring','amount','projectCode','motivationCode','status'],
 	    sortInfo:{field:'id',direction:'ASC'}
 	});
 
@@ -121,12 +121,14 @@ postToUrl: function(url, params, newWindow)
             {id: 'recurring',header: 'Recurring',dataIndex: 'recurring'},
 	    {id:'amount',xtype: 'numbercolumn', header: 'Pledge Amount',dataIndex:'amount',sortable:true},
 	    {id:'status',header:'Pledge Status',dataIndex:'status',sortable:true},
+	    {id:'projectCode', header: 'Project Code', dataIndex: 'projectCode', sortable:true},
+	    {id:'motivationCode', header: 'Motivation Code', dataIndex: 'motivationCode', sortable: true},
 
         {header: "Actions", width: 60, sortable: false, renderer: function() {
             return '<div class="controlBtn"><img src="images/money.png" class="make_payment"></div>';
         }, dataIndex: 'Id'}],
 	    viewConfig: {
-		forceFit: false,
+		forceFit: true,
 		emptyText: 'No Pledges To Display'
 	    },
 	    stripeRows:true,
@@ -151,7 +153,7 @@ postToUrl: function(url, params, newWindow)
                 case 'payment':
                     console.log('make a payment - ' + record.id);
                     var params = {};
-                    window.open(donationurl + "?pledge_id=" + record.id +"&gift_amount=" + record.data.amount);
+                    window.open(donationurl + "?pledge_id=" + record.id +"&gift_amount=" + record.data.amount + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode);
                     //pledges.postToUrl('http://localhost/~ldangelo/donation.html',params);
                     break;
                 case 'go':

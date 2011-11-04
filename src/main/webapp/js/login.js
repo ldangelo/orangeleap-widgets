@@ -99,7 +99,7 @@ postToUrl: function(url, params, newWindow)
 		this.setCookie("sessionId",sessionId);
 
 	    if (successurl != null) {
-	    	window.open(successurl,"_blank");
+	    	window.open(successurl);
 	    }
 	}
     },
