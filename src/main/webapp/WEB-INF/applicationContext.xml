@@ -56,7 +56,7 @@
   <dwr:controller id="dwrController" debug="true" />
 
   <bean id="orangeLeapWidget" class="com.orangeleap.webtools.service.impl.OrangeLeapWidgetServiceImpl">
-      <property name="baseUri" value="http://localhost:8080/jasperserver"/>
+      <property name="baseUri" value="http://${jasper.host}:${jasper.port}/jasperserver"/>
       <property name="repositoryUri" value="/services/repository"/>
     <dwr:remote javascript="OrangeLeapWidget">
       <dwr:include method="create" />
