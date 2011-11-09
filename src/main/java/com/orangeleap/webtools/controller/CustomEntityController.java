@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -49,7 +50,7 @@ public class CustomEntityController extends MultiActionController {
 			return getModelMapError("Invalid guid");
 		}
 
-//		if (w.getWidgetAuthenticationRequired()) {
+		if (w.getWidgetAuthenticationRequired()) {
 			//
 			// get the constituent id out of the session cache
 			Element elem = sessionCache.get(sessionId);
@@ -58,7 +59,7 @@ public class CustomEntityController extends MultiActionController {
 			} else {
 				constituentid = (Long) elem.getObjectValue();
 			}
-//		}
+		}
 
 		if (guid != null && !guid.equals("undefined")) {
 			List<CustomEntity> ceList = widgetService.getCustomEntity(guid);
@@ -106,7 +107,24 @@ public class CustomEntityController extends MultiActionController {
 			// get the constituent id out of the session cache
 			Element elem = sessionCache.get(sessionId);
 			if (elem == null) {
-				return getModelMapError("Invalid Session ID");
+				Cookie sessionCookie = null;
+				Cookie sessionCookies[] = request.getCookies();
+				for (int i = 0; i < sessionCookies.length; i++) {
+					if (sessionCookies[i].getName().equals("sessionId")) {
+						sessionCookie = sessionCookies[i];
+						sessionCookie.setMaxAge(0);
+						sessionCookie.setValue("");
+						break;
+					}
+				}
+				
+				if (sessionCookie == null) {
+					//
+					// clear the 
+					sessionCookie = new Cookie("sessionId","");
+				}
+				
+				response.addCookie(sessionCookie);
 			} else {
 				constituentid = (Long) elem.getObjectValue();
 			}

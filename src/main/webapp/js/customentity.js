@@ -184,8 +184,8 @@ postToUrl: function(url, params, newWindow)
 	this.sessionId = this.getCookie("sessionId");
 
 	if (this.authenticate == true && this.sessionId == "") {
-        window.open(this.loginurl,"_blank");
-//	    window.location = this.loginurl;
+//        window.open(this.loginurl,"_blank");
+	    window.location = this.loginurl;
 	    return;
 	}
 	OrangeLeap.CustomEntity.superclass.initComponent.call(this);
