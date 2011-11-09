@@ -97,7 +97,7 @@ var gifthistory = {
         }, dataIndex: 'Id'}
 	],
 	    viewConfig: {
-		forceFit: false,
+		forceFit: true,
 		emptyText: 'No Gift History To Display'
 	    },
 	    stripeRows:true,
