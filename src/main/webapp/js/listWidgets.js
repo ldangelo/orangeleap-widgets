@@ -91,8 +91,45 @@ Ext.onReady(function() {
 		store: store,
 		columns: [
 			{id:'widgetid',width: 200,header:'Id',dataIndex:'widgetid'},
-			{id:'type',width: 200,header:'Type',dataIndex:'type'},
-			{id:'entityname',width: 300,header:'Entity Name',dataIndex:'entityname'},
+			{
+				id: 'widgetName',
+				width: 300,
+				header: 'Widget Name',
+				dataIndex: 'type',
+				renderer: function(val, metaData, record, rowIndex, colIndex, store) {
+					var displayVal = val;
+					if (record.data.type == "customentity" && record.data.entityname == 'widget_authentication') {
+						displayVal = "Login";
+					}
+					else if (record.data.type == "customentity" && record.data.entityname == 'online_donation') {
+						displayVal = "Donation";
+					}
+					else if (record.data.type == "pledges") {
+						displayVal = "Pledge";
+					}
+					else if (record.data.type == "customentity" && record.data.entityname == 'online_recurringgift') {
+						displayVal = "Recurring Gift";
+					}
+					else if (record.data.type == "customentity" && record.data.entityname == 'online_registration') {
+						displayVal = "Registration";
+					}
+					else if (record.data.type == "customentity" && record.data.entityname == 'donor_profile') {
+						displayVal = "Donor Profile";
+					}
+					else if (record.data.type == "gifthistory") {
+						displayVal = "Gift History";
+					}
+					else if (record.data.type == "customentity" && record.data.entityname == 'online_sponsorship') {
+						displayVal = "Sponsorship";
+					}
+					else if (record.data.type == "customentity" && record.data.entityname == 'sponsorable') {
+						displayVal = "Sponsorable";
+					}
+					return displayVal;
+				}
+			},
+//			{id:'type',width: 300,header:'Type',dataIndex:'type'},
+//			{id:'entityname',width: 150,header:'Entity Name',dataIndex:'entityname'},
 			{id:'view',width:80,header:'View',renderer: renderViewIcon,dataIndex:'guid'},
 //			{id:'notifications',width:80,header:'Notifications',renderer: renderNotificationIcon,dataIndex:'guid'},
 			{id:'code',width:80,header:'Code',renderer: renderCodeIcon,dataIndex:'guid'}

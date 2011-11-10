@@ -81,7 +81,7 @@ postToUrl: function(url, params, newWindow)
     	
 	// display the error
     	Ext.Msg.show({
-    		title: 'Passowrd changed!',
+    		title: 'Password changed!',
     		msg: dataFromServer,
     		icon: Ext.MessageBox.Info,
     		buttons: Ext.Msg.OK,
@@ -132,98 +132,98 @@ postToUrl: function(url, params, newWindow)
 	Ext.form.Field.prototype.msgTarget = 'under';
 
         this.loginform = new Ext.form.FormPanel({
-	    id:'loginform',
-	    border:false,
-	    frame:true,
-	    title: 'Authenticate',
-	    width:350,
-	    defaults: {width: 230},
-	    defaultType: 'textfield',
-	    monitorValid:true,
-	    items: [{
-		fieldLabel: 'User Name',
-		name: 'username',
-		allowBlank:false,
-		minLength: 6,
-		maxLength: 12,
-		blankText: 'Enter your User Name Please.',
-		minLengthText: 'User Name must be at least 6 characters'
-	    },{
-		inputType:'password',
-		fieldLabel: 'Password',
-		name:'password',
-		allowBlank:false,
-		minLength: 6,
-		maxLength: 12,
-		blankText: 'Enter your Password Please.',
-		minLengthText: 'Password must be at least 6 characters'
+			id:'loginform',
+			border:false,
+			frame:true,
+			title: 'Authenticate',
+			width:350,
+			defaults: {width: 230},
+			defaultType: 'textfield',
+			monitorValid:true,
+			items: [{
+				fieldLabel: 'User Name',
+				name: 'username',
+				allowBlank:false,
+				minLength: 6,
+				maxLength: 12,
+				blankText: 'Enter your User Name.',
+				minLengthText: 'User Name must be at least 6 characters'
+			},{
+				inputType:'password',
+				fieldLabel: 'Password',
+				name:'password',
+				allowBlank:false,
+				minLength: 6,
+				maxLength: 12,
+				blankText: 'Enter your Password.',
+				minLengthText: 'Password must be at least 6 characters'
+			},
+				{
+					id: 'remember',
+					xtype:'checkbox',
+				    boxLabel: 'Remember Me'
+				},
+				{
+					xtype: "box",
+					autoEl: {
+						tag: 'a',
+						href: 'http://www.orangeleap.com/',
+						html: 'Powered by Orange Leap.'
+					}
+				}],
+			buttons: [{
+				text: 'Login',
+				formBind:true,
+				handler: function(b,e) {
 
-	    },
-		    {id: 'remember',
-		     xtype:'checkbox',
-		     boxLabel: 'Remember Me'
-		    },
-		    {
-		    	xtype: "box",
-		    	autoEl: {
-		    		tag: 'a',
-		    		href: 'http://www.orangeleap.com/',
-		    		html: 'Powered by Orange Leap.'
-		    	}
-		    }],
-	    buttons: [{
-		text: 'Login',
-		formBind:true,
-		handler: function(b,e) {
+					//
+					// call authenticate through DWR
+					var callbackproxy = function(dataFromServer) {
+					authentication.handleReturn(dataFromServer,widgetid,successurl);
+					}
 
-		    //
-		    // call authenticate through DWR
-		    var callbackproxy = function(dataFromServer) {
-			authentication.handleReturn(dataFromServer,widgetid,successurl);
-		    }
+					var callMetaData = {callback:callbackproxy};
 
-		    var callMetaData = {callback:callbackproxy};
-
-		    OrangeLeapWidget.authenticate(widgetid,$j("input[name=username]").val(),$j("input[name=password]").val(),callMetaData);
-		}
+					OrangeLeapWidget.authenticate(widgetid,$j("input[name=username]").val(),$j("input[name=password]").val(),callMetaData);
+				}
             },{
             	text: 'Forgot Password',
             	formBind: false,
             	handler: function(b,e) {
 
-var forgotpass = new Ext.form.FormPanel({
-	    id:'loginform',
-	    border:false,
-	    frame:true,
-	    title: 'Forgot Password',
-	    width:350,
-	    defaults: {width: 230},
-	    defaultType: 'textfield',
-	    monitorValid:true,
-	    items: [{
-	    	fieldLabel: 'User Name',
-	    	name: 'fpusername',
-	    	allowBlank:false,
-	    	minLenght:6,
-	    	maxLength:12,
-	    	blankText: 'Enter your User Name.',
-	    	minLenghtText: 'User Name must be at least 6 characters'
-	    }
-		    ],
-	    buttons: [{
-		text: 'Submit',
-		formBind:true,
-		handler: function(b,e) {
-			var callbackproxy = function(dataFromServer) {
-				authentication.forgotPassword(dataFromServer,widgetid);
-			}
-			
-			var callMetaData={callback:callbackproxy};
-			
-			OrangeLeapWidget.forgotPassword(widgetid,$j("input[name=fpusername]").val(),callMetaData);
-		}
-	    }]
-        });
+					var forgotpass = new Ext.form.FormPanel({
+						id:'loginform',
+						border:false,
+						frame:true,
+						title: 'Forgot Password',
+						width:350,
+						defaults: {width: 230},
+						defaultType: 'textfield',
+						monitorValid:true,
+						items: [{
+							fieldLabel: 'User Name',
+							name: 'fpusername',
+							allowBlank:false,
+							minLength:6,
+							maxLength:12,
+							blankText: 'Enter your User Name.',
+							minLengthText: 'User Name must be at least 6 characters'
+						}
+							],
+						buttons: [{
+							text: 'Submit',
+							formBind:true,
+							handler: function(b,e) {
+								var callbackproxy = function(dataFromServer) {
+									authentication.forgotPassword(dataFromServer,widgetid);
+								}
+
+								var callMetaData={callback:callbackproxy};
+
+								OrangeLeapWidget.forgotPassword(widgetid,$j("input[name=fpusername]").val(),callMetaData);
+							}
+						}]
+					});
             	
 		var win = new Ext.Window({
 			layout: 'fit',
@@ -241,79 +241,79 @@ var forgotpass = new Ext.form.FormPanel({
             	text: 'Change Password',
             	formBind: false,
             	handler: function(b,e) {
-var changepass = new Ext.form.FormPanel({
-	    id:'changeform',
-	    border:false,
-	    frame:true,
-	    title: 'Change Password',
-	    width:350,
-	    defaults: {width: 230},
-	    defaultType: 'textfield',
-	    monitorValid:true,
-	    items: [{
-	    	fieldLabel: 'User Name',
-	    	name: 'cpusername',
-	    	allowBlank:false,
-	    	minLenght:6,
-	    	maxLength:12,
-	    	blankText: 'Enter your User Name.',
-	    	minLenghtText: 'User Name must be at least 6 characters'
-	    },
-	            {
-	    	fieldLabel: 'Old Password',
-	    	name: 'oldpassword',
-	    	allowBlank:false,
-	    	minLength: 6,
-	    	maxLength: 12,
-	    	blankText: 'Enter your current Password.',
-	    	minLengthText: 'Old Password must be at least 6 characters'
-	    	},
-	    		            {
-	    	fieldLabel: 'New Password',
-	    	name: 'newpassword',
-	    	allowBlank:false,
-	    	minLength: 6,
-	    	maxLength: 12,
-	    	blankText: 'Enter your New Password.',
-	    	minLengthText: 'New Password must be at least 6 characters'
-	    	},
-	            {
-	    	fieldLabel: 'New Password',
-	    	name: 'newpasswordre',
-	    	allowBlank:false,
-	    	minLength: 6,
-	    	maxLength: 12,
-	    	blankText: 'Re-Enter your New Password.',
-	    	minLengthText: 'New Password must be at least 6 characters'
-	    	}
+				var changepass = new Ext.form.FormPanel({
+						id:'changeform',
+						border:false,
+						frame:true,
+						title: 'Change Password',
+						width:350,
+						defaults: {width: 230},
+						defaultType: 'textfield',
+						monitorValid:true,
+						items: [{
+							fieldLabel: 'User Name',
+							name: 'cpusername',
+							allowBlank:false,
+							minLength:6,
+							maxLength:12,
+							blankText: 'Enter your User Name.',
+							minLengthText: 'User Name must be at least 6 characters'
+						},
+								{
+							fieldLabel: 'Old Password',
+							name: 'oldpassword',
+							allowBlank:false,
+							minLength: 6,
+							maxLength: 12,
+							blankText: 'Enter your current Password.',
+							minLengthText: 'Old Password must be at least 6 characters'
+							},
+											{
+							fieldLabel: 'New Password',
+							name: 'newpassword',
+							allowBlank:false,
+							minLength: 6,
+							maxLength: 12,
+							blankText: 'Enter your New Password.',
+							minLengthText: 'New Password must be at least 6 characters'
+							},
+								{
+							fieldLabel: 'New Password',
+							name: 'newpasswordre',
+							allowBlank:false,
+							minLength: 6,
+							maxLength: 12,
+							blankText: 'Re-Enter your New Password.',
+							minLengthText: 'New Password must be at least 6 characters'
+							}
 
-		    ],
-	    buttons: [{
-		text: 'Submit',
-		formBind:true,
-		handler: function(b,e) {
-			if ($j("input[name=newpassword]").val() != $j("input[name=newpasswordre]").val()) {
-					// display the error
-				Ext.Msg.show({
-					title: 'ERROR',
-					msg: "New Passwords Must Be The Same",
-					icon: Ext.MessageBox.ERROR,
-					buttons: Ext.Msg.OK,
-					modal: true
-				});
-	
-				return;
-			}
-			var callbackproxy = function(dataFromServer) {
-				authentication.changePassword(dataFromServer,widgetid);
-			}
-			
-			var callMetaData={callback:callbackproxy};
-			
-			OrangeLeapWidget.changePassword(widgetid,$j("input[name=cpusername]").val(),$j("input[name=oldpassword]").val(),$j("input[name=newpassword]").val(),callMetaData);
-		}
-	    }]
-        });
+							],
+						buttons: [{
+						text: 'Submit',
+						formBind:true,
+						handler: function(b,e) {
+							if ($j("input[name=newpassword]").val() != $j("input[name=newpasswordre]").val()) {
+									// display the error
+								Ext.Msg.show({
+									title: 'ERROR',
+									msg: "New Passwords Must Be The Same",
+									icon: Ext.MessageBox.ERROR,
+									buttons: Ext.Msg.OK,
+									modal: true
+								});
+
+								return;
+							}
+							var callbackproxy = function(dataFromServer) {
+								authentication.changePassword(dataFromServer,widgetid);
+							}
+
+							var callMetaData={callback:callbackproxy};
+
+							OrangeLeapWidget.changePassword(widgetid,$j("input[name=cpusername]").val(),$j("input[name=oldpassword]").val(),$j("input[name=newpassword]").val(),callMetaData);
+						}
+						}]
+                    });
             	
 		var win = new Ext.Window({
 			layout: 'fit',
@@ -352,18 +352,18 @@ var changepass = new Ext.form.FormPanel({
     errorHandlerFinished: function() {
     },
     handleError: function(widgetid, str) {
-	// update widget's error count
-	OrangeLeapWidget.updateErrorCount(widgetid,document.location.href);
+		// update widget's error count
+		OrangeLeapWidget.updateErrorCount(widgetid,document.location.href);
 
-	// display the error
-	Ext.Msg.show({
-	    title: 'ERROR',
-	    msg: str,
-	    icon: Ext.MessageBox.ERROR,
-	    buttons: Ext.Msg.OK,
-	    modal: true,
-	    fn: this.errorHandlerFinished
-	});
+		// display the error
+		Ext.Msg.show({
+			title: 'ERROR',
+			msg: str,
+			icon: Ext.MessageBox.ERROR,
+			buttons: Ext.Msg.OK,
+			modal: true,
+			fn: this.errorHandlerFinished
+		});
     },
 
     validateForm: function() {

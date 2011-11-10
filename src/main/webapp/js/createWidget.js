@@ -66,42 +66,10 @@ Ext.onReady(function() {
 			width: 250,
 			listeners: {
 				'change': function(combobox, newValue, oldValue) {
-					var formpanel = Ext.getCmp("formpanel");
-					formpanel.el.mask('Loading...', 'x-mask-loading');
-					formpanel.removeAll();
-
-					var widgetFormParams;
-
-					if ('login' == newValue) {
-						widgetFormParams = { widgettype:'customentity', customentitytype:'widget_authentication' };
-					}
-					else if ('donation' == newValue) {
-						widgetFormParams = { widgettype:'customentity', customentitytype:'online_donation' };
-					}
-					else if ('pledge' == newValue) {
-						widgetFormParams = { widgettype:'pledges', customentitytype:'undefined' };
-					}
-					else if ('recurringGift' == newValue) {
-						widgetFormParams = { widgettype:'customentity', customentitytype:'online_recurringgift' };
-					}
-					else if ('registration' == newValue) {
-						widgetFormParams = { widgettype:'customentity', customentitytype:'online_registration' };
-					}
-					else if ('donorProfile' == newValue) {
-						widgetFormParams = { widgettype:'customentity', customentitytype:'donor_profile' };
-					}
-					else if ('giftHistory' == newValue) {
-						widgetFormParams = { widgettype:'gifthistory',customentitytype:'undefined' };
-					}
-					else if ('sponsorship' == newValue) {
-						widgetFormParams = { widgettype:'customentity',customentitytype:'online_sponsorship' };
-					}
-					else if ('sponsorable' == newValue) {
-						widgetFormParams = { widgettype:'customentity',customentitytype:'sponsorable' };
-					}
-					formpanel.add(new WidgetForm(widgetFormParams));
-					formpanel.doLayout();
-					formpanel.el.unmask();
+					showWidgetForm(newValue);
+				},
+				'select': function(combobox, record, index) {
+					showWidgetForm(combobox.getValue());
 				},
 				scope: this
 			}
@@ -109,5 +77,44 @@ Ext.onReady(function() {
 
 		var widgetpanel = new NewWidgetPanelUi();
 		widgetpanel.render("widgetpanel-div");
+    }
+
+    function showWidgetForm(newValue) {
+		var formpanel = Ext.getCmp("formpanel");
+		formpanel.el.mask('Loading...', 'x-mask-loading');
+		formpanel.removeAll();
+
+		var widgetFormParams;
+
+		if ('login' == newValue) {
+			widgetFormParams = { widgettype:'customentity', customentitytype:'widget_authentication' };
+		}
+		else if ('donation' == newValue) {
+			widgetFormParams = { widgettype:'customentity', customentitytype:'online_donation' };
+		}
+		else if ('pledge' == newValue) {
+			widgetFormParams = { widgettype:'pledges', customentitytype:'undefined' };
+		}
+		else if ('recurringGift' == newValue) {
+			widgetFormParams = { widgettype:'customentity', customentitytype:'online_recurringgift' };
+		}
+		else if ('registration' == newValue) {
+			widgetFormParams = { widgettype:'customentity', customentitytype:'online_registration' };
+		}
+		else if ('donorProfile' == newValue) {
+			widgetFormParams = { widgettype:'customentity', customentitytype:'donor_profile' };
+		}
+		else if ('giftHistory' == newValue) {
+			widgetFormParams = { widgettype:'gifthistory',customentitytype:'undefined' };
+		}
+		else if ('sponsorship' == newValue) {
+			widgetFormParams = { widgettype:'customentity',customentitytype:'online_sponsorship' };
+		}
+		else if ('sponsorable' == newValue) {
+			widgetFormParams = { widgettype:'customentity',customentitytype:'sponsorable' };
+		}
+		formpanel.add(new WidgetForm(widgetFormParams));
+		formpanel.doLayout();
+		formpanel.el.unmask();
     }
 });

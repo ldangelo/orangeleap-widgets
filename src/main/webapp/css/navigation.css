@@ -22,7 +22,7 @@
 	font-family: helvetica, arial;
 	font-size: .75em;
 	border-top: 1px solid #444;
-	background-color: #aaa;
+	background-color: #999;
 	padding: 10px 0;
 	color: #fff;
 	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
@@ -115,11 +115,11 @@ button.add {
 }
 #navmain ul li a:hover {
 	/*background-color: #ffd3a6;*/
-	background: #444 url("../images/navGradientBlack2.gif") repeat-x;
+	background-color: #444;
 	color: #fff;
 }
 #navmain ul li a.active {
-	background: #fff url("../images/navGradientGrey.gif") repeat-x;
+	background-color: #fff;
 	color: #000;
 	border-top: 1px solid #c95d00;
 	border-right: 1px solid #c95d00;
@@ -143,7 +143,7 @@ button.add {
 	color: #000;
 }
 #navmain ul li a.dropActive:hover {
-	background: #444 url("../images/navGradientBlack2.gif") repeat-x;
+	background-color: #444;
 	color: #fff;
 }
 #navmain ul li a.bactive {
@@ -152,7 +152,7 @@ button.add {
 	text-decoration: none;
 	line-height: 22px;
 	display: block;
-	background: #444 url("../images/navGradientBlack2.gif") repeat-x;
+	background-color: #444;
 	color: #fff;
 }
 #navmain ul.primaryNav li ul {
