@@ -12,41 +12,38 @@
 	    messageProperty: 'message'
 	});
 
-	myplacementdatastore = new Ext.data.Store({
+	var myplacementdatastore = new Ext.data.Store({
 	    metaData:true,
 	    reader:placementreader,
 	    proxy:placementproxy,
 	    autoSave:false,
 	    listeners: {
 
-     	    	   	'metachange':function(store,meta) {
-               var fields = meta.fields;
+				'metachange':function(store,meta) {
+                    var fields = meta.fields;
                     // has the right definition
 
                     var columns = [];
-		    for (var f=0;f < fields.length; f++) {
-                    	columns.push({header: fields[f].header, dataIndex: fields[f].name,sortable:true});
-		    }
+		            for (var f=0;f < fields.length; f++) {
+                    	columns.push({header: fields[f].header, dataIndex: fields[f].name,sortable:true, width: 150});
+					}
 
                     placementgrid.reconfigure(store,new Ext.grid.ColumnModel(columns));
-		},
-		'load':function(store,records,options) {
-				placementgrid.render("placements-div");
-}
+				},
+				'load':function(store,records,options) {
+					placementgrid.render("placements-div");
+				}
 		}});
 
 	var placementgrid = new Ext.grid.GridPanel({
 	    store: myplacementdatastore,
 	    columns: [],
 	    viewConfig: {
-		forceFit: false,
 		emptyText: 'No Widgets'
 	    },
 	    stripeRows: true,
-	    frame:true,
-	    title: "Widget Placement",
 	    height: 250,
-	    width:655
+	    width:900
 	});
 
 

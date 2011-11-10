@@ -14,7 +14,7 @@
  <body bgcolor="#FFFFFF">
  <script type="text/javascript">window.status = "Loading: <decorator:title default="INTRANET" />...";</script>
  <%@ include file="/includes/header.jsp"%>
- <table width="100%" border="0" cellspacing="0" cellpadding="0">
+ <table class="mainBodyTable" border="0" cellspacing="0" cellpadding="0">
  <tr>
  <td height="20" nowrap> </td>
  </tr>

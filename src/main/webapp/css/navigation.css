@@ -1,3 +1,13 @@
+.heading {
+    color: #EF7000;
+    font-size: 1.2em;
+    font-family: helvetica, arial;
+    margin-bottom: 10px;
+}
+#grid-example .x-grid3-row,
+    #styles-div .x-grid3-row {
+		cursor: pointer;
+}
 #greeting {
 	color:#d46400;
 }
@@ -5,18 +15,22 @@
 	font-weight:bold;
 }
 #banner {
-	height:66px;
-	width:100%;
-	background: transparent url('../images/orangeleap-logo.png') no-repeat scroll 10px 10px;
+	height: 50px;
+	background: transparent url('../images/orangeLeapHoriz.png') no-repeat scroll 5px 10px;
 }
 #footer {
-	font-size: 11px;
-	border-top: 1px solid #ddd;
-	margin-top: 40px;
-	padding: 20px 0 50px 0;
+	font-family: helvetica, arial;
+	font-size: .75em;
+	border-top: 1px solid #444;
+	background-color: #999;
+	padding: 10px 0;
+	color: #fff;
+	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
+	background-image: -moz-linear-gradient(100% 50% 90deg, #666, #555);
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 50%, from(#555), to(#666));
 }
+
 #footer .legal {
-	color:#777;
 	text-align:center;
 }
 /*.navLeftCap {
@@ -49,28 +63,38 @@
 #navmain {
 	position:relative;
 	background-color: #FFAB4E;
-	//background: #5987b3 url("../images/navGradientBoth.gif");
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14px;
 	font-weight: bold;
 	/*height:57px;*/
 	height:33px;
-	border: 1px solid gray;
-	border-bottom-left-radius: 5px 5px;
-	border-bottom-right-radius: 5px 5px;
-	border-top-left-radius: 5px 5px;
-	border-top-right-radius: 5px 5px;
+	border-top: 1px solid gray;
+	border-bottom: 1px solid gray;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14px;
 	font-weight: bold;
 	height: 33px;
-	margin: 0px 10px;
+	padding: 0px 20px;
 	position: relative;
 	/*padding-top:2px;*/
     z-index: 8900;
+	-moz-box-shadow: 1px 1px 2px rgba(175, 175, 175, 0.7), 2px 2px 7px rgba(239, 112, 0, 0.5) inset, -5px 0 5px rgba(239, 112, 0, 0.5) inset, 0 50px 15px rgba(239, 112, 0, 0.2) inset, 5px 0 15px #EF7000 inset;
+	-webkit-box-shadow: 1px 1px 2px rgba(175, 175, 175, 0.7), 2px 2px 7px rgba(239, 112, 0, 0.5) inset, -5px 0 5px rgba(239, 112, 0, 0.5) inset, 0 50px 15px rgba(239, 112, 0, 0.2) inset, 5px 0 15px #EF7000 inset;
+	box-shadow: 1px 1px 2px rgba(175, 175, 175, 0.7), 2px 2px 7px rgba(239, 112, 0, 0.5) inset, -5px 0 5px rgba(239, 112, 0, 0.5) inset, 0 50px 15px rgba(239, 112, 0, 0.2) inset, 5px 0 15px #EF7000 inset;
+}
+#banner,
+	#navmain ul {
+	margin: 0 auto;
+	width: 900px;
+}
+.mainBodyTable {
+	width: 900px;
+	margin: 0 auto;
+}
+button.add {
+    background-image: url("../images/add5.png");
 }
 #navmain ul {
-	margin: 0;
 	padding: 0;
 }
 #navmain ul li {
@@ -91,11 +115,11 @@
 }
 #navmain ul li a:hover {
 	/*background-color: #ffd3a6;*/
-	background: #444 url("../images/navGradientBlack2.gif") repeat-x;
+	background-color: #444;
 	color: #fff;
 }
 #navmain ul li a.active {
-	background: #fff url("../images/navGradientGrey.gif") repeat-x;
+	background-color: #fff;
 	color: #000;
 	border-top: 1px solid #c95d00;
 	border-right: 1px solid #c95d00;
@@ -119,7 +143,7 @@
 	color: #000;
 }
 #navmain ul li a.dropActive:hover {
-	background: #444 url("../images/navGradientBlack2.gif") repeat-x;
+	background-color: #444;
 	color: #fff;
 }
 #navmain ul li a.bactive {
@@ -128,7 +152,7 @@
 	text-decoration: none;
 	line-height: 22px;
 	display: block;
-	background: #444 url("../images/navGradientBlack2.gif") repeat-x;
+	background-color: #444;
 	color: #fff;
 }
 #navmain ul.primaryNav li ul {
@@ -196,14 +220,4 @@ div.navMessage {
 	font-weight:normal;
 	margin:2px 0 0 8px;
 	font-family:verdana;
-}
-div.homeIcon {
-	width:20px;
-	background:url("../images/icons/homeIcon.gif") no-repeat center center;
-}
-a:hover div.homeIcon {
-	background:url("../images/icons/homeIconInverted.gif") no-repeat center center;
-}
-a.active:hover div.homeIcon {
-	background:url("../images/icons/homeIcon.gif") no-repeat center center;
 }

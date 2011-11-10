@@ -7,12 +7,17 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title><spring:message code="appName"/> <spring:message code="login"/></title>
 	<link href="<c:url value='/css/login.css' />" rel="stylesheet" type="text/css" />
-	<script type="text/javascript" src="/js/jquery/jquery-1.3.2.min.js"></script>
+	<script type="text/javascript" src="<c:url value='/js/jquery/jquery-1.3.2.min.js' />"></script>
+	<script>
+		$(function() {
+            $('#j_username').focus();
+		});
+	</script>
 </head>
 <body>
 <div class="loginPane">
 	<div class="loginContent">
-	<img src="images/donate_now.gif" />
+	<img src="images/donate_nowTrimmed.png" />
 	    <h1 class="loginHeader"><spring:message code="pleaseSignIn"/></h1>
 
     	<c:if test="${not empty param.login_error}">
@@ -34,7 +39,7 @@
 		    		<td class="loginButton">
 		    		<input class="loginField" type="hidden" name="sitename" id="sitename" />
 		    		<input class="loginField" type="hidden" name="j_username" id="j_username" />
-		    		<input class="loginButton" name="submit" id="submit" type="submit"/>
+		    		<input class="loginButton" name="submit" id="submit" type="submit" value="Sign In"/>
 		    		</td>
 	            </tr>
 	            <%--
@@ -45,7 +50,7 @@
 	            --%>
     		</table>
     	</form>
-    	<spring:message code="release"/>: ${build.version} <!-- ${build.time}  -->
+    	<c:if test="${not empty build.version}"><spring:message code="release"/>: </c:if><c:out value="${build.version}"/> <!-- ${build.time}  -->
 	</div>
 </div>
 

@@ -6,7 +6,6 @@
 <page:applyDecorator name="main">
 <head>
     <script type="text/javascript" src="js/jquery/jquery-1.3.2.min.js"></script>
-	<script type="text/javascript" src="js/extjs/adapter/ext/ext-base-debug.js"></script>
 	<script type="text/javascript" src="js/extjs/adapter/jquery/ext-jquery-adapter.js"></script>
 	<script type="text/javascript" src="js/extjs/ext-all-debug.js"></script>
 	<script type="text/javascript" src="js/listplacements.js"></script>
@@ -14,9 +13,6 @@
         <script type="text/javascript">
         	Ext.onReady(function() {
 
-        		function newStyle() {
-        					window.location = 'styleform.htm';
-        		}
 	var mystyledatasource = null;
 
         var styleproxy = new Ext.data.HttpProxy( {api: {
@@ -44,7 +40,7 @@
 
                     var columns = [];
 		    for (var f=0;f < fields.length; f++) {
-                    	columns.push({header: fields[f].header, dataIndex: fields[f].name,sortable:true});
+                    	columns.push({header: fields[f].header, dataIndex: fields[f].name,sortable:true, width: 275});
 		    }
 
                     stylegrid.reconfigure(store,new Ext.grid.ColumnModel(columns));
@@ -59,14 +55,25 @@
 	    store: mystyledatastore,
 	    columns: [],
 	    viewConfig: {
-		forceFit: false,
-		emptyText: 'No Styles'
+			emptyText: 'No Styles'
 	    },
 	    stripeRows: true,
-	    frame:true,
-	    title: "Widget Styles",
 	    height: 250,
-	    width:655,
+	    width:900,
+		tbar: {
+            items: [
+                {
+					xtype: 'button',
+					'text': 'Add New Style',
+					'tooltip': 'Add New Style',
+					'iconCls': 'add',
+					'id': 'addNewButton',
+					'handler': function() {
+						window.location.href = 'styleform.htm';
+					}
+				}
+			]
+		}
 	});
     stylegrid.on('rowdblclick', function(grid, rowIndex, event) {
 
@@ -75,22 +82,16 @@
             // open window to view record
             var thisUrl = 'styleform.htm?id=' + record.get('Id');
 
-            window.location = thisUrl;
+            window.location.href = thisUrl;
         }
     });
 
     var panel = new Ext.Panel({
     	height: 350,
-    	width: 660,
+    	width: 900,
     	border: false,
-    	items:[ {
-    		xtype: 'button',
-    		text: 'New Style',
-    		height: 50,
-    		handler: newStyle
-    	}, stylegrid ]
+    	items:[ stylegrid ]
     });
-
 
     mystyledatastore.load();
 
@@ -98,6 +99,7 @@
         </script>
     </head>
     <body>
+	<h3 class="heading">Widget Styles</h3>
     <div id="styles-div"></div>
 
     </body>

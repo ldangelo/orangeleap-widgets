@@ -9,7 +9,6 @@
 <page:applyDecorator name="main">
 	<head>
 	<script type="text/javascript" src="js/jquery/jquery-1.3.2.min.js"></script>
-	<script type="text/javascript" src="js/extjs/adapter/ext/ext-base-debug.js"></script>
 	<script type="text/javascript" src="js/extjs/adapter/jquery/ext-jquery-adapter.js"></script>
 	<script type="text/javascript" src="js/extjs/ext-all-debug.js"></script>
 	<script type="text/javascript" src="js/listplacements.js"></script>
@@ -23,6 +22,7 @@
 	</script>
 	</head>
 	<body>
+	<h3 class="heading">Pledge Widget</h3>
 	<div id="pledge-div"></div>
 	<div id="placements-div"></div>
 	</body>
