@@ -1,7 +1,23 @@
 package com.orangeleap.webtools.domain;
 
 public class CustomEntity {
-  /**
+  public String getRegEx() {
+		return regEx;
+	}
+
+	public void setRegEx(String regEx) {
+		this.regEx = regEx;
+	}
+
+	public String getRegExExample() {
+		return regExExample;
+	}
+
+	public void setRegExExample(String regExExample) {
+		this.regExExample = regExExample;
+	}
+
+/**
    * Describe name here.
    */
   private String name;
@@ -45,6 +61,9 @@ public class CustomEntity {
    * Describe expression here.
    */
   private String expression;
+  
+  private String regEx;
+  private String regExExample;
 
   /**
    * Get the <code>Expression</code> value.

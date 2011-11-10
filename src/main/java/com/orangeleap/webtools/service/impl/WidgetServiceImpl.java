@@ -284,6 +284,8 @@ public class WidgetServiceImpl implements WidgetService {
     ce.setRequired(false);
     ce.setExpression("");
     ce.setValue("");
+    ce.setRegEx("");
+    ce.setRegExExample("");
     retList.add(ce);
 
     while (ctit.hasNext()) {
@@ -317,6 +319,8 @@ public class WidgetServiceImpl implements WidgetService {
       ce.setValue(ctfield.getCustomTableFieldDefaultValue());
       ce.setRequired(ctfield.isCustomTableFieldRequired());
       ce.setExpression(ctfield.getCustomTableFieldExpression());
+      ce.setRegEx(ctfield.getCustomTableFieldRegex());
+      ce.setRegExExample(ctfield.getCustomTableFieldRegexExample());
       retList.add(ce);
     }
     return retList;

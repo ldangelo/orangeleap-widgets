@@ -142,6 +142,8 @@ public class CustomEntityController {
       map.put("searchable",false);
       map.put("hidden",true);
       map.put("required",false);
+      map.put("regex", "");
+      map.put("regexText", "");
       fields.add(map);
 
       while (ctit.hasNext()) {
@@ -163,6 +165,8 @@ public class CustomEntityController {
           map.put("searchable",ctfield.isCustomTableFieldSearchable());
           map.put("hidden",false);
           map.put("required",ctfield.isCustomTableFieldRequired());
+          map.put("regex", ctfield.getCustomTableFieldRegex());
+          map.put("regexText", ctfield.getCustomTableFieldRegexExample());          
           fields.add(map);
 
       }

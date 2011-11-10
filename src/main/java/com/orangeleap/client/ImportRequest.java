@@ -19,6 +19,8 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="jobDescription" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="importEntityType" type="{http://www.orangeleap.com/orangeleap/services3.0/}importEntityType"/>
+ *         &lt;element name="customTableName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="csvData" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -31,6 +33,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "jobDescription",
+    "importEntityType",
+    "customTableName",
     "csvData"
 })
 @XmlRootElement(name = "ImportRequest")
@@ -38,6 +42,10 @@ public class ImportRequest {
 
     @XmlElement(required = true)
     protected String jobDescription;
+    @XmlElement(required = true)
+    protected ImportEntityType importEntityType;
+    @XmlElement(required = true)
+    protected String customTableName;
     @XmlElement(required = true)
     protected String csvData;
 
@@ -63,6 +71,54 @@ public class ImportRequest {
      */
     public void setJobDescription(String value) {
         this.jobDescription = value;
+    }
+
+    /**
+     * Gets the value of the importEntityType property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link ImportEntityType }
+     *     
+     */
+    public ImportEntityType getImportEntityType() {
+        return importEntityType;
+    }
+
+    /**
+     * Sets the value of the importEntityType property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ImportEntityType }
+     *     
+     */
+    public void setImportEntityType(ImportEntityType value) {
+        this.importEntityType = value;
+    }
+
+    /**
+     * Gets the value of the customTableName property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCustomTableName() {
+        return customTableName;
+    }
+
+    /**
+     * Sets the value of the customTableName property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCustomTableName(String value) {
+        this.customTableName = value;
     }
 
     /**

@@ -43,6 +43,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="customTableFieldDefaultHidden" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *         &lt;element name="customTableFieldPicklistNameId" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="customTableFieldRegex" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="customTableFieldRegexExample" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="customTableFieldRequired" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="customTableFieldSearchable" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="customTableFieldWWViewable" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
@@ -87,6 +88,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "customTableFieldDefaultHidden",
     "customTableFieldPicklistNameId",
     "customTableFieldRegex",
+    "customTableFieldRegexExample",
     "customTableFieldRequired",
     "customTableFieldSearchable",
     "customTableFieldWWViewable",
@@ -125,6 +127,7 @@ public class CustomTableField {
     protected Boolean customTableFieldDefaultHidden;
     protected String customTableFieldPicklistNameId;
     protected String customTableFieldRegex;
+    protected String customTableFieldRegexExample;
     protected boolean customTableFieldRequired;
     protected boolean customTableFieldSearchable;
     protected boolean customTableFieldWWViewable;
@@ -642,6 +645,30 @@ public class CustomTableField {
      */
     public void setCustomTableFieldRegex(String value) {
         this.customTableFieldRegex = value;
+    }
+
+    /**
+     * Gets the value of the customTableFieldRegexExample property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCustomTableFieldRegexExample() {
+        return customTableFieldRegexExample;
+    }
+
+    /**
+     * Sets the value of the customTableFieldRegexExample property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCustomTableFieldRegexExample(String value) {
+        this.customTableFieldRegexExample = value;
     }
 
     /**
