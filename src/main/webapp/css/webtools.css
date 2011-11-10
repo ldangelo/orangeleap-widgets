@@ -433,7 +433,7 @@ margin-right:30px;
 	font-family: helvetica, arial;
 	font-size: .75em;
 	border-top: 1px solid #444;
-	background-color: #ddd;
+	background-color: #aaa;
 	padding: 10px 0;
 	color: #fff;
 	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
@@ -474,7 +474,6 @@ margin-right:30px;
 #navmain {
 	position:relative;
 	background-color: #FFAB4E;
-	//background: #5987b3 url("../images/navGradientBoth.gif");
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14px;
 	font-weight: bold;
@@ -504,7 +503,7 @@ margin-right:30px;
 	margin: 0 auto;
 }
 button.add {
-    background-image: url("../images/icons/add5.png");
+    background-image: url("../images/add5.png");
 }
 #navmain ul {
 	padding: 0;
@@ -632,16 +631,6 @@ div.navMessage {
 	font-weight:normal;
 	margin:2px 0 0 8px;
 	font-family:verdana;
-}
-div.homeIcon {
-	width:20px;
-	background:url("../images/icons/homeIcon.gif") no-repeat center center;
-}
-a:hover div.homeIcon {
-	background:url("../images/icons/homeIconInverted.gif") no-repeat center center;
-}
-a.active:hover div.homeIcon {
-	background:url("../images/icons/homeIcon.gif") no-repeat center center;
 }
 
 

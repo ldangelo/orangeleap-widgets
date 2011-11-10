@@ -22,7 +22,7 @@
 	font-family: helvetica, arial;
 	font-size: .75em;
 	border-top: 1px solid #444;
-	background-color: #ddd;
+	background-color: #aaa;
 	padding: 10px 0;
 	color: #fff;
 	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
@@ -63,7 +63,6 @@
 #navmain {
 	position:relative;
 	background-color: #FFAB4E;
-	//background: #5987b3 url("../images/navGradientBoth.gif");
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14px;
 	font-weight: bold;
