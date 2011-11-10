@@ -505,7 +505,7 @@ var sponsorshipform =  {
 	    items:[form,searchform]
 	});
 
-	msgBox = Ext.MessageBox.wait("Loading...","Loading Sponships");
+	msgBox = Ext.MessageBox.wait("Loading...","Loading Sponsorships");
 	mydatastore.load({params:{start:pageStart,limit:pageSize,pattern:pattern}});
     },
 
