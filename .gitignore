@@ -3,4 +3,6 @@
 /target
 .settings
 .project
-
+donorwidgets.iml
+donorwidgets.ipr
+donorwidgets.iws

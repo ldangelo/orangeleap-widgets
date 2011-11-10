@@ -260,11 +260,11 @@
 							<jettyEnvXml>${basedir}/src/main/config/jetty-local/jetty-env.xml</jettyEnvXml>
 							<contextHandlers>
 								<contextHandler implementation="org.mortbay.jetty.webapp.WebAppContext">
-									<war>${basedir}/../cas/target/cas-15.0-SNAPSHOT.war</war>
+									<war>${basedir}/../cas/target/cas-${project.version}-SNAPSHOT.war</war>
 									<contextPath>/cas</contextPath>
 								</contextHandler>
 								<contextHandler implementation="org.mortbay.jetty.webapp.WebAppContext">
-									<war>${basedir}/../tangerine/target/tangerine-15.0-SNAPSHOT.war</war>
+									<war>${basedir}/../tangerine/target/tangerine-${project.version}-SNAPSHOT.war</war>
 									<contextPath>/orangeleap</contextPath>
 								</contextHandler>
 							</contextHandlers>
