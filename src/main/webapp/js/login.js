@@ -228,6 +228,7 @@ postToUrl: function(url, params, newWindow)
 		var win = new Ext.Window({
 			layout: 'fit',
 			plain: true,
+			width: 400,
 			height: 130,
 			items: [
 			        forgotpass
@@ -318,6 +319,7 @@ postToUrl: function(url, params, newWindow)
 		var win = new Ext.Window({
 			layout: 'fit',
 			plain: true,
+			width: 400,
 			height: 210,
 			items: [
 			        changepass
