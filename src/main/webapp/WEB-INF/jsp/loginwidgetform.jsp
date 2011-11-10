@@ -23,6 +23,7 @@
 </script>
     </head>
     <body>
+	<h3 class="heading">Login Widget</h3>
     <div id="loginform-div"></div>
     <div id="placements-div"></div>
     </body>

@@ -10,7 +10,7 @@ WidgetForm = Ext.extend(Ext.form.FormPanel, {
 	frame: true,
 	labelWidth: 100,
 	monitorValid:true,
-	width: 600,
+	width: 900,
 	trackResetOnLoad:true,
 	getParameter: function (queryString, parameterName) {
 		// Add "=" to the parameter name (i.e. parameterName=value)

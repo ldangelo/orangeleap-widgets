@@ -23,6 +23,7 @@
 	</script>
 	</head>
 	<body>
+	<h3 class="heading">Gift History Widget</h3>
 	<div id="gifthistory-div"></div>
 	<div id="placements-div"></div>
 	</body>

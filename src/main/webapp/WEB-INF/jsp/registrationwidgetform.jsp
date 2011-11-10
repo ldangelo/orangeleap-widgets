@@ -23,6 +23,7 @@
 </script>
     </head>
     <body>
+	<h3 class="heading">Registration Widget</h3>
     <div id="donorprofileform-div"></div>
     <div id="placements-div"></div>
     </body>

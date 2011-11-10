@@ -23,6 +23,7 @@ Ext.onReady(function() {
 </script>
     </head>
     <body>
+	<h3 class="heading">Donor Profile Widget</h3>
     <div id="donorprofileform-div"></div>
     <div id="placements-div"></div>
     </body>

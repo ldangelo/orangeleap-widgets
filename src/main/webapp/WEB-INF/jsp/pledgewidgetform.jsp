@@ -23,6 +23,7 @@
 	</script>
 	</head>
 	<body>
+	<h3 class="heading">Pledge Widget</h3>
 	<div id="pledge-div"></div>
 	<div id="placements-div"></div>
 	</body>

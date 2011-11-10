@@ -81,7 +81,7 @@
 		frame: true,
 		labelWidth: 100,
 		monitorValid:true,
-		width: 600,
+		width: 900,
 		trackResetOnLoad:true,
 		defaultType: 'textarea',
 		items: [{
@@ -93,7 +93,7 @@
                         fieldLabel: 'Style',
                         id: 'Style',
                         name: 'Style',
-                        width:400,
+                        width:700,
                         height:200
                 },
                 {
@@ -132,6 +132,7 @@
         </script>
     </head>
     <body>
+	<h3 class="heading">Style Properties</h3>
     <div id="styleform-div"></div>
     <div id="styles-div"></div>
 

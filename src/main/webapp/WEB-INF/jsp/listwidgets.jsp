@@ -107,52 +107,64 @@
 	var grid = new Ext.grid.GridPanel({
 		store: store,
 		columns: [
-			{id:'widgetid',width: 80,header:'Id',dataIndex:'widgetid'},
-			{id:'type',width: 80,header:'Type',dataIndex:'type'},
-			{id:'entityname',width: 80,header:'Entity Name',dataIndex:'entityname'},
+			{id:'widgetid',width: 200,header:'Id',dataIndex:'widgetid'},
+			{id:'type',width: 200,header:'Type',dataIndex:'type'},
+			{id:'entityname',width: 300,header:'Entity Name',dataIndex:'entityname'},
 			{id:'view',width:80,header:'View',renderer: renderViewIcon,dataIndex:'guid'},
-			{id:'notifications',width:80,header:'Notifications',renderer: renderNotificationIcon,dataIndex:'guid'},
+//			{id:'notifications',width:80,header:'Notifications',renderer: renderNotificationIcon,dataIndex:'guid'},
 			{id:'code',width:80,header:'Code',renderer: renderCodeIcon,dataIndex:'guid'}
 //			{id:'errorcount',width: 80,header:'Error Count',dataIndex:'errorcount', renderer: add_thousands_separator },
 //			{id:'viewcount',width:80,header:'View Count',dataIndex:'viewcount',renderer: add_thousands_separator }
 		],
-	       viewConfig: {
-            forceFit: false,
+	    viewConfig: {
             emptyText: 'No Widgets Found'
         },
 		stripeRows: true,
-		frame:true,
-		title: 'Current Widgets',
 		height: 250,
-		width: 655,
+		width: 900,
+		tbar: {
+            items: [
+                {
+					xtype: 'button',
+					'text': 'Add New Widget',
+					'tooltip': 'Add New Widget',
+					'iconCls': 'add',
+					'id': 'addNewButton',
+					'handler': function() {
+						window.location.href = 'createwidget.htm';
+					}
+				}
+			]
+		},
 	    listeners: {
-	    'rowclick': function(placementgrid,rowIndex, e) {
-	    //
-	    // need to load the placements
-	    var row = this.store.data.items[rowIndex].data;
+		    'rowclick': function(placementgrid,rowIndex, e) {
+				// need to load the placements
+				grid.el.mask('Loading', 'x-mask-loading');
+				var row = this.store.data.items[rowIndex].data;
 
-	    myplacementdatastore.load({params: {guid: row.guid}})
-	    }
+				var callbackFunc = function() {
+					grid.el.unmask();
+					$('#widgetPlacementTitle').show();
+				};
+		        myplacementdatastore.load({params: {guid: row.guid}, callback: callbackFunc})
+	        }
 	    }
 	});
 
     var panel = new Ext.Panel({
     	height: 350,
-    	width: 660,
+    	width: 900,
     	border: false,
-    	items:[ {
-    		xtype: 'button',
-    		text: 'New Widget',
-    		height: 50,
-    		handler: newForm
-    	}, grid ]
+    	items:[ grid ]
     });
 	panel.render('grid-example');
 });
 	</script>
 </head>
 <body>
+	<h3 class="heading">Current Widgets</h3>
 	<div id='grid-example'></div>
+	<h3 class="heading" style="display:none" id="widgetPlacementTitle">Widget Placement</h3>
 	<div id="placements-div"></div>
 </body>
 </page:applyDecorator>

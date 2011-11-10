@@ -22,6 +22,7 @@
 </script>
     </head>
     <body>
+	<h3 class="heading">Recurring Gift Widget</h3>
     <div id="donationform-div"></div>
     <div id="placements-div"></div>
     </body>

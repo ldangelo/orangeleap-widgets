@@ -22,6 +22,7 @@
 </script>
     </head>
     <body>
+	<h3 class="heading">Sponsorship Widget</h3>
     <div id="sponsorshipform-div"></div>
     <div id="placements-div"></div>
     </body>
