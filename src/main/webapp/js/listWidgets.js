@@ -70,6 +70,7 @@ Ext.onReady(function() {
 				{name: 'widgetid', mapping: 'widgetid'},
 				{name: 'guid'},
 				{name: 'type'},
+				{name: 'widgetDescription'},
 				{name: 'entityname'},
 				{name: 'errorcount'},
 				{name: 'viewcount'}
@@ -93,7 +94,7 @@ Ext.onReady(function() {
 			{id:'widgetid',width: 200,header:'Id',dataIndex:'widgetid'},
 			{
 				id: 'widgetName',
-				width: 300,
+				width: 200,
 				header: 'Widget Name',
 				dataIndex: 'type',
 				renderer: function(val, metaData, record, rowIndex, colIndex, store) {
@@ -128,7 +129,7 @@ Ext.onReady(function() {
 					return displayVal;
 				}
 			},
-//			{id:'type',width: 300,header:'Type',dataIndex:'type'},
+			{id:'widgetDescription',width: 200,header:'Description',dataIndex:'widgetDescription'},
 //			{id:'entityname',width: 150,header:'Entity Name',dataIndex:'entityname'},
 			{id:'view',width:80,header:'View',renderer: renderViewIcon,dataIndex:'guid'},
 //			{id:'notifications',width:80,header:'Notifications',renderer: renderNotificationIcon,dataIndex:'guid'},

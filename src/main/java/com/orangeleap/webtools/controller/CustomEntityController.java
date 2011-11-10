@@ -1,32 +1,27 @@
 package com.orangeleap.webtools.controller;
 
-import java.util.Map;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.Element;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
-import com.orangeleap.webtools.service.WidgetService;
-import com.orangeleap.webtools.service.OrangeLeapClientService;
+import com.orangeleap.client.Constituent;
+import com.orangeleap.client.CustomTableRow;
 import com.orangeleap.webtools.domain.CustomEntity;
 import com.orangeleap.webtools.domain.Widget;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import com.orangeleap.client.CustomTableRow;
-import com.orangeleap.client.Constituent;
+import com.orangeleap.webtools.service.OrangeLeapClientService;
+import com.orangeleap.webtools.service.WidgetService;
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.Element;
 import org.apache.commons.beanutils.PropertyUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 public class CustomEntityController extends MultiActionController {
 

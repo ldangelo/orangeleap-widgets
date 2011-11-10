@@ -1,13 +1,7 @@
 package com.orangeleap.webtools.controller;
 
-import org.apache.commons.beanutils.PropertyUtils;
-import com.orangeleap.client.Constituent;
-import com.orangeleap.client.CustomTableRow;
-import com.orangeleap.webtools.domain.CustomEntity;
-import com.orangeleap.webtools.domain.Widget;
-import com.orangeleap.webtools.service.OrangeLeapClientService;
-import com.orangeleap.webtools.service.WidgetService;
-import com.orangeleap.webtools.service.StyleService;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -16,21 +10,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
+import com.orangeleap.webtools.domain.Widget;
+import com.orangeleap.webtools.service.StyleService;
+import com.orangeleap.webtools.service.WidgetService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.Authentication;
 import org.springframework.security.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
-import com.orangeleap.webtools.domain.Style;
 
 public class AjaxWidgetFormController extends MultiActionController {
 	@Autowired
@@ -48,7 +37,7 @@ public class AjaxWidgetFormController extends MultiActionController {
 	 */
 	private String donationWidgetHTML;
 	private String donorProfileWidgetHTML;
-	
+
 	/**
 	 * Describe registrationWidgetHTML here.
 	 */
@@ -66,46 +55,45 @@ public class AjaxWidgetFormController extends MultiActionController {
 	 */
 	private String sponsorshipWidgetHTML;
 
-    private String pledgesWidgetHTML;
+	private String pledgesWidgetHTML;
 
 
-    /**
+	/**
 	 * Describe iframeHTML here.
 	 */
 	private String iframeHTML;
 
-    public String getRecurringGiftWidgetHTML() {
-        return recurringGiftWidgetHTML;
-    }
+	public String getRecurringGiftWidgetHTML() {
+		return recurringGiftWidgetHTML;
+	}
 
-    public void setRecurringGiftWidgetHTML(String recurringGiftWidgetHTML) {
-        this.recurringGiftWidgetHTML = recurringGiftWidgetHTML;
-    }
+	public void setRecurringGiftWidgetHTML(String recurringGiftWidgetHTML) {
+		this.recurringGiftWidgetHTML = recurringGiftWidgetHTML;
+	}
 
-    private String recurringGiftWidgetHTML;
+	private String recurringGiftWidgetHTML;
 
 	/**
 	 * Get the <code>IframeHTML</code> value.
-	 * 
+	 *
 	 * @return a <code>String</code> value
 	 */
 	public final String getIframeHTML() {
 		return iframeHTML;
 	}
 
-    public String getPledgesWidgetHTML() {
-        return pledgesWidgetHTML;
-    }
+	public String getPledgesWidgetHTML() {
+		return pledgesWidgetHTML;
+	}
 
-    public void setPledgesWidgetHTML(String pledgesWidgetHTML) {
-        this.pledgesWidgetHTML = pledgesWidgetHTML;
-    }
+	public void setPledgesWidgetHTML(String pledgesWidgetHTML) {
+		this.pledgesWidgetHTML = pledgesWidgetHTML;
+	}
 
 	/**
 	 * Set the <code>IframeHTML</code> value.
-	 * 
-	 * @param iframeHTML
-	 *            The new IframeHTML value.
+	 *
+	 * @param iframeHTML The new IframeHTML value.
 	 */
 	public final void setIframeHTML(final String iframeHTML) {
 		this.iframeHTML = iframeHTML;
@@ -113,7 +101,7 @@ public class AjaxWidgetFormController extends MultiActionController {
 
 	/**
 	 * Get the <code>SponsorshipWidgetHTML</code> value.
-	 * 
+	 *
 	 * @return a <code>String</code> value
 	 */
 	public final String getSponsorshipWidgetHTML() {
@@ -122,9 +110,8 @@ public class AjaxWidgetFormController extends MultiActionController {
 
 	/**
 	 * Set the <code>SponsorshipWidgetHTML</code> value.
-	 * 
-	 * @param sponsorshipWidgetHTML
-	 *            The new SponsorshipWidgetHTML value.
+	 *
+	 * @param sponsorshipWidgetHTML The new SponsorshipWidgetHTML value.
 	 */
 	public final void setSponsorshipWidgetHTML(
 			final String sponsorshipWidgetHTML) {
@@ -133,7 +120,7 @@ public class AjaxWidgetFormController extends MultiActionController {
 
 	/**
 	 * Get the <code>SponsorableWidgetHTML</code> value.
-	 * 
+	 *
 	 * @return a <code>String</code> value
 	 */
 	public final String getSponsorableWidgetHTML() {
@@ -142,9 +129,8 @@ public class AjaxWidgetFormController extends MultiActionController {
 
 	/**
 	 * Set the <code>SponsorableWidgetHTML</code> value.
-	 * 
-	 * @param sponsorableWidgetHTML
-	 *            The new SponsorableWidgetHTML value.
+	 *
+	 * @param sponsorableWidgetHTML The new SponsorableWidgetHTML value.
 	 */
 	public final void setSponsorableWidgetHTML(
 			final String sponsorableWidgetHTML) {
@@ -153,7 +139,7 @@ public class AjaxWidgetFormController extends MultiActionController {
 
 	/**
 	 * Get the <code>GiftHistoryWidgetHTML</code> value.
-	 * 
+	 *
 	 * @return a <code>String</code> value
 	 */
 	public final String getGiftHistoryWidgetHTML() {
@@ -162,9 +148,8 @@ public class AjaxWidgetFormController extends MultiActionController {
 
 	/**
 	 * Set the <code>GiftHistoryWidgetHTML</code> value.
-	 * 
-	 * @param giftHistoryWidgetHTML
-	 *            The new GiftHistoryWidgetHTML value.
+	 *
+	 * @param giftHistoryWidgetHTML The new GiftHistoryWidgetHTML value.
 	 */
 	public final void setGiftHistoryWidgetHTML(
 			final String giftHistoryWidgetHTML) {
@@ -173,7 +158,7 @@ public class AjaxWidgetFormController extends MultiActionController {
 
 	/**
 	 * Get the <code>RegistrationWidgetHTML</code> value.
-	 * 
+	 *
 	 * @return a <code>String</code> value
 	 */
 	public final String getRegistrationWidgetHTML() {
@@ -182,9 +167,8 @@ public class AjaxWidgetFormController extends MultiActionController {
 
 	/**
 	 * Set the <code>RegistrationWidgetHTML</code> value.
-	 * 
-	 * @param registrationWidgetHTML
-	 *            The new RegistrationWidgetHTML value.
+	 *
+	 * @param registrationWidgetHTML The new RegistrationWidgetHTML value.
 	 */
 	public final void setRegistrationWidgetHTML(
 			final String registrationWidgetHTML) {
@@ -201,7 +185,7 @@ public class AjaxWidgetFormController extends MultiActionController {
 
 	/**
 	 * Get the <code>DonationWidgetHTML</code> value.
-	 * 
+	 *
 	 * @return a <code>String</code> value
 	 */
 	public final String getDonationWidgetHTML() {
@@ -210,9 +194,8 @@ public class AjaxWidgetFormController extends MultiActionController {
 
 	/**
 	 * Set the <code>DonationWidgetHTML</code> value.
-	 * 
-	 * @param donationWidgetHTML
-	 *            The new DonationWidgetHTML value.
+	 *
+	 * @param donationWidgetHTML The new DonationWidgetHTML value.
 	 */
 	public final void setDonationWidgetHTML(final String donationWidgetHTML) {
 		this.donationWidgetHTML = donationWidgetHTML;
@@ -220,7 +203,7 @@ public class AjaxWidgetFormController extends MultiActionController {
 
 	/**
 	 * Get the <code>LoginWidgetHTML</code> value.
-	 * 
+	 *
 	 * @return a <code>String</code> value
 	 */
 	public final String getLoginWidgetHTML() {
@@ -229,9 +212,8 @@ public class AjaxWidgetFormController extends MultiActionController {
 
 	/**
 	 * Set the <code>LoginWidgetHTML</code> value.
-	 * 
-	 * @param loginWidgetHTML
-	 *            The new LoginWidgetHTML value.
+	 *
+	 * @param loginWidgetHTML The new LoginWidgetHTML value.
 	 */
 	public final void setLoginWidgetHTML(final String loginWidgetHTML) {
 		this.loginWidgetHTML = loginWidgetHTML;
@@ -278,7 +260,8 @@ public class AjaxWidgetFormController extends MultiActionController {
 			String value = request.getParameter(key);
 			try {
 				BeanUtils.setProperty(widget, key, value);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				logger.error(e.getMessage());
 			}
 		}
@@ -304,24 +287,32 @@ public class AjaxWidgetFormController extends MultiActionController {
 
 		if (customentitytype.equals("widget_authentication")) {
 			widget.setWidgetHtml(loginWidgetHTML);
-		} else if (customentitytype.equals("donor_profile")) {
+		}
+		else if (customentitytype.equals("donor_profile")) {
 			widget.setWidgetHtml(donorProfileWidgetHTML);
-		} else if (customentitytype.equals("sponsorable")) {
+		}
+		else if (customentitytype.equals("sponsorable")) {
 			widget.setWidgetHtml(sponsorableWidgetHTML);
-		} else if (customentitytype.equals("online_sponsorship")) {
+		}
+		else if (customentitytype.equals("online_sponsorship")) {
 			widget.setWidgetHtml(sponsorshipWidgetHTML);
-		} else if (customentitytype.equals("online_donation")) {
+		}
+		else if (customentitytype.equals("online_donation")) {
 			widget.setWidgetHtml(donationWidgetHTML);
-		} else if (customentitytype.equals("online_recurringgift")) {
-            widget.setWidgetHtml(recurringGiftWidgetHTML);
-        } else if (customentitytype.equals("online_registration")) {
+		}
+		else if (customentitytype.equals("online_recurringgift")) {
+			widget.setWidgetHtml(recurringGiftWidgetHTML);
+		}
+		else if (customentitytype.equals("online_registration")) {
 			widget.setWidgetHtml(registrationWidgetHTML);
-		} else if (customentitytype.equals("undefined")
+		}
+		else if (customentitytype.equals("undefined")
 				&& widgettype.equals("gifthistory")) {
 			widget.setWidgetHtml(giftHistoryWidgetHTML);
-		} else if (customentitytype.equals("undefined") && widgettype.equals("pledges")) {
-            widget.setWidgetHtml(pledgesWidgetHTML);
-        }
+		}
+		else if (customentitytype.equals("undefined") && widgettype.equals("pledges")) {
+			widget.setWidgetHtml(pledgesWidgetHTML);
+		}
 
 		widget.setIframeHtml(this.getIframeHTML()
 				.replaceAll("@APPLOCATION@", appLocation)
@@ -377,13 +368,13 @@ public class AjaxWidgetFormController extends MultiActionController {
 		fields.add(map);
 
 
-			map = new HashMap<String, Object>();
-			map.put("name", "widgetLoginSuccessURL");
-			map.put("readonly", false);
-			map.put("required", true);
-			map.put("type", "text");
-			map.put("header", "Widget Success URL");
-			fields.add(map);
+		map = new HashMap<String, Object>();
+		map.put("name", "widgetLoginSuccessURL");
+		map.put("readonly", false);
+		map.put("required", true);
+		map.put("type", "text");
+		map.put("header", "Widget Success URL");
+		fields.add(map);
 
 		if (customentitytype.equals("online_donation") || customentitytype.equals("online_recurringgift")) {
 			map = new HashMap<String, Object>();
@@ -395,15 +386,16 @@ public class AjaxWidgetFormController extends MultiActionController {
 			map.put("pickListId", "projectCode");
 			fields.add(map);
 
-            map = new HashMap<String,Object>();
-            map.put("name","motivationCode");
-            map.put("readonly",false);
-            map.put("required",false);
-            map.put("type","picklist");
-            map.put("header","Motivation Code");
-            map.put("picklistId","motivationCode");
-            fields.add(map);
-		} else if (customentitytype.equals("sponsorable")) {
+			map = new HashMap<String, Object>();
+			map.put("name", "motivationCode");
+			map.put("readonly", false);
+			map.put("required", false);
+			map.put("type", "picklist");
+			map.put("header", "Motivation Code");
+			map.put("picklistId", "motivationCode");
+			fields.add(map);
+		}
+		else if (customentitytype.equals("sponsorable")) {
 			map = new HashMap<String, Object>();
 			map.put("name", "sponsorshipURL");
 			map.put("readonly", false);
@@ -412,8 +404,9 @@ public class AjaxWidgetFormController extends MultiActionController {
 			map.put("header", "Sponsorship URL");
 			map.put("pickListId", "");
 			fields.add(map);
-		} else if (widgettype.equals("pledges")) {
-            map = new HashMap<String, Object>();
+		}
+		else if (widgettype.equals("pledges")) {
+			map = new HashMap<String, Object>();
 			map.put("name", "donationUrl");
 			map.put("readonly", false);
 			map.put("required", true);
@@ -421,7 +414,7 @@ public class AjaxWidgetFormController extends MultiActionController {
 			map.put("header", "Donation URL");
 			map.put("pickListId", "");
 			fields.add(map);
-        }
+		}
 
 		map = new HashMap<String, Object>();
 		map.put("name", "iframeHtml");
@@ -453,8 +446,6 @@ public class AjaxWidgetFormController extends MultiActionController {
 
 		List<Map<String, Object>> fields = new ArrayList<Map<String, Object>>();
 		Map<String, Object> map = new HashMap<String, Object>();
-
-		map = new HashMap<String, Object>();
 		map.put("name", "widgetGuid");
 		map.put("readonly", true);
 		map.put("required", false);
@@ -462,23 +453,31 @@ public class AjaxWidgetFormController extends MultiActionController {
 		map.put("header", "Widget GUID");
 		fields.add(map);
 
-        if (widgettype.equals("pledges") || widgettype.equals("gifthistory") || customentitytype.equals("donor_profile")) {
-            map = new HashMap<String, Object>();
-            map.put("name", "widgetAuthenticationRequired");
-            map.put("readonly", false);
-            map.put("required", true);
-            map.put("type", "boolean");
-            map.put("header", "Authentication Required");
-            fields.add(map);
+		map = new HashMap<String, Object>();
+		map.put("name", "widgetDescription");
+		map.put("readonly", false);
+		map.put("required", false);
+		map.put("type", "text");
+		map.put("header", "Description");
+		fields.add(map);
 
-            map = new HashMap<String, Object>();
-            map.put("name", "widgetAuthenticationURL");
-            map.put("readonly", false);
-            map.put("required", true);
-            map.put("type", "text");
-            map.put("header", "Authentication URL");
-            fields.add(map);
-        }
+		if (widgettype.equals("pledges") || widgettype.equals("gifthistory") || customentitytype.equals("donor_profile")) {
+			map = new HashMap<String, Object>();
+			map.put("name", "widgetAuthenticationRequired");
+			map.put("readonly", false);
+			map.put("required", true);
+			map.put("type", "boolean");
+			map.put("header", "Authentication Required");
+			fields.add(map);
+
+			map = new HashMap<String, Object>();
+			map.put("name", "widgetAuthenticationURL");
+			map.put("readonly", false);
+			map.put("required", true);
+			map.put("type", "text");
+			map.put("header", "Authentication URL");
+			fields.add(map);
+		}
 
 		map = new HashMap<String, Object>();
 		map.put("name", "styleId");
@@ -491,11 +490,13 @@ public class AjaxWidgetFormController extends MultiActionController {
 		map = new HashMap<String, Object>();
 		map.put("name", "widgetLoginSuccessURL");
 		map.put("readonly", false);
-		
-		if (customentitytype.equals("widget_authentication"))
+
+		if (customentitytype.equals("widget_authentication")) {
 			map.put("required", true);
-		else
+		}
+		else {
 			map.put("required", false);
+		}
 		map.put("type", "text");
 		map.put("header", "Widget Success URL");
 
@@ -510,15 +511,16 @@ public class AjaxWidgetFormController extends MultiActionController {
 			map.put("header", "Project Code");
 			fields.add(map);
 
-            map = new HashMap<String,Object>();
-            map.put("name","motivationCode");
-            map.put("readonly",false);
-            map.put("required",false);
-            map.put("type","picklist");
-            map.put("header","Motivation Code");
-            map.put("picklistId","motivationCode");
-            fields.add(map);
-		} else if (customentitytype.equals("sponsorable")) {
+			map = new HashMap<String, Object>();
+			map.put("name", "motivationCode");
+			map.put("readonly", false);
+			map.put("required", false);
+			map.put("type", "picklist");
+			map.put("header", "Motivation Code");
+			map.put("picklistId", "motivationCode");
+			fields.add(map);
+		}
+		else if (customentitytype.equals("sponsorable")) {
 			map = new HashMap<String, Object>();
 			map.put("name", "sponsorshipURL");
 			map.put("readonly", false);
@@ -527,8 +529,9 @@ public class AjaxWidgetFormController extends MultiActionController {
 			map.put("header", "Sponsorship URL");
 			map.put("pickListId", "");
 			fields.add(map);
-		}  else if (widgettype.equals("pledges")) {
-            map = new HashMap<String, Object>();
+		}
+		else if (widgettype.equals("pledges")) {
+			map = new HashMap<String, Object>();
 			map.put("name", "donationUrl");
 			map.put("readonly", false);
 			map.put("required", true);
@@ -536,7 +539,7 @@ public class AjaxWidgetFormController extends MultiActionController {
 			map.put("header", "Donation URL");
 			map.put("pickListId", "");
 			fields.add(map);
-        }
+		}
 
 		map = new HashMap<String, Object>();
 		map.put("name", "iframeHtml");
