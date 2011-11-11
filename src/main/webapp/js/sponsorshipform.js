@@ -331,10 +331,11 @@ var sponsorshipform =  {
 		    form.add(panel);
 		    var linkConfig = {
 		    	xtype: "box",
+				cls: 'olLink',
 		    	autoEl: {
 		    		tag: 'a',
 		    		href: 'http://www.orangeleap.com/',
-		    		html: 'Powered by Orange Leap.'
+		    		html: 'Powered by Orange Leap'
 		    	}
 		    };
 		    form.add(linkConfig);
@@ -459,14 +460,17 @@ var sponsorshipform =  {
 	    frame:true,
 	    labelWidth:100,
 	    monitorValid:true,
+		buttonAlign: 'center',
+		cls: 'widgetForm',
 	    width:900,
 	    items:[
-		countryComboConfig,genderCombo,ageCombo
+			countryComboConfig,genderCombo,ageCombo
 	    ],
 	    buttons: [{
-		text: 'Search',
-		handler: sponsorshipform.onSearch,
-		align:'center'
+			text: 'Search',
+			cls: 'mainButton',
+			handler: sponsorshipform.onSearch,
+			align:'center'
 	    }]
 	});
 	form = new Ext.FormPanel({
@@ -474,23 +478,27 @@ var sponsorshipform =  {
 //	    region: 'top',
 	    border: false,
 	    frame: true,
+		buttonAlign: 'center',
 	    labelWidth: 100,
 	    monitorValid:true,
 	    width: 900,
+		cls: 'widgetForm',
 	    items: [],
-	    buttons: [{
-		text: 'Previous',
-		handler: sponsorshipform.onPrevious,
-		align: 'center'
-	    },{
-		text: 'Sponsor',
-		handler: sponsorshipform.onSponsor,
-		align: 'center'
-	    },{
-		text: 'Next',
-		handler: sponsorshipform.onNext,
-		align: 'center'
-	    }
+	    buttons: [
+	        {
+				text: 'Previous',
+				handler: sponsorshipform.onPrevious,
+				align: 'center'
+			},{
+				text: 'Sponsor',
+				cls: 'mainButton',
+				handler: sponsorshipform.onSponsor,
+				align: 'center'
+			},{
+				text: 'Next',
+				handler: sponsorshipform.onNext,
+				align: 'center'
+			}
 	    ]
 	});
 

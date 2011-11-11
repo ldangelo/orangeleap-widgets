@@ -136,14 +136,17 @@ var authentication = {
 		Ext.form.Field.prototype.msgTarget = 'under';
 
 			this.loginform = new Ext.form.FormPanel({
-				id:'loginform',
+				id: 'loginform',
 				border:false,
-				frame:true,
-				title: 'Authenticate',
-				width:350,
+				frame: true,
+				title: 'Login',
+				cls: 'widgetForm',
+				buttonAlign: 'center',
+				width: 350,
 				defaults: {width: 230},
 				defaultType: 'textfield',
-				monitorValid:true,
+				labelAlign: 'right',
+				monitorValid: true,
 				items: [{
 					fieldLabel: 'User Name',
 					name: 'username',
@@ -169,15 +172,18 @@ var authentication = {
 					},
 					{
 						xtype: "box",
+						cls: 'olLink',
 						autoEl: {
 							tag: 'a',
 							href: 'http://www.orangeleap.com/',
-							html: 'Powered by Orange Leap.'
+							html: 'Powered by Orange Leap'
 						}
-					}],
-				buttons: [{
+					}
+				],
+				fbar: [{
 					text: 'Login',
 					formBind:true,
+					cls: 'mainButton',
 					handler: function(b,e) {
 
 						//
@@ -202,6 +208,7 @@ var authentication = {
 							bodyStyle: 'padding:10px',
 							defaults: {width: 230},
 							defaultType: 'textfield',
+							buttonAlign: 'center',
 							monitorValid:true,
 							items: [{
 								fieldLabel: 'User Name',
@@ -254,6 +261,7 @@ var authentication = {
 							border:false,
 							frame:true,
 							width:350,
+							buttonAlign: 'center',
 							bodyStyle: 'padding:10px',
 							defaults: {width: 230},
 							defaultType: 'textfield',
@@ -340,7 +348,16 @@ var authentication = {
 						}
 						changePasswordWin.show();
 					}
-				}]
+				}//,
+//				{
+//					xtype: "box",
+//					autoEl: {
+//						tag: 'a',
+//						href: 'http://www.orangeleap.com/',
+//						html: 'Powered by Orange Leap'
+//					}
+//                }
+				]
 
 			});
 

@@ -115,6 +115,7 @@ postToUrl: function(url, params, newWindow)
 	var pledgesGrid = new Ext.grid.GridPanel({
 	    id:'pledgegrid',
 	    store:mydatastore,
+		cls: 'widgetForm',
 	    columns:	[
 	    {id:'id', header: 'Pledge Id', dataIndex: 'id',sortable:true},
 	    {id:'donationdate',xtype: 'datecolumn', header: 'Pledge Date', dataIndex:'donationdate',sortable:true},
@@ -139,7 +140,7 @@ postToUrl: function(url, params, newWindow)
 	});
 	mydatastore.load();
         Ext.get('loading').remove();
-	Ext.get('loading-mask').fadeOut({remove:true});
+		Ext.get('loading-mask').fadeOut({remove:true});
 
     pledgesGrid.on("click", function(e) {
          var btn = e.getTarget('.controlBtn');

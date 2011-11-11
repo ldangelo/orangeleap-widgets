@@ -5,6 +5,8 @@ OrangeLeap.CustomEntity = Ext
 		.extend(
 				Ext.form.FormPanel,
 				{
+					cls: 'widgetForm',
+					buttonAlign: 'center',
 					monitorValid : true,
 					widgetid : null,
 					guid : null,
@@ -12,7 +14,6 @@ OrangeLeap.CustomEntity = Ext
 					buttonLabel : null,
 					mydatastore : null,
 					referer : "Unknown",
-					// form:null,
 					sessionId : null,
 					args : null,
 					successurl : null,
@@ -144,7 +145,7 @@ OrangeLeap.CustomEntity = Ext
 							}
 
 							if (user_message == null)
-								user_message = 'Form submitted successfully';
+								user_message = 'Your changes were successfully saved';
 
 							Ext.Msg.show({
 								title : 'Success',
@@ -175,22 +176,21 @@ OrangeLeap.CustomEntity = Ext
 					},
 
 					onSubmit : function() {
-						this
-								.getForm()
-								.submit(
-										{
-											url : 'customEntity.ajax?action=create&guid='
-													+ this.guid
-													+ '&sessionId'
-													+ this.sessionId,
-											scope : this,
-											success : this.onSuccess,
-											failure : this.onFailure,
-											params : {
-												cmd : 'save'
-											},
-											waitMsg : 'Saving...'
-										});
+						var customEntityForm = Ext.getCmp('form');
+						customEntityForm.form.submit(
+						{
+							url : 'customEntity.ajax?action=create&guid='
+									+ customEntityForm.guid
+									+ '&sessionId'
+									+ customEntityForm.sessionId,
+							scope : customEntityForm,
+							success : customEntityForm.onSuccess,
+							failure : customEntityForm.onFailure,
+							params : {
+								cmd : 'save'
+							},
+							waitMsg : 'Saving...'
+						});
 					},
 					initComponent : function() {
 						Ext.QuickTips.init();
@@ -481,6 +481,7 @@ OrangeLeap.CustomEntity = Ext
 											var btnConfig = {
 												text : this.form.buttonLabel,
 												handler : this.form.onSubmit,
+												cls: 'mainButton',
 												align : 'center',
 												formBind : true,
 												scope : this
@@ -488,10 +489,11 @@ OrangeLeap.CustomEntity = Ext
 
 											var linkConfig = {
 												xtype : "box",
+												cls: 'olLink',
 												autoEl : {
 													tag : 'a',
 													href : 'http://www.orangeleap.com/',
-													html : 'Powered by Orange Leap.'
+													html : 'Powered by Orange Leap'
 												}
 											};
 											this.form.superclass().addButton

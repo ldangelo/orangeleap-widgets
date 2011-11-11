@@ -96,6 +96,7 @@
 							<!-- files to exclude, path relative to output's directory <excludes> 
 								<exclude>**/*.pack.js</exclude> <exclude>**/compressed.css</exclude> </excludes> -->
 						</aggregation>
+<!--
 						<aggregation>
 							<insertNewLine>true</insertNewLine>
 							<output>${basedir}/src/main/webapp/css/webtools.css</output>
@@ -106,6 +107,7 @@
 								<include>xtheme-default.css</include>
 							</includes>
 						</aggregation>
+-->
 					</aggregations>
 				</configuration>
 			</plugin>
@@ -260,11 +262,11 @@
 							<jettyEnvXml>${basedir}/src/main/config/jetty-local/jetty-env.xml</jettyEnvXml>
 							<contextHandlers>
 								<contextHandler implementation="org.mortbay.jetty.webapp.WebAppContext">
-									<war>${basedir}/../cas/target/cas-${project.version}-SNAPSHOT.war</war>
+									<war>${basedir}/../cas/target/cas-${project.version}.war</war>
 									<contextPath>/cas</contextPath>
 								</contextHandler>
 								<contextHandler implementation="org.mortbay.jetty.webapp.WebAppContext">
-									<war>${basedir}/../tangerine/target/tangerine-${project.version}-SNAPSHOT.war</war>
+									<war>${basedir}/../tangerine/target/tangerine-${project.version}.war</war>
 									<contextPath>/orangeleap</contextPath>
 								</contextHandler>
 							</contextHandlers>
