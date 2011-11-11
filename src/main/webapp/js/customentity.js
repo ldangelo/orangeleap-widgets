@@ -213,7 +213,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 
 			if (this.authenticate == true && this.sessionId == "") {
 				// window.open(this.loginurl,"_blank");
-				window.location = this.loginurl;
+				top.location.href = this.loginurl;
 				return;
 			}
 
