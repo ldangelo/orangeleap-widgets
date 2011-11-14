@@ -4400,7 +4400,7 @@ body.ext-ie6.x-body-masked .x-window select {
 }
 .x-tool-expand-east, .x-tool-expand-west {
     float: none;
-    margin: 3px auto;
+    margin: 3px 2px;
 }
 .x-accordion-hd .x-tool-toggle {
     background-position: 0 -255px;
@@ -7700,3 +7700,60 @@ body.ext-ie6 .x-superboxselect-item {
 .widgetForm {
 	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
 }
+.loginButton {
+	text-align: center;
+}
+
+/* Copied over from extjs3.4 css */
+.x-quirks .ext-ie9 .x-form-text {
+    height: 22px;
+    padding-top: 3px;
+    padding-bottom: 0px;
+}
+.x-quirks .ext-ie9 .x-input-wrapper .x-form-text,
+.x-quirks .ext-ie9 .x-form-field-trigger-wrap .x-form-text {
+    margin-top: -1px;
+    margin-bottom: -1px;
+}
+.x-quirks .ext-ie9 .x-input-wrapper .x-form-element {
+    margin-bottom: -1px;
+}
+.ext-strict .ext-webkit .x-small-editor .x-form-text{
+    height:14px !important;
+}
+.ext-strict .ext-ie9 .x-fieldset legend.x-fieldset-header {
+    padding-top: 1px;
+}
+.x-tool-prev {
+    background-position:0 -105px;
+}
+
+.x-tool-prev-over {
+    background-position:-15px -105px;
+}
+
+.x-tool-next {
+    background-position:0 -120px;
+}
+.x-tool-next-over {
+    background-position:-15px -120px;
+}
+.x-tool-expand {
+    background-position:0 -330px;
+}
+
+.x-tool-expand-over {
+    background-position:-15px -330px;
+}
+
+.x-tool-collapse {
+    background-position:0 -345px;
+}
+
+.x-tool-collapse-over {
+    background-position:-15px -345px;
+}
+
+
+
+

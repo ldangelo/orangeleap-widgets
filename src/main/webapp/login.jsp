@@ -36,7 +36,7 @@
 							<td><input size="30" class="loginField" type="password" name="j_password" id="j_password" /></td>
 						</tr>
 						<tr>
-							<td class="loginButton">
+							<td class="loginButton" colspan="2">
 								<input class="loginField" type="hidden" name="sitename" id="sitename" />
 								<input class="loginField" type="hidden" name="j_username" id="j_username" />
 								<input class="loginButton" name="submit" id="submit" type="submit" value="Sign In"/>

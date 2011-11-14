@@ -189,7 +189,7 @@ var authentication = {
 						//
 						// call authenticate through DWR
 						var callbackproxy = function(dataFromServer) {
-						authentication.handleReturn(dataFromServer,widgetid,successurl);
+							authentication.handleReturn(dataFromServer,widgetid,successurl);
 						}
 
 						var callMetaData = {callback:callbackproxy};
@@ -348,37 +348,25 @@ var authentication = {
 						}
 						changePasswordWin.show();
 					}
-				}//,
-//				{
-//					xtype: "box",
-//					autoEl: {
-//						tag: 'a',
-//						href: 'http://www.orangeleap.com/',
-//						html: 'Powered by Orange Leap'
-//					}
-//                }
-				]
+				}
+			]
+		});
 
-			});
-
-
-	//	var element = Ext.query('script[src$=required-field.js]')[0];
-	//	var renderElement = element.parentNode;
 		this.loginform.render("widget");
 
 		OrangeLeapWidget.updateViewCount(widgetid,document.location.href);
     },
 
     showError: function() {
-	$j("div#globalErrors").show();
+		$j("div#globalErrors").show();
     },
 
     hideError: function() {
-	$j("div#globalErrors").hide();
+		$j("div#globalErrors").hide();
     },
 
     clearError: function() {
-	$j("ul#errors").empty();
+		$j("ul#errors").empty();
     },
 
     errorHandlerFinished: function() {
@@ -403,5 +391,4 @@ var authentication = {
 
 	return isValid;
     }
-
 }
