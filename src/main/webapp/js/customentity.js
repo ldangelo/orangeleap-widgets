@@ -196,7 +196,7 @@ OrangeLeap.CustomEntity = Ext
 						Ext.QuickTips.init();
 
 						if (this.guid == null)
-							this.showError("Guid id undefinded");
+							this.showError("Guid ID is undefined");
 						if (this.authenticate == null)
 							this.showError("Authenticate is undefined");
 						if (this.loginurl == null)

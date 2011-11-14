@@ -140,7 +140,7 @@ var sponsorshipform =  {
 	    pattern=pattern+ "gender=" + field.value + ';';
 
 	fldidx = 0;
-	msgBox = Ext.MessageBox.wait("Searching...","Searching Sponships");
+	msgBox = Ext.MessageBox.wait("Searching...","Searching Sponsorships");
 
 	mydatastore.load({params:{start:0,limit:pageSize,pattern:pattern}});
     },
