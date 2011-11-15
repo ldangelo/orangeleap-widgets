@@ -65,9 +65,6 @@ Ext.onReady(function() {
 			emptyText: ' ',
 			width: 250,
 			listeners: {
-				'change': function(combobox, newValue, oldValue) {
-					showWidgetForm(newValue);
-				},
 				'select': function(combobox, record, index) {
 					showWidgetForm(combobox.getValue());
 				},
