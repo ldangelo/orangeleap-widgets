@@ -160,7 +160,7 @@ var sponsorshipform =  {
 
 	    query=query + items[i].name + '=' + items[i].value;
 	}
-	window.location=sponsorshipform.sponsorshipurl + query
+	top.location.href=sponsorshipform.sponsorshipurl + query
     },
     clearForm:function() {
 	//

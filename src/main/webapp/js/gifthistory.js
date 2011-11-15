@@ -66,8 +66,7 @@ var gifthistory = {
     this.widgetId = widgetid;
 
 	if (authenticate == true && this.sessionId == "") {
-        window.open(redirecturl,"_blank");
-//	    window.location=redirecturl;
+        top.location.href=redirecturl;
 	    return;
 	}
 

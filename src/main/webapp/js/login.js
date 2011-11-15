@@ -3,7 +3,8 @@ var $j = jQuery.noConflict();
 var authentication = {
 	successurl:null,
     loginform:null,
-
+ 
+  
 	postToUrl: function(url, params, newWindow) {
 		var form = $('<form>');
 		form.attr('action', url);
@@ -102,7 +103,7 @@ var authentication = {
 			this.setCookie("sessionId",sessionId);
 
 			if (successurl != null) {
-				window.open(successurl);
+				top.location.href=successurl;
 			}
 		}
     },

@@ -95,8 +95,8 @@ postToUrl: function(url, params, newWindow)
 	var sessionId = this.getCookie("sessionId");
 
 	if (authenticate == true && sessionId == "") {
-        window.open(redirecturl, "_blank");
-//	    window.location=redirecturl;
+//        window.open(redirecturl, "_blank");
+	    top.location.href=redirecturl;
 	    return;
 	}
 
@@ -154,7 +154,7 @@ postToUrl: function(url, params, newWindow)
                 case 'payment':
                     console.log('make a payment - ' + record.id);
                     var params = {};
-                    window.open(donationurl + "?pledge_id=" + record.id +"&gift_amount=" + record.data.amount + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode);
+                    top.location.href= donationurl + "?pledge_id=" + record.id +"&gift_amount=" + record.data.amount + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;
                     //pledges.postToUrl('http://localhost/~ldangelo/donation.html',params);
                     break;
                 case 'go':
