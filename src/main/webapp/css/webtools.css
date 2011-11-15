@@ -6077,7 +6077,13 @@ body {
     font-family: helvetica,arial,tahoma;
 }
 .ext-el-mask {
-    background-color: #DADADA;
+    background-color: #000;
+    opacity: 0.5;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
 }
 .ext-el-mask-msg {
     background-color: #EBEBEB;
@@ -7702,6 +7708,11 @@ body.ext-ie6 .x-superboxselect-item {
 }
 .loginButton {
 	text-align: center;
+}
+.showWait {
+    background-image: url("../images/indicator.gif");
+    background-position: right center;
+    background-repeat: no-repeat;
 }
 
 /* Copied over from extjs3.4 css */

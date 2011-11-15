@@ -153,6 +153,7 @@ var authentication = {
 					allowBlank:false,
 					minLength: 6,
 					maxLength: 12,
+					id: 'enterUserName',
 					blankText: 'Enter your User Name.',
 					minLengthText: 'User Name must be at least 6 characters'
 				},{
@@ -185,11 +186,13 @@ var authentication = {
 					formBind:true,
 					cls: 'mainButton',
 					handler: function(b,e) {
+						Ext.get('enterUserName').addClass('showWait');
 
 						//
 						// call authenticate through DWR
 						var callbackproxy = function(dataFromServer) {
 							authentication.handleReturn(dataFromServer,widgetid,successurl);
+							Ext.get('enterUserName').removeClass('showWait');
 						}
 
 						var callMetaData = {callback:callbackproxy};
@@ -210,27 +213,30 @@ var authentication = {
 							defaultType: 'textfield',
 							buttonAlign: 'center',
 							monitorValid:true,
-							items: [{
-								fieldLabel: 'User Name',
-								name: 'fpusername',
-								allowBlank:false,
-								minLength:6,
-								maxLength:12,
-								blankText: 'Enter your User Name.',
-								minLengthText: 'User Name must be at least 6 characters'
-							}
-								],
+							items: [
+								{
+									fieldLabel: 'User Name',
+									name: 'fpusername',
+									id: 'forgotPasswordUserName',
+									allowBlank: false,
+									minLength: 6,
+									maxLength: 12,
+									blankText: 'Enter your User Name.',
+									minLengthText: 'User Name must be at least 6 characters'
+								}
+							],
 							buttons: [{
 								text: 'Submit',
 								formBind:true,
 								handler: function(b,e) {
+									Ext.get('forgotPasswordUserName').addClass('showWait');
 									var callbackproxy = function(dataFromServer) {
-										authentication.forgotPassword(dataFromServer,widgetid);
+										authentication.forgotPassword(dataFromServer, widgetid);
+										Ext.get('forgotPasswordUserName').removeClass('showWait');
 									}
+									var callMetaData= { callback: callbackproxy };
 
-									var callMetaData={callback:callbackproxy};
-
-									OrangeLeapWidget.forgotPassword(widgetid,$j("input[name=fpusername]").val(),callMetaData);
+									OrangeLeapWidget.forgotPassword(widgetid, $j("input[name=fpusername]").val(), callMetaData);
 								}
 							}]
 						});
@@ -238,6 +244,7 @@ var authentication = {
 						var forgotPasswordWin = new Ext.Window({
 							layout: 'fit',
 							plain: false,
+							modal: true,
 							width: 400,
 							height: 130,
 							id: 'forgotPasswordWin',
@@ -266,76 +273,81 @@ var authentication = {
 							defaults: {width: 230},
 							defaultType: 'textfield',
 							monitorValid:true,
-							items: [{
-								fieldLabel: 'User Name',
-								name: 'cpusername',
-								allowBlank:false,
-								minLength:6,
-								maxLength:12,
-								blankText: 'Enter your User Name.',
-								minLengthText: 'User Name must be at least 6 characters'
-							},
-									{
-								fieldLabel: 'Old Password',
-								name: 'oldpassword',
-								allowBlank:false,
-								minLength: 6,
-								maxLength: 12,
-								blankText: 'Enter your current Password.',
-								minLengthText: 'Old Password must be at least 6 characters'
+							items: [
+								{
+									fieldLabel: 'User Name',
+									name: 'cpusername',
+									id: 'changePasswordUserName',
+									allowBlank:false,
+									minLength:6,
+									maxLength:12,
+									blankText: 'Enter your User Name.',
+									minLengthText: 'User Name must be at least 6 characters'
 								},
-												{
-								fieldLabel: 'New Password',
-								name: 'newpassword',
-								allowBlank:false,
-								minLength: 6,
-								maxLength: 12,
-								blankText: 'Enter your New Password.',
-								minLengthText: 'New Password must be at least 6 characters'
+								{
+									fieldLabel: 'Old Password',
+									name: 'oldpassword',
+									allowBlank:false,
+									minLength: 6,
+									maxLength: 12,
+									blankText: 'Enter your current Password.',
+									minLengthText: 'Old Password must be at least 6 characters'
 								},
-									{
-								fieldLabel: 'New Password',
-								name: 'newpasswordre',
-								allowBlank:false,
-								minLength: 6,
-								maxLength: 12,
-								blankText: 'Re-Enter your New Password.',
-								minLengthText: 'New Password must be at least 6 characters'
+								{
+									fieldLabel: 'New Password',
+									name: 'newpassword',
+									allowBlank:false,
+									minLength: 6,
+									maxLength: 12,
+									blankText: 'Enter your New Password.',
+									minLengthText: 'New Password must be at least 6 characters'
+								},
+								{
+									fieldLabel: 'New Password',
+									name: 'newpasswordre',
+									allowBlank:false,
+									minLength: 6,
+									maxLength: 12,
+									blankText: 'Re-Enter your New Password.',
+									minLengthText: 'New Password must be at least 6 characters'
 								}
 
-								],
+							],
 							buttons: [{
-							text: 'Submit',
-							formBind:true,
-							handler: function(b,e) {
-								if ($j("input[name=newpassword]").val() != $j("input[name=newpasswordre]").val()) {
-										// display the error
-									Ext.Msg.show({
-										title: 'ERROR',
-										msg: "New Passwords Must Be The Same",
-										icon: Ext.MessageBox.ERROR,
-										buttons: Ext.Msg.OK,
-										modal: true
-									});
+								text: 'Submit',
+								formBind:true,
+								handler: function(b,e) {
+									if ($j("input[name=newpassword]").val() != $j("input[name=newpasswordre]").val()) {
+											// display the error
+										Ext.Msg.show({
+											title: 'ERROR',
+											msg: "New Passwords Must Be The Same",
+											icon: Ext.MessageBox.ERROR,
+											buttons: Ext.Msg.OK,
+											modal: true
+										});
 
-									return;
+										return;
+									}
+									Ext.get('changePasswordUserName').addClass('showWait');
+									var callbackproxy = function(dataFromServer) {
+										authentication.changePassword(dataFromServer,widgetid);
+										Ext.get('changePasswordUserName').removeClass('showWait');
+									}
+
+									var callMetaData= { callback: callbackproxy };
+
+									OrangeLeapWidget.changePassword(widgetid, $j("input[name=cpusername]").val(), $j("input[name=oldpassword]").val(), $j("input[name=newpassword]").val(), callMetaData);
 								}
-								var callbackproxy = function(dataFromServer) {
-									authentication.changePassword(dataFromServer,widgetid);
-								}
-
-								var callMetaData={callback:callbackproxy};
-
-								OrangeLeapWidget.changePassword(widgetid,$j("input[name=cpusername]").val(),$j("input[name=oldpassword]").val(),$j("input[name=newpassword]").val(),callMetaData);
-							}
 							}]
 						});
 
 						changePasswordWin = new Ext.Window({
 							layout: 'fit',
 							plain: false,
+							modal: true,
 							width: 400,
-							height: 275,
+							height: 260,
 							title: 'Change Password',
 							id: 'changePasswordWin',
 							items: [
@@ -387,8 +399,8 @@ var authentication = {
     },
 
     validateForm: function() {
-	var isValid=1;
+		var isValid=1;
 
-	return isValid;
+		return isValid;
     }
 }
