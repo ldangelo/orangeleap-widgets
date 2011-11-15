@@ -560,6 +560,9 @@ html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fiel
 img, body, html {
     border: 0 none;
 }
+html, body {
+	height: 100%;
+}
 address, caption, cite, code, dfn, em, strong, th, var {
     font-style: normal;
     font-weight: normal;
@@ -580,6 +583,7 @@ q:before, q:after {
     height: 100%;
     left: 0;
     opacity: 0.5;
+	filter: alpha(opacity = 50);
     top: 0;
     width: 100%;
     z-index: 100;
@@ -7703,8 +7707,14 @@ body.ext-ie6 .x-superboxselect-item {
 	.olLink:focus {
 		color: blue;
 }
+
+#widget {
+	width: 99%;
+	height: 99%;
+}
 .widgetForm {
 	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+	margin: auto;
 }
 .loginButton {
 	text-align: center;

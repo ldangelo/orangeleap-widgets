@@ -34,11 +34,10 @@ public class CustomEntityController extends MultiActionController {
 	@Resource(name = "sessionCache")
 	Cache sessionCache;
 
-	public ModelAndView view(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ModelAndView view(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String guid = request.getParameter("guid");
 		String sessionId = request.getParameter("sessionId");
-		Long constituentid = -1L;
+		Long constituentid = - 1L;
 
 		Widget w = widgetService.getWidget(guid);
 		if (w == null) {
@@ -51,12 +50,13 @@ public class CustomEntityController extends MultiActionController {
 			Element elem = sessionCache.get(sessionId);
 			if (elem == null) {
 				return getModelMapError("Invalid Session ID");
-			} else {
+			}
+			else {
 				constituentid = (Long) elem.getObjectValue();
 			}
 		}
 
-		if (guid != null && !guid.equals("undefined")) {
+		if (guid != null && ! guid.equals("undefined")) {
 			List<CustomEntity> ceList = widgetService.getCustomEntity(guid);
 			return getModelMap(ceList, guid, new Long(constituentid));
 		}
@@ -84,14 +84,14 @@ public class CustomEntityController extends MultiActionController {
 			HttpServletResponse response) throws Exception {
 		String guid = request.getParameter("guid");
 		String sessionId = request.getParameter("sessionId");
-		Long constituentid = -1L;
-		
-		
+		Long constituentid = - 1L;
+
+
 		//
 		// incase a successurl is set and we are going to redirect
 		response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
 
-		
+
 		Widget w = widgetService.getWidget(guid);
 		if (w == null) {
 			return getModelMapError("Invalid guid");
@@ -112,37 +112,39 @@ public class CustomEntityController extends MultiActionController {
 						break;
 					}
 				}
-				
+
 				if (sessionCookie == null) {
 					//
 					// clear the 
-					sessionCookie = new Cookie("sessionId","");
+					sessionCookie = new Cookie("sessionId", "");
 				}
-				
+
 				response.addCookie(sessionCookie);
-			} else {
+			}
+			else {
 				constituentid = (Long) elem.getObjectValue();
 			}
 		}
 
-		if (constituentid != null && !constituentid.equals("undefined")
-				&& !constituentid.equals("")) {
+		if (constituentid != null && ! constituentid.equals("undefined")
+				&& ! constituentid.equals("")) {
 			orangeLeapClientService.removeFromCache(new Long(constituentid));
 		}
 
-		if (guid != null && !guid.equals("undefined")) {
+		if (guid != null && ! guid.equals("undefined")) {
 			try {
-			CustomTableRow row = widgetService.CreateCustomTableRow(guid,
-					request);
-			if (row != null) {
-				return getModelMap(row);
+				CustomTableRow row = widgetService.CreateCustomTableRow(guid,
+						request);
+				if (row != null) {
+					return getModelMap(row);
+				}
 			}
-			} catch (Exception e) {
+			catch (Exception e) {
 				return getModelMapError(e.getMessage());
 			}
 		}
 
-		
+
 		return getModelMapError("Error trying to create customEntity.");
 	}
 
@@ -173,7 +175,7 @@ public class CustomEntityController extends MultiActionController {
 
 		Constituent constituent = null;
 
-		if (constituentid != -1) {
+		if (constituentid != - 1) {
 			//
 			// get the constituent associated with this custom entity
 			constituent = orangeLeapClientService.getConstituentById(guid,
@@ -190,8 +192,9 @@ public class CustomEntityController extends MultiActionController {
 
 			//
 			// skip the id as we already put it in...
-			if (ce.getName().equals("id"))
+			if (ce.getName().equals("id")) {
 				continue;
+			}
 
 			try {
 				String ceName = ce.getName();
@@ -200,22 +203,25 @@ public class CustomEntityController extends MultiActionController {
 					if (ce.getExpression().startsWith("constituent")) {
 						//
 						// split the string on instances of '.'
-						String args[] = ce.getExpression().split("\\.", -1);
+						String args[] = ce.getExpression().split("\\.", - 1);
 						if (args.length == 2) {
 							row.put(ce.getName(), PropertyUtils
 									.getSimpleProperty(constituent, args[1]));
-						} else if (args.length == 3) {
+						}
+						else if (args.length == 3) {
 							Object obj = PropertyUtils.getSimpleProperty(
 									constituent, args[1]);
 							row.put(ce.getName(), PropertyUtils
 									.getSimpleProperty(obj, args[2]));
 						}
 					}
-				} else {
+				}
+				else {
 					// we don't have a constituent
 					row.put(ce.getName(), "");
 				}
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				row.put(ce.getName(), "");
 			}
 		}
@@ -229,8 +235,7 @@ public class CustomEntityController extends MultiActionController {
 	/**
 	 * Generates modelMap to return in the modelAndView in case of exception
 	 *
-	 * @param msg
-	 *            message
+	 * @param msg message
 	 * @return
 	 */
 	private ModelAndView getModelMapError(String msg) {

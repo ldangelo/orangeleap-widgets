@@ -402,18 +402,18 @@ var sponsorshipform =  {
 	    allowBlank:false,
 	    emptyText: 'Select location...',
 	    store:new Ext.data.JsonStore({
-		id:'Name',
-		root:'rows',
-		totalProperty:'totalRows',
-		fields: [
-		    {name:'Name',type:'string'},
-		    {name:'Description',type:'string'}
-		],
-		url:'picklistItems.json',
-		baseParams: {
-		    guid: guid,
-		    picklistname: 'sponsorablecountry'
-		}
+			id:'Name',
+			root:'rows',
+			totalProperty:'totalRows',
+			fields: [
+				{name:'Name',type:'string'},
+				{name:'Description',type:'string'}
+			],
+			url:'picklistItems.json',
+			baseParams: {
+				guid: guid,
+				picklistname: 'sponsorablecountry'
+			}
 	    }),
 	    fieldLabel:'Country'
 	};

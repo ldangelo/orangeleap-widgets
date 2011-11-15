@@ -104,8 +104,8 @@ function generateForm(form,store,meta) {
                         timeout: 120000
                     }),
 				    baseParams: {
-					guid: "",
-					picklistname: fields[f].name
+						guid: "",
+						picklistname: fields[f].name
 				    }
 				}),
 				fieldLabel:fields[f].header

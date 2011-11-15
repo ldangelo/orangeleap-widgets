@@ -347,7 +347,7 @@ var authentication = {
 							plain: false,
 							modal: true,
 							width: 400,
-							height: 260,
+							height: 270,
 							title: 'Change Password',
 							id: 'changePasswordWin',
 							items: [
