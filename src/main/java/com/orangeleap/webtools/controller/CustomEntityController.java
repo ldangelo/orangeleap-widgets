@@ -15,6 +15,7 @@ import com.orangeleap.client.CustomTableRow;
 import com.orangeleap.webtools.domain.CustomEntity;
 import com.orangeleap.webtools.domain.Widget;
 import com.orangeleap.webtools.service.OrangeLeapClientService;
+import com.orangeleap.webtools.service.PicklistService;
 import com.orangeleap.webtools.service.WidgetService;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.Element;
@@ -31,10 +32,14 @@ public class CustomEntityController extends MultiActionController {
 	@Autowired
 	OrangeLeapClientService orangeLeapClientService;
 
+	@Autowired
+	PicklistService picklistService;
+
 	@Resource(name = "sessionCache")
 	Cache sessionCache;
 
-	public ModelAndView view(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@SuppressWarnings("unchecked")
+	public ModelAndView view(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		String guid = request.getParameter("guid");
 		String sessionId = request.getParameter("sessionId");
 		Long constituentid = - 1L;
@@ -76,8 +81,9 @@ public class CustomEntityController extends MultiActionController {
 		}
 
 		if (guid != null && ! guid.equals("undefined")) {
-			List<CustomEntity> ceList = widgetService.getCustomEntity(guid);
-			return getModelMap(ceList, guid, new Long(constituentid));
+			final List<CustomEntity> ceList = widgetService.getCustomEntity(guid);
+
+			return getModelMap(ceList, guid, constituentid);
 		}
 
 		return getModelMapError("Error trying to retrieve customEntity");
@@ -90,7 +96,6 @@ public class CustomEntityController extends MultiActionController {
 	 * @return
 	 */
 	private ModelAndView getModelMap(CustomTableRow row) {
-
 		Map<String, Object> modelMap = new HashMap<String, Object>(3);
 		modelMap.put("total", 1);
 		modelMap.put("data", row);
@@ -116,7 +121,7 @@ public class CustomEntityController extends MultiActionController {
 			return getModelMapError("Invalid guid");
 		}
 
-		if (w.getWidgetAuthenticationRequired() == true) {
+		if (w.getWidgetAuthenticationRequired()) {
 			//
 			// get the constituent id out of the session cache
 			Element elem = sessionCache.get(sessionId);
@@ -188,6 +193,8 @@ public class CustomEntityController extends MultiActionController {
 		metaData.put("totalProperty", "totalRows");
 		metaData.put("successProperty", "success");
 		metaData.put("fields", ceList);
+		final Map<String, List<Map<String, Object>>> picklistNameItems = widgetService.findPicklistItemsForCustomEntities(ceList, guid);
+		metaData.put("picklistNameItems", picklistNameItems);
 
 		modelMap.put("metaData", metaData);
 		modelMap.put("success", true);

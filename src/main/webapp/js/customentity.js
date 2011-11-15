@@ -14,6 +14,8 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 		sessionId : null,
 		args : null,
 		successurl : null,
+		picklistNameItemsMap: {},
+
 		postToUrl : function(url, params, newWindow) {
 			var form = $j('<form>');
 			form.attr('action', url);
@@ -54,16 +56,12 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 		setCookie : function(c_name, value, expiredays) {
 			var exdate = new Date();
 			exdate.setDate(exdate.getDate() + expiredays);
-			document.cookie = c_name
-					+ "="
-					+ escape(value)
-					+ ((expiredays == null) ? "" : ";expires="
-							+ exdate.toUTCString());
+			document.cookie = c_name + "=" + escape(value) + ( ! expiredays ? "" : ";expires=" + exdate.toUTCString());
 		},
 		populateArgs : function(form, args) {
 			var referer = args.split('?');
 
-			if (referer[1] != null) {
+			if (referer[1]) {
 				var parms = referer[1].split('&');
 
 				for (x in parms) {
@@ -75,14 +73,14 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 
 					if (keyval[0] == 'id') {
 						var f = form.findById("sponsorable_id");
-						if (f != null) {
+						if (f) {
 							f.setValue(keyval[1]);
 						}
 						continue; // skip id's
 					}
 
 					var f = form.findById(keyval[0]);
-					if (f != null) {
+					if (f) {
 						f.setValue(keyval[1]);
 					}
 				}
@@ -91,27 +89,17 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 		populateWidget : function(constituent, table) {
 			for (x in table.fields) {
 				var fieldName = table.fields[x].customTableFieldName;
-				if (fieldName != null) {
+				if (fieldName) {
 					if (fieldName.indexOf(".") != -1) {
 						//
 						// this is a sub object like primaryEmail,
 						// etc...
 						var obj = constituent[fieldName.substring(
 								0, fieldName.indexOf("."))];
-						$j(
-								"[name="
-										+ table.fields[x].customTableFieldName
-										+ "]").val(
-								obj[fieldName.substring(fieldName
-										.indexOf(".") + 1,
-										fieldName.length)]);
-					} else {
-						$j(
-								"[name="
-										+ table.fields[x].customTableFieldName
-										+ "]")
-								.val(
-										constituent[table.fields[x].customTableFieldName]);
+						$j("[name=" + table.fields[x].customTableFieldName + "]").val(obj[fieldName.substring(fieldName.indexOf(".") + 1, fieldName.length)]);
+					}
+					else {
+						$j("[name=" + table.fields[x].customTableFieldName + "]").val(constituent[table.fields[x].customTableFieldName]);
 					}
 				}
 			}
@@ -126,8 +114,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 					if (c_end == -1) {
 						c_end = document.cookie.length;
 					}
-					return unescape(document.cookie.substring(
-							c_start, c_end));
+					return unescape(document.cookie.substring(c_start, c_end));
 				}
 			}
 			return "";
@@ -135,7 +122,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 		onSuccess : function(f, a) {
 			var cfMap = a.result.data.customFieldMap.entry;
 
-			if (this.successurl == null || this.successurl == '') {
+			if ( ! this.successurl || this.successurl == '') {
 				var user_message = null;
 				for ( var f = 0; f < cfMap.length; f++) {
 					if (cfMap[f].key == 'user_message') {
@@ -144,7 +131,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 					}
 				}
 
-				if (user_message == null) {
+				if ( ! user_message) {
 					user_message = 'Your changes were successfully saved';
 				}
 
@@ -178,8 +165,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 
 		onSubmit : function() {
 			var customEntityForm = Ext.getCmp('form');
-			customEntityForm.form.submit(
-			{
+			customEntityForm.form.submit({
 				url : 'customEntity.ajax?action=create&guid='
 						+ customEntityForm.guid
 						+ '&sessionId'
@@ -196,16 +182,18 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 		initComponent : function() {
 			Ext.QuickTips.init();
 
-			if (this.guid == null) {
+			var that = this;
+
+			if ( ! this.guid) {
 				this.showError("Guid ID is undefined");
 			}
-			if (this.authenticate == null) {
+			if ( ! this.authenticate) {
 				this.showError("Authenticate is undefined");
 			}
-			if (this.loginurl == null) {
+			if ( ! this.loginurl) {
 				this.showError("Login URL is undefined");
 			}
-			if (this.buttonLabel == null) {
+			if ( ! this.buttonLabel) {
 				this.showError("Button Label is undefined");
 			}
 
@@ -233,28 +221,27 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 
 			// call parent
 			OrangeLeap.CustomEntity.superclass.initComponent.apply(this, arguments);
-			var proxy = new Ext.data.HttpProxy(
-					{
-						api : {
-							read : 'customEntity.ajax?action=view&guid='
-									+ this.guid
-									+ '&sessionId='
-									+ this.sessionId,
-							create : 'customEntity.ajax?action=create&guid='
-									+ this.guid
-									+ '&sessionId='
-									+ this.sessionId,
-							update : 'customEntity.ajax?action=update&guid='
-									+ this.guid
-									+ '&sessionId='
-									+ this.sessionId,
-							destroy : 'customEntity.ajax?action=delete&guid='
-									+ this.guid
-									+ '&sessionId='
-									+ this.sessionId
-						},
-						timeout : 120000
-					});
+			var proxy = new Ext.data.HttpProxy({
+				api : {
+					read : 'customEntity.ajax?action=view&guid='
+							+ this.guid
+							+ '&sessionId='
+							+ this.sessionId,
+					create : 'customEntity.ajax?action=create&guid='
+							+ this.guid
+							+ '&sessionId='
+							+ this.sessionId,
+					update : 'customEntity.ajax?action=update&guid='
+							+ this.guid
+							+ '&sessionId='
+							+ this.sessionId,
+					destroy : 'customEntity.ajax?action=delete&guid='
+							+ this.guid
+							+ '&sessionId='
+							+ this.sessionId
+				},
+				timeout : 120000
+			});
 
 			var reader = new Ext.data.JsonReader(
 					{"success": true} );
@@ -264,317 +251,253 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 				writeAllFields : false
 			});
 
-			this.mydatastore = new Ext.data.Store(
-					{
-						form : this,
-						metaData : true,
-						reader : reader,
-						writer : writer,
-						proxy : proxy,
-						autoSave : false,
-						listeners : {
-							'exception' : function(misc) {
-								top.location.href = this.loginurl;
-							},
-							'metachange' : function(store, meta) {
-								var fields = meta.fields;
-								var fieldset = null;
-								var fieldsectioncount = 0;
-								var fieldsectionindex = 0;
+			this.mydatastore = new Ext.data.Store({
+				form : this,
+				metaData : true,
+				reader : reader,
+				writer : writer,
+				proxy : proxy,
+				autoSave : false,
+				listeners : {
+					'exception' : function(misc) {
+						top.location.href = this.loginurl;
+					},
+					'metachange' : function(store, meta) {
+						var fields = meta.fields;
+						var fieldset = null;
+						var fieldsectioncount = 0;
+						var fieldsectionindex = 0;
 
-								for ( var f = 0; f < fields.length; f++) {
-									if (fields[f].hidden == true) {
-
-										if (this.form
-												.findById(fields[f].name) == null) {
-											var field = new Ext.form.Hidden();
-											field.id = fields[f].name;
-											field.name = fields[f].name;
-											field.dataIndex = fields[f].name;
-											field.fieldLabel = fields[f].header;
-											field.store = store;
-											field.border = false;
-											// if (fieldset == null)
-											this.form.superclass().add
-													.call(
-															this.form,
-															field);
-										}
-									} else if (fields[f].type == 'text'
-											|| fields[f].type == 'date'
-											|| fields[f].type == 'integer'
-											|| fields[f].type == 'number') {
-										var field = new Ext.form.TextField();
-										field.id = fields[f].name;
-										field.name = fields[f].name;
-										field.dataIndex = fields[f].name;
-										field.fieldLabel = fields[f].header;
-										field.store = store;
-										field.border = false;
-
-										field.value = fields[f].value;
-
-										if (!Ext.isEmpty(fields[f].regEx)) {
-											field.regex = new RegExp(fields[f].regEx);
-											field.regexText = fields[f].regExExample;
-									}
-
-										if (fields[f].required == true) {
-													field.allowBlank = false,
-													field.blankText = "Enter a "
-															+ fields[f].header;
-										}
-
-										if (fieldset == null) {
-											this.form.superclass().add
-													.call(
-															this.form,
-															field);
-										}
-										else {
-											if (fieldsectionindex >= fieldsectioncount / 2)
-												col2.add(field);
-											else
-												col1.add(field);
-											fieldsectionindex++;
-										}
-									} else if (fields[f].type == 'comments') {
-										var field = new Ext.form.TextArea();
-										field.id = fields[f].name;
-										field.name = fields[f].name;
-										field.dataIndex = fields[f].name;
-										field.fieldLabel = fields[f].header;
-										field.store = store;
-										field.border = false;
-										field.width = 350;
-										field.height = 150;
-										if (fields[f].required == true) {
-													field.allowBlank = false,
-													field.blankText = "Enter a "
-															+ fields[f].header;
-										}
-										if (fieldset == null) {
-											this.form.superclass().add
-													.call(
-															this.form,
-															field);
-										}
-										else {
-											if (fieldsectionindex > (fieldsectioncount - 1) / 2)
-												col2.add(field);
-											else
-												col1.add(field);
-											fieldsectionindex++;
-										}
-									} else if (fields[f].type == 'section') {
-										if (fieldset != null) {
-											this.form.superclass().add
-													.call(
-															this.form,
-															fieldset);
-										}
-										var col1 = new Ext.Panel(
-												{
-													columnWidth : '.50',
-													layout : 'form',
-													defaults : {
-														anchor : '100%'
-													},
-													bodyStyle : 'padding:0 18px 0 0',
-													items : []
-												});
-										var col2 = new Ext.Panel(
-												{
-													columnWidth : '.50',
-													layout : 'form',
-													defaults : {
-														anchor : '100%'
-													},
-													bodyStyle : 'padding:0 18px 0 0',
-													items : []
-												})
-										var panel = new Ext.Panel(
-												{
-													columnWidth : 0.5,
-													layout : 'column',
-													bodyStyle : 'padding:0 18px 0 0',
-													items : [ col1,
-															col2 ]
-												});
-
-										fieldset = new Ext.form.FieldSet(
-												{
-													id : fields[f].name,
-													title : fields[f].header,
-													labelAlign : 'left',
-													items : [ panel ]
-												});
-
-										// calculate the number of
-										// fields in this section
-										var start = f + 1;
-										for (fieldsectioncount = 0; start < fields.length
-												&& fields[start].type != 'section'; fieldsectioncount++) {
-											start++;
-										}
-										fieldsectionindex = 0;
-
-									} else if (fields[f].type == 'picklist'
-											|| fields[f].type == 'multi-picklist') {
-										var comboConfig = new Ext.form.ComboBox(
-												{
-													id : fields[f].name
-															+ 'combo',
-													dataIndex : fields[f].name,
-													valueField : 'Name',
-													triggerAction : 'all',
-													hiddenName : fields[f].name,
-													displayField : 'Description',
-													forceSelection : true,
-													lazyInit : false,
-													mode : 'local',
-													emptyText : 'Select '
-															+ fields[f].header
-															+ '...',
-													store : new Ext.data.JsonStore(
-															{
-																id : 'Name',
-																autoLoad : true,
-																root : 'rows',
-																totalProperty : 'totalRows',
-																fields : [
-																		{
-																			name : 'Name',
-																			type : 'string'
-																		},
-																		{
-																			name : 'Description',
-																			type : 'string'
-																		} ],
-																url : 'picklistItems.json',
-																baseParams : {
-																	guid : this.form.guid,
-																	picklistname : fields[f].picklistId
-																}
-															}),
-													fieldLabel : fields[f].header
-												});
-
-										if (fields[f].required == true) {
-													comboConfig.allowBlank = false,
-													comboConfig.blankText = "Enter a "
-															+ fields[f].header;
-										}
-										//			    comboConfig.selectByValu(fields[f].value,true);
-										if (fieldset == null) {
-											this.form.superclass().add
-													.call(
-															this.form,
-															field);
-										}
-										else {
-											if (fieldsectionindex > (fieldsectioncount - 1) / 2) {
-												col2
-														.add(comboConfig);
-											}
-											else {
-												col1
-														.add(comboConfig);
-											}
-											fieldsectionindex++;
-										}
-									}
-								}
-
-								if (fieldset != null) {
-									this.form.superclass().add
-											.call(this.form,
-													fieldset);
-								}
-								var btnConfig = {
-									text : this.form.buttonLabel,
-									handler : this.form.onSubmit,
-									cls: 'mainButton',
-									align : 'center',
-									formBind : true,
-									scope : this
-								};
-
-								var linkConfig = {
-									xtype : "box",
-									cls: 'olLink',
-									autoEl : {
-										tag : 'a',
-										href : 'http://www.orangeleap.com/',
-										html : 'Powered by Orange Leap'
-									}
-								};
-								this.form.superclass().addButton
-										.call(this.form, btnConfig,
-												this.form.onSubmit,
-												this.form);
-								this.form.superclass().add.call(
-										this.form, linkConfig);
-
-										// apply config
-
-								this.form.superclass().render.call(
-										this.form,
-										this.form.widgetid);
-							},
-							'load' : function(store, records,
-									options) {
-								var metaData = store.reader.meta.fields;
-								var value = null;
-								for ( var m = 0; m < metaData.length; m++) {
-
-									if (metaData[m].type != 'section') {
-										value = records[0]
-												.get(metaData[m].name);
-
-										if (metaData[m].type == 'picklist') {
-											if (this.form
-													.findById(metaData[m].name
-															+ 'combo') != null)
-												this.form
-														.findById(
-																metaData[m].name
-																		+ 'combo')
-														.setValue(
-																value);
-										} else {
-											if (this.form
-													.findById(metaData[m].name) != null)
-												this.form
-														.findById(
-																metaData[m].name)
-														.setValue(
-																value);
-										}
-									}
-								}
-								if (this.form.args != null) {
-									this.form.populateArgs(
-											this.form,
-											this.form.args);
-								}
-								Ext.get('loading').remove();
-								Ext.get('loading-mask').fadeOut({
-									remove : true
-								});
+						that.picklistNameItemsMap = {};
+						if (meta.picklistNameItems) {
+							for (var picklistName in meta.picklistNameItems) {
+								that.picklistNameItemsMap[picklistName] = meta.picklistNameItems[picklistName];
 							}
 						}
-					});
 
-			OrangeLeapWidget.updateViewCount(this.guid,
-					this.referer);
+						for ( var f = 0; f < fields.length; f++) {
+							if (fields[f].hidden) {
+								if ( ! this.form.findById(fields[f].name)) {
+									var field = new Ext.form.Hidden();
+									field.id = fields[f].name;
+									field.name = fields[f].name;
+									field.dataIndex = fields[f].name;
+									field.fieldLabel = fields[f].header;
+									field.store = store;
+									field.border = false;
+									this.form.superclass().add.call(this.form, field);
+								}
+							}
+							else if (fields[f].type == 'text'
+									|| fields[f].type == 'date'
+									|| fields[f].type == 'integer'
+									|| fields[f].type == 'number') {
+								var field = new Ext.form.TextField();
+								field.id = fields[f].name;
+								field.name = fields[f].name;
+								field.dataIndex = fields[f].name;
+								field.fieldLabel = fields[f].header;
+								field.store = store;
+								field.border = false;
+
+								field.value = fields[f].value;
+
+								if (!Ext.isEmpty(fields[f].regEx)) {
+									field.regex = new RegExp(fields[f].regEx);
+									field.regexText = fields[f].regExExample;
+								}
+
+								if (fields[f].required) {
+									field.allowBlank = false;
+									field.blankText = "Enter a " + fields[f].header;
+								}
+
+								if ( ! fieldset) {
+									this.form.superclass().add.call(this.form, field);
+								}
+								else {
+									if (fieldsectionindex >= fieldsectioncount / 2) {
+										col2.add(field);
+									}
+									else {
+										col1.add(field);
+									}
+									fieldsectionindex++;
+								}
+							}
+							else if (fields[f].type == 'comments') {
+								var field = new Ext.form.TextArea();
+								field.id = fields[f].name;
+								field.name = fields[f].name;
+								field.dataIndex = fields[f].name;
+								field.fieldLabel = fields[f].header;
+								field.store = store;
+								field.border = false;
+								field.width = 350;
+								field.height = 150;
+								if (fields[f].required) {
+									field.allowBlank = false,
+									field.blankText = "Enter a " + fields[f].header;
+								}
+								if ( ! fieldset) {
+									this.form.superclass().add.call(this.form, field);
+								}
+								else {
+									if (fieldsectionindex > (fieldsectioncount - 1) / 2) {
+										col2.add(field);
+									}
+									else {
+										col1.add(field);
+									}
+									fieldsectionindex++;
+								}
+							}
+							else if (fields[f].type == 'section') {
+								if (fieldset) {
+									this.form.superclass().add.call(this.form, fieldset);
+								}
+								var col1 = new Ext.Panel({
+									columnWidth : '.50',
+									layout : 'form',
+									defaults : {
+										anchor : '100%'
+									},
+									bodyStyle : 'padding:0 18px 0 0',
+									items : []
+								});
+								var col2 = new Ext.Panel({
+									columnWidth : '.50',
+									layout : 'form',
+									defaults : {
+										anchor : '100%'
+									},
+									bodyStyle : 'padding:0 18px 0 0',
+									items : []
+								});
+								var panel = new Ext.Panel({
+									columnWidth : 0.5,
+									layout : 'column',
+									bodyStyle : 'padding:0 18px 0 0',
+									items : [ col1, col2 ]
+								});
+
+								fieldset = new Ext.form.FieldSet({
+									id : fields[f].name,
+									title : fields[f].header,
+									labelAlign : 'left',
+									items : [ panel ]
+								});
+
+								// calculate the number of
+								// fields in this section
+								var start = f + 1;
+								for (fieldsectioncount = 0; start < fields.length && fields[start].type != 'section'; fieldsectioncount++) {
+									start++;
+								}
+								fieldsectionindex = 0;
+
+							}
+							else if (fields[f].type == 'picklist' || fields[f].type == 'multi-picklist') {
+								var comboConfig = new Ext.form.ComboBox({
+									id : fields[f].name + 'combo',
+									dataIndex : fields[f].name,
+									valueField : 'Name',
+									triggerAction : 'all',
+									hiddenName : fields[f].name,
+									displayField : 'Description',
+									forceSelection : true,
+									lazyInit : false,
+									mode : 'local',
+									emptyText : 'Select ' + fields[f].header + '...',
+									store : new Ext.data.JsonStore({
+										fields : [ 'Name', 'Description'],
+										data: that.picklistNameItemsMap[fields[f].picklistId]
+									}),
+									fieldLabel : fields[f].header
+								});
+
+								if (fields[f].required) {
+									comboConfig.allowBlank = false;
+									comboConfig.blankText = "Enter a " + fields[f].header;
+								}
+								if ( ! fieldset) {
+									this.form.superclass().add.call(this.form, field);
+								}
+								else {
+									if (fieldsectionindex > (fieldsectioncount - 1) / 2) {
+										col2.add(comboConfig);
+									}
+									else {
+										col1.add(comboConfig);
+									}
+									fieldsectionindex++;
+								}
+							}
+						}
+
+						if (fieldset) {
+							this.form.superclass().add.call(this.form, fieldset);
+						}
+						var btnConfig = {
+							text : this.form.buttonLabel,
+							handler : this.form.onSubmit,
+							cls: 'mainButton',
+							align : 'center',
+							formBind : true,
+							scope : this
+						};
+
+						var linkConfig = {
+							xtype : "box",
+							cls: 'olLink',
+							autoEl : {
+								tag : 'a',
+								href : 'http://www.orangeleap.com/',
+								html : 'Powered by Orange Leap'
+							}
+						};
+						this.form.superclass().addButton.call(this.form, btnConfig, this.form.onSubmit, this.form);
+						this.form.superclass().add.call(this.form, linkConfig);
+
+						// apply config
+						this.form.superclass().render.call(this.form, this.form.widgetid);
+					},
+					'load' : function(store, records, options) {
+						var metaData = store.reader.meta.fields;
+						var value = null;
+						for ( var m = 0; m < metaData.length; m++) {
+							if (metaData[m].type != 'section') {
+								value = records[0].get(metaData[m].name);
+
+								if (metaData[m].type == 'picklist' || metaData[m].type == 'multi-picklist') {
+									if (this.form.findById(metaData[m].name + 'combo')) {
+										this.form.findById(metaData[m].name + 'combo').setValue(value);
+									}
+								}
+								else {
+									if (this.form.findById(metaData[m].name)) {
+										this.form.findById(metaData[m].name).setValue(value);
+									}
+								}
+							}
+						}
+						if (this.form.args) {
+							this.form.populateArgs(this.form, this.form.args);
+						}
+						Ext.get('loading').remove();
+						Ext.get('loading-mask').fadeOut({
+							remove : true
+						});
+					}
+				}
+			});
+
+			OrangeLeapWidget.updateViewCount(this.guid, this.referer);
 
 			this.mydatastore.load();
-
 		},
 		showError : function(str) {
-			OrangeLeapWidget.updateErrorCount(this.guid,
-					this.referer);
+			OrangeLeapWidget.updateErrorCount(this.guid, this.referer);
 
 			Ext.Msg.show({
 				title : 'ERROR',
