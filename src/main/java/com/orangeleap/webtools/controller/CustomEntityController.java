@@ -49,6 +49,25 @@ public class CustomEntityController extends MultiActionController {
 			// get the constituent id out of the session cache
 			Element elem = sessionCache.get(sessionId);
 			if (elem == null) {
+				Cookie sessionCookie = null;
+				Cookie sessionCookies[] = request.getCookies();
+				for (int i = 0; i < sessionCookies.length; i++) {
+					if (sessionCookies[i].getName().equals("sessionId")) {
+						sessionCookie = sessionCookies[i];
+						sessionCookie.setMaxAge(0);
+						sessionCookie.setValue("");
+						break;
+					}
+				}
+
+				if (sessionCookie == null) {
+					//
+					// clear the 
+					sessionCookie = new Cookie("sessionId", "");
+				}
+
+				response.addCookie(sessionCookie);			
+			
 				return getModelMapError("Invalid Session ID");
 			}
 			else {

@@ -127,10 +127,6 @@ var authentication = {
     generateWidget: function(widgetid, successurl) {
 		sessionId = this.getCookie("sessionId");
 
-		if (sessionId != "") {
-			window.location.href = successurl;
-		}
-
 		this.successurl = successurl;
 
 		Ext.QuickTips.init();

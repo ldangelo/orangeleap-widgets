@@ -256,7 +256,8 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 						timeout : 120000
 					});
 
-			var reader = new Ext.data.JsonReader();
+			var reader = new Ext.data.JsonReader(
+					{"success": true} );
 
 			var writer = new Ext.data.JsonWriter({
 				encode : true,
@@ -272,6 +273,9 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 						proxy : proxy,
 						autoSave : false,
 						listeners : {
+							'exception' : function(misc) {
+								top.location.href = this.loginurl;
+							},
 							'metachange' : function(store, meta) {
 								var fields = meta.fields;
 								var fieldset = null;
