@@ -6894,6 +6894,7 @@ td.grid-hd-group-cell {
 }
 .x-date-middle .x-btn .x-btn-text {
     color: #FFFFFF;
+    text-shadow: 0 1px 0 #000;
 }
 .x-date-middle .x-btn-mc em.x-btn-arrow {
     background-image: url("../images/default/toolbar/btn-arrow-light.gif");
@@ -6907,12 +6908,12 @@ td.grid-hd-group-cell {
 .x-date-inner th {
     background-color: #D8D8D8;
     background-image: url("../images/default/panel/white-top-bottom.gif");
-    border-bottom-color: #DE8500;
+    border-bottom-color: #888;
     color: #595959;
     font: 10px arial,helvetica,tahoma,sans-serif;
 }
 .x-date-inner td {
-    border-color: #FFD52F;
+    border-color: #ddd;
 }
 .x-date-inner a {
     color: #000000;
@@ -6924,10 +6925,10 @@ td.grid-hd-group-cell {
 .x-date-inner .x-date-selected a {
     background-color: #D8D8D8;
     background-image: none;
-    border-color: #FFB20C;
+    border-color: #cfe7fa;
 }
 .x-date-inner .x-date-today a {
-    border-color: #BA0000;
+    border-color: navy;
 }
 .x-date-inner .x-date-selected span {
     font-weight: bold;
@@ -6939,7 +6940,7 @@ td.grid-hd-group-cell {
     background-color: #E6E6E6;
     background-image: url("../images/default/panel/white-top-bottom.gif");
     background-position: 0 -2px;
-    border-top-color: #DE8500;
+    border-top-color: #888;
 }
 .x-date-inner a:hover, .x-date-inner .x-date-disabled a:hover {
     background-color: #D8D8D8;
@@ -6964,7 +6965,7 @@ td.grid-hd-group-cell {
 }
 .x-date-mp-btns button {
     background-color: #5C646D;
-    border-color: #EF9600 #721900 #721900 #EF9600;
+    border-color: #b8c6df #6d88b7 #6d88b7 #b8c6df;
     color: #FFFFFF;
     font: 11px arial,helvetica,tahoma,sans-serif;
 }
@@ -6974,7 +6975,7 @@ td.grid-hd-group-cell {
     background-position: 0 -2px;
 }
 .x-date-mp-btns td {
-    border-top-color: #DE8500;
+    border-top-color: #888;
 }
 td.x-date-mp-month a, td.x-date-mp-year a {
     color: #333333;
@@ -6987,13 +6988,13 @@ td.x-date-mp-sel a {
     background-color: #E6E6E6;
     background-image: url("../images/default/panel/white-top-bottom.gif");
     background-position: 0 -2px;
-    border-color: #FFB20C;
+    border-color: #cfe7fa;
 }
 .x-date-mp-ybtn a {
     background-image: url("../images/default/panel/tool-sprites.gif");
 }
 td.x-date-mp-sep {
-    border-right-color: #FFAD07;
+    border-right-color: #7abcff;
 }
 .x-tip .x-tip-close {
     background-image: url("../images/default/qtip/close.gif");
@@ -7081,7 +7082,7 @@ a.x-menu-item {
     background-color: #FFFFFF !important;
 }
 .x-menu .x-date-picker {
-    border-color: #DE8500;
+    border-color: #888;
 }
 .x-cycle-menu .x-menu-item-checked {
     background-color: #FFFFFF;
@@ -7774,7 +7775,15 @@ body.ext-ie6 .x-superboxselect-item {
 .x-tool-collapse-over {
     background-position:-15px -345px;
 }
-
+.x-date-middle .x-btn {
+	background: #3f4c6b; /* Old browsers */
+	background: -moz-linear-gradient(top, #3f4c6b 0%, #3f4c6b 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3f4c6b), color-stop(100%,#3f4c6b)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #3f4c6b 0%,#3f4c6b 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #3f4c6b 0%,#3f4c6b 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #3f4c6b 0%,#3f4c6b 100%); /* IE10+ */
+	background: linear-gradient(top, #3f4c6b 0%,#3f4c6b 100%); /* W3C */
+}
 
 
 

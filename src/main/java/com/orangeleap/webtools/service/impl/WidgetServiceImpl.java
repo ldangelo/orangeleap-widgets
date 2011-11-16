@@ -421,6 +421,7 @@ public class WidgetServiceImpl implements WidgetService {
 				final List<Map<String, Object>> itemsList = new ArrayList<Map<String, Object>>();
 				if (StringUtils.isNotBlank(entityMap.get("picklistId")) &&
 						("picklist".equalsIgnoreCase(entityMap.get("type")) || "multi-picklist".equalsIgnoreCase(entityMap.get("type")))) {
+
 					final WidgetExample example = new WidgetExample();
 					example.createCriteria().andWidgetGuidEqualTo(guid);
 
@@ -444,7 +445,16 @@ public class WidgetServiceImpl implements WidgetService {
 					        wsUsername = widget.getWidgetUsername();
 					        wsPassword = widget.getWidgetPassword();
 					    }
-					    final List<PicklistItem> picklistItems = picklistService.getPickListItems(wsUsername, wsPassword, entityMap.get("picklistId"));
+					    List<PicklistItem> picklistItems = null;
+
+						try {
+							picklistItems = picklistService.getPickListItems(wsUsername, wsPassword, entityMap.get("picklistId"));
+						}
+						catch (Exception ex) {
+							if (logger.isWarnEnabled()) {
+								logger.warn("findPicklistItems: exception occurred = " + ex.toString(), ex);
+							}
+						}
 
 					    if (picklistItems != null) {
 						    final Iterator<PicklistItem> it = picklistItems.iterator();

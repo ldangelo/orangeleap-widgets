@@ -231,6 +231,10 @@ public class CustomEntityListController {
 			map.put("header", ctfield.getCustomTableFieldDesc());
 			map.put("searchable", ctfield.isCustomTableFieldSearchable());
 			map.put("hidden", false);
+
+			if ("picklist".equals(ctfield.getCustomTableFieldDatatype()) || "multi-picklist".equalsIgnoreCase(ctfield.getCustomTableFieldDatatype())) {
+				map.put("picklistId", ctfield.getCustomTableFieldPicklistNameId());
+			}
 			fields.add(map);
 		}
 		final Map<String, List<Map<String, Object>>> picklistNameItems = widgetService.findPicklistItemsForCustomTableFields(ctfields, guid);
