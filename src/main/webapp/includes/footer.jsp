@@ -18,6 +18,7 @@
 		</c:choose>
 		<p class="legal">
 			<spring:message code="companyPhone"/> | <spring:message code="poweredBy"/> &#169; <spring:message code="copyright"/> <c:out value="${copyrightRange}"/> <spring:message code="companyRightsReserved"/>
+			<strong><spring:message code="version"/>:</strong> <spring:message code='buildInfo' var="buildVersion"/> <c:out value='${fn:replace(buildVersion, "-SNAPSHOT", "")}'/>
 		</p>
 	</div>
 </div>

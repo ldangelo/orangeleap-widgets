@@ -36,6 +36,35 @@
 			</plugin>
 
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>delete OLD webtools JS and CSS, and old target/classes/app.properties</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<delete failonerror="false">
+									 <fileset dir="${basedir}/src/main/webapp/js/generated">
+										 <include name="*.js"/>
+									 </fileset>
+								</delete>
+								<delete failonerror="false">
+									 <fileset dir="${basedir}/src/main/webapp/css/generated">
+										 <include name="*.css"/>
+									 </fileset>
+								</delete>
+								<delete failonerror="false" file="target/classes/app.properties" />
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
 				<groupId>org.zeroturnaround</groupId>
 				<artifactId>jrebel-maven-plugin</artifactId>
                 <version>1.0.7</version>
@@ -45,7 +74,7 @@
 					    <artifactId>commons-lang</artifactId>
 					    <version>2.5</version>
 					</dependency>
-					</dependencies>
+				</dependencies>
 				<executions>
 					<execution>
 						<id>generate-rebel-xml</id>
@@ -76,48 +105,67 @@
 							<!-- remove files after aggregation (default: false) <removeIncluded>true</removeIncluded> -->
 							<!-- insert new line after each concatenation (default: false) -->
 							<insertNewLine>true</insertNewLine>
-							<output>${basedir}/src/main/webapp/js/webtools.js</output>
+							<output>${basedir}/src/main/webapp/js/generated/webtools-${maven.build.timestamp}.js</output>
 							<!-- files to include, path relative to output's directory or absolute 
 								path -->
 							<includes>
-								<include>jquery/jquery-1.3.2.js</include>
-								<include>extjs/adapter/jquery/ext-jquery-adapter.js</include>
-								<include>extjs/ext-all.js</include>
-                                <include>required-field.js</include>
+								<include>${basedir}/src/main/webapp/js/jquery/jquery-1.3.2.js</include>
+								<include>${basedir}/src/main/webapp/js/extjs/adapter/jquery/ext-jquery-adapter.js</include>
+								<include>${basedir}/src/main/webapp/js/extjs/ext-all.js</include>
 							</includes>
-                            <excludes>
-                                <exclude>required-field.js</exclude>
-                                <exclude>customentity.js</exclude>
-                                <exclude>sponsorshipform.js</exclude>
-                                <exclude>pledges.js</exclude>
-                                <exclude>gifthistory.js</exclude>
-                                <exclude>login.js</exclude>
-                            </excludes>
-							<!-- files to exclude, path relative to output's directory <excludes> 
+							<!-- files to exclude, path relative to output's directory <excludes>
 								<exclude>**/*.pack.js</exclude> <exclude>**/compressed.css</exclude> </excludes> -->
 						</aggregation>
-<!--
 						<aggregation>
-							<insertNewLine>true</insertNewLine>
-							<output>${basedir}/src/main/webapp/css/webtools.css</output>
+							<output>${basedir}/src/main/webapp/js/generated/login-${maven.build.timestamp}.js</output>
+							<!-- files to include, path relative to output's directory or absolute
+								path -->
 							<includes>
-								<include>pages.css</include>
-								<include>navigation.css</include>
-								<include>ext-all.css</include>
-								<include>xtheme-default.css</include>
+								<include>${basedir}/src/main/webapp/js/login.js</include>
 							</includes>
 						</aggregation>
--->
+						<aggregation>
+							<output>${basedir}/src/main/webapp/js/generated/customentity-${maven.build.timestamp}.js</output>
+							<!-- files to include, path relative to output's directory or absolute
+								path -->
+							<includes>
+								<include>${basedir}/src/main/webapp/js/customentity.js</include>
+							</includes>
+						</aggregation>
+						<aggregation>
+							<output>${basedir}/src/main/webapp/js/generated/gifthistory-${maven.build.timestamp}.js</output>
+							<!-- files to include, path relative to output's directory or absolute
+								path -->
+							<includes>
+								<include>${basedir}/src/main/webapp/js/gifthistory.js</include>
+							</includes>
+						</aggregation>
+						<aggregation>
+							<output>${basedir}/src/main/webapp/js/generated/pledges-${maven.build.timestamp}.js</output>
+							<!-- files to include, path relative to output's directory or absolute
+								path -->
+							<includes>
+								<include>${basedir}/src/main/webapp/js/pledges.js</include>
+							</includes>
+						</aggregation>
+						<aggregation>
+							<output>${basedir}/src/main/webapp/js/generated/sponsorshipform-${maven.build.timestamp}.js</output>
+							<!-- files to include, path relative to output's directory or absolute
+								path -->
+							<includes>
+								<include>${basedir}/src/main/webapp/js/sponsorshipform.js</include>
+							</includes>
+						</aggregation>
+						<aggregation>
+							<insertNewLine>true</insertNewLine>
+							<output>${basedir}/src/main/webapp/css/webtools-${maven.build.timestamp}.css</output>
+							<includes>
+								<include>${basedir}/src/main/webapp/css/widgetsBase.css</include>
+							</includes>
+						</aggregation>
 					</aggregations>
 				</configuration>
 			</plugin>
-			<!-- <plugin> <groupId>net.sf.alchim</groupId> <artifactId>yuicompressor-maven-plugin</artifactId> 
-				<executions> <execution> <phase>process-resources</phase> <goals> <goal>compress</goal> 
-				</goals> </execution> </executions> <configuration> <nosuffix>true</nosuffix> 
-				<aggregations> <aggregation> <insertNewLine>true</insertNewLine> <output>${basedir}/src/main/webapp/css/webtools.css</output> 
-				<includes> <include>pages.css</include> <include>navigation.css</include> 
-				<include>ext-all.css</include> </includes> </aggregation> </aggregations> 
-				</configuration> </plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-antrun-plugin</artifactId>
@@ -132,6 +180,8 @@
 							<tasks>
 								<replace file="${basedir}/target/classes/app.properties"
 									token="$${build.info}" value="${project.version}-${maven.build.timestamp}" />
+								<replace file="${basedir}/target/classes/app.properties"
+									token="$${widget-timestamp}" value="${maven.build.timestamp}" />
 							</tasks>
 						</configuration>
 					</execution>

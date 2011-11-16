@@ -3,6 +3,9 @@
 /target
 .settings
 .project
+db-scripts/target
 donorwidgets.iml
 donorwidgets.ipr
 donorwidgets.iws
+src/main/webapp/css/webtools*.css
+src/main/webapp/js/generated

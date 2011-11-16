@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -16,6 +17,7 @@ import com.orangeleap.webtools.service.StyleService;
 import com.orangeleap.webtools.service.WidgetService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.Authentication;
 import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,6 +29,10 @@ public class AjaxWidgetFormController extends MultiActionController {
 
 	@Autowired
 	StyleService styleService;
+
+	@Autowired
+	MessageSource messageSource;
+
 	/**
 	 * Describe loginWidgetHTML here.
 	 */
@@ -313,6 +319,8 @@ public class AjaxWidgetFormController extends MultiActionController {
 		else if (customentitytype.equals("undefined") && widgettype.equals("pledges")) {
 			widget.setWidgetHtml(pledgesWidgetHTML);
 		}
+
+		final String buildTimestamp = messageSource.getMessage("buildTimestamp", null, Locale.getDefault());
 
 		widget.setIframeHtml(this.getIframeHTML()
 				.replaceAll("@APPLOCATION@", appLocation)
