@@ -60,7 +60,16 @@ WidgetForm = Ext.extend(Ext.form.FormPanel, {
 		params.customentitytype=mydatastore.widgetForm.customentitytype;
 
 		for (var f = 0; f < mydatastore.reader.meta.fields.length; f++) {
-		    params[mydatastore.reader.meta.fields[f].name] = mydatastore.widgetForm.findById(mydatastore.reader.meta.fields[f].name).getValue();
+			var anElem = mydatastore.widgetForm.findById(mydatastore.reader.meta.fields[f].name);
+			var aValue;
+			if (anElem.getXType() == 'radiogroup') {
+				var aRadioElem = anElem.getValue();
+				aValue = aRadioElem && (aRadioElem.getRawValue() === 'true' || aRadioElem.getRawValue() === true);
+			}
+			else {
+				aValue = anElem.getValue();
+			}
+			params[mydatastore.reader.meta.fields[f].name] = aValue;
 		}
 
 		mydatastore.load({
@@ -128,7 +137,14 @@ WidgetForm = Ext.extend(Ext.form.FormPanel, {
 					var metaData = store.reader.meta.fields;
 					var value = null;
 					for (var m=0; m < metaData.length; m++) {
-						if (metaData[m].type != 'boolean' && metaData[m].type != 'style') {
+						if (metaData[m].name == 'replaceTopContents') {
+							value = records[records.length-1].get(metaData[m].name);
+							var fld = store.widgetForm.getForm().findField(metaData[m].name);
+							if (fld != null) {
+								fld.setValue(value);
+							}
+						}
+						else if (metaData[m].type != 'boolean' && metaData[m].type != 'style') {
 							value = records[records.length-1].get(metaData[m].name);
 							value = value.replace(/&lt;/g,"<");
 							value = value.replace(/&gt;/g,">");

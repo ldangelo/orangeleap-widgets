@@ -71,6 +71,18 @@ Ext.onReady(function() {
 				{name: 'guid'},
 				{name: 'type'},
 				{name: 'widgetDescription'},
+				{
+					name: 'replaceTopContents',
+					renderer: function(value, metaData, record, rowIndex, colIndex, store) {
+						if (value == 'true' || value == '1') {
+							value = 'Replace Top Window Contents';
+						}
+						else {
+							value = 'Replace Inner Window (IFrame) Contents';
+						}
+						return value;
+					}
+				},
 				{name: 'entityname'},
 				{name: 'errorcount'},
 				{name: 'viewcount'}

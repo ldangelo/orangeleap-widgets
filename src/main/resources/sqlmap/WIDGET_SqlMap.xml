@@ -16,6 +16,7 @@
 		<result column="WIDGET_VIEW_COUNT" property="widgetViewCount" jdbcType="BIGINT"/>
 		<result column="WIDGET_TYPE" property="widgetType" jdbcType="VARCHAR"/>
 		<result column="WIDGET_DESCRIPTION" property="widgetDescription" jdbcType="VARCHAR"/>
+		<result column="REPLACE_TOP_CONTENTS" property="replaceTopContents" jdbcType="BOOLEAN"/>
 		<result column="MOTIVATION_CODE" property="motivationCode" jdbcType="VARCHAR"/>
 		<result column="PROJECT_CODE" property="projectCode" jdbcType="VARCHAR"/>
 		<result column="CUSTOM_ENTITY_NAME" property="customEntityName" jdbcType="VARCHAR"/>
@@ -66,8 +67,8 @@
 			  This element was generated on Tue Jul 27 17:41:07 CDT 2010.
 			-->
 		select WIDGET_ID, WIDGET_GUID, WIDGET_USERNAME, WIDGET_PASSWORD, WIDGET_ERROR_COUNT,
-		WIDGET_CREATE_DATE, WIDGET_HTML, WIDGET_VIEW_COUNT, WIDGET_TYPE, WIDGET_DESCRIPTION, MOTIVATION_CODE,
-		PROJECT_CODE,
+		WIDGET_CREATE_DATE, WIDGET_HTML, WIDGET_VIEW_COUNT, WIDGET_TYPE, WIDGET_DESCRIPTION,
+		REPLACE_TOP_CONTENTS, MOTIVATION_CODE, PROJECT_CODE,
 		CUSTOM_ENTITY_NAME,LOGIN_SUCCESS_URL,LOGIN_FAILURE_URL,AUTHENTICATION_REQUIRED,AUTHENTICATION_URL,SPONSORSHIP_URL,STYLE_ID,IFRAME_HTML,DONATION_URL
 		from WIDGET
 		<isParameterPresent>
@@ -84,8 +85,8 @@
 			  This element was generated on Tue Jul 27 17:41:07 CDT 2010.
 			-->
 		select WIDGET_ID, WIDGET_GUID, WIDGET_USERNAME, WIDGET_PASSWORD, WIDGET_ERROR_COUNT,
-		WIDGET_CREATE_DATE, WIDGET_HTML, WIDGET_VIEW_COUNT, WIDGET_TYPE, WIDGET_DESCRIPTION, MOTIVATION_CODE,
-		PROJECT_CODE,
+		WIDGET_CREATE_DATE, WIDGET_HTML, WIDGET_VIEW_COUNT, WIDGET_TYPE, WIDGET_DESCRIPTION,
+		REPLACE_TOP_CONTENTS, MOTIVATION_CODE, PROJECT_CODE,
 		CUSTOM_ENTITY_NAME,LOGIN_SUCCESS_URL,LOGIN_FAILURE_URL,AUTHENTICATION_REQUIRED,AUTHENTICATION_URL,SPONSORSHIP_URL,STYLE_ID,IFRAME_HTML,DONATION_URL
 		from WIDGET
 		where WIDGET_ID = #widgetId:BIGINT#
@@ -113,12 +114,12 @@
 			-->
 		insert into WIDGET (WIDGET_ID, WIDGET_GUID, WIDGET_USERNAME, WIDGET_PASSWORD,
 		WIDGET_ERROR_COUNT, WIDGET_CREATE_DATE, WIDGET_HTML, WIDGET_VIEW_COUNT, WIDGET_TYPE,WIDGET_DESCRIPTION,
-		MOTIVATION_CODE, PROJECT_CODE,
+		REPLACE_TOP_CONTENTS, MOTIVATION_CODE, PROJECT_CODE,
 		CUSTOM_ENTITY_NAME,LOGIN_SUCCESS_URL,LOGIN_FAILURE_URL,AUTHENTICATION_REQUIRED,AUTHENTICATION_URL,SPONSORSHIP_URL,STYLE_ID,IFRAME_HTML,DONATION_URL)
 		values (#widgetId:BIGINT#, #widgetGuid:VARCHAR#, #widgetUsername:VARCHAR#,
 		#widgetPassword:VARCHAR#, #widgetErrorCount:BIGINT#, #widgetCreateDate:TIMESTAMP#,
 		#widgetHtml:VARCHAR#, #widgetViewCount:BIGINT#, #widgetType:VARCHAR#, #widgetDescription#,
-		#motivationCode:VARCHAR#, #projectCode:VARCHAR#,
+		#replaceTopContents#, #motivationCode:VARCHAR#, #projectCode:VARCHAR#,
 		#customEntityName:VARCHAR#,#widgetLoginSuccessURL:VARCHAR#,#widgetLoginFailureURL:VARCHAR#,#widgetAuthenticationRequired:BOOLEAN#,#widgetAuthenticationURL:VARCHAR#,#sponsorshipURL:VARCHAR#,#styleId:BIGINT#,#iframeHtml:VARCHAR#,#donationUrl:VARCHAR#)
 	</insert>
 	<insert id="ibatorgenerated_insertSelective" parameterClass="com.orangeleap.webtools.domain.Widget">
@@ -157,6 +158,9 @@
 			</isNotNull>
 			<isNotNull prepend="," property="widgetDescription">
 				WIDGET_DESCRIPTION
+			</isNotNull>
+			<isNotNull prepend="," property="replaceTopContents">
+				REPLACE_TOP_CONTENTS
 			</isNotNull>
 			<isNotNull prepend="," property="motivationCode">
 				MOTIVATION_CODE
@@ -297,6 +301,9 @@
 			<isNotNull prepend="," property="record.widgetDescription">
 				WIDGET_DESCRIPTION = #record.widgetDescription:VARCHAR#
 			</isNotNull>
+			<isNotNull prepend="," property="record.replaceTopContents">
+				REPLACE_TOP_CONTENTS = #record.replaceTopContents#
+			</isNotNull>
 			<isNotNull prepend="," property="record.motivationCode">
 				MOTIVATION_CODE = #record.motivationCode:VARCHAR#
 			</isNotNull>
@@ -330,6 +337,7 @@
 		WIDGET_VIEW_COUNT = #record.widgetViewCount:BIGINT#,
 		WIDGET_TYPE = #record.widgetType:VARCHAR#,
 		WIDGET_DESCRIPTION = #record.widgetDescription:VARCHAR#,
+		REPLACE_TOP_CONTENTS = #record.replaceTopContents#,
 		MOTIVATION_CODE = #record.motivationCode:VARCHAR#,
 		PROJECT_CODE = #record.projectCode:VARCHAR#,
 		CUSTOM_ENTITY_NAME = #record.customEntityName:VARCHAR#,
@@ -380,6 +388,9 @@
 			<isNotNull prepend="," property="widgetDescription">
 				WIDGET_DESCRIPTION = #widgetDescription:VARCHAR#
 			</isNotNull>
+			<isNotNull prepend="," property="record.replaceTopContents">
+				REPLACE_TOP_CONTENTS = #record.replaceTopContents#
+			</isNotNull>
 			<isNotNull prepend="," property="motivationCode">
 				MOTIVATION_CODE = #motivationCode:VARCHAR#
 			</isNotNull>
@@ -410,6 +421,7 @@
 		WIDGET_VIEW_COUNT = #widgetViewCount:BIGINT#,
 		WIDGET_TYPE = #widgetType:VARCHAR#,
 		WIDGET_DESCRIPTION = #widgetDescription#,
+		REPLACE_TOP_CONTENTS = #replaceTopContents#,
 		MOTIVATION_CODE = #motivationCode:VARCHAR#,
 		PROJECT_CODE = #projectCode:VARCHAR#,
 		CUSTOM_ENTITY_NAME = #customEntityName:VARCHAR#,
