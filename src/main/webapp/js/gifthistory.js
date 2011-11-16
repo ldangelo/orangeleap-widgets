@@ -80,24 +80,24 @@ var gifthistory = {
 	    sortInfo:{field:'id',direction:'ASC'}
 	});
 
-
-
 	var giftGrid = new Ext.grid.GridPanel({
 	    id:'giftgrid',
-	    store:mydatastore,
+	    store: mydatastore,
+	    loadMask: true,
+		cls: 'widgetForm',
 	    columns:	[
-	    {id:'id', header: 'Gift Id', dataIndex: 'id',sortable:false},
-	    {id:'donationdate',header: 'Donation Date', dataIndex:'donationdate',sortable:false},
-	    {id:'amount',header: 'Gift Amount',dataIndex:'amount',sortable:false},
-	    {id:'status',header:'Gift Status',dataIndex:'status',sortable:false},
-	    {id:'paymentstatus',header:'Payment Status',dataIndex:'paymentstatus',sortable:false},
-                   {header: "Actions", width: 60, sortable: false, renderer: function() {
-            return '<div class="controlBtn"><img src="images/inboxSmall.png" class="make_receipt"></div>';
-        }, dataIndex: 'Id'}
-	],
+			{id:'id', header: 'Gift Id', dataIndex: 'id',sortable:false},
+			{id:'donationdate',header: 'Donation Date', dataIndex:'donationdate',sortable:false},
+			{id:'amount',header: 'Gift Amount',dataIndex:'amount',sortable:false},
+			{id:'status',header:'Gift Status',dataIndex:'status',sortable:false},
+			{id:'paymentstatus',header:'Payment Status',dataIndex:'paymentstatus',sortable:false},
+					   {header: "Actions", width: 60, sortable: false, renderer: function() {
+				return '<div class="controlBtn"><img src="images/inboxSmall.png" class="make_receipt"></div>';
+			}, dataIndex: 'Id'}
+		],
 	    viewConfig: {
-		forceFit: true,
-		emptyText: 'No Gift History To Display'
+			forceFit: true,
+			emptyText: 'No Gift History To Display'
 	    },
 	    stripeRows:true,
 	    frame:false,
@@ -105,13 +105,17 @@ var gifthistory = {
 	    height:350,
 	    width:655
 	});
-	mydatastore.load();
-        Ext.get('loading').remove();
-	Ext.get('loading-mask').fadeOut({remove:true});
+	mydatastore.load({
+		callback: function() {
+			Ext.get('loading').remove();
+			Ext.get('loading-mask').fadeOut({remove:true});
+		}
+	});
 
-        giftGrid.on("click", function(e) {
-             var btn = e.getTarget('.controlBtn');
+	giftGrid.on("click", function(e) {
+            var btn = e.getTarget('.controlBtn');
             if (btn) {
+                $j(btn).addClass('showWait');
                 var t = e.getTarget();
                 var v = this.getView();
                 var rowIdx = v.findRowIndex(t);
@@ -122,6 +126,7 @@ var gifthistory = {
                         console.log('send receipt for gift - ' + record.id);
                         var callbackproxy = function(dataFromServer) {
 				            gifthistory.handleReturn(dataFromServer);
+                            $j(btn).removeClass('showWait');
 			            }
 
 			            var callMetaData={callback:callbackproxy};

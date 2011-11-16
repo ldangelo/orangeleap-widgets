@@ -4998,7 +4998,7 @@ ul.x-tab-strip-bottom {
     font: 12px arial,tahoma,helvetica,sans-serif;
 }
 .x-form-invalid-icon {
-    background-image: url("../images/default/form/dialog_error.png");
+    background-image: url("../images/dialog_error.png");
 }
 .x-fieldset {
     border-color: #B5B8C8;
@@ -5644,7 +5644,7 @@ td.x-date-mp-sep {
     background-image: url("../images/default/form/error-tip-corners.gif");
 }
 .x-form-invalid-tip .x-tip-body {
-    background-image: url("../images/default/form/dialog_error.png");
+    background-image: url("../images/dialog_error.png");
 }
 .x-tip-anchor {
     background-image: url("../images/default/qtip/tip-anchor-sprite.gif");
@@ -6113,9 +6113,6 @@ body {
 .x-splitbar-proxy {
     background-color: #B8B8B8;
 }
-.x-color-palette a {
-    border-color: #FFD52F;
-}
 .x-color-palette a:hover, .x-color-palette a.x-color-palette-sel {
     background-color: #F8F8F8;
     border-color: #FEA500;
@@ -6328,7 +6325,7 @@ ul.x-tab-strip-bottom {
     font-weight: normal;
 }
 .x-form-invalid-icon {
-    background-image: url("../images/default/form/dialog_error.png");
+    background-image: url("../images/dialog_error.png");
 }
 .x-fieldset {
     border-color: #fff;
@@ -6541,16 +6538,8 @@ ul.x-tab-strip-bottom {
     background-color: #FFFFFF;
     background-image: url("../images/default/shared/loading-balls.gif");
 }
-.x-grid3-row {
-    border-color: #FFD52F #FFC31D #FFC31D;
-}
 .x-grid3-row-alt {
     background-color: #FAFAFA;
-}
-.x-grid3-row-over {
-    background-color: #EFEFEF;
-    background-image: url("../images/default/grid/row-over.gif");
-    border-color: #FFB30D;
 }
 .x-grid3-resize-proxy {
     background-color: #858585;
@@ -6619,13 +6608,6 @@ td.grid-hd-group-cell {
     color: #000000 !important;
 }
 .x-grid3-cell-selected .x-grid3-cell-text {
-    color: #000000;
-}
-.x-grid3-locked td.x-grid3-row-marker, .x-grid3-locked .x-grid3-row-selected td.x-grid3-row-marker {
-    background-color: #F9F8E9 !important;
-    background-image: url("../images/default/grid/grid-hrow.gif") !important;
-    border-right-color: #9E760F !important;
-    border-top-color: #FFD52F;
     color: #000000;
 }
 .x-grid3-locked td.x-grid3-row-marker div, .x-grid3-locked .x-grid3-row-selected td.x-grid3-row-marker div {
@@ -6746,12 +6728,6 @@ td.grid-hd-group-cell {
     border-bottom-color: #FFA600;
     border-left-color: #ddd;
     border-right-color: #FFA600;
-}
-.x-dd-drag-ghost {
-    background-color: #FFFFFF;
-    border-color: #FFB30D #EA9100 #EA9100 #FFB30D;
-    color: #000000;
-    font: 11px arial,helvetica,sans-serif;
 }
 .x-dd-drop-nodrop .x-dd-drop-icon {
     background-image: url("../images/default/dd/drop-no.gif");
@@ -7026,7 +7002,7 @@ td.x-date-mp-sep {
     background-image: url("../images/default/form/error-tip-corners.gif");
 }
 .x-form-invalid-tip .x-tip-body {
-    background-image: url("../images/default/form/dialog_error.png");
+    background-image: url("../images/dialog_error.png");
 }
 .x-tip-anchor {
     background-image: url("../images/default/qtip/tip-anchor-sprite.gif");
@@ -7397,12 +7373,6 @@ body.x-body-masked .x-window-plain .x-window-mc {
     background-color: #FFFFFF;
     background-image: url("../images/default/grid/grid3-hrow2.gif");
 }
-.x-list-header-inner div em {
-    border-left-color: #FFB30D;
-    font-family: arial,tahoma,helvetica,sans-serif;
-    font-size: 11px;
-    font-weight: normal;
-}
 .x-list-body dt em {
     font-family: arial,tahoma,helvetica,sans-serif;
     font-size: 11px;
@@ -7724,6 +7694,31 @@ body.ext-ie6 .x-superboxselect-item {
     background-image: url("../images/indicator.gif");
     background-position: right center;
     background-repeat: no-repeat;
+}
+
+#loading-mask {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background-color: #111;
+    opacity: 0.4;
+	filter: alpha(opacity = 40);
+}
+#loading {
+	background-color: #fff;
+	padding: 2px 4px;
+	border: 1px solid #ccc;
+	position: fixed;
+	top: 45%;
+	left: 45%;
+	box-shadow: 0 1px 0 rgba(0,0,0,0.4);
+	z-index: 2;
+}
+.controlBtn {
+	cursor: pointer;
 }
 
 /* Copied over from extjs3.4 css */

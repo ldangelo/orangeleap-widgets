@@ -138,9 +138,12 @@ postToUrl: function(url, params, newWindow)
 	    height:350,
 	    width:655
 	});
-	mydatastore.load();
-        Ext.get('loading').remove();
-		Ext.get('loading-mask').fadeOut({remove:true});
+	mydatastore.load({
+		callback: function() {
+			Ext.get('loading').remove();
+			Ext.get('loading-mask').fadeOut({remove:true});
+		}
+	});
 
     pledgesGrid.on("click", function(e) {
          var btn = e.getTarget('.controlBtn');
