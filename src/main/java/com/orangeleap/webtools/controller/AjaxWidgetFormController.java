@@ -279,16 +279,24 @@ public class AjaxWidgetFormController extends MultiActionController {
 				.getAuthentication();
 		String widgettype = request.getParameter("widgettype");
 		String customentitytype = request.getParameter("customentitytype");
+		String guid = request.getParameter("widgetGuid");
 		String userName = auth.getName();
 		String password = (String) auth.getCredentials();
 		String appLocation = System.getProperty("webtools.applocation");
-		Widget widget = widgetService.createWidget(userName, password,
-				widgettype, customentitytype);
+		Widget widget = null;
+		
+		if (guid.isEmpty()) {
+			widget = widgetService.createWidget(userName, password,	widgettype, customentitytype);
+			populateWidget(widget, request);
+			widget.setWidgetId(0L);
+			widget.setWidgetGuid(UUID.randomUUID().toString());
+		} else {
+			widget = widgetService.getWidget(guid);
+			populateWidget(widget, request);			
+		}
+		
 
-		populateWidget(widget, request);
 
-		widget.setWidgetId(0L);
-		widget.setWidgetGuid(UUID.randomUUID().toString());
 		widget.setWidgetLoginSuccessURL(request.getParameter("widgetLoginSuccessURL"));
 
 		if (customentitytype.equals("widget_authentication")) {

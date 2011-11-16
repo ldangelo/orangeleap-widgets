@@ -103,7 +103,10 @@ var authentication = {
 			this.setCookie("sessionId",sessionId);
 
 			if (successurl != null) {
-				top.location.href=successurl;
+				if (replaceTopContent==true)
+					top.location.href=successurl;
+				else
+					window.location.href=successurl;
 			}
 		}
     },
@@ -124,7 +127,7 @@ var authentication = {
 		return "";
     },
 
-    generateWidget: function(widgetid, successurl) {
+    generateWidget: function(widgetid, successurl, replaceTopContent,referer) {
 		sessionId = this.getCookie("sessionId");
 
 		this.successurl = successurl;
@@ -363,7 +366,7 @@ var authentication = {
 
 		this.loginform.render("widget");
 
-		OrangeLeapWidget.updateViewCount(widgetid,document.location.href);
+		OrangeLeapWidget.updateViewCount(widgetid,referer);
     },
 
     showError: function() {
@@ -382,7 +385,7 @@ var authentication = {
     },
     handleError: function(widgetid, str) {
 		// update widget's error count
-		OrangeLeapWidget.updateErrorCount(widgetid,document.location.href);
+		OrangeLeapWidget.updateErrorCount(widgetid,this.referer);
 
 		// display the error
 		Ext.Msg.show({

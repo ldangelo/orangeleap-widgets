@@ -154,8 +154,8 @@ function generateForm(form,store,meta) {
                         	name: fields[f].name,
                         	readOnly: fields[f].readonly,
 							items: [
-								{ boxLabel: fields[f].trueOption, name: fields[f].name, inputValue: 'true' },
-								{ boxLabel: fields[f].falseOption, name: fields[f].name, inputValue: 'false', checked: true },
+								{ boxLabel: fields[f].trueOption, name: fields[f].name, inputValue: 'true', checked: true},
+								{ boxLabel: fields[f].falseOption, name: fields[f].name, inputValue: 'false' },
 							]
 						});
 						if (col2 != null && f > fields.length/2) {

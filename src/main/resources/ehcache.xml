@@ -105,7 +105,7 @@
            overflowToDisk="true"
            diskSpoolBufferSizeMB="10"
            timeToIdleSeconds="120"
-           timeToLiveSeconds="120"
+           timeToLiveSeconds="216000"
            diskExpiryThreadIntervalSeconds="600"
            memoryStoreEvictionPolicy="LRU"
             />

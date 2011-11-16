@@ -106,7 +106,7 @@ WidgetForm = Ext.extend(Ext.form.FormPanel, {
 		})];
 
 		this.buttons =  [{
-			text: 'Generate',
+			text: 'Save',
 			handler: this.onGenerate,
 			align:'center',
 			formBind: true
@@ -182,7 +182,7 @@ WidgetForm = Ext.extend(Ext.form.FormPanel, {
 			});
 			//
 			// hide the 'Generate' button to keep someone from regenerating the code....
-			this.buttons[0].hide();
+			//this.buttons[0].hide();
 		}
 	}
 });
