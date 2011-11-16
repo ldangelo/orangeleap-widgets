@@ -184,16 +184,16 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 
 			var that = this;
 
-			if ( ! this.guid) {
+			if ( ! this.guid == undefined) {
 				this.showError("Guid ID is undefined");
 			}
-			if ( ! this.authenticate) {
+			if ( ! this.authenticate == undefined) {
 				this.showError("Authenticate is undefined");
 			}
-			if ( ! this.loginurl) {
+			if ( ! this.loginurl == undefined) {
 				this.showError("Login URL is undefined");
 			}
-			if ( ! this.buttonLabel) {
+			if ( ! this.buttonLabel == undefined) {
 				this.showError("Button Label is undefined");
 			}
 
