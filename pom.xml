@@ -108,7 +108,7 @@
 									tofile="${project.build.directory}/${project.artifactId}-${project.version}/js/webtools-${maven.build.timestamp}.js" overwrite="true" />
 
 								<echo>*********************************************************************</echo>
-								<echo>************************* Set app.properties ************************</echo>
+								<echo>******** Set app.properties to: ${maven.build.timestamp} ************</echo>
 								<echo>*********************************************************************</echo>
 								<replace file="${project.build.outputDirectory}/app.properties"
 									token="$${build.info}" value="${project.version}-${maven.build.timestamp}" />

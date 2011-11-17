@@ -7720,6 +7720,20 @@ body.ext-ie6 .x-superboxselect-item {
 .controlBtn {
 	cursor: pointer;
 }
+#widgetContainer {
+    display: table;
+    height: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+#widgetContainer > div {
+    display: table-cell;
+    height: 100%;
+    margin: auto;
+    padding: 4px;
+    vertical-align: middle;
+    width: 100%;
+}
 
 /* Copied over from extjs3.4 css */
 .x-quirks .ext-ie9 .x-form-text {
