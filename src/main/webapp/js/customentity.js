@@ -15,6 +15,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 		args : null,
 		successurl : null,
 		picklistNameItemsMap: {},
+		replaceTopContent: null,
 
 		postToUrl : function(url, params, newWindow) {
 			var form = $j('<form>');
@@ -184,24 +185,30 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 
 			var that = this;
 
-			if ( ! this.guid == undefined) {
+			if ( this.guid == undefined) {
 				this.showError("Guid ID is undefined");
 			}
-			if ( ! this.authenticate == undefined) {
-				this.showError("Authenticate is undefined");
+			if ( this.authenticate == undefined) {
+				this.showError("Authenticate is undefined.");
 			}
-			if ( ! this.loginurl == undefined) {
-				this.showError("Login URL is undefined");
+			if ( this.loginurl == undefined) {
+				this.showError("Login URL is undefined.");
 			}
-			if ( ! this.buttonLabel == undefined) {
-				this.showError("Button Label is undefined");
+			if ( this.buttonLabel == undefined) {
+				this.showError("Button Label is undefined.");
 			}
 
+			if (this.replaceTopContent == undefined) {
+				this.showError("Replace Top Content is undefined.")
+			}
 			this.sessionId = this.getCookie("sessionId");
 
 			if (this.authenticate == true && this.sessionId == "") {
 				// window.open(this.loginurl,"_blank");
-				top.location.href = this.loginurl;
+				if (this.replaceTopContent == true)
+					top.location.href = this.loginurl;
+				else
+					window.location.href = this.loginurl;
 				return;
 			}
 
@@ -260,7 +267,11 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 				autoSave : false,
 				listeners : {
 					'exception' : function(misc) {
-						top.location.href = this.loginurl;
+						if (replaceTopContent == true)
+							top.location.href = this.loginurl;
+						else
+							window.location.href = this.loginurl;
+						
 					},
 					'metachange' : function(store, meta) {
 						var fields = meta.fields;

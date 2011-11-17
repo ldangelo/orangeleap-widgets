@@ -1,6 +1,7 @@
 var $j = jQuery.noConflict();
 
 var pledges = {
+		replaceTopContent: null,		
 postToUrl: function(url, params, newWindow)
 {
     var form = $('<form>');
@@ -70,7 +71,10 @@ postToUrl: function(url, params, newWindow)
 	    this.handlerError("Authentication Failed!");
 	} else {
 	    this.setCookie("constituentId",constituentid);
-	    document.location = redirecturl;
+	    if (this.replaceTopContent == true)
+	    	top.location.href = redirecturl;
+	    else
+	    	top.location.href = redirecturl;	    	
 	}
     },
 
@@ -91,13 +95,19 @@ postToUrl: function(url, params, newWindow)
 	return "";
     },
 
-    generateWidget: function(widgetname,widgetid,authenticate, redirecturl, referer, donationurl) {
+    generateWidget: function(widgetname,widgetid,authenticate, redirecturl, referer, donationurl, replaceTopContent) {
 	var sessionId = this.getCookie("sessionId");
-
+	this.replaceTopContent = replaceTopContent;
+	
+	
 	if (authenticate == true && sessionId == "") {
 //        window.open(redirecturl, "_blank");
-	    top.location.href=redirecturl;
-	    return;
+		if (replaceTopContent == true)
+			top.location.href=redirecturl;
+		else
+			top.location.href=redirecturl;
+
+		return;
 	}
 
 
@@ -157,7 +167,10 @@ postToUrl: function(url, params, newWindow)
                 case 'payment':
                     console.log('make a payment - ' + record.id);
                     var params = {};
-                    top.location.href= donationurl + "?pledge_id=" + record.id +"&gift_amount=" + record.data.amount + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;
+                    if (replaceTopContent == true) 
+                    	top.location.href= donationurl + "?pledge_id=" + record.id +"&gift_amount=" + record.data.amount + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;
+                    else
+                    	window.location.href= donationurl + "?pledge_id=" + record.id +"&gift_amount=" + record.data.amount + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;                    	
                     //pledges.postToUrl('http://localhost/~ldangelo/donation.html',params);
                     break;
                 case 'go':

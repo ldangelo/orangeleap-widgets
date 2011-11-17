@@ -3,7 +3,8 @@ var $j = jQuery.noConflict();
 var gifthistory = {
     sessionId: null,
     widgetId: null,
-
+	replaceTopContent: null,
+	
     setCookie: function(c_name,value,expiredays)
     {
 	var exdate=new Date();
@@ -61,12 +62,17 @@ var gifthistory = {
 	return "";
     },
 
-    generateWidget: function(widgetname,widgetid,authenticate, redirecturl, referer) {
+    generateWidget: function(widgetname,widgetid,authenticate, redirecturl, referer, replaceTopContent) {
 	this.sessionId = this.getCookie("sessionId");
     this.widgetId = widgetid;
+    this.replaceTopContent = replaceTopContent;
 
 	if (authenticate == true && this.sessionId == "") {
-        top.location.href=redirecturl;
+		if (replaceTopContent == true)
+			top.location.href=redirecturl;
+		else
+			window.location.href=redirecturl;
+		
 	    return;
 	}
 

@@ -18,6 +18,7 @@ var panel = null;
 var sponsorshipform =  {
     referer:"Unknown",
     sponsorshipurl:null,
+	replaceTopContent: null,    
 	picklistNameItemsMap: {},
     include: function(filename) {
 		var head = document.getElementsByTagName('head')[0];
@@ -163,7 +164,10 @@ var sponsorshipform =  {
 
 			query=query + items[i].name + '=' + items[i].value;
 		}
-		top.location.href=sponsorshipform.sponsorshipurl + query
+		if (replaceTopContent == true)
+			top.location.href=sponsorshipform.sponsorshipurl + query
+		else
+			window.location.href=sponsorshipform.sponsorshipurl + query			
     },
     clearForm:function() {
 		//
@@ -225,15 +229,20 @@ var sponsorshipform =  {
 	    }
 	}
     },
-    generateWidget: function(widgetname,guid,authenticate, redirecturl,sponsorshipformurl,referer) {
+    generateWidget: function(widgetname,guid,authenticate, redirecturl,sponsorshipformurl,referer,replaceTopContent) {
         var that = this;
 		this.sponsorshipurl = sponsorshipformurl;
 		this.referer = referer;
+		this.replaceTopContent = replaceTopContent;
+		
 		wname = widgetname;
 		var constituentId = this.getCookie("constituentId");
 
 		if (authenticate == true &&  constituentId == "") {
-			window.location=redirecturl;
+			if (replaceTopContent == true)
+				top.location.href=redirecturl;
+			else
+				window.location.href=redirecturl;
 			return;
 		}
 		OrangeLeapWidget.updateViewCount(guid,this.referer);

@@ -66,7 +66,7 @@ public class WidgetController extends MultiActionController {
                 w.setWidgetHtml(w.getWidgetHtml().replace("@ARGS@", (request.getHeader("Referer") != null) ? request.getHeader("Referer"): ""));
                 w.setWidgetHtml(w.getWidgetHtml().replace("@STYLE@", (style != null) ? style.getStyle() : ""));
                 w.setWidgetHtml(w.getWidgetHtml().replace("@DONATIONURL@",(w.getDonationUrl() != null) ? w.getDonationUrl():""));
-
+                w.setWidgetHtml(w.getWidgetHtml().replace("@REPLACETOPCONTENT@", w.isReplaceTopContents().toString()));
 
                 response.setIntHeader("Content-Length", w.getWidgetHtml().length());
                 response.setHeader("Content-Type", "text/html; charset=UTF-8");
