@@ -3,7 +3,7 @@ var $j = jQuery.noConflict();
 var authentication = {
 	successurl:null,
     loginform:null,
- 
+    replaceTopContent:null,
   
 	postToUrl: function(url, params, newWindow) {
 		var form = $('<form>');
@@ -103,7 +103,7 @@ var authentication = {
 			this.setCookie("sessionId",sessionId);
 
 			if (successurl != null) {
-				if (replaceTopContent==true)
+				if (this.replaceTopContent==true)
 					top.location.href=successurl;
 				else
 					window.location.href=successurl;
@@ -131,7 +131,8 @@ var authentication = {
 		sessionId = this.getCookie("sessionId");
 
 		this.successurl = successurl;
-
+		this.replaceTopContent = replaceTopContent;
+		
 		Ext.QuickTips.init();
 		Ext.form.Field.prototype.msgTarget = 'under';
 

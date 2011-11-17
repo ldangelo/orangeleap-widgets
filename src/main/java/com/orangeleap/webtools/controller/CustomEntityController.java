@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.orangeleap.client.AbstractCustomizableEntity.CustomFieldMap;
 import com.orangeleap.client.Constituent;
 import com.orangeleap.client.CustomTableRow;
 import com.orangeleap.webtools.domain.CustomEntity;
@@ -19,6 +20,8 @@ import com.orangeleap.webtools.service.PicklistService;
 import com.orangeleap.webtools.service.WidgetService;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.Element;
+
+import org.apache.axis.wsdl.toJava.GeneratedFileInfo.Entry;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
@@ -49,7 +52,7 @@ public class CustomEntityController extends MultiActionController {
 			return getModelMapError("Invalid guid");
 		}
 
-		if (w.getWidgetAuthenticationRequired()) {
+		if (w.getWidgetAuthenticationRequired() || !sessionId.isEmpty()) {
 			//
 			// get the constituent id out of the session cache
 			Element elem = sessionCache.get(sessionId);
@@ -182,6 +185,16 @@ public class CustomEntityController extends MultiActionController {
 		return getModelMapError("Error trying to delete customEntity");
 	}
 
+	private String getCustomFieldMapValue(CustomFieldMap cfMap,String index) {
+		List<com.orangeleap.client.AbstractCustomizableEntity.CustomFieldMap.Entry> list = cfMap.getEntry();
+		Iterator<com.orangeleap.client.AbstractCustomizableEntity.CustomFieldMap.Entry> it = list.iterator();
+		
+		while (it.hasNext()) {
+			com.orangeleap.client.AbstractCustomizableEntity.CustomFieldMap.Entry entry = it.next();
+			if (entry.getKey().equals(index)) return entry.getValue().getValue();
+		}
+		return "";
+	}
 	private ModelAndView getModelMap(List<CustomEntity> ceList, String guid,
 			Long constituentid) {
 		List<Map<String, Object>> returnList = new ArrayList<Map<String, Object>>();
@@ -234,11 +247,18 @@ public class CustomEntityController extends MultiActionController {
 							row.put(ce.getName(), PropertyUtils
 									.getSimpleProperty(constituent, args[1]));
 						}
-						else if (args.length == 3) {
-							Object obj = PropertyUtils.getSimpleProperty(
-									constituent, args[1]);
-							row.put(ce.getName(), PropertyUtils
-									.getSimpleProperty(obj, args[2]));
+						else { 
+							String property = ce.getExpression().substring(ce.getExpression().indexOf(".") + 1);
+							
+							if (property.contains("customFieldMap")) {
+								String strcf = property.substring(0,property.indexOf('['));
+								CustomFieldMap cfMap = (CustomFieldMap) PropertyUtils.getNestedProperty(constituent, strcf);
+								
+								String index = property.substring(property.indexOf('[') + 1, property.indexOf(']'));
+								row.put(ce.getName(), getCustomFieldMapValue(cfMap,index));
+							} else {
+								row.put(ce.getName(), PropertyUtils.getNestedProperty(constituent,property));
+							}
 						}
 					}
 				}
