@@ -35,7 +35,7 @@ public class WidgetController extends MultiActionController {
         String appLocation = System.getProperty("webtools.applocation");
         String refererUrl = request.getHeader("Referer");
 
-	    final String buildTimestamp = messageSource.getMessage("buildTimestamp", null, Locale.getDefault());
+	    final String jsCssSuffix = messageSource.getMessage("jsCssSuffix", null, Locale.getDefault());
 
         if (constituentid == null || constituentid.equals("undefined") || constituentid.equals("")) {
             constituentid = "-1";
@@ -56,7 +56,7 @@ public class WidgetController extends MultiActionController {
                 w.setWidgetHtml(w.getWidgetHtml().replace("@REFERER@", (refererUrl != null) ? refererUrl : ""));
                 w.setWidgetHtml(w.getWidgetHtml().replace("@APPLOCATION@", (appLocation != null) ? appLocation : ""));
                 w.setWidgetHtml(w.getWidgetHtml().replace("@GUID@", w.getWidgetGuid()));
-	            w.setWidgetHtml(w.getWidgetHtml().replace("@SUFFIX@", buildTimestamp));
+	            w.setWidgetHtml(w.getWidgetHtml().replace("@SUFFIX@", jsCssSuffix));
                 w.setWidgetHtml(w.getWidgetHtml().replace("@SUCCESSURL@", (w.getWidgetLoginSuccessURL() != null? w.getWidgetLoginSuccessURL() : "")));
                 w.setWidgetHtml(w.getWidgetHtml().replace("@AUTHENTICATE@", w.getWidgetAuthenticationRequired().toString()));
                 w.setWidgetHtml(w.getWidgetHtml().replace("@LOGINURL@", (w.getWidgetAuthenticationURL() != null) ? w.getWidgetAuthenticationURL() : ""));

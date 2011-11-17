@@ -40,24 +40,14 @@
 				<artifactId>maven-antrun-plugin</artifactId>
 				<executions>
 					<execution>
-						<id>delete OLD webtools JS and CSS, and old target/classes/app.properties</id>
+						<id>delete old target/classes/app.properties</id>
 						<phase>generate-resources</phase>
 						<goals>
 							<goal>run</goal>
 						</goals>
 						<configuration>
 							<tasks>
-								<delete failonerror="false">
-									 <fileset dir="${basedir}/src/main/webapp/js/generated">
-										 <include name="*.js"/>
-									 </fileset>
-								</delete>
-								<delete failonerror="false">
-									 <fileset dir="${basedir}/src/main/webapp/css/generated">
-										 <include name="*.css"/>
-									 </fileset>
-								</delete>
-								<delete failonerror="false" file="target/classes/app.properties" />
+								<delete failonerror="false" file="${project.build.outputDirectory}/app.properties" />
 							</tasks>
 						</configuration>
 					</execution>
@@ -85,6 +75,51 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>Append CSS and JS file suffixes and set app.properties</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<echo>*********************************************************************</echo>
+								<echo>******************** Append CSS and JS file suffixes  ***************</echo>
+								<echo>*********************************************************************</echo>
+
+								<move file="${project.build.directory}/${project.artifactId}-${project.version}/css/webtools.css"
+									tofile="${project.build.directory}/${project.artifactId}-${project.version}/css/webtools-${maven.build.timestamp}.css" overwrite="true" />
+								<move file="${project.build.directory}/${project.artifactId}-${project.version}/js/login.js"
+									tofile="${project.build.directory}/${project.artifactId}-${project.version}/js/login-${maven.build.timestamp}.js" overwrite="true" />
+								<move file="${project.build.directory}/${project.artifactId}-${project.version}/js/customentity.js"
+									tofile="${project.build.directory}/${project.artifactId}-${project.version}/js/customentity-${maven.build.timestamp}.js" overwrite="true" />
+								<move file="${project.build.directory}/${project.artifactId}-${project.version}/js/gifthistory.js"
+									tofile="${project.build.directory}/${project.artifactId}-${project.version}/js/gifthistory-${maven.build.timestamp}.js" overwrite="true" />
+								<move file="${project.build.directory}/${project.artifactId}-${project.version}/js/pledges.js"
+									tofile="${project.build.directory}/${project.artifactId}-${project.version}/js/pledges-${maven.build.timestamp}.js" overwrite="true" />
+								<move file="${project.build.directory}/${project.artifactId}-${project.version}/js/sponsorshipform.js"
+									tofile="${project.build.directory}/${project.artifactId}-${project.version}/js/sponsorshipform-${maven.build.timestamp}.js" overwrite="true" />
+								<move file="${project.build.directory}/${project.artifactId}-${project.version}/js/webtools.js"
+									tofile="${project.build.directory}/${project.artifactId}-${project.version}/js/webtools-${maven.build.timestamp}.js" overwrite="true" />
+
+								<echo>*********************************************************************</echo>
+								<echo>************************* Set app.properties ************************</echo>
+								<echo>*********************************************************************</echo>
+								<replace file="${project.build.outputDirectory}/app.properties"
+									token="$${build.info}" value="${project.version}-${maven.build.timestamp}" />
+								<replace file="${project.build.outputDirectory}/app.properties"
+									token="$${jsCssSuffix}" value="-${maven.build.timestamp}" />
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 			<plugin>
 				<groupId>net.sf.alchim</groupId>
 				<artifactId>yuicompressor-maven-plugin</artifactId>
@@ -105,7 +140,7 @@
 							<!-- remove files after aggregation (default: false) <removeIncluded>true</removeIncluded> -->
 							<!-- insert new line after each concatenation (default: false) -->
 							<insertNewLine>true</insertNewLine>
-							<output>${basedir}/src/main/webapp/js/generated/webtools-${maven.build.timestamp}.js</output>
+							<output>${basedir}/src/main/webapp/js/webtools.js</output>
 							<!-- files to include, path relative to output's directory or absolute 
 								path -->
 							<includes>
@@ -116,76 +151,8 @@
 							<!-- files to exclude, path relative to output's directory <excludes>
 								<exclude>**/*.pack.js</exclude> <exclude>**/compressed.css</exclude> </excludes> -->
 						</aggregation>
-						<aggregation>
-							<output>${basedir}/src/main/webapp/js/generated/login-${maven.build.timestamp}.js</output>
-							<!-- files to include, path relative to output's directory or absolute
-								path -->
-							<includes>
-								<include>${basedir}/src/main/webapp/js/login.js</include>
-							</includes>
-						</aggregation>
-						<aggregation>
-							<output>${basedir}/src/main/webapp/js/generated/customentity-${maven.build.timestamp}.js</output>
-							<!-- files to include, path relative to output's directory or absolute
-								path -->
-							<includes>
-								<include>${basedir}/src/main/webapp/js/customentity.js</include>
-							</includes>
-						</aggregation>
-						<aggregation>
-							<output>${basedir}/src/main/webapp/js/generated/gifthistory-${maven.build.timestamp}.js</output>
-							<!-- files to include, path relative to output's directory or absolute
-								path -->
-							<includes>
-								<include>${basedir}/src/main/webapp/js/gifthistory.js</include>
-							</includes>
-						</aggregation>
-						<aggregation>
-							<output>${basedir}/src/main/webapp/js/generated/pledges-${maven.build.timestamp}.js</output>
-							<!-- files to include, path relative to output's directory or absolute
-								path -->
-							<includes>
-								<include>${basedir}/src/main/webapp/js/pledges.js</include>
-							</includes>
-						</aggregation>
-						<aggregation>
-							<output>${basedir}/src/main/webapp/js/generated/sponsorshipform-${maven.build.timestamp}.js</output>
-							<!-- files to include, path relative to output's directory or absolute
-								path -->
-							<includes>
-								<include>${basedir}/src/main/webapp/js/sponsorshipform.js</include>
-							</includes>
-						</aggregation>
-						<aggregation>
-							<insertNewLine>true</insertNewLine>
-							<output>${basedir}/src/main/webapp/css/webtools-${maven.build.timestamp}.css</output>
-							<includes>
-								<include>${basedir}/src/main/webapp/css/widgetsBase.css</include>
-							</includes>
-						</aggregation>
 					</aggregations>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>set build version and timestamp</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<tasks>
-								<replace file="${basedir}/target/classes/app.properties"
-									token="$${build.info}" value="${project.version}-${maven.build.timestamp}" />
-								<replace file="${basedir}/target/classes/app.properties"
-									token="$${widget-timestamp}" value="${maven.build.timestamp}" />
-							</tasks>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 
 			<plugin>
@@ -216,8 +183,6 @@
 	</build>
 
 	<profiles>
-
-
 		<!-- Does JSP pre-compilation for releases -->
 		<profile>
 			<id>release</id>
@@ -280,6 +245,28 @@
 									<tasks>
 										<copy file="src/main/config/jetty-local/webtools.properties"
 											todir="target/classes" filtering="true" overwrite="true" />
+									</tasks>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>set build version and timestamp</id>
+								<phase>process-resources</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<tasks>
+										<replace file="${project.build.outputDirectory}/app.properties"
+											token="$${build.info}" value="${project.version}-${maven.build.timestamp}" />
+										<replace file="${project.build.outputDirectory}/app.properties"
+											token="$${jsCssSuffix}" value="" />
 									</tasks>
 								</configuration>
 							</execution>
