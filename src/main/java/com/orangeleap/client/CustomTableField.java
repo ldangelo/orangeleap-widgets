@@ -56,6 +56,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="updateDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="updatedBy" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="validValueList" type="{http://www.orangeleap.com/orangeleap/typesv3}validValue" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="customTableFieldGuiOptions" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -100,7 +101,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "id",
     "updateDate",
     "updatedBy",
-    "validValueList"
+    "validValueList",
+    "customTableFieldGuiOptions"
 })
 public class CustomTableField {
 
@@ -142,6 +144,7 @@ public class CustomTableField {
     protected String updatedBy;
     @XmlElement(nillable = true)
     protected List<ValidValue> validValueList;
+    protected String customTableFieldGuiOptions;
 
     /**
      * Gets the value of the createDate property.
@@ -930,6 +933,30 @@ public class CustomTableField {
             validValueList = new ArrayList<ValidValue>();
         }
         return this.validValueList;
+    }
+
+    /**
+     * Gets the value of the customTableFieldGuiOptions property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCustomTableFieldGuiOptions() {
+        return customTableFieldGuiOptions;
+    }
+
+    /**
+     * Sets the value of the customTableFieldGuiOptions property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCustomTableFieldGuiOptions(String value) {
+        this.customTableFieldGuiOptions = value;
     }
 
 }
