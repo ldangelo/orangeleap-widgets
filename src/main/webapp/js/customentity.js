@@ -267,7 +267,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 				autoSave : false,
 				listeners : {
 					'exception' : function(misc) {
-						if (replaceTopContent == true)
+						if (that.replaceTopContent == true)
 							top.location.href = this.loginurl;
 						else
 							window.location.href = this.loginurl;
@@ -300,16 +300,23 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 								}
 							}
 							else if (fields[f].type == 'text'
+									|| fields[f].type == 'password'
 									|| fields[f].type == 'date'
 									|| fields[f].type == 'integer'
 									|| fields[f].type == 'number') {
-								var field = new Ext.form.TextField();
+								var field = (fields[f].type == 'date' ? new Ext.form.DateField() :
+								        (fields[f].type == 'integer' || fields[f].type == 'number') ? new Ext.form.NumberField() :
+										new Ext.form.TextField());
 								field.id = fields[f].name;
 								field.name = fields[f].name;
 								field.dataIndex = fields[f].name;
 								field.fieldLabel = fields[f].header;
 								field.store = store;
 								field.border = false;
+
+								if (fields[f].type == 'password') {
+									field.inputType = 'password';
+								}
 
 								field.value = fields[f].value;
 

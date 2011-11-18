@@ -29,7 +29,7 @@ public class JsonListWidgetController {
 			map.put("guid", widget.getWidgetGuid());
             map.put("type", widget.getWidgetType());
 			map.put("widgetDescription", widget.getWidgetDescription());
-			map.put("replaceTopContents", widget.isReplaceTopContents());
+			map.put("replaceTopContents", widget.getReplaceTopContents());
             map.put("entityname", widget.getCustomEntityName());
 			map.put("errorcount", widget.getWidgetErrorCount());
 			map.put("viewcount", widget.getWidgetViewCount());
