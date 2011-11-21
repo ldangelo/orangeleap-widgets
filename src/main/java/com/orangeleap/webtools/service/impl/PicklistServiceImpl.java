@@ -8,6 +8,9 @@ import com.orangeleap.client.PicklistItem;
 import com.orangeleap.client.WSClient;
 import com.orangeleap.webtools.service.PicklistService;
 import java.util.List;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import net.sf.ehcache.Cache;
@@ -18,7 +21,9 @@ import javax.annotation.Resource;
 
 @Service("picklistService")
 public class PicklistServiceImpl implements PicklistService {
-
+	private static final Log logger = LogFactory
+			.getLog(PicklistServiceImpl.class);
+	
   @Resource(name="picklistCache")
   Cache picklistCache;
 
@@ -43,10 +48,14 @@ public class PicklistServiceImpl implements PicklistService {
     GetPickListByNameResponse response = null;
 
     request.setName(picklistname);
-    response = oleap.getPickListByName(request);
-    if (response != null) {
-      cache.put(new Element(username+response.getPicklist().getPicklistName(),response.getPicklist()));
-      return response.getPicklist().getPicklistItems();
+    try {
+    	response = oleap.getPickListByName(request);
+    	if (response != null) {
+    		cache.put(new Element(username+response.getPicklist().getPicklistName(),response.getPicklist()));
+    		return response.getPicklist().getPicklistItems();
+    	}
+    } catch (Exception e) {
+    	logger.debug(picklistname + " " + e.getMessage());
     }
 
     return null;

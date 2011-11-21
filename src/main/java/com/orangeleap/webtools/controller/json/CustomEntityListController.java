@@ -148,7 +148,9 @@ public class CustomEntityListController {
 
 				for (int i = 0; i < args.length; i++) {
 					String val[] = args[i].split("=");
-					if (! val[0].equals("age")) {
+					if (val.length != 2) continue;
+					
+					if (!val[0].equals("age")) {
 						Filter f = new Filter();
 						f.setName(val[0]);
 						f.setValue(val[1]);
@@ -160,7 +162,7 @@ public class CustomEntityListController {
 						GregorianCalendar birth = new GregorianCalendar();
 
 						// back up current date by age...
-						birth.set(GregorianCalendar.YEAR, birth.get(GregorianCalendar.YEAR) - (new Integer(val[1]) + 1));
+						birth.set(GregorianCalendar.YEAR, birth.get(GregorianCalendar.YEAR) - (new Integer(val[1]) - 1));
 						XMLGregorianCalendar xmltoday;
 						try {
 							xmltoday = DatatypeFactory.newInstance().newXMLGregorianCalendar(today);

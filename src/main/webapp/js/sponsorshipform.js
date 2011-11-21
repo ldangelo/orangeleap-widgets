@@ -132,15 +132,15 @@ var sponsorshipform =  {
 		sponsorshipform.clearForm();
 		pattern = "sponsorship_status=Available;";
 		var field = searchform.getForm().findField('searchcountry');
-		if (field.value != null)
+		if (field.value != null && field.value.length > 0)
 			pattern=pattern+ "country=" + field.value + ';';
 
 		field = searchform.getForm().findField('searchage');
-		if (field.value != null)
+		if (field.value != null && field.value.length > 0)
 			pattern=pattern+ "age=" + field.value + ';';
 
 		field = searchform.getForm().findField('searchgender');
-		if (field.value != null)
+		if (field.value != null && field.value.length > 0)
 			pattern=pattern+ "gender=" + field.value + ';';
 
 		fldidx = 0;
@@ -247,7 +247,7 @@ var sponsorshipform =  {
 		}
 		OrangeLeapWidget.updateViewCount(guid,this.referer);
 
-		var proxy = new Ext.data.HttpProxy( {url:'/donorwidgets/customEntityList.json?guid=' + guid});
+		var proxy = new Ext.data.HttpProxy( {url:'/donorwidgets/customEntityList.json?guid=' + guid,timeout : 120000});
 
 		var reader=new Ext.data.JsonReader();
 
