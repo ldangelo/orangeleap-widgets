@@ -205,7 +205,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 
 			if (this.authenticate == true && this.sessionId == "") {
 				// window.open(this.loginurl,"_blank");
-				if (this.replaceTopContent == true)
+				if (this.replaceTopContent == 'true')
 					top.location.href = this.loginurl;
 				else
 					window.location.href = this.loginurl;
@@ -267,7 +267,8 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 				autoSave : false,
 				listeners : {
 					'exception' : function(misc) {
-						if (that.replaceTopContent == true)
+
+						if (this.replaceTopContent == 'true')
 							top.location.href = this.loginurl;
 						else
 							window.location.href = this.loginurl;

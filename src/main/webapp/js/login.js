@@ -103,7 +103,7 @@ var authentication = {
 			this.setCookie("sessionId",sessionId);
 
 			if (successurl != null) {
-				if (this.replaceTopContent==true)
+				if (this.replaceTopContent=='true')
 					top.location.href=successurl;
 				else
 					window.location.href=successurl;

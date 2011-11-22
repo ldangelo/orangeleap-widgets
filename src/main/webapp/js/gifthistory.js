@@ -68,7 +68,7 @@ var gifthistory = {
     this.replaceTopContent = replaceTopContent;
 
 	if (authenticate == true && this.sessionId == "") {
-		if (replaceTopContent == true)
+		if (replaceTopContent == 'true')
 			top.location.href=redirecturl;
 		else
 			window.location.href=redirecturl;

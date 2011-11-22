@@ -164,7 +164,7 @@ var sponsorshipform =  {
 
 			query=query + items[i].name + '=' + items[i].value;
 		}
-		if (replaceTopContent == true)
+		if (this.replaceTopContent == 'true')
 			top.location.href=sponsorshipform.sponsorshipurl + query
 		else
 			window.location.href=sponsorshipform.sponsorshipurl + query			
@@ -239,7 +239,7 @@ var sponsorshipform =  {
 		var constituentId = this.getCookie("constituentId");
 
 		if (authenticate == true &&  constituentId == "") {
-			if (replaceTopContent == true)
+			if (replaceTopContent == 'true')
 				top.location.href=redirecturl;
 			else
 				window.location.href=redirecturl;

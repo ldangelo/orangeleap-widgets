@@ -71,7 +71,7 @@ postToUrl: function(url, params, newWindow)
 	    this.handlerError("Authentication Failed!");
 	} else {
 	    this.setCookie("constituentId",constituentid);
-	    if (this.replaceTopContent == true)
+	    if (this.replaceTopContent == 'true')
 	    	top.location.href = redirecturl;
 	    else
 	    	top.location.href = redirecturl;	    	
@@ -102,7 +102,7 @@ postToUrl: function(url, params, newWindow)
 	
 	if (authenticate == true && sessionId == "") {
 //        window.open(redirecturl, "_blank");
-		if (replaceTopContent == true)
+		if (replaceTopContent == 'true')
 			top.location.href=redirecturl;
 		else
 			top.location.href=redirecturl;
@@ -167,7 +167,7 @@ postToUrl: function(url, params, newWindow)
                 case 'payment':
                     console.log('make a payment - ' + record.id);
                     var params = {};
-                    if (replaceTopContent == true) 
+                    if (replaceTopContent == 'true') 
                     	top.location.href= donationurl + "?pledge_id=" + record.id +"&gift_amount=" + record.data.amount + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;
                     else
                     	window.location.href= donationurl + "?pledge_id=" + record.id +"&gift_amount=" + record.data.amount + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;                    	
