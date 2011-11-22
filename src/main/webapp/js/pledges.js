@@ -132,8 +132,8 @@ postToUrl: function(url, params, newWindow)
             {id: 'recurring',header: 'Recurring',dataIndex: 'recurring'},
 	    {id:'amount',xtype: 'numbercolumn', header: 'Pledge Amount',dataIndex:'amount',sortable:true},
 	    {id:'status',header:'Pledge Status',dataIndex:'status',sortable:true},
-	    {id:'projectCodeDescription', header: 'Project Code', dataIndex: 'projectCode', sortable:true},
-	    {id:'motivationCodeDescription', header: 'Motivation Code', dataIndex: 'motivationCode', sortable: true},
+	    {id:'projectCodeDescription', header: 'Project Code', dataIndex: 'projectCodeDescription', sortable:true},
+	    {id:'motivationCodeDescription', header: 'Motivation Code', dataIndex: 'motivationCodeDescription', sortable: true},
 
         {header: "Actions", width: 60, sortable: false, renderer: function() {
             return '<div class="controlBtn"><img src="images/money.png" class="make_payment"></div>';
