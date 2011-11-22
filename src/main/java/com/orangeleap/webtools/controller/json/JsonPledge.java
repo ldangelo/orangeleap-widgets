@@ -35,7 +35,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class JsonPledge {
 
 	public static final String PROJECT_CODE = "projectCode";
+	public static final String PROJECT_CODE_DESCRIPTION = "projectCodeDescription";	
 	public static final String MOTIVATION_CODE = "motivationCode";
+	public static final String MOTIVATION_CODE_DESCRIPTION = "motivationCodeDescription";	
 
 	@Autowired
 	WidgetDAO widgetDAO = null;
@@ -108,12 +110,14 @@ public class JsonPledge {
 			map.put("status", pledge.getPledgeStatus());
 
 			String projectCode = pledge.getDistributionLines().get(0).getProjectCode();
-			projectCode = getItemDescription(codeMap, projectCode, PROJECT_CODE);
 			map.put(PROJECT_CODE, projectCode);
+			projectCode = getItemDescription(codeMap, projectCode, PROJECT_CODE);
+			map.put(PROJECT_CODE_DESCRIPTION, projectCode);
 
 			String motivationCode = pledge.getDistributionLines().get(0).getMotivationCode();
-			motivationCode = getItemDescription(codeMap, motivationCode, MOTIVATION_CODE);
 			map.put(MOTIVATION_CODE, motivationCode);
+			motivationCode = getItemDescription(codeMap, motivationCode, MOTIVATION_CODE);
+			map.put(MOTIVATION_CODE_DESCRIPTION, motivationCode);
 
 			returnList.add(map);
 		}
