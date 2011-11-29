@@ -394,7 +394,7 @@ var sponsorshipform =  {
 		    };
 		    form.add(linkConfig);
 
-		    Ext.getCmp('searchcountry').store.loadData(that.picklistNameItemsMap['country']);
+		    Ext.getCmp('searchcountry').store.loadData(that.picklistNameItemsMap['sponsorable_country']);
 		},
 		'load': function(store,records,options) {
 		    var metaData = store.reader.meta.fields;
