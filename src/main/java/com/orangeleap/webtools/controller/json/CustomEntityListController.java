@@ -158,17 +158,23 @@ public class CustomEntityListController {
 					}
 					else {
 						DateFilter f = new DateFilter();
-						GregorianCalendar today = new GregorianCalendar();
-						GregorianCalendar birth = new GregorianCalendar();
+						GregorianCalendar startdate = new GregorianCalendar();
+						GregorianCalendar enddate = new GregorianCalendar();
 
 						// back up current date by age...
-						birth.set(GregorianCalendar.YEAR, birth.get(GregorianCalendar.YEAR) - (new Integer(val[1]) - 1));
+						startdate.set(GregorianCalendar.YEAR, startdate.get(GregorianCalendar.YEAR) - (new Integer(val[1])));
+						startdate.set(GregorianCalendar.MONTH, GregorianCalendar.JANUARY);
+						startdate.set(GregorianCalendar.DAY_OF_MONTH,1);
+						enddate.set(GregorianCalendar.YEAR, enddate.get(GregorianCalendar.YEAR) - (new Integer(val[1])));
+						enddate.set(GregorianCalendar.MONTH, GregorianCalendar.DECEMBER);
+						enddate.set(GregorianCalendar.DAY_OF_MONTH,31);
+
 						XMLGregorianCalendar xmltoday;
 						try {
-							xmltoday = DatatypeFactory.newInstance().newXMLGregorianCalendar(today);
-							XMLGregorianCalendar xmlbirth = DatatypeFactory.newInstance().newXMLGregorianCalendar(birth);
-							f.setMinDate(xmlbirth);
-							f.setMaxDate(xmltoday);
+							XMLGregorianCalendar xmlstartdate = DatatypeFactory.newInstance().newXMLGregorianCalendar(startdate);
+							XMLGregorianCalendar xmlenddate = DatatypeFactory.newInstance().newXMLGregorianCalendar(enddate);
+							f.setMinDate(xmlstartdate);
+							f.setMaxDate(xmlenddate);
 							f.setName("birthdate");
 							rowRequest.getDateFilters().add(f);
 						}
