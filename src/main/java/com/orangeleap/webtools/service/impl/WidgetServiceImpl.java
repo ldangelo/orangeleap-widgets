@@ -303,6 +303,9 @@ public class WidgetServiceImpl implements WidgetService {
 			if (ctfield.getCustomTableFieldGuiOptions() != null && ctfield.getCustomTableFieldGuiOptions().contains("maskInput")) {
 				ce.setType("password");
 			}
+			else if (ctfield.getCustomTableFieldGuiOptions() != null && ctfield.getCustomTableFieldGuiOptions().contains("maskMoney")) {
+				ce.setType("money");
+			}
 			else {
 				ce.setType(ctfield.getCustomTableFieldDatatype());
 			}

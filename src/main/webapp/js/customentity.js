@@ -304,7 +304,8 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 									|| fields[f].type == 'password'
 									|| fields[f].type == 'date'
 									|| fields[f].type == 'integer'
-									|| fields[f].type == 'number') {
+									|| fields[f].type == 'number'
+									|| fields[f].type == 'money') {
 								var field = (fields[f].type == 'date' ? new Ext.form.DateField() :
 								        (fields[f].type == 'integer' || fields[f].type == 'number') ? new Ext.form.NumberField() :
 										new Ext.form.TextField());
@@ -319,6 +320,23 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 									field.inputType = 'password';
 								}
 
+								if (fields[f].type == 'money') {
+//										field.maskRe=/[0-9\$\.]/;
+//										field.regex= /\d{1,3},?(\d{3},?)*\d{3}(\.\d{1,3})?|\d{1,3}(\.\d{1,2})?/;
+										field.validateOnBlur=true;
+										field.minValue=1;
+										field.allowNegative=false;
+										field.decimalPrecision=2;
+										field.decimalSeperator=".";
+										field.on('change', function(object, newValue, oldValue){
+													newValue = Ext.util.Format.number(newValue,"0.00");
+//													if(newValue == '$NaN.00') 
+														//object.setValue(oldValue); 
+//													else 
+														object.setValue(newValue);
+												});
+
+								}
 								field.value = fields[f].value;
 
 								if (!Ext.isEmpty(fields[f].regEx)) {
