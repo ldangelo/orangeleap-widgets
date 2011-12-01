@@ -92,11 +92,15 @@ function generateForm(form,store,meta) {
 					hiddenName:fields[f].name + 'hidden' ,
 					displayField:'Description',
 					forceSelection:true,
+					lazyInit:false,
+					mode:'local',
 					emptyText: 'Select ' + fields[f].header + '...',
 					store:new Ext.data.JsonStore({
 						id:'Name',
 						root:'rows',
 						totalProperty:'totalRows',
+						autoLoad: true,
+						picklistName: fields[f].name,
 						fields: [
 						{name:'Name',type:'string'},
 						{name:'Description',type:'string'}
@@ -110,7 +114,17 @@ function generateForm(form,store,meta) {
 						baseParams: {
 							guid: "",
 							picklistname: fields[f].name
+						},
+						listeners: {
+							'load' : function(store, records, options) {
+								
+								var fld = form.getForm().findField(this.picklistName);
+								if (fld != null) {
+									fld.setValue(fld.value);
+								}								
+							}
 						}
+						
 					}),
 					fieldLabel:fields[f].header
 					});

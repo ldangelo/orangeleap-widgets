@@ -3,7 +3,7 @@
 <page:applyDecorator name="main">
 	<head>
 		<title>Edit Donation Widget - <spring:message code="appName"/></title>
-		<pack:script enabled='true'>
+		<pack:script enabled='false'>
 			<src>/js/listplacements.js</src>
 			<src>/js/dynamicform.js</src>
 			<src>/js/widgetform.js</src>
