@@ -110,6 +110,18 @@
            memoryStoreEvictionPolicy="LRU"
             />
 
+    <cache name="picklistCache"
+           maxElementsInMemory="1000"
+           maxElementsOnDisk="0"
+           eternal="false"
+           overflowToDisk="true"
+           diskSpoolBufferSizeMB="10"
+           timeToIdleSeconds="0"
+           timeToLiveSeconds="216000"
+           diskExpiryThreadIntervalSeconds="600"
+           memoryStoreEvictionPolicy="LRU"
+            />
+            
 <cache name="constituentCache"
            maxElementsInMemory="1000"
            maxElementsOnDisk="0"

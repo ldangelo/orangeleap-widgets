@@ -51,7 +51,7 @@ public class PicklistServiceImpl implements PicklistService {
     try {
     	response = oleap.getPickListByName(request);
     	if (response != null) {
-    		cache.put(new Element(username+response.getPicklist().getPicklistName(),response.getPicklist()));
+    		cache.put(new Element(username+picklistname,response.getPicklist()));
     		return response.getPicklist().getPicklistItems();
     	}
     } catch (Exception e) {

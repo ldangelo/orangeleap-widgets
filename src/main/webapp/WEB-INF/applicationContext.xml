@@ -39,7 +39,7 @@
     <bean id="constituentCache"
           class="org.springframework.cache.ehcache.EhCacheFactoryBean"
           p:cacheManager-ref="cacheManager"
-          p:cacheName="customTableCache"
+          p:cacheName="constituentCache"
           />
 
 	<bean id="messageSource"

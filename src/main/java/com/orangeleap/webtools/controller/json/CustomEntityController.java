@@ -22,6 +22,8 @@ import com.orangeleap.webtools.domain.Widget;
 import com.orangeleap.webtools.domain.WidgetExample;
 import com.orangeleap.webtools.service.PicklistService;
 import com.orangeleap.webtools.service.PlacementsService;
+import com.orangeleap.webtools.service.WidgetService;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -44,6 +46,9 @@ public class CustomEntityController {
   @Autowired
   PicklistService picklistService;
 
+  @Autowired
+  WidgetService widgetService;
+  
   Map fieldMap = new HashMap<String,CustomTableField>();
 	@RequestMapping(method = RequestMethod.GET)
    public void  getCustomEntityList(@RequestParam(required=true) String guid, ModelMap modelMap) {
@@ -60,24 +65,9 @@ public class CustomEntityController {
       // guid is a unique key so this will only return one widget
       Widget widget = widgets.get(0);
 
-      String wsusername = widgets.get(0).getWidgetUsername();
-      String wspassword = widgets.get(0).getWidgetPassword();
-      
-      WSClient wsClient = null;
-      OrangeLeap oleap = null;
-      
-      wsClient = new WSClient();
-      oleap = wsClient.getOrangeLeap(System.getProperty("webtools.wsdllocation"),wsusername, wspassword);
-      //
-      // first get the table definition
-      ReadCustomTableByNameRequest request = new ReadCustomTableByNameRequest();
-      ReadCustomTableByNameResponse response = null;
-      request.setName(widget.getCustomEntityName());
 
-      response = oleap.readCustomTableByName(request);
-
-
-      populateMetaData(response.getCustomTable(),modelMap);
+      CustomTable table = widgetService.getCustomTable(widget.getWidgetGuid());
+      populateMetaData(table,modelMap);
 
 
 
@@ -103,23 +93,8 @@ public class CustomEntityController {
       Widget widget = widgets.get(0);
 
 
-      String wsusername = widgets.get(0).getWidgetUsername();
-      String wspassword = widgets.get(0).getWidgetPassword();
-      
-      WSClient wsClient = null;
-      OrangeLeap oleap = null;
-      
-      wsClient = new WSClient();
-      oleap = wsClient.getOrangeLeap(System.getProperty("webtools.wsdllocation"),wsusername, wspassword);
-      //
-      // first get the table definition
-      ReadCustomTableByNameRequest request = new ReadCustomTableByNameRequest();
-      ReadCustomTableByNameResponse response = null;
-      request.setName(widget.getCustomEntityName());
-
-      response = oleap.readCustomTableByName(request);
-
-      populateMetaData(response.getCustomTable(),modelMap);
+      CustomTable table = widgetService.getCustomTable(widget.getWidgetGuid());
+      populateMetaData(table,modelMap);
 
   }
     

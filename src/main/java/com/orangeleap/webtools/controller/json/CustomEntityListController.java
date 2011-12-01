@@ -73,13 +73,8 @@ public class CustomEntityListController {
 
 			wsClient = new WSClient();
 			oleap = wsClient.getOrangeLeap(System.getProperty("webtools.wsdllocation"), wsusername, wspassword);
-			//
-			// first get the table definition
-			ReadCustomTableByNameRequest request = new ReadCustomTableByNameRequest();
-			ReadCustomTableByNameResponse response = null;
-			request.setName(widget.getCustomEntityName());
-
-			response = oleap.readCustomTableByName(request);
+			
+			CustomTable table = widgetService.getCustomTable(widget.getWidgetGuid());
 
 			//
 			// now get the rows....
@@ -90,9 +85,9 @@ public class CustomEntityListController {
 			rowResponse = oleap.getCustomTableRows(rowRequest);
 
 			if (rowResponse != null) {
-				populateMetaData(response.getCustomTable(), modelMap, guid);
+				populateMetaData(table, modelMap, guid);
 
-				addCustomTableRows(wsusername, wspassword, response.getCustomTable(), rowResponse.getCustomTableRow(), returnList);
+				addCustomTableRows(wsusername, wspassword,table, rowResponse.getCustomTableRow(), returnList);
 			}
 		}
 
@@ -126,13 +121,8 @@ public class CustomEntityListController {
 
 			wsClient = new WSClient();
 			oleap = wsClient.getOrangeLeap(System.getProperty("webtools.wsdllocation"), wsusername, wspassword);
-			//
-			// first get the table definition
-			ReadCustomTableByNameRequest request = new ReadCustomTableByNameRequest();
-			ReadCustomTableByNameResponse response = null;
-			request.setName(widget.getCustomEntityName());
 
-			response = oleap.readCustomTableByName(request);
+			CustomTable table = widgetService.getCustomTable(widget.getWidgetGuid());
 
 			//
 			// now get the rows....
@@ -194,9 +184,9 @@ public class CustomEntityListController {
 			}
 
 			if (rowResponse != null) {
-				populateMetaData(response.getCustomTable(), modelMap, guid);
+				populateMetaData(table, modelMap, guid);
 
-				addCustomTableRows(wsusername, wspassword, response.getCustomTable(), rowResponse.getCustomTableRow(), returnList);
+				addCustomTableRows(wsusername, wspassword, table, rowResponse.getCustomTableRow(), returnList);
 			}
 		}
 
