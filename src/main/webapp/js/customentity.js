@@ -434,7 +434,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 								fieldsectionindex = 0;
 
 							}
-							else if (fields[f].type == 'picklist' || fields[f].type == 'multi-picklist') {
+							else if (fields[f].type == 'picklist') {
 								var comboConfig = new Ext.form.ComboBox({
 									id : fields[f].name + 'combo',
 									dataIndex : fields[f].name,
@@ -444,6 +444,47 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 									displayField : 'Description',
 									forceSelection : true,
 									lazyInit : false,
+									mode : 'local',
+									emptyText : 'Select ' + fields[f].header + '...',
+									store : new Ext.data.JsonStore({
+										fields : [ 'Name', 'Description'],
+										data: that.picklistNameItemsMap[fields[f].picklistId]
+									}),
+									fieldLabel : fields[f].header
+								});
+
+								if (fields[f].required) {
+									comboConfig.allowBlank = false;
+									comboConfig.blankText = "Enter a " + fields[f].header;
+								}
+								if ( ! fieldset) {
+									this.form.superclass().add.call(this.form, field);
+								}
+								else {
+									if (fieldsectionindex > (fieldsectioncount - 1) / 2) {
+										col2.add(comboConfig);
+									}
+									else {
+										col1.add(comboConfig);
+									}
+									fieldsectionindex++;
+								} 
+							} else if (fields[f].type == 'multi-picklist') {
+								var comboConfig = new Ext.ux.form.SuperBoxSelect({
+									id : fields[f].name, // + 'combo',
+									name: fields[f].name,
+									valueDelimiter: '\u00A7',
+									triggerAction: 'all',
+									queryDelay: 0,
+									readOnly:true,
+									renderFieldBtns: false,
+									supressClearValueRemoveEvents: true,									
+//									dataIndex : fields[f].name,
+									valueField : 'Name',
+//									hiddenName : fields[f].name,
+									displayField : 'Description',
+//									forceSelection : true,
+//									lazyInit : false,
 									mode : 'local',
 									emptyText : 'Select ' + fields[f].header + '...',
 									store : new Ext.data.JsonStore({
@@ -506,13 +547,15 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 							if (metaData[m].type != 'section') {
 								value = records[0].get(metaData[m].name);
 
-								if (metaData[m].type == 'picklist' || metaData[m].type == 'multi-picklist') {
+								if (metaData[m].type == 'picklist') {
 									if (this.form.findById(metaData[m].name + 'combo')) {
 										this.form.findById(metaData[m].name + 'combo').setValue(value);
 									}
 								}
 								else {
 									if (this.form.findById(metaData[m].name)) {
+										if (typeof(value) === 'string')
+											value = value.replace('&#167;','\u00A7');
 										this.form.findById(metaData[m].name).setValue(value);
 									}
 								}

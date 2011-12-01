@@ -296,7 +296,7 @@ var sponsorshipform =  {
 					field.fieldLabel = fields[f].header;
 					field.store = mydatastore;
 					field.mode = 'local';
-					field.readOnly = false;
+					field.readOnly = true;
 					field.border = false;
 					if (f > fields.length/2) {
 						col2.add(field);
@@ -312,7 +312,7 @@ var sponsorshipform =  {
 					field.fieldLabel = fields[f].header;
 					field.store = mydatastore;
 					field.mode = 'local';
-					field.readOnly = false;
+					field.readOnly = true;
 					field.border = false;
 					if (f > fields.length/2) {
 						col2.add(field);
@@ -328,7 +328,7 @@ var sponsorshipform =  {
 					field.fieldLabel = fields[f].header;
 					field.store = mydatastore;
 					field.mode = 'local';
-					field.readOnly = false;
+					field.readOnly = true;
 					field.border = false;
 					if (f > fields.length/2) {
 						col2.add(field);
@@ -344,7 +344,7 @@ var sponsorshipform =  {
 					field.fieldLabel = fields[f].header;
 					field.store = mydatastore;
 					field.mode = 'local';
-					field.readOnly = false;
+					field.readOnly = true;
 					field.border = false;
 					field.width = 350;
 					field.height = 150;
@@ -355,10 +355,11 @@ var sponsorshipform =  {
 						col1.add(field);
 					}
 				}
-				else if (fields[f].type == 'picklist' || fields[f].type == 'multi-picklist') {
+				else if (fields[f].type == 'picklist') {
 					var field = new Ext.form.ComboBox({
 						id: fields[f].name,
 						name : fields[f].name,
+						readOnly: true,
 						valueField : 'Name',
 						triggerAction : 'all',
 						hiddenName : fields[f].name,
@@ -379,8 +380,38 @@ var sponsorshipform =  {
 					else {
 						col1.add(field);
 					}
-				}
-			}
+					} else if (fields[f].type == 'multi-picklist') {
+								var comboConfig = new Ext.ux.form.SuperBoxSelect({
+									id : fields[f].name, // + 'combo',
+									name: fields[f].name,
+									valueDelimiter: '\u00A7',
+									triggerAction: 'all',
+									queryDelay: 0,
+									readOnly:true,
+									renderFieldBtns: false,
+									supressClearValueRemoveEvents: true,									
+//									dataIndex : fields[f].name,
+									valueField : 'Name',
+//									hiddenName : fields[f].name,
+									displayField : 'Description',
+//									forceSelection : true,
+//									lazyInit : false,
+									mode : 'local',
+									emptyText : 'Select ' + fields[f].header + '...',
+									store : new Ext.data.JsonStore({
+										fields : [ 'Name', 'Description'],
+										data: that.picklistNameItemsMap[fields[f].picklistId]
+									}),
+									fieldLabel : fields[f].header
+								});
+								if (f > fields.length/2) {
+									col2.add(comboConfig);
+								}
+								else {
+									col1.add(comboConfig);
+								}
+					}
+		    }
 
 		    form.add(panel);
 		    var linkConfig = {
@@ -405,8 +436,11 @@ var sponsorshipform =  {
 					value = records[fldidx].get(metaData[m].name);
 
 					if (metaData[m].type != 'url') {
-						if (ffield != null)
+						if (ffield != null) {
+							if (typeof(value) === 'string')
+								value = value.replace('&#167;','\u00A7');
 							ffield.setValue(value);
+						}
 					}
 					else {
 						var fldImage = new Ext.Panel({
