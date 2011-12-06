@@ -289,6 +289,7 @@ var authentication = {
 									fieldLabel: 'Old Password',
 									name: 'oldpassword',
 									allowBlank:false,
+									inputType: 'password',
 									minLength: 6,
 									maxLength: 12,
 									blankText: 'Enter your current Password.',
@@ -297,6 +298,7 @@ var authentication = {
 								{
 									fieldLabel: 'New Password',
 									name: 'newpassword',
+									inputType: 'password',
 									allowBlank:false,
 									minLength: 6,
 									maxLength: 12,
@@ -306,6 +308,7 @@ var authentication = {
 								{
 									fieldLabel: 'New Password',
 									name: 'newpasswordre',
+									inputType: 'password',
 									allowBlank:false,
 									minLength: 6,
 									maxLength: 12,
