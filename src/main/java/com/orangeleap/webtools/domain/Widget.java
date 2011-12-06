@@ -458,7 +458,7 @@ public class Widget implements Serializable {
 		return replaceTopContents;
 	}
 	
-	public void setReplaceTopContents(final boolean replaceTopContents) {
+	public void setReplaceTopContents(final Boolean replaceTopContents) {
 		this.replaceTopContents = replaceTopContents;
 	}
 

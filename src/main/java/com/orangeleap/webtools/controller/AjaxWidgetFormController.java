@@ -14,7 +14,8 @@ import java.util.UUID;
 import com.orangeleap.webtools.domain.Widget;
 import com.orangeleap.webtools.service.StyleService;
 import com.orangeleap.webtools.service.WidgetService;
-import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.PropertyAccessorFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.Authentication;
 import org.springframework.security.context.SecurityContextHolder;
@@ -253,17 +254,16 @@ public class AjaxWidgetFormController extends MultiActionController {
 	}
 
 	private void populateWidget(Widget widget, HttpServletRequest request) {
-		Map paramaterMap = request.getParameterMap();
-		Set keySet = paramaterMap.keySet();
-		Iterator it = keySet.iterator();
-		while (it.hasNext()) {
-			String key = (String) it.next();
-			String value = request.getParameter(key);
-			try {
-				BeanUtils.setProperty(widget, key, value);
-			}
-			catch (Exception e) {
-				logger.error(e.getMessage());
+		final Map parameterMap = request.getParameterMap();
+		final BeanWrapper bean = PropertyAccessorFactory.forBeanPropertyAccess(widget);
+		final Set keySet = parameterMap.keySet();
+
+		for (final Object keyObj : keySet) {
+			final String key = (String) keyObj;
+			final String value = request.getParameter(key);
+
+			if (bean.isWritableProperty(key)) {
+				bean.setPropertyValue(key, value);
 			}
 		}
 	}
