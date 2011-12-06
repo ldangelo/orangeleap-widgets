@@ -126,10 +126,28 @@ var authentication = {
 		}
 		return "";
     },
-
+    testCookies: function() {
+    	this.setCookie("test","test",1);
+    	
+    	if (this.getCookie("test") == "") 
+    		return false;
+    	else
+    		return true;
+    },
     generateWidget: function(widgetid, successurl, replaceTopContent,referer) {
 		sessionId = this.getCookie("sessionId");
 
+		if (this.testCookies() == false) {
+			// display the error
+			Ext.Msg.show({
+				title: 'ERROR',
+				msg: "Cookies must be enabled.",
+				icon: Ext.MessageBox.ERROR,
+				buttons: Ext.Msg.OK,
+				modal: true,
+			});
+			return;
+		}
 		this.successurl = successurl;
 		this.replaceTopContent = replaceTopContent;
 		
