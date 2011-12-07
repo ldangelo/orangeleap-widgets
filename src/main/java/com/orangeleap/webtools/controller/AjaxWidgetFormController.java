@@ -5,12 +5,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import com.orangeleap.webtools.domain.Style;
 import com.orangeleap.webtools.domain.Widget;
 import com.orangeleap.webtools.service.StyleService;
 import com.orangeleap.webtools.service.WidgetService;
@@ -228,13 +228,47 @@ public class AjaxWidgetFormController extends MultiActionController {
 
 	public ModelAndView read(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		Authentication auth = SecurityContextHolder.getContext()
-				.getAuthentication();
 		String guid = request.getParameter("guid");
 
 		Widget w = widgetService.selectWidgetByGuid(guid);
 
-		return getModelMap(w, w.getWidgetType(), w.getCustomEntityName());
+		final ModelAndView mav = getModelMap(w, w.getWidgetType(), w.getCustomEntityName());
+		addStyles(mav);
+
+		return mav;
+	}
+
+	@SuppressWarnings("unchecked")
+	private void addStyles(final ModelAndView mav) {
+		final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		final String userName = auth.getName();
+		final Style style = new Style();
+		style.setUserName(userName);
+		List<Style> styles = null;
+
+		if (userName != null && ! userName.equals("")) {
+			styles = styleService.selectByUserName(userName);
+		}
+		final Map<String, Object> metaData = (Map<String, Object>) mav.getModel().get("metaData");
+
+		final List<Map<String, Object>> styleRows = new ArrayList<Map<String, Object>>();
+
+		Map<String, Object> aStyleRow = new HashMap<String, Object>();
+		aStyleRow.put("Id", "0");
+		aStyleRow.put("Style", "");
+		aStyleRow.put("StyleName", "Default");
+		styleRows.add(aStyleRow);
+
+		if (styles != null) {
+			for (final Style aStyle : styles) {
+				aStyleRow = new HashMap<String, Object>();
+				aStyleRow.put("Id", aStyle.getId());
+				aStyleRow.put("Style", net.sf.json.util.JSONUtils.quote(aStyle.getStyle()));
+				aStyleRow.put("StyleName", aStyle.getStyleName());
+				styleRows.add(aStyleRow);
+			}
+		}
+		metaData.put("styles", styleRows);
 	}
 
 	public ModelAndView create(HttpServletRequest request,
@@ -250,7 +284,11 @@ public class AjaxWidgetFormController extends MultiActionController {
 				customentitytype);
 		ret.setWidgetId(0L);
 		ret.setWidgetHtml("Undefined");
-		return getModelMap(ret, widgettype, customentitytype);
+
+		final ModelAndView mav = getModelMap(ret, widgettype, customentitytype);
+		addStyles(mav);
+
+		return mav;
 	}
 
 	private void populateWidget(Widget widget, HttpServletRequest request) {
@@ -331,7 +369,10 @@ public class AjaxWidgetFormController extends MultiActionController {
 		widget.setWidgetViewCount(0L);
 		widgetService.saveWidget(widget);
 
-		return getModelMap(widget, widgettype, customentitytype);
+		final ModelAndView mav = getModelMap(widget, widgettype, customentitytype);
+		addStyles(mav);
+
+		return mav;
 	}
 
 	public ModelAndView save(HttpServletRequest request,

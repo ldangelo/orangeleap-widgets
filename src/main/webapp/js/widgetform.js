@@ -82,26 +82,18 @@ WidgetForm = Ext.extend(Ext.form.FormPanel, {
 	},
 	initComponent: function() {
 		this.items = [ new Ext.form.ComboBox({
-			id:'styleId',
+			id: 'styleId',
 			fieldLabel: 'Style',
 			hiddenName: 'styleIdHidden',
 			triggerAction: 'all',
 			emptyText: 'Select Style...',
-			displayField:'StyleName',
+			displayField: 'StyleName',
 			valueField: 'Id',
-			store:new Ext.data.JsonStore({
-				id:'Id',
-				root:'rows',
-				totalProperty:'totalRows',
-				fields: [
-					{name:'Id',type:'string'},
-					{name:'Style',type:'string'},
-					{name: 'StyleName',type: 'string'}
-				],
-				url:'style.ajax',
-				baseParams: {
-					action: "list"
-				}
+			lazyInit : false,
+			mode : 'local',
+			store : new Ext.data.JsonStore({
+				fields : [ 'Id', 'Style', 'StyleName'],
+				data: []
 			})
 		})];
 
@@ -134,6 +126,10 @@ WidgetForm = Ext.extend(Ext.form.FormPanel, {
 					generateForm(store.widgetForm, store, meta);
 				},
 				'load':function(store,records,options) {
+					if (store.reader.meta.styles) {
+						Ext.getCmp('styleId').store.loadData(store.reader.meta.styles);
+					}
+
 					var metaData = store.reader.meta.fields;
 					var value = null;
 					for (var m=0; m < metaData.length; m++) {
@@ -144,7 +140,14 @@ WidgetForm = Ext.extend(Ext.form.FormPanel, {
 								fld.setValue(value);
 							}
 						}
-						else if (metaData[m].type != 'boolean' && metaData[m].type != 'style') {
+						else if (metaData[m].type == 'style') {
+							value = records[records.length-1].get(metaData[m].name);
+							if ( ! value) {
+								value = '0';
+							}
+							Ext.getCmp('styleId').setValue(value);
+						}
+						else if (metaData[m].type != 'boolean') {
 							value = records[records.length-1].get(metaData[m].name);
 							value = value.replace(/&lt;/g,"<");
 							value = value.replace(/&gt;/g,">");
