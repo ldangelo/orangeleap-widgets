@@ -143,8 +143,21 @@ public class WidgetServiceImpl implements WidgetService {
 			}
 			CustomField val = new CustomField();
 			val.setName(ce.getName());
-			String value = request.getParameter(ce.getName());
-			val.setValue((value == null) ? "" : value);
+			String[] values = request.getParameterValues(ce.getName());
+			if (values == null || values.length == 0) {
+				val.setValue("");
+			} else if (values.length == 1) {
+				val.setValue((values[0] == null) ? "" : values[0]);				
+			} else {
+				StringBuilder concatenatedValues = new StringBuilder();
+				for (String value : values) {
+					if (concatenatedValues.length() > 0) {
+						concatenatedValues.append("\u00A7");
+					}
+					concatenatedValues.append(value);
+				}
+				val.setValue(concatenatedValues.toString());
+			}
 			val.setEntityType("customtablerow");
 			val.setSequenceNumber(0);
 			entry.setKey(ce.getName());
