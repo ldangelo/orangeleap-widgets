@@ -143,18 +143,21 @@ public class WidgetServiceImpl implements WidgetService {
 			}
 			CustomField val = new CustomField();
 			val.setName(ce.getName());
+			String emptyText = ce.getType().equals("multi-picklist") ? "Select " + ce.getHeader() + "..." : "";
 			String[] values = request.getParameterValues(ce.getName());
 			if (values == null || values.length == 0) {
 				val.setValue("");
 			} else if (values.length == 1) {
-				val.setValue((values[0] == null) ? "" : values[0]);				
+				val.setValue((values[0] == null) ? "" : (emptyText.equals(values[0]) ? "" : values[0]));				
 			} else {
 				StringBuilder concatenatedValues = new StringBuilder();
 				for (String value : values) {
-					if (concatenatedValues.length() > 0) {
-						concatenatedValues.append("\u00A7");
+					if (!emptyText.equals(value)) {
+						if (concatenatedValues.length() > 0) {
+							concatenatedValues.append("\u00A7");
+						}
+						concatenatedValues.append(value);
 					}
-					concatenatedValues.append(value);
 				}
 				val.setValue(concatenatedValues.toString());
 			}
