@@ -51,4 +51,7 @@ public interface WidgetService {
 	Map<String, List<Map<String, Object>>> findPicklistItemsForCustomEntities(List<CustomEntity> customEntityList, String guid);
 
 	Map<String, List<Map<String, Object>>> findPicklistItemsForCustomTableFields(List<CustomTableField> customTableFieldsList, String guid);
+
+	public CustomTable getCustomTableByName(String userName, String password,
+			String customentitytype);
 }

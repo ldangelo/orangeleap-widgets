@@ -5,7 +5,7 @@
 		<title>Create Widget - <spring:message code="appName"/></title>
 		<script type='text/javascript' src='dwr/interface/OrangeLeapWidget.js'></script>
 		<script type='text/javascript' src='dwr/engine.js'></script>
-		<pack:script enabled='true'>
+		<pack:script enabled='false'>
 			<src>/js/dynamicform.js</src>
 			<src>/js/widgetform.js</src>
 			<src>/js/createWidget.js</src>

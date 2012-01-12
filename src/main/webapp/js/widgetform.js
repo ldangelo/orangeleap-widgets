@@ -115,13 +115,22 @@ WidgetForm = Ext.extend(Ext.form.FormPanel, {
 			messageProperty: 'message'
 		});
 
-		mydatastore = new Ext.data.Store({
+		mydatastore = new Ext.data.JsonStore({
 			metaData:true,
 			reader:reader,
 			proxy:proxy,
 			autoSave:false,
 			widgetForm: this,
 			listeners: {
+				'exception': function(proxy, type, action, exception) {
+					Ext.Msg.show({
+						title:'Error'
+							,msg:exception.reader.jsonData.message
+							,modal:true
+							,icon:Ext.Msg.ERROR
+							,buttons:Ext.Msg.OK					
+					});
+				},
 				'metachange':function(store,meta) {
 					generateForm(store.widgetForm, store, meta);
 				},

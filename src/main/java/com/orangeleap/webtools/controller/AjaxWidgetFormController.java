@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.orangeleap.webtools.domain.Style;
+import com.orangeleap.client.CustomTable;
 import com.orangeleap.webtools.domain.Widget;
 import com.orangeleap.webtools.service.StyleService;
 import com.orangeleap.webtools.service.WidgetService;
@@ -280,6 +281,10 @@ public class AjaxWidgetFormController extends MultiActionController {
 		String userName = auth.getName();
 		String password = (String) auth.getCredentials();
 
+		CustomTable table = widgetService.getCustomTableByName(userName, password, customentitytype);
+		if (table == null || table.isCustomTableActive() == false) {
+			return getModelMapError("Custom Table " + customentitytype + " is inactive.");
+		}
 		Widget ret = widgetService.createWidget(userName, password, widgettype,
 				customentitytype);
 		ret.setWidgetId(0L);

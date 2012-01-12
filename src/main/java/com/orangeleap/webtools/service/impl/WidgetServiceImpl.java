@@ -171,6 +171,12 @@ public class WidgetServiceImpl implements WidgetService {
 		//
 		// call up orangeleap and save the row
 		CustomTable table = getCustomTable(guid);
+		
+		if (table.isCustomTableActive() == false) {
+			throw new Exception("Custom Table " + table.getCustomTableName() + " is not active");
+		}
+		
+		
 		WidgetExample example = new WidgetExample();
 		example.createCriteria().andWidgetGuidEqualTo(guid);
 
@@ -224,6 +230,26 @@ public class WidgetServiceImpl implements WidgetService {
 		return null;
 	}
 
+	public CustomTable getCustomTableByName(String username, String password, String tablename) {
+			WSClient wsClient = null;
+			OrangeLeap oleap = null;
+
+			wsClient = new WSClient();
+			oleap = wsClient.getOrangeLeap(System.getProperty("webtools.wsdllocation"), username, password);
+			//
+			// first get the table definition
+			ReadCustomTableByNameRequest request = new ReadCustomTableByNameRequest();
+			ReadCustomTableByNameResponse response = null;
+			request.setName(tablename);
+
+			response = oleap.readCustomTableByName(request);
+
+			if (response != null)
+				return response.getCustomTable();
+			else
+				return null;
+	}
+	
 	public CustomTable getCustomTable(String guid) {
 		WidgetExample example = new WidgetExample();
 		example.createCriteria().andWidgetGuidEqualTo(guid);
