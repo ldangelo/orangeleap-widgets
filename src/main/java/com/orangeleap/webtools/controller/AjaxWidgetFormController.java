@@ -280,11 +280,31 @@ public class AjaxWidgetFormController extends MultiActionController {
 		String customentitytype = request.getParameter("customentitytype");
 		String userName = auth.getName();
 		String password = (String) auth.getCredentials();
-
-		CustomTable table = widgetService.getCustomTableByName(userName, password, customentitytype);
-		if (table == null || table.isCustomTableActive() == false) {
-			return getModelMapError("Custom Table " + customentitytype + " is inactive.");
+		String tablename = null;
+		
+		if (widgettype.equals("customentity") && !customentitytype.equals("undefined")) {
+			tablename = customentitytype;
+		} else {
+			if (widgettype.equals("gifthistory")) {
+				tablename = "donor_profile";
+			} else if (widgettype.equals("pledges")) {
+				tablename = "donor_profile";
+			}
 		}
+		
+		if(tablename != null) {
+			CustomTable table = widgetService.getCustomTableByName(userName, password, tablename);
+			if (table == null || table.isCustomTableActive() == false) {
+				if (widgettype.equals("customentity") && !customentitytype.equals("undefined")) {
+					tablename = customentitytype;
+				} else if (widgettype.equals("gifthistory")) {
+					tablename = "gifthistory";
+				} else if (widgettype.equals("pledges")) tablename = "pledges";
+			
+				return getModelMapError("Custom Table " + tablename + " is inactive.");
+			}
+		}
+		
 		Widget ret = widgetService.createWidget(userName, password, widgettype,
 				customentitytype);
 		ret.setWidgetId(0L);
