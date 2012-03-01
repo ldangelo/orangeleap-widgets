@@ -131,7 +131,7 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
 		filter.setName("user_name");
 		filter.setValue(username);
 
-		webwidgetRequest.setTablename("widget_authentication");
+		webwidgetRequest.setTablename("online_registration");
 		webwidgetRequest.setOffset(0);
 		webwidgetRequest.setLimit(1);
 		webwidgetRequest.getFilters().add(filter);
@@ -309,7 +309,7 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
 		filter.setName("user_name");
 		filter.setValue(username);
 
-		webwidgetRequest.setTablename("widget_authentication");
+		webwidgetRequest.setTablename("online_registration");
 		webwidgetRequest.setOffset(0);
 		webwidgetRequest.setLimit(1);
 		webwidgetRequest.getFilters().add(filter);
@@ -334,7 +334,8 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
 					SaveOrUpdateCustomTableRowRequest updaterequest = new SaveOrUpdateCustomTableRowRequest();
 					SaveOrUpdateCustomTableRowResponse updateresponse = new SaveOrUpdateCustomTableRowResponse();
 
-					if (setCustomFieldMapValue(row.getCustomFieldMap(), "user_password", newpassword)) {
+					if (setCustomFieldMapValue(row.getCustomFieldMap(), "user_password", newpassword) &&
+							setCustomFieldMapValue(row.getCustomFieldMap(),"confirm_password",newpassword)) {
 						updaterequest.setCustomTableRow(row);
 						updateresponse = oleap.saveOrUpdateCustomTableRow(updaterequest);
 
@@ -394,7 +395,7 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
 		filter.setName("user_name");
 		filter.setValue(username);
 
-		webwidgetRequest.setTablename("widget_authentication");
+		webwidgetRequest.setTablename("online_authentication");
 		webwidgetRequest.setOffset(0);
 		webwidgetRequest.setLimit(1);
 		webwidgetRequest.getFilters().add(filter);
