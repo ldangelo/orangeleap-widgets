@@ -73,6 +73,7 @@
       <dwr:include method="changePassword"/>
       <dwr:include method="forgotPassword"/>
       <dwr:include method="sendGiftReceipt"/>
+      <dwr:convert type="bean"  class="com.orangeleap.webtools.domain.Session" />      
       <dwr:convert type="bean"  class="com.orangeleap.webtools.domain.WidgetData" />
       <dwr:convert type="bean"  class="com.orangeleap.client.*"/>
       <dwr:convert type="bean"  class="com.orangeleap.client.CustomTable"/>

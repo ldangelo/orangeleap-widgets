@@ -92,21 +92,21 @@ var authentication = {
     	
     },
 
-    handleReturn: function(sessionId,widgetid,successurl) {
-		if (sessionId == null) {
+    handleReturn: function(session,widgetid,successurl) {
+		if (session == null) {
 			this.handleError(widgetid,"Authentication Failed!");
 		}
 		else {
 			if (Ext.get("remember").dom.value == "on")
-			this.setCookie("sessionId",sessionId,5);
+			this.setCookie("sessionId",session.sessionId,5);
 			else
-			this.setCookie("sessionId",sessionId);
+			this.setCookie("sessionId",session.sessionId);
 
 			if (successurl != null) {
 				if (this.replaceTopContent=='true')
-					top.location.href=successurl;
+					top.location.href=successurl + "?constituentId=" + session.constituentId;
 				else
-					window.location.href=successurl;
+					window.location.href=successurl+ "?constituentId=" + session.constituentId;
 			}
 		}
     },

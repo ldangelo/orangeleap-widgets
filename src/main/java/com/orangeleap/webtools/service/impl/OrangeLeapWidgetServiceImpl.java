@@ -102,7 +102,7 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
 		return null;
 	}
 
-	public String authenticate(String guid, String username, String password) {
+	public Session authenticate(String guid, String username, String password) {
 		WidgetExample example = new WidgetExample();
 		List<Widget> widgets = null;
 
@@ -156,7 +156,7 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
 							row.getCustomFieldMap(), "constituent_id")));
 					s.setSessionId(UUID.randomUUID().toString());
 					sessionCache.put(new Element(s.getSessionId(), s.getConstituentId()));
-					return s.getSessionId();
+					return s;
 				}
 			}
 		}

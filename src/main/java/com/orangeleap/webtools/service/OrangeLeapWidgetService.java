@@ -5,6 +5,7 @@ import com.orangeleap.client.CustomTable;
 import com.orangeleap.client.CustomTableRow;
 import com.orangeleap.client.Gift;
 import com.orangeleap.client.PicklistItem;
+import com.orangeleap.webtools.domain.Session;
 import com.orangeleap.webtools.domain.WidgetData;
 import java.util.List;
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -12,7 +13,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 public interface OrangeLeapWidgetService {
   public List<Gift> getConstituentGifts(String guid, String sessionId);
 
-  public String authenticate(String guid, String username, String password);
+  public Session authenticate(String guid, String username, String password);
 
   public String getRoles();
 
