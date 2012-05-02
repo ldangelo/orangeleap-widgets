@@ -1189,10 +1189,10 @@ background-color:#ffffff;
 }
 *.x-panel-ml{
 background-color:#ffffff;
-background-image:url(https://go.orangeleap.com/donorwidgets/images/default/panel/left-right.gif);
+background-image:url(../images/default/panel/left-right.gif);
 }
 *.x-panel-mr{
-background-image:url(https://go.orangeleap.com/donorwidgets/images/default/panel/left-right.gif);
+background-image:url(../images/default/panel/left-right.gif);
 }
 *.x-tool{
 background-image:url(../images/default/panel/tool-sprites.gif);

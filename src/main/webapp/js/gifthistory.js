@@ -80,7 +80,7 @@ var gifthistory = {
 	OrangeLeapWidget.updateViewCount(widgetid,referer);
 
 	var mydatastore = new Ext.data.JsonStore({
-	    url:'/donorwidgets/giftHistory.json?guid=' + widgetid + '&sessionId=' + this.sessionId,
+	    url:'giftHistory.json?guid=' + widgetid + '&sessionId=' + this.sessionId,
 	    root:'rows',
 	    fields:['id','donationdate','amount','status','paymentstatus'],
 	    sortInfo:{field:'id',direction:'ASC'}

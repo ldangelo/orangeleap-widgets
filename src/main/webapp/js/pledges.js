@@ -114,7 +114,7 @@ postToUrl: function(url, params, newWindow)
 	OrangeLeapWidget.updateViewCount(widgetid,referer);
 
 	var mydatastore = new Ext.data.JsonStore({
-	    url:'/donorwidgets/pledges.json?guid=' + widgetid + '&sessionId=' + sessionId,
+	    url:'pledges.json?guid=' + widgetid + '&sessionId=' + sessionId,
 	    root:'rows',
 	    fields:['id','donationdate','recurring','amount','projectCode','projectCodeDescription','motivationCode','motivationCodeDescription','status'],
 	    sortInfo:{field:'id',direction:'ASC'}

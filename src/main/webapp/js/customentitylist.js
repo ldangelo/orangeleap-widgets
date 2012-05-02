@@ -82,7 +82,7 @@ var customentitylist = {
 	}
 
 	
-	var proxy = new Ext.data.HttpProxy( {url:'/donorwidgets/customEntityList.json?guid=' + guid});
+	var proxy = new Ext.data.HttpProxy( {url:'customEntityList.json?guid=' + guid});
 
 	var reader=new Ext.data.JsonReader();
 

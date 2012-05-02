@@ -62,7 +62,7 @@
 		
 	Ext.onReady(function() {
 
-	var proxy=new Ext.data.HttpProxy(    {url:'/donorwidgets/listPlacements.json?widgetid=' + $j("#id").attr("value")});
+	var proxy=new Ext.data.HttpProxy(    {url:'listPlacements.json?widgetid=' + $j("#id").attr("value")});
 		  var reader=new Ext.data.JsonReader(
 			{
 				totalProperty: 'totalRows',
