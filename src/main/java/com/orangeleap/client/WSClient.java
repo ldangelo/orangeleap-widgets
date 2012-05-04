@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.xml.namespace.QName;
 
 import org.apache.cxf.endpoint.Client;
+import org.apache.cxf.transport.http.HTTPConduit;
+import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
 import org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor;
 import org.apache.ws.security.WSConstants;
 import org.apache.ws.security.handler.WSHandlerConstants;
@@ -30,7 +32,13 @@ public class WSClient  {
         Map outProps = new HashMap();
 		Client client = org.apache.cxf.frontend.ClientProxy.getClient(orangeLeapPort);
 		org.apache.cxf.endpoint.Endpoint cxfEndpoint = client.getEndpoint();
-	
+		
+		HTTPConduit http = (HTTPConduit) client.getConduit();		
+		HTTPClientPolicy httpClientPolicy = new HTTPClientPolicy();		  
+		httpClientPolicy.setConnectionTimeout(120000);
+		httpClientPolicy.setReceiveTimeout(120000);
+		http.setClient(httpClientPolicy);	 
+
 		PWCallbackHandler pwHandler = new PWCallbackHandler(username,password);
 		outProps.put(WSHandlerConstants.ACTION,WSHandlerConstants.USERNAME_TOKEN);
 		outProps.put(WSHandlerConstants.USER, username);
