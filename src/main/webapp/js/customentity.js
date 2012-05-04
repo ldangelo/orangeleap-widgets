@@ -16,6 +16,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 		successurl : null,
 		picklistNameItemsMap: {},
 		replaceTopContent: null,
+		timeout: 120,
 
 		postToUrl : function(url, params, newWindow) {
 			var form = $j('<form>');
