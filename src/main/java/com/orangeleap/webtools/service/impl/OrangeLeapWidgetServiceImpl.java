@@ -224,7 +224,8 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
 		widget.setWidgetErrorCount(widget.getWidgetErrorCount() + 1);
 		widgetDAO.updateWidgetByPrimaryKey(widget);
 
-		placementsService.updateErrorCount(widget, refererrer);
+        if (refererrer != null)
+          placementsService.updateErrorCount(widget, refererrer);
 	}
 
 	public String getRoles() {
