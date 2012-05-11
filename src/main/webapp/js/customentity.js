@@ -132,6 +132,13 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 						break;
 					}
 				}
+				for ( var f = 0; f < cfMap.length; f++) {
+					if (cfMap[f].key == 'customtablerowid') {
+						this.mydatastore.getAt(0).set('customtablerow', parseInt(cfMap[f].value.value, 10));
+						Ext.getCmp("form").form.findField("customtablerowid").setValue(cfMap[f].value.value);
+						break;
+					}
+				}
 
 				if ( ! user_message) {
 					user_message = 'Your changes were successfully saved';

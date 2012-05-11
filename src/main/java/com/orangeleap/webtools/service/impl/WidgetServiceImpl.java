@@ -16,6 +16,9 @@ import com.orangeleap.client.CustomField;
 import com.orangeleap.client.CustomTable;
 import com.orangeleap.client.CustomTableField;
 import com.orangeleap.client.CustomTableRow;
+import com.orangeleap.client.Filter;
+import com.orangeleap.client.GetCustomTableRowsRequest;
+import com.orangeleap.client.GetCustomTableRowsResponse;
 import com.orangeleap.client.OrangeLeap;
 import com.orangeleap.client.PicklistItem;
 import com.orangeleap.client.ReadCustomTableByNameRequest;
@@ -136,36 +139,43 @@ public class WidgetServiceImpl implements WidgetService {
 
 		while (it.hasNext()) {
 			CustomEntity ce = it.next();
-			Entry entry = new Entry();
-
-			if (ce.getType().equals("section")) {
-				continue;
-			}
-			CustomField val = new CustomField();
-			val.setName(ce.getName());
-			String emptyText = ce.getType().equals("multi-picklist") ? "Select " + ce.getHeader() + "..." : "";
-			String[] values = request.getParameterValues(ce.getName());
-			if (values == null || values.length == 0) {
-				val.setValue("");
-			} else if (values.length == 1) {
-				val.setValue((values[0] == null) ? "" : (emptyText.equals(values[0]) ? "" : values[0]));				
+			if (ce.getName().equals("customtablerowid")) {
+				String[] values = request.getParameterValues(ce.getName());
+				if (values != null && values.length == 1 && values[0].length() > 0) {
+					row.setId(Long.parseLong(values[0]));
+				}			
 			} else {
-				StringBuilder concatenatedValues = new StringBuilder();
-				for (String value : values) {
-					if (!emptyText.equals(value)) {
-						if (concatenatedValues.length() > 0) {
-							concatenatedValues.append("\u00A7");
-						}
-						concatenatedValues.append(value);
-					}
+				Entry entry = new Entry();
+	
+				if (ce.getType().equals("section")) {
+					continue;
 				}
-				val.setValue(concatenatedValues.toString());
+				CustomField val = new CustomField();
+				val.setName(ce.getName());
+				String emptyText = ce.getType().equals("multi-picklist") ? "Select " + ce.getHeader() + "..." : "";
+				String[] values = request.getParameterValues(ce.getName());
+				if (values == null || values.length == 0) {
+					val.setValue("");
+				} else if (values.length == 1) {
+					val.setValue((values[0] == null) ? "" : (emptyText.equals(values[0]) ? "" : values[0]));				
+				} else {
+					StringBuilder concatenatedValues = new StringBuilder();
+					for (String value : values) {
+						if (!emptyText.equals(value)) {
+							if (concatenatedValues.length() > 0) {
+								concatenatedValues.append("\u00A7");
+							}
+							concatenatedValues.append(value);
+						}
+					}
+					val.setValue(concatenatedValues.toString());
+				}
+				val.setEntityType("customtablerow");
+				val.setSequenceNumber(0);
+				entry.setKey(ce.getName());
+				entry.setValue(val);
+				row.getCustomFieldMap().getEntry().add(entry);
 			}
-			val.setEntityType("customtablerow");
-			val.setSequenceNumber(0);
-			entry.setKey(ce.getName());
-			entry.setValue(val);
-			row.getCustomFieldMap().getEntry().add(entry);
 		}
 
 		//
@@ -230,6 +240,76 @@ public class WidgetServiceImpl implements WidgetService {
 		return null;
 	}
 
+	public List<CustomTableRow> getCustomTableRows(String guid, Map<String, String> whereFieldEqualsValue) throws Exception {
+
+		CustomTable table = getCustomTable(guid);
+		
+		if (table.isCustomTableActive() == false) {
+			throw new Exception("Custom Table " + table.getCustomTableName() + " is not active");
+		}
+		
+		
+		WidgetExample example = new WidgetExample();
+		example.createCriteria().andWidgetGuidEqualTo(guid);
+
+		List<Widget> widgets = widgetDAO.selectWidgetByExample(example);
+
+		if (widgets.size() > 0) {
+
+			//
+			// guid is a unique key so this will only return one widget
+			Widget widget = widgets.get(0);
+
+			String wsusername = widgets.get(0).getWidgetUsername();
+			String wspassword = widgets.get(0).getWidgetPassword();
+
+			WSClient wsClient = null;
+			OrangeLeap oleap = null;
+
+			wsClient = new WSClient();
+			oleap = wsClient.getOrangeLeap(System.getProperty("webtools.wsdllocation"), wsusername, wspassword);
+
+
+			GetCustomTableRowsRequest rowrequest = new GetCustomTableRowsRequest();
+			GetCustomTableRowsResponse rowresponse = null;
+			
+			rowrequest.setTablename(table.getCustomTableName());
+			rowrequest.setLimit(100);
+			rowrequest.setOffset(0);
+			
+			for (Map.Entry<String, String> entry : whereFieldEqualsValue.entrySet()){
+				Filter filter = new Filter();
+				filter.setName(entry.getKey());
+				filter.setValue(entry.getValue());
+				rowrequest.getFilters().add(filter);
+			}
+			
+			try {
+				rowresponse = oleap.getCustomTableRows(rowrequest);
+			}
+			catch (Exception e) {
+				if (e instanceof SOAPFaultException) {
+					SOAPFaultException sfe = (SOAPFaultException) e;
+					logger.error(sfe.getMessage());
+					String message = sfe.getMessage();
+					if (message.contains(":")) {
+						message = message.substring(message.lastIndexOf(":") + 1);
+					}
+					throw new Exception(message);
+				}
+
+			}
+
+
+			if (rowresponse != null) {
+				return rowresponse.getCustomTableRow();
+			}
+
+		}
+
+		return null;
+	}
+	
 	public CustomTable getCustomTableByName(String username, String password, String tablename) {
 			WSClient wsClient = null;
 			OrangeLeap oleap = null;
@@ -327,6 +407,21 @@ public class WidgetServiceImpl implements WidgetService {
 		ce.setRegExExample("");
 		retList.add(ce);
 
+		// add the customtablerowid
+		ce = new CustomEntity();		
+		ce.setName("customtablerowid");
+		ce.setType("text");
+		ce.setHeader("customtablerowid");
+		ce.setSearchable(false);
+		ce.setHidden(true);
+		ce.setPicklistId("");
+		ce.setRequired(false);
+		ce.setExpression("");
+		ce.setValue("");
+		ce.setRegEx("");
+		ce.setRegExExample("");
+		retList.add(ce);		
+		
 		while (ctit.hasNext()) {
 			CustomTableField ctfield = ctit.next();
 

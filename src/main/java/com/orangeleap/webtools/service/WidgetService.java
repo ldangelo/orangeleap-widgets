@@ -54,4 +54,6 @@ public interface WidgetService {
 
 	public CustomTable getCustomTableByName(String userName, String password,
 			String customentitytype);
+
+	public List<CustomTableRow> getCustomTableRows(String guid,	Map<String, String> whereFieldEqualsValue) throws Exception;
 }

@@ -12,7 +12,12 @@ import java.util.Map;
 
 import com.orangeleap.client.AbstractCustomizableEntity.CustomFieldMap;
 import com.orangeleap.client.Constituent;
+import com.orangeleap.client.CustomField;
+import com.orangeleap.client.CustomTable;
+import com.orangeleap.client.CustomTableField;
 import com.orangeleap.client.CustomTableRow;
+import com.orangeleap.client.OrangeLeap;
+import com.orangeleap.client.WSClient;
 import com.orangeleap.webtools.domain.CustomEntity;
 import com.orangeleap.webtools.domain.Widget;
 import com.orangeleap.webtools.service.OrangeLeapClientService;
@@ -40,6 +45,8 @@ public class CustomEntityController extends MultiActionController {
 
 	@Resource(name = "sessionCache")
 	Cache sessionCache;
+	
+	public final static String CONSTITUENT_ID = "constituentId";
 
 	@SuppressWarnings("unchecked")
 	public ModelAndView view(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
@@ -163,6 +170,12 @@ public class CustomEntityController extends MultiActionController {
 				CustomTableRow row = widgetService.CreateCustomTableRow(guid,
 						request);
 				if (row != null) {
+					com.orangeleap.client.AbstractCustomizableEntity.CustomFieldMap.Entry entry = new com.orangeleap.client.AbstractCustomizableEntity.CustomFieldMap.Entry();
+					entry.setKey("customtablerowid");
+					CustomField customField = new CustomField();
+					customField.setValue(row.getId().toString());
+					entry.setValue(customField);
+					row.getCustomFieldMap().getEntry().add(entry);
 					return getModelMap(row);
 				}
 			}
@@ -213,12 +226,56 @@ public class CustomEntityController extends MultiActionController {
 		modelMap.put("success", true);
 
 		Constituent constituent = null;
-
+		long rowId = 0;
 		if (constituentid != - 1) {
 			//
 			// get the constituent associated with this custom entity
 			constituent = orangeLeapClientService.getConstituentById(guid,
 					constituentid);
+			//determine if there is only one custom entity record(ie this table has a unique one to one record with the constituent)
+			//if so locate the custom table row(there will only be one) and use that id
+			CustomTable table = widgetService.getCustomTable(guid);
+			boolean ceReferencesConstituent = false;
+			boolean forConstituentContext = false;
+			boolean hasConstituentIdKey = false;
+			int keys = 0;
+			// for more info see com.orangeleap.tangerine.service.customization.CustomTableMaintenanceServiceImpl.forConstituentAttributes(CustomTable)
+			for (final CustomTableField field : table.getFields()) {
+				if (field.isCustomTableFieldTakeConstituentContext()) {
+					forConstituentContext = true;
+				}
+				if (field.getCustomTableFieldName().equalsIgnoreCase(CONSTITUENT_ID) && field.isCustomTableFieldKey()) {
+					hasConstituentIdKey = true;
+				}
+				if (field.isCustomTableFieldKey()) {
+					keys++;
+				}
+			}
+			ceReferencesConstituent = forConstituentContext && hasConstituentIdKey && keys == 1;
+			//if there is a unique one to one record with the constituent then we need to locate 
+			//the custom table row id for that record
+			if (ceReferencesConstituent){
+				Map<String, String> whereFieldEqualsValue = new HashMap<String, String>();
+				whereFieldEqualsValue.put(CONSTITUENT_ID.toLowerCase(), constituentid.toString());
+				
+				try {
+					List<CustomTableRow> rows = widgetService.getCustomTableRows(guid, whereFieldEqualsValue);
+					//if a row was returned
+					if (rows != null && rows.size() == 1){
+						rowId = rows.get(0).getId();
+					}else if (rows != null && rows.size() == 0){
+						//set rowId to zero so it will create a new row
+						rowId = 0;
+					}else {
+						//TODO throw error as the row count should be 0 or 1
+					}
+				}catch (Exception e) {
+						return getModelMapError(e.getMessage());
+				}
+				
+			}
+			
+			
 		}
 
 		//
@@ -226,6 +283,7 @@ public class CustomEntityController extends MultiActionController {
 		Iterator<CustomEntity> it = ceList.iterator();
 		Map<String, Object> row = new HashMap<String, Object>();
 		row.put("id", 0);
+		row.put("customtablerowid", rowId);
 		while (it.hasNext()) {
 			CustomEntity ce = it.next();
 
