@@ -157,7 +157,10 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 				for ( var f = 0; f < cfMap.length; f++) {
 					params[cfMap[f].key] = cfMap[f].value.value;
 				}
-				this.postToUrl(this.successurl, params);
+			    if (this.replaceToContent)
+				this.postToUrl(this.successurl, params,true);
+			    else
+				this.postToUrl(this.successurl, params,false);
 			}
 		},
 
