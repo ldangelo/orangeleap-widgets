@@ -9,6 +9,7 @@ var authentication = {
 		var form = $('<form>');
 		form.attr('action', url);
 		form.attr('method', 'POST');
+
 		if(newWindow){ form.attr('target', '_blank'); }
 
 		var addParam = function(paramName, paramValue){

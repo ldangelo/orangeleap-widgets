@@ -4,18 +4,18 @@
  '(jdibug-connect-host (quote "localhost"))
  '(jdibug-connect-port 8000)
  '(jde-db-option-connect-socket '(nil "8000"))
- '(jde-ant-buildfile "/Volumes/User/Users/ldangelo/Development/orangeleap/orangeleap-donatenow/build/build.xml")
+ '(jde-ant-buildfile "/Users/ldangelo/Development/orangeleap/orangeleap-donatenow/build/build.xml")
  '(jde-ant-enable-find nil)
  '(jde-ant-read-target t)
  '(jde-ant-home "/usr/share/ant")
  '(jde-ant-invocation-method (quote ("Java")))
  ;; Set name for your make program: ant or maybe maven?
  '(jde-build-function 'jde-maven2-build)
- '(compilation-directory "/Volumes/User/Users/ldangelo/Development/orangeleap/orangeleap-donatenow")
+ '(compilation-directory "//Users/ldangelo/Development/orangeleap/orangeleap-donatenow")
 '(jde-maven-project-file-name "pom.xml")
  '(jde-jdk-registry (quote (("1.6" . "/System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/"))))
- '(jde-run-working-directory "/Volumes/User/Users/ldangelo/Development/orangeleap/orangeleap-donatenow/")
- '(jde-compile-option-directory "/Volumes/User/Users/ldangelo/Development/orangeleap/orangeleap-donatenow/build/stage/classes-jar") 
+ '(jde-run-working-directory "/Users/ldangelo/Development/orangeleap/orangeleap-donatenow/")
+ '(jde-compile-option-directory "/Users/ldangelo/Development/orangeleap/orangeleap-donatenow/build/stage/classes-jar") 
  '(jde-compile-option-target (quote ("1.6")))
  '(jde-jdk (quote ("1.6")))
 
@@ -32,7 +32,7 @@
  '(user-mail-address "ldangelo@orangeleap.com") )
 
 (jde-maven2-set-current-profile "jetty")
-(jde-maven2-set-current-goal "compile")
+(jde-maven2-set-current-goal "jetty:run")
 (jde-maven2-set-current-arguments "-Dmaven.test.skip=false")
 
 
