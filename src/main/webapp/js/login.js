@@ -6,14 +6,14 @@ var authentication = {
     replaceTopContent:null,
   
 	postToUrl: function(url, params, newWindow) {
-		var form = $('<form>');
+		var form = $j('<form>');
 		form.attr('action', url);
 		form.attr('method', 'POST');
 
 		if(newWindow){ form.attr('target', '_blank'); }
 
 		var addParam = function(paramName, paramValue){
-			var input = $('<input type="hidden">');
+			var input = $j('<input type="hidden">');
 			input.attr({ 'id':     paramName,
 						 'name':   paramName,
 						 'value':  paramValue });
@@ -104,10 +104,14 @@ var authentication = {
 			this.setCookie("sessionId",session.sessionId);
 
 			if (successurl != null) {
-				if (this.replaceTopContent=='true')
-					top.location.href=successurl + "?constituentId=" + session.constituentId;
-				else
-					window.location.href=successurl+ "?constituentId=" + session.constituentId;
+			    var params = new Object();
+			    params["constituentId"] = session.constituentId;
+			    params["accountnumber"]= session.accountNumber;
+
+			    if (this.replaceTopContent=='true')
+				this.postToUrl(successurl, params,true);
+			    else
+				this.postToUrl(successurl, params,false);
 			}
 		}
     },

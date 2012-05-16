@@ -154,6 +154,7 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
 					Session s = new Session();
 					s.setConstituentId(Long.parseLong(customFieldMapValue(
 							row.getCustomFieldMap(), "constituent_id")));
+					s.setAccountNumber(Long.parseLong(customFieldMapValue(row.getCustomFieldMap(), "constituent_account_number")));
 					s.setSessionId(UUID.randomUUID().toString());
 					sessionCache.put(new Element(s.getSessionId(), s.getConstituentId()));
 					return s;

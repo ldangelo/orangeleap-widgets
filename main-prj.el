@@ -15,7 +15,7 @@
 '(jde-maven-project-file-name "pom.xml")
  '(jde-jdk-registry (quote (("1.6" . "/System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/"))))
  '(jde-run-working-directory "/Users/ldangelo/Development/orangeleap/orangeleap-donatenow/")
- '(jde-compile-option-directory "/Users/ldangelo/Development/orangeleap/orangeleap-donatenow/build/stage/classes-jar") 
+ '(jde-compile-option-directory "/Users/ldangelo/Development/orangeleap/orangeleap-donatenow/target/classes") 
  '(jde-compile-option-target (quote ("1.6")))
  '(jde-jdk (quote ("1.6")))
 
