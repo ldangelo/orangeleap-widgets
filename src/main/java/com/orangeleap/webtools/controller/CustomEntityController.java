@@ -322,11 +322,11 @@ public class CustomEntityController extends MultiActionController {
 				}
 				else {
 					// we don't have a constituent
-					row.put(ce.getName(), "");
+					row.put(ce.getName(), ce.getValue());
 				}
 			}
 			catch (Exception e) {
-				row.put(ce.getName(), "");
+				row.put(ce.getName(), ce.getValue());
 			}
 		}
 		returnList.add(row);

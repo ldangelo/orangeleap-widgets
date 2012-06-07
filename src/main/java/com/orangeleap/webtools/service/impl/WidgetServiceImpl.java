@@ -456,11 +456,11 @@ public class WidgetServiceImpl implements WidgetService {
 
 			ce.setHeader(ctfield.getCustomTableFieldDesc());
 			ce.setSearchable(false);
-			if (ctfield.isCustomTableFieldDefaultHidden() == null) {
-				ce.setHidden(false);
+			if (ctfield.isCustomTableFieldDefaultHidden() != null && (ctfield.getCustomTableFieldDatatype().equals("hidden") || ctfield.isCustomTableFieldDefaultHidden())) {
+				ce.setHidden(true);
 			}
 			else {
-				ce.setHidden(ctfield.isCustomTableFieldDefaultHidden());
+				ce.setHidden(false);
 			}
 			ce.setValue(ctfield.getCustomTableFieldDefaultValue());
 			ce.setRequired(ctfield.isCustomTableFieldRequired());

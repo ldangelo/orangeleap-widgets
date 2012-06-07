@@ -317,10 +317,18 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 									|| fields[f].type == 'date'
 									|| fields[f].type == 'integer'
 									|| fields[f].type == 'number'
-									|| fields[f].type == 'money') {
-								var field = (fields[f].type == 'date' ? new Ext.form.DateField() :
-								        (fields[f].type == 'integer' || fields[f].type == 'number') ? new Ext.form.NumberField() :
-										new Ext.form.TextField());
+									|| fields[f].type == 'money'
+									|| fields[f].type == 'checkbox') {
+								var field = null;
+								if (fields[f].type == 'date') {
+									field = new Ext.form.DateField();
+								} else if (fields[f].type == 'integer' || fields[f].type == 'number') {
+									field = new Ext.form.NumberField();
+								} else if (fields[f].type == "checkbox") {
+									field = new Ext.form.Checkbox();
+								} else {
+									field = new Ext.form.TextField();
+								}
 								field.id = fields[f].name;
 								field.name = fields[f].name;
 								field.dataIndex = fields[f].name;
@@ -349,7 +357,6 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 												});
 
 								}
-								field.value = fields[f].value;
 
 								if (!Ext.isEmpty(fields[f].regEx)) {
 									field.regex = new RegExp(fields[f].regEx);
@@ -563,8 +570,10 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 									if (this.form.findById(metaData[m].name + 'combo')) {
 										this.form.findById(metaData[m].name + 'combo').setValue(value);
 									}
-								}
-								else {
+								}else if (metaData[m].type == 'checkbox'){
+									this.form.findById(metaData[m].name).setValue(value);
+									this.form.findById(metaData[m].name).checked = value;
+								}else {
 									if (this.form.findById(metaData[m].name)) {
 										if (typeof(value) === 'string')
 											value = value.replace('&#167;','\u00A7');
