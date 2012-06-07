@@ -1,21 +1,6 @@
 package com.orangeleap.webtools.domain;
 
 public class CustomEntity {
-  public String getRegEx() {
-		return regEx;
-	}
-
-	public void setRegEx(String regEx) {
-		this.regEx = regEx;
-	}
-
-	public String getRegExExample() {
-		return regExExample;
-	}
-
-	public void setRegExExample(String regExExample) {
-		this.regExExample = regExExample;
-	}
 
 /**
    * Describe name here.
@@ -64,6 +49,9 @@ public class CustomEntity {
   
   private String regEx;
   private String regExExample;
+
+	private String parentFieldName;
+	private String parentFieldValue;
 
   /**
    * Get the <code>Expression</code> value.
@@ -244,8 +232,39 @@ public class CustomEntity {
   public final void setName(final String id) {
     this.name = id;
   }
+	public String getRegEx() {
+		return regEx;
+	}
 
-  public CustomEntity() {
+	public void setRegEx(String regEx) {
+		this.regEx = regEx;
+	}
+
+	public String getRegExExample() {
+		return regExExample;
+	}
+
+	public void setRegExExample(String regExExample) {
+		this.regExExample = regExExample;
+	}
+
+	public String getParentFieldName() {
+		return parentFieldName;
+	}
+
+	public void setParentFieldName(final String parentFieldName) {
+		this.parentFieldName = parentFieldName;
+	}
+
+	public String getParentFieldValue() {
+		return parentFieldValue;
+	}
+
+	public void setParentFieldValue(final String parentFieldValue) {
+		this.parentFieldValue = parentFieldValue;
+	}
+
+	public CustomEntity() {
     name="";
     guid="";
     type="";

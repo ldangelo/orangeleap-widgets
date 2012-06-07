@@ -13,7 +13,42 @@
 		<script>
 			$(function() {
 				$('#j_username').focus();
-			});
+
+            	if (localStorage) {
+            		if (localStorage.getItem('olRememberChecked') === 'false') {
+                        $('#rememberUserName').get(0).checked = false;
+            		}
+                    if (localStorage.getItem('olCachedUserName')) {
+                        $('#j_username').val(localStorage.getItem('olCachedUserName'));
+                        $('#j_password').focus();
+                    }
+                    else {
+                        $('#j_username').focus();
+                    }
+            		$('#j_username').bind('change', function(event) {
+                    	if ($('#rememberUserName').get(0).checked) {
+                    	    localStorage.setItem('olCachedUserName', $(this).val());
+                    	}
+                    	else {
+                    	    localStorage.removeItem('olCachedUserName');
+                    	}
+            		});
+            		$('#rememberUserName').bind('click', function(event) {
+            			if ($(this).get(0).checked) {
+                    	    localStorage.setItem('olCachedUserName', $('#j_username').val());
+                    	    localStorage.setItem('olRememberChecked', 'true');
+            			}
+            			else {
+                    	    localStorage.removeItem('olCachedUserName');
+                    	    localStorage.setItem('olRememberChecked', 'false');
+            			}
+            		});
+            	}
+            	else {
+            		$('#userNameRow, #rememberUserName').hide();
+                    $('#username').focus();
+            	}
+            });
 		</script>
 	</head>
 	<body>
@@ -36,6 +71,11 @@
 							<td style="text-align:right"><label for="j_password"><spring:message code="password"/></label></td>
 							<td><input size="30" class="loginField" type="password" name="j_password" id="j_password" /></td>
 						</tr>
+                        <tr id="userNameRow">
+                            <td colspan="2">
+                                <input type="checkbox" value="true" name="rememberUserName" id="rememberUserName" checked="true"/> <spring:message code="rememberUserName"/>
+                            </td>
+                        </tr>
 						<tr>
 							<td class="loginButton" colspan="2">
 								<input class="loginField" type="hidden" name="sitename" id="sitename" />
