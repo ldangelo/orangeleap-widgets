@@ -130,9 +130,13 @@ WidgetForm = Ext.extend(Ext.form.FormPanel, {
 							,icon:Ext.Msg.ERROR
 							,buttons:Ext.Msg.OK					
 					});
+                	Ext.fly('widgetWrapper').unmask();
 				},
 				'metachange':function(store,meta) {
 					generateForm(store.widgetForm, store, meta);
+				},
+				'beforeload': function(store, options) {
+                	Ext.fly('widgetWrapper').mask('Loading...', 'x-mask-loading');
 				},
 				'load':function(store,records,options) {
 					if (store.reader.meta.styles) {
@@ -167,6 +171,7 @@ WidgetForm = Ext.extend(Ext.form.FormPanel, {
 						}
 					}
 					store.widgetForm.doLayout();
+                	Ext.fly('widgetWrapper').unmask();
 				}
 			}
 		});
