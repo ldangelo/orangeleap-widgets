@@ -17,6 +17,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 		picklistNameItemsMap: {},
 		replaceTopContent: null,
 		timeout: 120,
+		valueDelimiter: '\u00A7',
 		parentFields: {},
 
 		postToUrl : function(url, params, newWindow) {
@@ -270,6 +271,47 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 				encode : true,
 				writeAllFields : false
 			});
+
+			that.checkMultiPicklistValue = function(comboSuperSelect) {
+				var aName = comboSuperSelect.getName();
+				var value = comboSuperSelect.getValue();
+
+				if ( ! Ext.isEmpty(value)) {
+					var tokens = value.split(that.valueDelimiter);
+				}
+
+				if (that.parentFields[aName]) {
+                    var childFields = that.parentFields[aName];
+                    if (childFields) {
+                        var myForm = Ext.getCmp("form").form;
+						for (var x = 0; x < childFields.length; x++) {
+							var childObj = childFields[x];
+
+							if ( ! Ext.isEmpty(childObj.parentFieldValue)) {
+								if (Ext.isEmpty(value)) {
+									myForm.findField(childObj.thisFieldName).hide();
+								}
+								else {
+									var show = false;
+									for (var z = 0; z < tokens.length; z++) {
+										if (tokens[z] == childObj.parentFieldValue) {
+											show = true;
+											break;
+										}
+									}
+									if (show) {
+										myForm.findField(childObj.thisFieldName).show();
+									}
+									else {
+										myForm.findField(childObj.thisFieldName).hide();
+									}
+								}
+							}
+						}
+                    }
+				}
+			};
+
 
 			this.mydatastore = new Ext.data.Store({
 				form : this,
@@ -527,13 +569,12 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 									}
 									fieldsectionindex++;
 								}
-//								comboConfig.fireEvent('select', comboConfig);
-
-							} else if (fields[f].type == 'multi-picklist') {
+							}
+							else if (fields[f].type == 'multi-picklist') {
 								var comboConfig = new Ext.ux.form.SuperBoxSelect({
 									id : fields[f].name, // + 'combo',
 									name: fields[f].name,
-									valueDelimiter: '\u00A7',
+									valueDelimiter: that.valueDelimiter,
 									triggerAction: 'all',
 									queryDelay: 0,
 //									readOnly:true,
@@ -551,7 +592,15 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 										fields : [ 'Name', 'Description'],
 										data: that.picklistNameItemsMap[fields[f].picklistId]
 									}),
-									fieldLabel : fields[f].header
+									fieldLabel : fields[f].header,
+									listeners: {
+										additem: function(comboSuperSelect, addedValue, record) {
+											that.checkMultiPicklistValue(comboSuperSelect);
+										},
+										removeitem: function(comboSuperSelect, removedValue, record) {
+											that.checkMultiPicklistValue(comboSuperSelect);
+										}
+									}
 								});
 
 								if (fields[f].required) {
@@ -656,7 +705,13 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 					for (var parentFieldName in thisForm.parentFields) {
 			            var aParentElem = thisForm.form.findField(parentFieldName);
 			            if (aParentElem) {
-				            aParentElem.fireEvent('select', aParentElem)
+			                var xType = aParentElem.getXType();
+			                if (xType == 'combo') {
+				                aParentElem.fireEvent('select', aParentElem)
+			                }
+			                else if (xType == 'superboxselect') {
+                                thisForm.checkMultiPicklistValue(aParentElem);
+			                }
 			            }
 					}
 				}
