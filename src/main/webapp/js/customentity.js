@@ -17,6 +17,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 		picklistNameItemsMap: {},
 		replaceTopContent: null,
 		timeout: 120,
+		parentFields: {},
 
 		postToUrl : function(url, params, newWindow) {
 			var form = $j('<form>');
@@ -287,6 +288,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 						
 					},
 					'metachange' : function(store, meta) {
+						that.parentFields = {};
 						var fields = meta.fields;
 						var fieldset = null;
 						var fieldsectioncount = 0;
@@ -300,6 +302,21 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 						}
 
 						for ( var f = 0; f < fields.length; f++) {
+							if ( ! Ext.isEmpty(fields[f].parentFieldName)) {
+								var childFields = that.parentFields[fields[f].parentFieldName];
+								if ( ! childFields) {
+									childFields = [];
+									that.parentFields[fields[f].parentFieldName] = childFields;
+								}
+
+								var childObj = { thisFieldName: fields[f].name };
+
+								if ( ! Ext.isEmpty(fields[f].parentFieldValue)) {
+									childObj.parentFieldValue = fields[f].parentFieldValue;
+							    }
+							    childFields.push(childObj);
+							}
+
 							if (fields[f].hidden) {
 								if ( ! this.form.findById(fields[f].name)) {
 									var field = new Ext.form.Hidden();
@@ -469,7 +486,29 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 										fields : [ 'Name', 'Description'],
 										data: that.picklistNameItemsMap[fields[f].picklistId]
 									}),
-									fieldLabel : fields[f].header
+									fieldLabel : fields[f].header,
+									listeners: {
+                                        select: function(comboBox, record, index) {
+											var value = comboBox.getValue();
+                                            var childFields = that.parentFields[comboBox.getName()];
+                                            if (childFields) {
+                                                var myForm = Ext.getCmp("form").form;
+												for (var x = 0; x < childFields.length; x++) {
+													var childObj = childFields[x];
+
+													if ( ! Ext.isEmpty(childObj.parentFieldValue)) {
+														var show = (value == childObj.parentFieldValue);
+														if (show) {
+															myForm.findField(childObj.thisFieldName).show();
+														}
+														else {
+															myForm.findField(childObj.thisFieldName).hide();
+														}
+													}
+												}
+                                            }
+										}
+									}
 								});
 
 								if (fields[f].required) {
@@ -487,7 +526,9 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 										col1.add(comboConfig);
 									}
 									fieldsectionindex++;
-								} 
+								}
+//								comboConfig.fireEvent('select', comboConfig);
+
 							} else if (fields[f].type == 'multi-picklist') {
 								var comboConfig = new Ext.ux.form.SuperBoxSelect({
 									id : fields[f].name, // + 'combo',
@@ -570,10 +611,12 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 									if (this.form.findById(metaData[m].name + 'combo')) {
 										this.form.findById(metaData[m].name + 'combo').setValue(value);
 									}
-								}else if (metaData[m].type == 'checkbox'){
+								}
+								else if (metaData[m].type == 'checkbox'){
 									this.form.findById(metaData[m].name).setValue(value);
 									this.form.findById(metaData[m].name).checked = value;
-								}else {
+								}
+								else {
 									if (this.form.findById(metaData[m].name)) {
 										if (typeof(value) === 'string')
 											value = value.replace('&#167;','\u00A7');
@@ -606,6 +649,18 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 				icon : Ext.MessageBox.ERROR,
 				buttons : Ext.Msg.OK
 			});
+		},
+		listeners: {
+            render: function(thisForm) {
+				if (thisForm.parentFields) {
+					for (var parentFieldName in thisForm.parentFields) {
+			            var aParentElem = thisForm.form.findField(parentFieldName);
+			            if (aParentElem) {
+				            aParentElem.fireEvent('select', aParentElem)
+			            }
+					}
+				}
+            }
 		}
 });
 Ext.reg('customentity', OrangeLeap.CustomEntity);
