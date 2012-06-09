@@ -513,6 +513,26 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 
 							}
 							else if (fields[f].type == 'picklist') {
+								var comboEventHandler = function(comboBox) {
+									var value = comboBox.getValue();
+                                    var childFields = that.parentFields[comboBox.getName()];
+                                    if (childFields) {
+                                        var myForm = Ext.getCmp("form").form;
+										for (var x = 0; x < childFields.length; x++) {
+											var childObj = childFields[x];
+
+											if ( ! Ext.isEmpty(childObj.parentFieldValue)) {
+												var show = (value == childObj.parentFieldValue);
+												if (show) {
+													myForm.findField(childObj.thisFieldName).show();
+												}
+												else {
+													myForm.findField(childObj.thisFieldName).hide();
+												}
+											}
+										}
+                                    }
+								};
 								var comboConfig = new Ext.form.ComboBox({
 									id : fields[f].name + 'combo',
 									dataIndex : fields[f].name,
@@ -521,6 +541,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 									hiddenName : fields[f].name,
 									displayField : 'Description',
 									forceSelection : true,
+                                    selectOnFocus: true,
 									lazyInit : false,
 									mode : 'local',
 									emptyText : 'Select ' + fields[f].header + '...',
@@ -531,24 +552,10 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 									fieldLabel : fields[f].header,
 									listeners: {
                                         select: function(comboBox, record, index) {
-											var value = comboBox.getValue();
-                                            var childFields = that.parentFields[comboBox.getName()];
-                                            if (childFields) {
-                                                var myForm = Ext.getCmp("form").form;
-												for (var x = 0; x < childFields.length; x++) {
-													var childObj = childFields[x];
-
-													if ( ! Ext.isEmpty(childObj.parentFieldValue)) {
-														var show = (value == childObj.parentFieldValue);
-														if (show) {
-															myForm.findField(childObj.thisFieldName).show();
-														}
-														else {
-															myForm.findField(childObj.thisFieldName).hide();
-														}
-													}
-												}
-                                            }
+											comboEventHandler(comboBox);
+										},
+										change: function(comboBox, newValue, oldValue) {
+											comboEventHandler(comboBox);
 										}
 									}
 								});
