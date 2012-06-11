@@ -7793,6 +7793,12 @@ body.ext-ie6 .x-superboxselect-item {
 	background: -ms-linear-gradient(top, #3f4c6b 0%,#3f4c6b 100%); /* IE10+ */
 	background: linear-gradient(top, #3f4c6b 0%,#3f4c6b 100%); /* W3C */
 }
+.required {
+	font-size: 1.6em;
+	color: #f00;
+	vertical-align: text-top;
+	padding-right: 4px;
+}
 
 
 

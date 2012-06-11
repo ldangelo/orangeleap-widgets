@@ -153,17 +153,20 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 					icon : Ext.Msg.INFO,
 					buttons : Ext.Msg.OK
 				});
-			} else {
+			}
+			else {
 				var params = new Object();
 
 				for ( var f = 0; f < cfMap.length; f++) {
 					params[cfMap[f].key] = cfMap[f].value.value;
 				}
 
-			    if (this.replaceTopContent == 'true')
-				this.postToUrl(this.successurl, params,true);
-			    else
-				this.postToUrl(this.successurl, params,false);
+			    if (this.replaceTopContent == 'true') {
+					this.postToUrl(this.successurl, params,true);
+			    }
+			    else {
+					this.postToUrl(this.successurl, params,false);
+			    }
 			}
 		},
 
@@ -219,10 +222,12 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 
 			if (this.authenticate == true && this.sessionId == "") {
 				// window.open(this.loginurl,"_blank");
-				if (this.replaceTopContent == 'true')
+				if (this.replaceTopContent == 'true') {
 					top.location.href = this.loginurl;
-				else
+				}
+				else {
 					window.location.href = this.loginurl;
+				}
 				return;
 			}
 
@@ -312,6 +317,9 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 				}
 			};
 
+			var createFieldLabel = function(aField) {
+				return (aField.required ? '<span class="required">*</span>' : '') + aField.header;
+			};
 
 			this.mydatastore = new Ext.data.Store({
 				form : this,
@@ -323,11 +331,12 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 				listeners : {
 					'exception' : function(misc) {
 
-						if (this.replaceTopContent == 'true')
+						if (this.replaceTopContent == 'true') {
 							top.location.href = this.loginurl;
-						else
+						}
+						else {
 							window.location.href = this.loginurl;
-						
+						}
 					},
 					'metachange' : function(store, meta) {
 						that.parentFields = {};
@@ -365,7 +374,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 									field.id = fields[f].name;
 									field.name = fields[f].name;
 									field.dataIndex = fields[f].name;
-									field.fieldLabel = fields[f].header;
+									field.fieldLabel = createFieldLabel(fields[f]);
 									field.store = store;
 									field.border = false;
 									this.form.superclass().add.call(this.form, field);
@@ -381,17 +390,20 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 								var field = null;
 								if (fields[f].type == 'date') {
 									field = new Ext.form.DateField();
-								} else if (fields[f].type == 'integer' || fields[f].type == 'number') {
+								}
+								else if (fields[f].type == 'integer' || fields[f].type == 'number') {
 									field = new Ext.form.NumberField();
-								} else if (fields[f].type == "checkbox") {
+								}
+								else if (fields[f].type == "checkbox") {
 									field = new Ext.form.Checkbox();
-								} else {
+								}
+								else {
 									field = new Ext.form.TextField();
 								}
 								field.id = fields[f].name;
 								field.name = fields[f].name;
 								field.dataIndex = fields[f].name;
-								field.fieldLabel = fields[f].header;
+								field.fieldLabel = createFieldLabel(fields[f]);
 								field.store = store;
 								field.border = false;
 
@@ -445,7 +457,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 								field.id = fields[f].name;
 								field.name = fields[f].name;
 								field.dataIndex = fields[f].name;
-								field.fieldLabel = fields[f].header;
+								field.fieldLabel = createFieldLabel(fields[f]);
 								field.store = store;
 								field.border = false;
 								field.width = 350;
@@ -539,7 +551,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 									valueField : 'Name',
 									triggerAction : 'all',
 									hiddenName : fields[f].name,
-									displayField : 'Description',
+									displayField : fields[f].required ? '<span class="required">*</span>' : '' + 'Description',
 									forceSelection : true,
                                     selectOnFocus: true,
 									lazyInit : false,
@@ -549,7 +561,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 										fields : [ 'Name', 'Description'],
 										data: that.picklistNameItemsMap[fields[f].picklistId]
 									}),
-									fieldLabel : fields[f].header,
+									fieldLabel : createFieldLabel(fields[f]),
 									listeners: {
                                         select: function(comboBox, record, index) {
 											comboEventHandler(comboBox);
@@ -599,7 +611,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 										fields : [ 'Name', 'Description'],
 										data: that.picklistNameItemsMap[fields[f].picklistId]
 									}),
-									fieldLabel : fields[f].header,
+									fieldLabel : createFieldLabel(fields[f]),
 									listeners: {
 										additem: function(comboSuperSelect, addedValue, record) {
 											that.checkMultiPicklistValue(comboSuperSelect);
@@ -663,20 +675,23 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 							if (metaData[m].type != 'section') {
 								value = records[0].get(metaData[m].name);
 
-								if (metaData[m].type == 'picklist') {
-									if (this.form.findById(metaData[m].name + 'combo')) {
-										this.form.findById(metaData[m].name + 'combo').setValue(value);
+								if (value !== '') {
+									if (metaData[m].type == 'picklist') {
+										if (this.form.findById(metaData[m].name + 'combo')) {
+											this.form.findById(metaData[m].name + 'combo').setValue(value);
+										}
 									}
-								}
-								else if (metaData[m].type == 'checkbox'){
-									this.form.findById(metaData[m].name).setValue(value);
-									this.form.findById(metaData[m].name).checked = value;
-								}
-								else {
-									if (this.form.findById(metaData[m].name)) {
-										if (typeof(value) === 'string')
-											value = value.replace('&#167;','\u00A7');
+									else if (metaData[m].type == 'checkbox'){
 										this.form.findById(metaData[m].name).setValue(value);
+										this.form.findById(metaData[m].name).checked = value;
+									}
+									else {
+										if (this.form.findById(metaData[m].name)) {
+											if (typeof(value) === 'string') {
+												value = value.replace('&#167;','\u00A7');
+											}
+											this.form.findById(metaData[m].name).setValue(value);
+										}
 									}
 								}
 							}

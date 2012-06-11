@@ -16,8 +16,6 @@ import com.orangeleap.client.CustomField;
 import com.orangeleap.client.CustomTable;
 import com.orangeleap.client.CustomTableField;
 import com.orangeleap.client.CustomTableRow;
-import com.orangeleap.client.OrangeLeap;
-import com.orangeleap.client.WSClient;
 import com.orangeleap.webtools.domain.CustomEntity;
 import com.orangeleap.webtools.domain.Widget;
 import com.orangeleap.webtools.service.OrangeLeapClientService;
@@ -25,8 +23,6 @@ import com.orangeleap.webtools.service.PicklistService;
 import com.orangeleap.webtools.service.WidgetService;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.Element;
-
-import org.apache.axis.wsdl.toJava.GeneratedFileInfo.Entry;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
@@ -204,7 +200,9 @@ public class CustomEntityController extends MultiActionController {
 		
 		while (it.hasNext()) {
 			com.orangeleap.client.AbstractCustomizableEntity.CustomFieldMap.Entry entry = it.next();
-			if (entry.getKey().equals(index)) return entry.getValue().getValue();
+			if (entry.getKey().equals(index)) {
+				return entry.getValue().getValue();
+			}
 		}
 		return "";
 	}
@@ -263,13 +261,16 @@ public class CustomEntityController extends MultiActionController {
 					//if a row was returned
 					if (rows != null && rows.size() == 1){
 						rowId = rows.get(0).getId();
-					}else if (rows != null && rows.size() == 0){
+					}
+					else if (rows != null && rows.size() == 0){
 						//set rowId to zero so it will create a new row
 						rowId = 0;
-					}else {
+					}
+					else {
 						//TODO throw error as the row count should be 0 or 1
 					}
-				}catch (Exception e) {
+				}
+				catch (Exception e) {
 						return getModelMapError(e.getMessage());
 				}
 				
@@ -313,9 +314,12 @@ public class CustomEntityController extends MultiActionController {
 								CustomFieldMap cfMap = (CustomFieldMap) PropertyUtils.getNestedProperty(constituent, strcf);
 								
 								String index = property.substring(property.indexOf('[') + 1, property.indexOf(']'));
-								row.put(ce.getName(), getCustomFieldMapValue(cfMap,index));
-							} else {
-								row.put(ce.getName(), PropertyUtils.getNestedProperty(constituent,property));
+								final String value = getCustomFieldMapValue(cfMap, index);
+								row.put(ce.getName(), value);
+							}
+							else {
+								final Object value = PropertyUtils.getNestedProperty(constituent, property);
+								row.put(ce.getName(), value);
 							}
 						}
 					}
