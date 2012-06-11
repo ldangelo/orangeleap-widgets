@@ -551,7 +551,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 									valueField : 'Name',
 									triggerAction : 'all',
 									hiddenName : fields[f].name,
-									displayField : fields[f].required ? '<span class="required">*</span>' : '' + 'Description',
+									displayField : 'Description',
 									forceSelection : true,
                                     selectOnFocus: true,
 									lazyInit : false,
