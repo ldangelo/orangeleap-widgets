@@ -5,6 +5,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix='security' uri='http://www.springframework.org/security/tags' %>
+<%@ taglib prefix="donorwidgets" uri="http://www.orangeleap.com/donorwidgets/tags"%>
 
 <%@ taglib prefix="pack" uri="http://packtag.sf.net" %>
 

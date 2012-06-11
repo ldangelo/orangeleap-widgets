@@ -10,6 +10,7 @@
 		<script type="text/javascript">
 			Ext.onReady(function() {
 
+            Ext.QuickTips.init();
 			var mystyledatasource = null;
 
 			var styleproxy = new Ext.data.HttpProxy( {api: {
@@ -37,7 +38,29 @@
 
 						var columns = [];
 						for (var f=0;f < fields.length; f++) {
-							columns.push({header: fields[f].header, dataIndex: fields[f].name,sortable:true, width: 275});
+							var thisWidth = 275;
+							if (fields[f].name == 'Inactive') {
+								thisWidth = 50;
+							}
+							else if (fields[f].name == 'Id') {
+								thisWidth = 150;
+							}
+							columns.push({
+								header: fields[f].header,
+								dataIndex: fields[f].name,
+								sortable:true,
+								width: thisWidth,
+								renderer: function(value, metaData, record, rowIndex, colIndex, store) {
+									var title = '';
+									var dataIndex = this.dataIndex ? this.dataIndex : (this.scope ? this.scope.dataIndex : null);
+									if (dataIndex && record.fields.map && record.fields.map[dataIndex]) {
+										if (record.fields.map[dataIndex].header) {
+											title = record.fields.map[dataIndex].header;
+										}
+									}
+									return '<span ext:qtitle="' + title + '"ext:qwidth="250" ext:qtip="' + value + '" ext:qclass="constrainText">' + value + '</span>';
+								}
+							});
 						}
 
 						stylegrid.reconfigure(store,new Ext.grid.ColumnModel(columns));

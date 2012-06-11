@@ -19,6 +19,7 @@ public class Style implements Serializable {
 	private String StyleName;
 
 	private boolean inactive;
+	private boolean deleted;
 
 	public String getStyleName() {
 		return StyleName;
@@ -88,5 +89,13 @@ public class Style implements Serializable {
 
 	public void setInactive(final boolean inactive) {
 		this.inactive = inactive;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(final boolean deleted) {
+		this.deleted = deleted;
 	}
 }

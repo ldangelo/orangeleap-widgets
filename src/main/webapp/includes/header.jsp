@@ -1,6 +1,11 @@
+<%@ include file="/WEB-INF/jsp/include.jsp" %>
+
+<donorwidgets:auth/>
+
 <div id="banner">
 	<ol>
 		<li id="greeting">
+			Welcome, <c:out value="${donorWidgetsUserName}"/>
 		</li>
 		<li>
 			<a id="sec-changepwd" href="#">Change Password</a>

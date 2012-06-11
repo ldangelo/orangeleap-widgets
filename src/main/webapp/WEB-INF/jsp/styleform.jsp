@@ -38,7 +38,7 @@
 	    function onSuccess() {
 		Ext.Msg.show({
         	    title:'Success'
-		    ,msg:'Form submitted successfully'
+		    ,msg:'Your changes were successfully saved.'
 		    ,modal:true
 		    ,icon:Ext.Msg.INFO
 		    ,buttons:Ext.Msg.OK
@@ -55,7 +55,7 @@
 	    }
 
                 function onSave() {
-                	form.getForm().submit({url:'style.ajax?action=save',waitMsg:'Saving Style...',submitEmptyText:false});
+                	form.getForm().submit({url:'style.ajax?action=save',waitMsg:'Saving Style...',submitEmptyText:false, success: onSuccess, failure: onFailure });
                 }
 
 
@@ -64,7 +64,7 @@
                 root:'rows',
                 totalProperty: 'rows',
 	            fields: [
-    	            "Id","Style","StyleName"
+    	            "Id","Style","StyleName","Inactive","Deleted"
         	    ]});
 
 
@@ -93,10 +93,23 @@
                         height:200
                 },
                 {
+                    fieldLabel: 'Inactive',
+                    id: 'Inactive',
+                    name: 'Inactive',
+                    xtype: 'checkbox'
+                },
+                {
+                    fieldLabel: 'Deleted',
+	                id: 'Deleted',
+	                name: 'Deleted',
+	                xtype: 'checkbox'
+	            },
+	            {
                 	id: 'Id',
                 	name: 'Id',
                 	xtype: 'hidden'
-                }],
+                }
+                ],
 		buttons: [{
 		    text: 'Save',
 		    handler: onSave,
@@ -108,15 +121,18 @@
         form.render('styleform-div');
 
         var id = getParameter(window.top.location.search.substring(1),'id');
-        if (id != null)
+        if (id != null) {
         	form.getForm().load({url:'style.ajax?action=read&Id='+ id,method: 'GET',waitMsg: 'Loading'});
-        else
+        }
+        else {
         	form.getForm().load({url:'style.ajax?action=create',method:'GET',waitMsg: 'Loading'});
+        }
 
         form.on({
         actioncomplete: function(form, action){
             if(action.type == 'load'){
     			form.items.get("Style").setValue(form.items.get("Style").value.replace(/\\n/gi,String.fromCharCode(10)));
+    			form.items.get("Style").setValue(form.items.get("Style").value.replace(/\\&quot;/gi,'"'));
     			form.items.get("Style").setValue(form.items.get("Style").value.replace(/&quot;/gi,''));
             }
         }
