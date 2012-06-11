@@ -35,23 +35,25 @@ WidgetForm = Ext.extend(Ext.form.FormPanel, {
 		    return "null";
 		}
 	},
-	onSuccess: function() {
-		Ext.Msg.show({
-        	    title:'Success'
-		    ,msg:'Form submitted successfully'
-		    ,modal:true
-		    ,icon:Ext.Msg.INFO
-		    ,buttons:Ext.Msg.OK
-		});
-	},
-	onFailure:function(form,action) {
-		Ext.Msg.show({
-		    title:'Error'
-		    ,msg:action.result.message || action.response.responseText
-		    ,modal:true
-		    ,icon:Ext.Msg.ERROR
-		    ,buttons:Ext.Msg.OK
-		});
+	checkSave: function(records, options, success) {
+		if (success) {
+			Ext.Msg.show({
+	                title:'Success'
+			    ,msg:'Your changes were successfully saved.'
+			    ,modal:true
+			    ,icon:Ext.Msg.INFO
+			    ,buttons:Ext.Msg.OK
+			});
+		}
+		else {
+			Ext.Msg.show({
+			    title:'Error'
+			    ,msg:'Your changes could NOT be saved due to an error.  Please try again.'
+			    ,modal:true
+			    ,icon:Ext.Msg.ERROR
+			    ,buttons:Ext.Msg.OK
+			});
+		}
 	},
 	onGenerate: function() {
 		var params = new Object();
@@ -74,8 +76,7 @@ WidgetForm = Ext.extend(Ext.form.FormPanel, {
 
 		mydatastore.load({
 			url: 'widgetform.ajax'
-			,success: mydatastore.widgetForm.onSuccess
-			,failure: mydatastore.widgetForm.onFailure
+			,callback: mydatastore.widgetForm.checkSave
 			,params: params
 			,waitMsg: 'Generating Widget...'
 		});

@@ -227,20 +227,20 @@ public class AjaxWidgetFormController extends MultiActionController {
 		return getModelMapError("Unimplemented");
 	}
 
-	public ModelAndView read(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		String guid = request.getParameter("guid");
+	public ModelAndView read(final HttpServletRequest request,
+			final HttpServletResponse response) throws Exception {
+		final String guid = request.getParameter("guid");
 
-		Widget w = widgetService.selectWidgetByGuid(guid);
+		final Widget w = widgetService.selectWidgetByGuid(guid);
 
 		final ModelAndView mav = getModelMap(w, w.getWidgetType(), w.getCustomEntityName());
-		addStyles(mav);
+		addStyles(mav, w.getStyleId());
 
 		return mav;
 	}
 
 	@SuppressWarnings("unchecked")
-	private void addStyles(final ModelAndView mav) {
+	private void addStyles(final ModelAndView mav, final Long widgetStyleId) {
 		final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		final String userName = auth.getName();
 		final Style style = new Style();
@@ -254,18 +254,38 @@ public class AjaxWidgetFormController extends MultiActionController {
 
 		final List<Map<String, Object>> styleRows = new ArrayList<Map<String, Object>>();
 
+		boolean foundStyle = false;
+
 		Map<String, Object> aStyleRow = new HashMap<String, Object>();
 		aStyleRow.put("Id", "0");
 		aStyleRow.put("Style", "");
 		aStyleRow.put("StyleName", "Default");
 		styleRows.add(aStyleRow);
+		if (new Long(0L).equals(widgetStyleId)) {
+			foundStyle = true;
+		}
 
 		if (styles != null) {
 			for (final Style aStyle : styles) {
 				aStyleRow = new HashMap<String, Object>();
 				aStyleRow.put("Id", aStyle.getId());
 				aStyleRow.put("Style", net.sf.json.util.JSONUtils.quote(aStyle.getStyle()));
-				aStyleRow.put("StyleName", aStyle.getStyleName());
+				aStyleRow.put("StyleName", aStyle.getStyleName() + (aStyle.isInactive() ? " (Inactive)" : ""));
+				styleRows.add(aStyleRow);
+
+				if (aStyle.getId().equals(widgetStyleId)) {
+					foundStyle = true;
+				}
+			}
+		}
+		if ( ! foundStyle && widgetStyleId != null && widgetStyleId > 0) {
+			// this is a deleted style
+			final Style aStyle = styleService.selectById(widgetStyleId);
+			if (aStyle != null) {
+				aStyleRow = new HashMap<String, Object>();
+				aStyleRow.put("Id", aStyle.getId());
+				aStyleRow.put("Style", net.sf.json.util.JSONUtils.quote(aStyle.getStyle()));
+				aStyleRow.put("StyleName", aStyle.getStyleName() + " (Deleted)");
 				styleRows.add(aStyleRow);
 			}
 		}
@@ -311,7 +331,7 @@ public class AjaxWidgetFormController extends MultiActionController {
 		ret.setWidgetHtml("Undefined");
 
 		final ModelAndView mav = getModelMap(ret, widgettype, customentitytype);
-		addStyles(mav);
+		addStyles(mav, ret.getStyleId());
 
 		return mav;
 	}
@@ -395,7 +415,7 @@ public class AjaxWidgetFormController extends MultiActionController {
 		widgetService.saveWidget(widget);
 
 		final ModelAndView mav = getModelMap(widget, widgettype, customentitytype);
-		addStyles(mav);
+		addStyles(mav, widget.getStyleId());
 
 		return mav;
 	}
