@@ -233,6 +233,13 @@ public class AjaxWidgetFormController extends MultiActionController {
 
 		final Widget w = widgetService.selectWidgetByGuid(guid);
 
+		final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		final String userSiteName = resolveSiteName(auth.getName());
+
+		if (w.getSiteName() != null && ! w.getSiteName().equals(userSiteName)) {
+			throw new IllegalAccessException("You are not authorized to view this Widget");
+		}
+
 		final ModelAndView mav = getModelMap(w, w.getWidgetType(), w.getCustomEntityName());
 		addStyles(mav, w.getStyleId());
 
@@ -381,6 +388,13 @@ public class AjaxWidgetFormController extends MultiActionController {
 		}
 		else {
 			widget = widgetService.getWidget(guid);
+
+			final String userSiteName = resolveSiteName(auth.getName());
+
+			if (widget.getSiteName() != null && ! widget.getSiteName().equals(userSiteName)) {
+				throw new IllegalAccessException("You are not authorized to view this Widget");
+			}
+
 			populateWidget(widget, request);
 		}
 
@@ -718,4 +732,7 @@ public class AjaxWidgetFormController extends MultiActionController {
 		return new ModelAndView("jsonView", modelMap);
 	}
 
+	private String resolveSiteName(final String userName) {
+		return userName == null ? null : userName.substring(userName.indexOf('@') + 1);
+	}
 }

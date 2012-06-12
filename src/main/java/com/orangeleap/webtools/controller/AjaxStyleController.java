@@ -17,6 +17,7 @@ import java.util.Map;
 import com.orangeleap.webtools.domain.Style;
 import com.orangeleap.webtools.service.StyleService;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.Authentication;
 import org.springframework.security.context.SecurityContextHolder;
@@ -32,15 +33,27 @@ public class AjaxStyleController extends MultiActionController {
 	protected StyleService styleService = null;
 
 	@SuppressWarnings("unchecked")
-	public ModelAndView save(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
+	public ModelAndView save(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		final String userName = auth.getName();
+		final String userSiteName = resolveSiteName(userName);
 		final String strStyle = request.getParameter("Style");
 		final String strId = request.getParameter("Id");
 		final String strStyleName = request.getParameter("StyleName");
 		final boolean inactive = "on".equalsIgnoreCase(request.getParameter("Inactive"));
 		final boolean deleted = "on".equalsIgnoreCase(request.getParameter("Deleted"));
-		final Style style = new Style();
+
+		Style style;
+		if (NumberUtils.isDigits(strId)) {
+			style = styleService.selectById(Long.valueOf(strId));
+
+			if (style != null && style.getSiteName() != null && ! style.getSiteName().equals(userSiteName))  {
+				throw new IllegalAccessException("You are not authorized to view this Style");
+			}
+		}
+		else {
+			style = new Style();
+		}
 
 		style.setUserName(userName);
 		style.setStyleName(strStyleName);
@@ -53,8 +66,7 @@ public class AjaxStyleController extends MultiActionController {
 		style.setInactive(inactive);
 		style.setDeleted(deleted);
 
-		if (strId != null && ! strId.equals("")) {
-			style.setId(new Long(strId));
+		if (NumberUtils.isDigits(strId)) {
 			styleService.update(style);
 		}
 		else {
@@ -93,15 +105,20 @@ public class AjaxStyleController extends MultiActionController {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ModelAndView read(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		String strId = request.getParameter("Id");
+	public ModelAndView read(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+		final String strId = request.getParameter("Id");
+		final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		final String userSiteName = resolveSiteName(auth.getName());
 
 		Style style = styleService.selectById(Long.valueOf(strId));
 
 		if (style == null) {
 			style = new Style();
 		}
+		else if (style.getSiteName() != null && ! style.getSiteName().equals(userSiteName))  {
+			throw new IllegalAccessException("You are not authorized to view this Style");
+		}
+
 		final Map model = new HashMap();
 		final Map<String, Object> rows = new HashMap<String, Object>();
 
@@ -130,7 +147,7 @@ public class AjaxStyleController extends MultiActionController {
 				styles = styleService.selectByUserName(userName);
 			}
 			else {
-				final String siteName = userName.substring(userName.indexOf('@') + 1);
+				final String siteName = resolveSiteName(userName);
 				if (StringUtils.isNotBlank(siteName)) {
 					styles = styleService.selectBySiteName(siteName);
 				}
@@ -196,5 +213,9 @@ public class AjaxStyleController extends MultiActionController {
 		model.put("rows", rows);
 
 		return new ModelAndView("jsonView", model);
+	}
+
+	private String resolveSiteName(final String userName) {
+		return userName == null ? null : userName.substring(userName.indexOf('@') + 1);
 	}
 }
