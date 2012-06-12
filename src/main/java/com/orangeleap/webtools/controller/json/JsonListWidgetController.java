@@ -34,6 +34,7 @@ public class JsonListWidgetController {
 			map.put("errorcount", widget.getWidgetErrorCount());
 			map.put("viewcount", widget.getWidgetViewCount());
 			map.put("wid", widget.getWidgetViewCount());
+			map.put("inactive", widget.isInactive());
 			returnList.add(map);
 		}
 	}

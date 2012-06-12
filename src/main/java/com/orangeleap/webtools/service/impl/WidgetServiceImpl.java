@@ -85,7 +85,7 @@ public class WidgetServiceImpl implements WidgetService {
 		WidgetExample example = new WidgetExample();
 
 		example.createCriteria().andWidgetUsernameEqualTo(userName)
-				.andWidgetPasswordEqualTo(password);
+				.andWidgetPasswordEqualTo(password).andDeletedEqualTo("0");
 
 		return widgetDAO.selectWidgetByExample(example);
 	}
@@ -490,12 +490,14 @@ public class WidgetServiceImpl implements WidgetService {
 		return widgets;
 	}
 
-	public Widget createWidget(String userName, String passWord, String widgettype, String customentitytype) {
+	public Widget createWidget(String userName, String passWord, String widgettype, String customentitytype, final boolean inactive, final boolean deleted) {
 		Widget widget = new Widget();
 		widget.setWidgetUsername(userName);
 		widget.setWidgetPassword(passWord);
 		widget.setWidgetType(widgettype);
 		widget.setCustomEntityName(customentitytype);
+		widget.setInactive(inactive);
+		widget.setDeleted(deleted);
 		return widget;
 	}
 

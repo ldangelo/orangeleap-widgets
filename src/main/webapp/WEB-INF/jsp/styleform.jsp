@@ -139,11 +139,11 @@ body {
 }
 .x-column-inner {
     display: table;
-<strong>/* Force one group of fields to be displayed as a table */</strong>
+<strong>/* Force one group of fields (like 'First Name' & 'Last Name') to be displayed as a table */</strong>
 }
 .x-column {
     display: table-row;
-<strong>/* Force a column of fields to be displayed as a table-row */</strong>
+<strong>/* Force a column of fields (like 'First Name') to be displayed as a table-row */</strong>
 }
 	            </div>
 			</div>

@@ -164,7 +164,14 @@ WidgetForm = Ext.extend(Ext.form.FormPanel, {
 							}
 							Ext.getCmp('styleId').setValue(value);
 						}
-						else if (metaData[m].type != 'boolean') {
+						else if (metaData[m].type == 'boolean') {
+							value = records[records.length-1].get(metaData[m].name);
+							var fld = store.widgetForm.getForm().findField(metaData[m].name);
+							if (fld != null) {
+								fld.setValue(value);
+							}
+						}
+						else {
 							value = records[records.length-1].get(metaData[m].name);
 							value = value.replace(/&lt;/g,"<");
 							value = value.replace(/&gt;/g,">");

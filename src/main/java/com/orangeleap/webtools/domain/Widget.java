@@ -114,8 +114,10 @@ public class Widget implements Serializable {
     private String     	sponsorshipURL = "";
     private String     	donationURL = "";
 	private String siteName;
+	private boolean inactive;
+	private boolean deleted;
 
-    public String getDonationUrl() {
+	public String getDonationUrl() {
         return donationURL;
     }
 
@@ -550,5 +552,21 @@ public class Widget implements Serializable {
 
 	public void setSiteName(final String siteName) {
 		this.siteName = siteName;
+	}
+
+	public boolean isInactive() {
+		return inactive;
+	}
+
+	public void setInactive(final boolean inactive) {
+		this.inactive = inactive;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(final boolean deleted) {
+		this.deleted = deleted;
 	}
 }

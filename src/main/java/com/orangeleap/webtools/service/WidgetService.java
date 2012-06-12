@@ -20,7 +20,7 @@ public interface WidgetService {
 
 	public List<Widget> getLoginWidgets(String username, String password);
 
-	public Widget createWidget(String username, String password, String widgettype, String customentitytype);
+	public Widget createWidget(String username, String password, String widgettype, String customentitytype, final boolean inactive, final boolean deleted);
 
 	public List<Widget> getWidgets(String username, String password, String widgettype, String customentitytype);
 

@@ -86,6 +86,7 @@ Ext.onReady(function() {
 				},
 				{name: 'entityname'},
 				{name: 'errorcount'},
+				{name: 'inactive'},
 				{name: 'viewcount'}
 			]}
 		)
@@ -171,12 +172,18 @@ Ext.onReady(function() {
 					return '<span ext:qtitle="' + title + '"ext:qwidth="250" ext:qtip="' + value + '" ext:qclass="constrainText">' + value + '</span>';
 				}
 			},
-//			{id:'entityname',width: 150,header:'Entity Name',dataIndex:'entityname'},
+			{
+				id:'inactive',
+				width:50,
+				header:'Inactive',
+				dataIndex:'inactive',
+				renderer: function(value, metaData, record, rowIndex, colIndex, store) {
+                    var title = findTitle(this.dataIndex, this.scope, store);
+					return '<span ext:qtitle="' + title + '"ext:qwidth="250" ext:qtip="' + value + '" ext:qclass="constrainText">' + value + '</span>';
+				}
+			},
 			{id:'view',width:80,header:'View',renderer: renderViewIcon,dataIndex:'guid'},
-//			{id:'notifications',width:80,header:'Notifications',renderer: renderNotificationIcon,dataIndex:'guid'},
 			{id:'code',width:80,header:'Code',renderer: renderCodeIcon,dataIndex:'guid'}
-//			{id:'errorcount',width: 80,header:'Error Count',dataIndex:'errorcount', renderer: add_thousands_separator },
-//			{id:'viewcount',width:80,header:'View Count',dataIndex:'viewcount',renderer: add_thousands_separator }
 		],
 	    viewConfig: {
             emptyText: 'No Widgets Found'

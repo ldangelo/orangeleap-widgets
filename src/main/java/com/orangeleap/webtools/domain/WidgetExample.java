@@ -335,77 +335,147 @@ public class WidgetExample {
             return this;
         }
 
-        public Criteria andWidgetUsernameIsNull() {
-            addCriterion("WIDGET_USERNAME is null");
-            return this;
-        }
+	    public Criteria andWidgetUsernameIsNull() {
+		    addCriterion("WIDGET_USERNAME is null");
+		    return this;
+	    }
 
-        public Criteria andWidgetUsernameIsNotNull() {
-            addCriterion("WIDGET_USERNAME is not null");
-            return this;
-        }
+	    public Criteria andWidgetUsernameIsNotNull() {
+		    addCriterion("WIDGET_USERNAME is not null");
+		    return this;
+	    }
 
-        public Criteria andWidgetUsernameEqualTo(String value) {
-            addCriterion("WIDGET_USERNAME =", value, "widgetUsername");
-            return this;
-        }
+	    public Criteria andWidgetUsernameEqualTo(String value) {
+		    addCriterion("WIDGET_USERNAME =", value, "widgetUsername");
+		    return this;
+	    }
 
-        public Criteria andWidgetUsernameNotEqualTo(String value) {
-            addCriterion("WIDGET_USERNAME <>", value, "widgetUsername");
-            return this;
-        }
+	    public Criteria andWidgetUsernameNotEqualTo(String value) {
+		    addCriterion("WIDGET_USERNAME <>", value, "widgetUsername");
+		    return this;
+	    }
 
-        public Criteria andWidgetUsernameGreaterThan(String value) {
-            addCriterion("WIDGET_USERNAME >", value, "widgetUsername");
-            return this;
-        }
+	    public Criteria andWidgetUsernameGreaterThan(String value) {
+		    addCriterion("WIDGET_USERNAME >", value, "widgetUsername");
+		    return this;
+	    }
 
-        public Criteria andWidgetUsernameGreaterThanOrEqualTo(String value) {
-            addCriterion("WIDGET_USERNAME >=", value, "widgetUsername");
-            return this;
-        }
+	    public Criteria andWidgetUsernameGreaterThanOrEqualTo(String value) {
+		    addCriterion("WIDGET_USERNAME >=", value, "widgetUsername");
+		    return this;
+	    }
 
-        public Criteria andWidgetUsernameLessThan(String value) {
-            addCriterion("WIDGET_USERNAME <", value, "widgetUsername");
-            return this;
-        }
+	    public Criteria andWidgetUsernameLessThan(String value) {
+		    addCriterion("WIDGET_USERNAME <", value, "widgetUsername");
+		    return this;
+	    }
 
-        public Criteria andWidgetUsernameLessThanOrEqualTo(String value) {
-            addCriterion("WIDGET_USERNAME <=", value, "widgetUsername");
-            return this;
-        }
+	    public Criteria andWidgetUsernameLessThanOrEqualTo(String value) {
+		    addCriterion("WIDGET_USERNAME <=", value, "widgetUsername");
+		    return this;
+	    }
 
-        public Criteria andWidgetUsernameLike(String value) {
-            addCriterion("WIDGET_USERNAME like", value, "widgetUsername");
-            return this;
-        }
+	    public Criteria andWidgetUsernameLike(String value) {
+		    addCriterion("WIDGET_USERNAME like", value, "widgetUsername");
+		    return this;
+	    }
 
-        public Criteria andWidgetUsernameNotLike(String value) {
-            addCriterion("WIDGET_USERNAME not like", value, "widgetUsername");
-            return this;
-        }
+	    public Criteria andWidgetUsernameNotLike(String value) {
+		    addCriterion("WIDGET_USERNAME not like", value, "widgetUsername");
+		    return this;
+	    }
 
-        public Criteria andWidgetUsernameIn(List<String> values) {
-            addCriterion("WIDGET_USERNAME in", values, "widgetUsername");
-            return this;
-        }
+	    public Criteria andWidgetUsernameIn(List<String> values) {
+		    addCriterion("WIDGET_USERNAME in", values, "widgetUsername");
+		    return this;
+	    }
 
-        public Criteria andWidgetUsernameNotIn(List<String> values) {
-            addCriterion("WIDGET_USERNAME not in", values, "widgetUsername");
-            return this;
-        }
+	    public Criteria andWidgetUsernameNotIn(List<String> values) {
+		    addCriterion("WIDGET_USERNAME not in", values, "widgetUsername");
+		    return this;
+	    }
 
-        public Criteria andWidgetUsernameBetween(String value1, String value2) {
-            addCriterion("WIDGET_USERNAME between", value1, value2, "widgetUsername");
-            return this;
-        }
+	    public Criteria andWidgetUsernameBetween(String value1, String value2) {
+		    addCriterion("WIDGET_USERNAME between", value1, value2, "widgetUsername");
+		    return this;
+	    }
 
-        public Criteria andWidgetUsernameNotBetween(String value1, String value2) {
-            addCriterion("WIDGET_USERNAME not between", value1, value2, "widgetUsername");
-            return this;
-        }
+	    public Criteria andWidgetUsernameNotBetween(String value1, String value2) {
+		    addCriterion("WIDGET_USERNAME not between", value1, value2, "widgetUsername");
+		    return this;
+	    }
 
-        public Criteria andWidgetPasswordIsNull() {
+	    public Criteria andSiteNameIsNull() {
+		    addCriterion("SITE_NAME is null");
+		    return this;
+	    }
+
+	    public Criteria andSiteNameIsNotNull() {
+		    addCriterion("SITE_NAME is not null");
+		    return this;
+	    }
+
+	    public Criteria andSiteNameEqualTo(String value) {
+		    addCriterion("SITE_NAME =", value, "siteName");
+		    return this;
+	    }
+
+	    public Criteria andSiteNameNotEqualTo(String value) {
+		    addCriterion("SITE_NAME <>", value, "siteName");
+		    return this;
+	    }
+
+	    public Criteria andSiteNameGreaterThan(String value) {
+		    addCriterion("SITE_NAME >", value, "siteName");
+		    return this;
+	    }
+
+	    public Criteria andSiteNameGreaterThanOrEqualTo(String value) {
+		    addCriterion("SITE_NAME >=", value, "siteName");
+		    return this;
+	    }
+
+	    public Criteria andSiteNameLessThan(String value) {
+		    addCriterion("SITE_NAME <", value, "siteName");
+		    return this;
+	    }
+
+	    public Criteria andSiteNameLessThanOrEqualTo(String value) {
+		    addCriterion("SITE_NAME <=", value, "siteName");
+		    return this;
+	    }
+
+	    public Criteria andSiteNameLike(String value) {
+		    addCriterion("SITE_NAME like", value, "siteName");
+		    return this;
+	    }
+
+	    public Criteria andSiteNameNotLike(String value) {
+		    addCriterion("SITE_NAME not like", value, "siteName");
+		    return this;
+	    }
+
+	    public Criteria andSiteNameIn(List<String> values) {
+		    addCriterion("SITE_NAME in", values, "siteName");
+		    return this;
+	    }
+
+	    public Criteria andSiteNameNotIn(List<String> values) {
+		    addCriterion("SITE_NAME not in", values, "siteName");
+		    return this;
+	    }
+
+	    public Criteria andSiteNameBetween(String value1, String value2) {
+		    addCriterion("SITE_NAME between", value1, value2, "siteName");
+		    return this;
+	    }
+
+	    public Criteria andSiteNameNotBetween(String value1, String value2) {
+		    addCriterion("SITE_NAME not between", value1, value2, "siteName");
+		    return this;
+	    }
+
+	    public Criteria andWidgetPasswordIsNull() {
             addCriterion("WIDGET_PASSWORD is null");
             return this;
         }
@@ -1004,5 +1074,146 @@ public class WidgetExample {
             addCriterion("CUSTOM_ENTITY_NAME not between", value1, value2, "customEntityName");
             return this;
         }
+
+	    public Criteria andInactiveIsNull() {
+		    addCriterion("INACTIVE is null");
+		    return this;
+	    }
+
+	    public Criteria andInactiveIsNotNull() {
+		    addCriterion("INACTIVE is not null");
+		    return this;
+	    }
+
+	    public Criteria andInactiveEqualTo(String value) {
+		    addCriterion("INACTIVE =", value, "inactive");
+		    return this;
+	    }
+
+	    public Criteria andInactiveNotEqualTo(String value) {
+		    addCriterion("INACTIVE <>", value, "inactive");
+		    return this;
+	    }
+
+	    public Criteria andInactiveGreaterThan(String value) {
+		    addCriterion("INACTIVE >", value, "inactive");
+		    return this;
+	    }
+
+	    public Criteria andInactiveGreaterThanOrEqualTo(String value) {
+		    addCriterion("INACTIVE >=", value, "inactive");
+		    return this;
+	    }
+
+	    public Criteria andInactiveLessThan(String value) {
+		    addCriterion("INACTIVE <", value, "inactive");
+		    return this;
+	    }
+
+	    public Criteria andInactiveLessThanOrEqualTo(String value) {
+		    addCriterion("INACTIVE <=", value, "inactive");
+		    return this;
+	    }
+
+	    public Criteria andInactiveLike(String value) {
+		    addCriterion("INACTIVE like", value, "inactive");
+		    return this;
+	    }
+
+	    public Criteria andInactiveNotLike(String value) {
+		    addCriterion("INACTIVE not like", value, "inactive");
+		    return this;
+	    }
+
+	    public Criteria andInactiveIn(List<String> values) {
+		    addCriterion("INACTIVE in", values, "inactive");
+		    return this;
+	    }
+
+	    public Criteria andInactiveNotIn(List<String> values) {
+		    addCriterion("INACTIVE not in", values, "inactive");
+		    return this;
+	    }
+
+	    public Criteria andInactiveBetween(String value1, String value2) {
+		    addCriterion("INACTIVE between", value1, value2, "inactive");
+		    return this;
+	    }
+
+	    public Criteria andInactiveNotBetween(String value1, String value2) {
+		    addCriterion("INACTIVE not between", value1, value2, "inactive");
+		    return this;
+	    }
+
+
+	    public Criteria andDeletedIsNull() {
+		    addCriterion("DELETED is null");
+		    return this;
+	    }
+
+	    public Criteria andDeletedIsNotNull() {
+		    addCriterion("DELETED is not null");
+		    return this;
+	    }
+
+	    public Criteria andDeletedEqualTo(String value) {
+		    addCriterion("DELETED =", value, "deleted");
+		    return this;
+	    }
+
+	    public Criteria andDeletedNotEqualTo(String value) {
+		    addCriterion("DELETED <>", value, "deleted");
+		    return this;
+	    }
+
+	    public Criteria andDeletedGreaterThan(String value) {
+		    addCriterion("DELETED >", value, "deleted");
+		    return this;
+	    }
+
+	    public Criteria andDeletedGreaterThanOrEqualTo(String value) {
+		    addCriterion("DELETED >=", value, "deleted");
+		    return this;
+	    }
+
+	    public Criteria andDeletedLessThan(String value) {
+		    addCriterion("DELETED <", value, "deleted");
+		    return this;
+	    }
+
+	    public Criteria andDeletedLessThanOrEqualTo(String value) {
+		    addCriterion("DELETED <=", value, "deleted");
+		    return this;
+	    }
+
+	    public Criteria andDeletedLike(String value) {
+		    addCriterion("DELETED like", value, "deleted");
+		    return this;
+	    }
+
+	    public Criteria andDeletedNotLike(String value) {
+		    addCriterion("DELETED not like", value, "deleted");
+		    return this;
+	    }
+
+	    public Criteria andDeletedIn(List<String> values) {
+		    addCriterion("DELETED in", values, "deleted");
+		    return this;
+	    }
+
+	    public Criteria andDeletedNotIn(List<String> values) {
+		    addCriterion("DELETED not in", values, "deleted");
+		    return this;
+	    }
+
+	    public Criteria andDeletedBetween(String value1, String value2) {
+		    addCriterion("DELETED between", value1, value2, "deleted");
+		    return this;
+	    }
+
+	    public Criteria andDeletedNotBetween(String value1, String value2) {
+		    addCriterion("DELETED not between", value1, value2, "deleted");
+		    return this;
+	    }
     }
 }

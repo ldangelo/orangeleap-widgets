@@ -278,7 +278,7 @@ public class AjaxWidgetFormController extends MultiActionController {
 				}
 			}
 		}
-		if ( ! foundStyle && widgetStyleId != null && widgetStyleId > 0) {
+		if (! foundStyle && widgetStyleId != null && widgetStyleId > 0) {
 			// this is a deleted style
 			final Style aStyle = styleService.selectById(widgetStyleId);
 			if (aStyle != null) {
@@ -301,32 +301,40 @@ public class AjaxWidgetFormController extends MultiActionController {
 		String userName = auth.getName();
 		String password = (String) auth.getCredentials();
 		String tablename = null;
-		
-		if (widgettype.equals("customentity") && !customentitytype.equals("undefined")) {
+		final boolean inactive = "true".equalsIgnoreCase(request.getParameter("inactive"));
+		final boolean deleted = "true".equalsIgnoreCase(request.getParameter("deleted"));
+
+		if (widgettype.equals("customentity") && ! customentitytype.equals("undefined")) {
 			tablename = customentitytype;
-		} else {
+		}
+		else {
 			if (widgettype.equals("gifthistory")) {
 				tablename = "donor_profile";
-			} else if (widgettype.equals("pledges")) {
+			}
+			else if (widgettype.equals("pledges")) {
 				tablename = "donor_profile";
 			}
 		}
-		
-		if(tablename != null) {
+
+		if (tablename != null) {
 			CustomTable table = widgetService.getCustomTableByName(userName, password, tablename);
 			if (table == null || table.isCustomTableActive() == false) {
-				if (widgettype.equals("customentity") && !customentitytype.equals("undefined")) {
+				if (widgettype.equals("customentity") && ! customentitytype.equals("undefined")) {
 					tablename = customentitytype;
-				} else if (widgettype.equals("gifthistory")) {
+				}
+				else if (widgettype.equals("gifthistory")) {
 					tablename = "gifthistory";
-				} else if (widgettype.equals("pledges")) tablename = "pledges";
-			
+				}
+				else if (widgettype.equals("pledges")) {
+					tablename = "pledges";
+				}
+
 				return getModelMapError("Custom Table " + tablename + " is inactive.");
 			}
 		}
-		
+
 		Widget ret = widgetService.createWidget(userName, password, widgettype,
-				customentitytype);
+				customentitytype, inactive, deleted);
 		ret.setWidgetId(0L);
 		ret.setWidgetHtml("Undefined");
 
@@ -361,18 +369,20 @@ public class AjaxWidgetFormController extends MultiActionController {
 		String userName = auth.getName();
 		String password = (String) auth.getCredentials();
 		String appLocation = System.getProperty("webtools.applocation");
+		final boolean inactive = "true".equalsIgnoreCase(request.getParameter("inactive"));
+		final boolean deleted = "true".equalsIgnoreCase(request.getParameter("deleted"));
 		Widget widget = null;
-		
+
 		if (guid.isEmpty()) {
-			widget = widgetService.createWidget(userName, password,	widgettype, customentitytype);
+			widget = widgetService.createWidget(userName, password, widgettype, customentitytype, inactive, deleted);
 			populateWidget(widget, request);
 			widget.setWidgetId(0L);
 			widget.setWidgetGuid(UUID.randomUUID().toString());
-		} else {
-			widget = widgetService.getWidget(guid);
-			populateWidget(widget, request);			
 		}
-		
+		else {
+			widget = widgetService.getWidget(guid);
+			populateWidget(widget, request);
+		}
 
 
 		widget.setWidgetLoginSuccessURL(request.getParameter("widgetLoginSuccessURL"));
@@ -409,6 +419,9 @@ public class AjaxWidgetFormController extends MultiActionController {
 		widget.setIframeHtml(this.getIframeHTML()
 				.replaceAll("@APPLOCATION@", appLocation)
 				.replaceAll("@GUID@", widget.getWidgetGuid()));
+		widget.setInactive(inactive);
+		widget.setDeleted(deleted);
+
 		widget.setWidgetCreateDate(new Date());
 		widget.setWidgetErrorCount(0L);
 		widget.setWidgetViewCount(0L);
@@ -517,6 +530,22 @@ public class AjaxWidgetFormController extends MultiActionController {
 		map.put("required", false);
 		map.put("type", "comment");
 		map.put("header", "Widget HTML");
+		fields.add(map);
+
+		map = new HashMap<String, Object>();
+		map.put("name", "inactive");
+		map.put("readonly", false);
+		map.put("required", false);
+		map.put("type", "boolean");
+		map.put("header", "Inactive");
+		fields.add(map);
+
+		map = new HashMap<String, Object>();
+		map.put("name", "deleted");
+		map.put("readonly", false);
+		map.put("required", false);
+		map.put("type", "boolean");
+		map.put("header", "Deleted");
 		fields.add(map);
 
 		metaData.put("fields", fields);
@@ -653,6 +682,22 @@ public class AjaxWidgetFormController extends MultiActionController {
 		map.put("required", false);
 		map.put("type", "comment");
 		map.put("header", "Widget HTML");
+		fields.add(map);
+
+		map = new HashMap<String, Object>();
+		map.put("name", "inactive");
+		map.put("readonly", false);
+		map.put("required", false);
+		map.put("type", "boolean");
+		map.put("header", "Inactive");
+		fields.add(map);
+
+		map = new HashMap<String, Object>();
+		map.put("name", "deleted");
+		map.put("readonly", false);
+		map.put("required", false);
+		map.put("type", "boolean");
+		map.put("header", "Deleted");
 		fields.add(map);
 
 		metaData.put("fields", fields);

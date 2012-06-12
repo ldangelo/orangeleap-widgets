@@ -1,12 +1,15 @@
 function generateForm(form,store,meta) {
-			if (form.items.length > 1) return;  // we are paging through data and the fields already exist
+			if (form.items.length > 1) {
+				return;  // we are paging through data and the fields already exist
+			}
 			var fields = meta.fields;
 			var col1 = new Ext.Panel({columnWidth: '.50',layout:'form',defaults:{anchor:'100%'},bodyStyle:'padding:0 18px 0 0',items:[]}); 
 			var col2 = null;
 
-			if (fields.length > 4)
+			if (fields.length > 4) {
 			    col2 =  new Ext.Panel({columnWidth: '.50',layout:'form',defaults:{anchor:'100%'},bodyStyle:'padding:0 18px 0 0',items:[]})
-			 
+			}
+
 			var panel = null;
 
 			if (col2 != null) {
@@ -26,14 +29,16 @@ function generateForm(form,store,meta) {
 					field.mode = 'local';
 					field.border = false;
 
-					if (fields[f].readonly == true)
+					if (fields[f].readonly == true) {
 					   field.readOnly=true;
+					}
 
-					if (col2 != null && f > fields.length/2)
+					if (col2 != null && f > fields.length/2) {
 						col2.add(field);
-					else
+					}
+					else {
 						col1.add(field);
-
+					}
 			    }
 			    else if (fields[f].type == 'text' || fields[f].type == 'date' || fields[f].type == 'integer') {
 					var field = new Ext.form.TextField();
@@ -44,19 +49,21 @@ function generateForm(form,store,meta) {
 					field.mode = 'local';
 					field.border = false;
 
-					if (fields[f].readonly == true)
+					if (fields[f].readonly == true) {
 					   field.readOnly=true;
+					}
 
 					if (fields[f].required == true) {
 						field.allowBlank=false,
 						field.blankText="Enter a " + fields[f].header;
 					}
 
-					if (col2 != null && f > fields.length/2)
+					if (col2 != null && f > fields.length/2) {
 						col2.add(field);
-					else
+					}
+					else {
 						col1.add(field);
-				
+					}
 			    }
 			    else if (fields[f].type == 'comment') {
 					var field = new Ext.form.TextArea();
@@ -69,19 +76,21 @@ function generateForm(form,store,meta) {
 					field.width = 350;
 					field.height = 150;
 
-					if (fields[f].readonly == true)
+					if (fields[f].readonly == true) {
 					   field.readOnly=true;
+					}
 
 					if (fields[f].required == true) {
 						field.allowBlank=false,
 						field.blankText="Enter a " + fields[f].header;
 					}
 
-					if (col2 != null && f > fields.length/2)
+					if (col2 != null && f > fields.length/2) {
 						col2.add(field);
-					else
+					}
+					else {
 						col1.add(field);
-
+					}
 			    }
 			    else if (fields[f].type == 'picklist') {
 					var comboConfig = new Ext.form.ComboBox({
@@ -129,14 +138,15 @@ function generateForm(form,store,meta) {
 					fieldLabel:fields[f].header
 					});
 					if (fields[f].required == true) {
-					comboConfig.allowBlank=false,
-					comboConfig.blankText="Enter a " + fields[f].header;
+						comboConfig.allowBlank=false,
+						comboConfig.blankText="Enter a " + fields[f].header;
 					}
-					if (col2 != null && f > fields.length/2)
+					if (col2 != null && f > fields.length/2) {
 						col2.add(comboConfig);
-					else
+					}
+					else {
 						col1.add(comboConfig);
-
+					}
 			    }
 			    else if (fields[f].type == 'multi-picklist') {
 					var field = new Ext.form.TextField();
@@ -147,19 +157,21 @@ function generateForm(form,store,meta) {
 					field.mode = 'local';
 					field.border = false;
 
-					if (fields[f].readonly == true)
+					if (fields[f].readonly == true) {
 					   field.readOnly=true;
-
-					if (fields[f].required == true) {
-					field.allowBlank=false,
-					field.blankText="Enter a " + fields[f].header;
 					}
 
-					if (col2 != null && f > fields.length/2)
-						col2.add(field);
-					else
-						col1.add(field);
+					if (fields[f].required == true) {
+						field.allowBlank=false,
+						field.blankText="Enter a " + fields[f].header;
+					}
 
+					if (col2 != null && f > fields.length/2) {
+						col2.add(field);
+					}
+					else {
+						col1.add(field);
+					}
 			    }
 			    else if (fields[f].type == 'boolean') {
 			        if (fields[f].element == 'radio') {
@@ -189,17 +201,20 @@ function generateForm(form,store,meta) {
 						field.mode = 'local';
 						field.border = false;
 
-						if (fields[f].readonly == true)
+						if (fields[f].readonly == true) {
 						   field.readOnly=true;
+						}
 
 						if (fields[f].required == true) {
 							field.checked=true;
 							field.disabled=true;
 						}
-						if (col2 != null && f > fields.length/2)
+						if (col2 != null && f > fields.length/2) {
 							col2.add(field);
-						else
+						}
+						else {
 							col1.add(field);
+						}
 			        }
 				}
 			}
