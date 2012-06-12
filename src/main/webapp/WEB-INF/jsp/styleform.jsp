@@ -3,150 +3,156 @@
 <page:applyDecorator name="main">
 	<head>
 		<title>Edit Style - <spring:message code="appName"/></title>
-		<pack:script enabled='true'>
-			<src>/js/listplacements.js</src>
-		</pack:script>
-
-        <script type="text/javascript">
-        	Ext.onReady(function() {
-
-    		var form=null;
-
-	    function getParameter ( queryString, parameterName ) {
-		// Add "=" to the parameter name (i.e. parameterName=value)
-		var parameterName = parameterName + "=";
-		if ( queryString.length > 0 ) {
-		    // Find the beginning of the string
-		    begin = queryString.indexOf ( parameterName );
-		    // If the parameter name is not found, skip it, otherwise return the value
-		    if ( begin != -1 ) {
-			// Add the length (integer) to the beginning
-			begin += parameterName.length;
-			// Multiple parameters are separated by the "&" sign
-			end = queryString.indexOf ( "&" , begin );
-			if ( end == -1 ) {
-			    end = queryString.length
+		<style type="text/css">
+			.dwRow {
+				display: table-row;
 			}
-			// Return the string
-			return unescape ( queryString.substring ( begin, end ) );
-		    }
-		    // Return "null" if no parameter has been found
-		    return "null";
-		}
-	    }
-
-	    function onSuccess() {
-		Ext.Msg.show({
-        	    title:'Success'
-		    ,msg:'Your changes were successfully saved.'
-		    ,modal:true
-		    ,icon:Ext.Msg.INFO
-		    ,buttons:Ext.Msg.OK
-		});
-	    }
-	    function onFailure(form,action) {
-		Ext.Msg.show({
-		    title:'Error'
-		    ,msg:action.result.message || action.response.responseText
-		    ,modal:true
-		    ,icon:Ext.Msg.ERROR
-		    ,buttons:Ext.Msg.OK
-		});
-	    }
-
-                function onSave() {
-                	form.getForm().submit({url:'style.ajax?action=save',waitMsg:'Saving Style...',submitEmptyText:false, success: onSuccess, failure: onFailure });
-                }
-
-
-	    var reader = new Ext.data.JsonReader({
-                idProperty: 'Id',
-                root:'rows',
-                totalProperty: 'rows',
-	            fields: [
-    	            "Id","Style","StyleName","Inactive","Deleted"
-        	    ]});
-
-
-	    // need a form here....
-	    form = new Ext.FormPanel({
-		id: 'form',
-		//	    region: 'top',
-                reader: reader,
-                border: false,
-		frame: true,
-		labelWidth: 100,
-		monitorValid:true,
-		width: 900,
-		trackResetOnLoad:true,
-		defaultType: 'textarea',
-		items: [{
-				fieldLabel: 'StyleName',
-				id: 'StyleName',
-				xtype: 'textfield'
-				},
-		        {
-                        fieldLabel: 'Style',
-                        id: 'Style',
-                        name: 'Style',
-                        width:700,
-                        height:200
-                },
-                {
-                    fieldLabel: 'Inactive',
-                    id: 'Inactive',
-                    name: 'Inactive',
-                    xtype: 'checkbox'
-                },
-                {
-                    fieldLabel: 'Deleted',
-	                id: 'Deleted',
-	                name: 'Deleted',
-	                xtype: 'checkbox'
-	            },
-	            {
-                	id: 'Id',
-                	name: 'Id',
-                	xtype: 'hidden'
-                }
-                ],
-		buttons: [{
-		    text: 'Save',
-		    handler: onSave,
-		    align:'center'
-		}
-			 ]
-	    });
-
-        form.render('styleform-div');
-
-        var id = getParameter(window.top.location.search.substring(1),'id');
-        if (id != null) {
-        	form.getForm().load({url:'style.ajax?action=read&Id='+ id,method: 'GET',waitMsg: 'Loading'});
-        }
-        else {
-        	form.getForm().load({url:'style.ajax?action=create',method:'GET',waitMsg: 'Loading'});
-        }
-
-        form.on({
-        actioncomplete: function(form, action){
-            if(action.type == 'load'){
-    			form.items.get("Style").setValue(form.items.get("Style").value.replace(/\\n/gi,String.fromCharCode(10)));
-    			form.items.get("Style").setValue(form.items.get("Style").value.replace(/\\&quot;/gi,'"'));
-    			form.items.get("Style").setValue(form.items.get("Style").value.replace(/&quot;/gi,''));
+			.dwCell {
+				display: table-cell;
+				width: 300px;
+				padding-left: 20px;
+			}
+			.dwCell img {
+				width: 250px;
+			}
+			.dwExample {
+				font-size: .85rem;
+				word-wrap: break-word;
+			}
+			.dwCell h4 {
+				font-size: 1rem;
+				font-family: helvetica, arial;
+				font-weight: bold;
+				color: #000;
+				margin-bottom: 7px;
+			}
+			.dwCell div {
+				margin-top: 5px;
+				white-space: pre-wrap;       /* css-3 */
+				white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+				white-space: -pre-wrap;      /* Opera 4-6 */
+				white-space: -o-pre-wrap;    /* Opera 7 */
+				word-wrap: break-word;       /* Internet Explorer 5.5+ */
+				font-family: courier;
+				font-size: .7rem;
+                height: 300px;
+                overflow-y: auto;
+			}
+			.toggleExample {
+				font-family: helvetica, arial;
+                text-decoration: underline;
+                color: blue;
+                cursor: pointer;
+                display: block;
+                margin-bottom: 15px;
+                font-size: .7rem;
+			}
+			.toggleExample:hover, .toggleExample:focus {
+				color: navy;
             }
-        }
-    });
-
-	});
-
-
-        </script>
+            #styleform-div {
+                margin-top: 15px;
+            }
+            .dwCell strong {
+                font-weight: bold;
+                font-family: sans-serif;
+            }
+		</style>
+		<pack:script enabled='true'>
+			<src>/js/editStyle.js</src>
+		</pack:script>
     </head>
     <body>
 		<h3 class="heading">Style Properties</h3>
+		<a class="toggleExample" id="showExample">Show Example Stylesheet</a>
+		<a class="toggleExample" id="hideExample" style="display:none">Hide Example Stylesheet</a>
+		<div class='dwRow' style="display:none" id="examples">
+			<div class="dwCell">
+				<h4>Default Look</h4>
+	            <img src="images/exampleDefaultScreen.png" title="This is the default look and feel"/>
+			</div>
+			<div id="styles-div" class="dwCell dwExample constrainText">
+				<h4>Example Stylesheet</h4>
+				<div>
+body {
+    font-family: Arial,
+        Helvetica,
+        sans-serif;
+    font-size: 1rem;
+    background-color: yellow;
+<strong>/* Change the font size, family and background color */</strong>
+}
+.x-panel {
+    border-color: transparent;
+<strong>/* Hide the gray border around the entire widget */</strong>
+}
+.x-panel-ml,
+	.x-panel-mc,
+	.x-panel-bl,
+	.x-panel-br,
+	.x-panel-bc,
+	.x-panel-tl,
+	.x-panel-tr {
+        background-color: #fff;
+<strong>/* Change the gray background to white */</strong>
+}
+.x-panel-tl,
+	.x-panel-tr {
+        background-image: none;
+<strong>/* Hide the blue background in the title */</strong>
+}
+.x-panel-tl .x-panel-header {
+    background-image: url("http://www.orangeleap.com/images/logo_orangeleap2.gif");
+    background-position: left top;
+    background-repeat: no-repeat;
+    color: #333333;
+    font-size: 18px;
+    padding-left: 10px;
+    padding-top: 100px;
+    text-align: left;
+<strong>/* Add the Orange Leap Icon at the top left and make "Online Donation" a large dark font */</strong>
+}
+.widgetForm {
+    box-shadow: 0 0 0;
+<strong>/* Remove the box shadow around the widget */</strong>
+}
+#widgetContainer {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    height: auto;
+    margin-bottom: 7px;
+    margin-top: 7px;
+<strong>/* Change the body background, border, and height of the widget */</strong>
+}
+.x-form-item label {
+    font-size: 14px;
+<strong>/* Change the font size of the left field labels */</strong>
+}
+.x-fieldset legend {
+    display: none;
+<strong>/* Hide the white box around the grouped fields (the fieldset) */</strong>
+}
+.olLink {
+    display: none;
+<strong>/* Hide the "Powered By Orange Leap" bottom link */</strong>
+}
+.x-column-inner {
+    display: table;
+<strong>/* Force one group of fields to be displayed as a table */</strong>
+}
+.x-column {
+    display: table-row;
+<strong>/* Force a column of fields to be displayed as a table-row */</strong>
+}
+	            </div>
+			</div>
+			<div class="dwCell">
+				<h4>Example Customized Look</h4>
+	            <img src="images/exampleCustomScreen.png" title="This is the customized look and feel based on the example stylesheet"/>
+			</div>
+		</div>
 		<div id="styleform-div"></div>
-		<div id="styles-div"></div>
     </body>
 </page:applyDecorator>
 
