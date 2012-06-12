@@ -234,6 +234,81 @@
 			</build>
 		</profile>
 
+		<profile>
+			<id>databaseUpdate</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>1.6</version>
+						<executions>
+							<execution>
+								<id>echo schema init</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<tasks>
+										<echo>*********************************************************************</echo>
+										<echo>*********** Updating database ${host}:${port}/${schema} *************</echo>
+										<echo>*********************************************************************</echo>
+									</tasks>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>1.2</version>
+						<executions>
+							<execution>
+								<id>run database update utility</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>java</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<includeProjectDependencies>true</includeProjectDependencies>
+							<includePluginDependencies>true</includePluginDependencies>
+							<executableDependency>
+								<groupId>com.orangeleap</groupId>
+								<artifactId>databaseUpdateUtility</artifactId>
+							</executableDependency>
+							<mainClass>com.orangeleap.theguru.databaseupdateutility.DatabaseUpdateUtility</mainClass>
+							<arguments>
+								<argument>-updatetype</argument>
+								<argument>s</argument>
+								<argument>-databasename</argument>
+								<argument>${schema}</argument>
+								<argument>-username</argument>
+								<argument>orangeleap</argument>
+								<argument>-password</argument>
+								<argument>orangeleap</argument>
+								<argument>-port</argument>
+								<argument>${port}</argument>
+								<argument>-servername</argument>
+								<argument>${host}</argument>
+								<argument>-sqlscriptdirectory</argument>
+								<argument>${basedir}/src/main/resources/db/prod/updateScripts</argument>
+								<argument>-mysqldirectory</argument>
+								<argument>${mysqldirectory}</argument>
+							</arguments>
+						</configuration>
+						<dependencies>
+							<dependency>
+								<groupId>com.orangeleap</groupId>
+								<artifactId>databaseUpdateUtility</artifactId>
+								<version>1.0</version>
+							</dependency>
+						</dependencies>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 	</profiles>
 
 </project>

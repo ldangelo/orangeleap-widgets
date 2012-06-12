@@ -57,4 +57,9 @@ CREATE TABLE `WIDGET` (
 ) ENGINE=InnoDB AUTO_INCREMENT=125 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-
+CREATE TABLE `VERSIONLOG` (
+  `VERSION_ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `SCRIPT` varchar(255) NOT NULL,
+  `INSTALLDATE` datetime NOT NULL,
+  PRIMARY KEY (`VERSION_ID`)
+) ENGINE=InnoDB;
