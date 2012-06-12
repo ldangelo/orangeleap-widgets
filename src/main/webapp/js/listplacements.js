@@ -47,6 +47,9 @@ Ext.onReady(function() {
 				}
 
                 placementgrid.reconfigure(store,new Ext.grid.ColumnModel(columns));
+			},
+			load: function(store, records, options) {
+				updateToolbarText();
 			}
 		}
 	});
@@ -57,6 +60,12 @@ Ext.onReady(function() {
 	    id: 'placementGrid',
 	    columns: [
 	    ],
+        bbar: new Ext.Toolbar([
+            new Ext.Toolbar.TextItem({
+                'id': 'placementsToolbarTextItem',
+                'text': ' '
+            })
+        ]),
 	    loadMask: true,
 	    viewConfig: {
 			emptyText: 'This Widget does not have a placement'
@@ -65,5 +74,20 @@ Ext.onReady(function() {
 	    height: 250,
 	    width: 900
 	});
+	var updateToolbarText = function() {
+        var count = 0;
+        if (myplacementdatastore.data && myplacementdatastore.data.items) {
+            count = myplacementdatastore.data.items.length;
+        }
+        if (count > 1) {
+            Ext.getCmp('placementsToolbarTextItem').setText(String.format('Displaying {0} Placements', count));
+        }
+        else if (count == 1) {
+            Ext.getCmp('placementsToolbarTextItem').setText(String.format('Displaying 1 Placement', count));
+        }
+        else {
+            Ext.getCmp("placementsToolbarTextItem").setText('No Placements to display');
+        }
+    };
 });
 

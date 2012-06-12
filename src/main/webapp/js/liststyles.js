@@ -60,7 +60,8 @@ Ext.onReady(function() {
 				stylegrid.reconfigure(store,new Ext.grid.ColumnModel(columns));
 			},
 			'load':function(store,records,options) {
-					panel.render("styles-div");
+				panel.render("styles-div");
+				updateToolbarText();
 			}
 		}});
 
@@ -130,10 +131,16 @@ Ext.onReady(function() {
 					}
 				}
 			]
-		}
+		},
+        bbar: new Ext.Toolbar([
+            new Ext.Toolbar.TextItem({
+                'id': 'stylesToolbarTextItem',
+                'text': ' '
+            })
+        ]),
 	});
 	stylegrid.on('rowdblclick', function(grid, rowIndex, event) {
-
+		stylegrid.el.mask('Loading...', 'x-mask-loading');
 		var record = mystyledatastore.getAt(rowIndex);
 		if (record) {
 			// open window to view record
@@ -167,6 +174,22 @@ Ext.onReady(function() {
 			}
 		});
 	};
+
+	var updateToolbarText = function() {
+        var count = 0;
+        if (mystyledatastore.data && mystyledatastore.data.items) {
+            count = mystyledatastore.data.items.length;
+        }
+        if (count > 1) {
+            Ext.getCmp('stylesToolbarTextItem').setText(String.format('Displaying {0} Styles', count));
+        }
+        else if (count == 1) {
+            Ext.getCmp('stylesToolbarTextItem').setText(String.format('Displaying 1 Style', count));
+        }
+        else {
+            Ext.getCmp("stylesToolbarTextItem").setText('No Styles to display');
+        }
+    };
 
 	loadStore();
 });

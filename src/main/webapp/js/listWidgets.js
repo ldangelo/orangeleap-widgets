@@ -60,7 +60,9 @@ Ext.onReady(function() {
 
     Ext.QuickTips.init();
 
-	var proxy = new Ext.data.HttpProxy(    {url:'listWidgets.json'});
+	var proxy = new Ext.data.HttpProxy({
+		url:'listWidgets.json'
+	});
 
 	var reader = new Ext.data.JsonReader({
 		totalProperty: 'totalRows',
@@ -95,7 +97,12 @@ Ext.onReady(function() {
 	var store = new Ext.data.Store({
 		proxy: proxy,
 		reader: reader,
-		remoteSort: false
+		remoteSort: false,
+		listeners: {
+			load: function(store, records, options) {
+				updateToolbarText();
+			}
+		}
 	});
 
 	var findTitle = function(dataIndex, scope, store) {
@@ -264,6 +271,12 @@ Ext.onReady(function() {
 				}
 			]
 		},
+        bbar: new Ext.Toolbar([
+            new Ext.Toolbar.TextItem({
+                'id': 'widgetsToolbarTextItem',
+                'text': ' '
+            })
+        ]),
 	    listeners: {
 		    'rowclick': function(placementgrid,rowIndex, e) {
 				// need to load the placements
@@ -277,6 +290,22 @@ Ext.onReady(function() {
 	        }
 	    }
 	});
+
+	var updateToolbarText = function() {
+		var count = 0;
+		if (store.data && store.data.items) {
+			count = store.data.items.length;
+		}
+		if (count > 1) {
+			Ext.getCmp('widgetsToolbarTextItem').setText(String.format('Displaying {0} Widgets', count));
+		}
+		else if (count == 1) {
+			Ext.getCmp('widgetsToolbarTextItem').setText(String.format('Displaying 1 Widget', count));
+		}
+		else {
+			Ext.getCmp('widgetsToolbarTextItem').setText('No Widgets to display');
+		}
+	};
 
 	var lastFilterByCreatedBy = 'everyone';
 	if (localStorage) {
