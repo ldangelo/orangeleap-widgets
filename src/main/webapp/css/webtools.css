@@ -1581,11 +1581,12 @@ textarea {
     background: none no-repeat scroll 0 2px transparent;
     display: block;
     height: 18px;
-    left: 0;
     position: absolute;
     top: 0;
     visibility: hidden;
     width: 16px;
+    background-image: url("../images/dialog_error.png");
+    left: 246px !important;
 }
 .x-fieldset {
     border: 1px solid;
@@ -4997,9 +4998,6 @@ ul.x-tab-strip-bottom {
 .ext-safari .x-small-editor .x-form-field {
     font: 12px arial,tahoma,helvetica,sans-serif;
 }
-.x-form-invalid-icon {
-    background-image: url("../images/dialog_error.png");
-}
 .x-fieldset {
     border-color: #B5B8C8;
 }
@@ -6323,9 +6321,6 @@ ul.x-tab-strip-bottom {
     font-family: arial,tahoma,helvetica,sans-serif;
     font-size: 12px;
     font-weight: normal;
-}
-.x-form-invalid-icon {
-    background-image: url("../images/dialog_error.png");
 }
 .x-fieldset {
     border-color: #fff;

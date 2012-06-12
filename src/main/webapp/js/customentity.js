@@ -153,6 +153,15 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 					icon : Ext.Msg.INFO,
 					buttons : Ext.Msg.OK
 				});
+
+				var cardField = Ext.getCmp('form').form.findField('creditCardNumber');
+				if (cardField) {
+					cardField.el.dom.type = 'password';
+				}
+				var achField = Ext.getCmp('form').form.findField('ach_account');
+				if (achField) {
+					achField.el.dom.type = 'password';
+				}
 			}
 			else {
 				var params = new Object();
@@ -429,7 +438,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 
 								}
 
-								if (!Ext.isEmpty(fields[f].regEx)) {
+								if ( ! Ext.isEmpty(fields[f].regEx)) {
 									field.regex = new RegExp(fields[f].regEx);
 									field.regexText = fields[f].regExExample;
 								}
