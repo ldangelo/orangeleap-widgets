@@ -58,7 +58,7 @@
 											title = record.fields.map[dataIndex].header;
 										}
 									}
-									return '<span ext:qtitle="' + title + '"ext:qwidth="250" ext:qtip="' + value + '" ext:qclass="constrainText">' + value + '</span>';
+									return '<span ext:qtitle="' + title + '"ext:qwidth="400" ext:qtip="' + value + '" ext:qclass="constrainText">' + value + '</span>';
 								}
 							});
 						}

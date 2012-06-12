@@ -11,7 +11,7 @@
 	<body>
 		<h3 class="heading">Current Widgets</h3>
 		<div id='grid-example'></div>
-		<h3 class="heading" style="display:none" id="widgetPlacementTitle">Widget Placement</h3>
+		<h3 class="heading" id="widgetPlacementTitle">Widget Placement</h3>
 		<div id="placements-div"></div>
 	</body>
 </page:applyDecorator>

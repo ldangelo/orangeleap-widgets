@@ -58,6 +58,7 @@ function newForm() {
 
 Ext.onReady(function() {
 
+    Ext.QuickTips.init();
 
 	var proxy=new Ext.data.HttpProxy(    {url:'listWidgets.json'});
 
@@ -96,14 +97,32 @@ Ext.onReady(function() {
 
 	store.load();
 
-
+	var findTitle = function(dataIndex, scope, store) {
+        var title = '';
+        var dataIndex = dataIndex ? dataIndex : (scope ? scope.dataIndex : null);
+        if (dataIndex && store.fields.map && store.fields.map[dataIndex]) {
+            if (store.fields.map[dataIndex].header) {
+                title = store.fields.map[dataIndex].header;
+            }
+        }
+        return title;
+	};
 
 	//
 	// create the grid
 	var grid = new Ext.grid.GridPanel({
 		store: store,
 		columns: [
-			{id:'widgetid',width: 200,header:'Id',dataIndex:'widgetid'},
+			{
+				id:'widgetid',
+				width: 200,
+				header:'Id',
+				dataIndex:'widgetid',
+                renderer: function(value, metaData, record, rowIndex, colIndex, store) {
+                    var title = findTitle(this.dataIndex, this.scope, store);
+                    return '<span ext:qtitle="' + title + '"ext:qwidth="250" ext:qtip="' + value + '" ext:qclass="constrainText">' + value + '</span>';
+                }
+			},
 			{
 				id: 'widgetName',
 				width: 200,
@@ -138,10 +157,20 @@ Ext.onReady(function() {
 					else if (record.data.type == "customentity" && record.data.entityname == 'sponsorable') {
 						displayVal = "Sponsorable";
 					}
-					return displayVal;
+                    var title = findTitle(this.dataIndex, this.scope, store);
+					return '<span ext:qtitle="' + title + '"ext:qwidth="250" ext:qtip="' + displayVal + '" ext:qclass="constrainText">' + displayVal + '</span>';
 				}
 			},
-			{id:'widgetDescription',width: 200,header:'Description',dataIndex:'widgetDescription'},
+			{
+				id:'widgetDescription',
+				width: 200,
+				header:'Description',
+				dataIndex:'widgetDescription',
+				renderer: function(value, metaData, record, rowIndex, colIndex, store) {
+                    var title = findTitle(this.dataIndex, this.scope, store);
+					return '<span ext:qtitle="' + title + '"ext:qwidth="250" ext:qtip="' + value + '" ext:qclass="constrainText">' + value + '</span>';
+				}
+			},
 //			{id:'entityname',width: 150,header:'Entity Name',dataIndex:'entityname'},
 			{id:'view',width:80,header:'View',renderer: renderViewIcon,dataIndex:'guid'},
 //			{id:'notifications',width:80,header:'Notifications',renderer: renderNotificationIcon,dataIndex:'guid'},
@@ -177,9 +206,8 @@ Ext.onReady(function() {
 
 				var callbackFunc = function() {
 					grid.el.unmask();
-					$('#widgetPlacementTitle').show();
 				};
-		        myplacementdatastore.load({params: {guid: row.guid}, callback: callbackFunc})
+		        Ext.getCmp('placementGrid').store.load({params: {guid: row.guid}, callback: callbackFunc})
 	        }
 	    }
 	});
