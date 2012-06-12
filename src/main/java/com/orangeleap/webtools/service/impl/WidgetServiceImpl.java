@@ -81,12 +81,23 @@ public class WidgetServiceImpl implements WidgetService {
 		return data;
 	}
 
-	public List<Widget> listWidgets(String userName, String password) {
-		WidgetExample example = new WidgetExample();
+	public List<Widget> listWidgets(final boolean displayOnlyUsersWidgets) {
+		final WidgetExample example = new WidgetExample();
 
-		example.createCriteria().andWidgetUsernameEqualTo(userName)
-				.andWidgetPasswordEqualTo(password).andDeletedEqualTo("0");
+		final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		final String userName = auth.getName();
 
+		if (displayOnlyUsersWidgets || (userName.indexOf('@') == -1 || StringUtils.isBlank(userName.substring(userName.indexOf('@') + 1)))) {
+			final String password = (String) auth.getCredentials();
+
+			example.createCriteria().andWidgetUsernameEqualTo(userName)
+					.andWidgetPasswordEqualTo(password).andDeletedEqualTo("0");
+		}
+		else {
+			final String siteName = userName.substring(userName.indexOf('@') + 1);
+			example.createCriteria().andSiteNameEqualTo(siteName)
+					.andDeletedEqualTo("0");
+		}
 		return widgetDAO.selectWidgetByExample(example);
 	}
 

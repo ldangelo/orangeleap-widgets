@@ -9,4 +9,6 @@ public interface StyleService {
   public Style update(Style style);
   public List<Style> selectByUserName(String userName);
   public Style selectById(Long Id);
+
+	List<Style> selectBySiteName(String siteName);
 }

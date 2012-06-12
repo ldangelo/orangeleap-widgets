@@ -32,6 +32,13 @@
 		and DELETED = 0
 	</select>
 
+	<select id="selectBySiteName" resultMap="BaseResultMap" parameterClass="com.orangeleap.webtools.domain.Style">
+		select Id, USER_NAME, STYLE, STYLE_NAME, INACTIVE, DELETED, SITE_NAME
+		from STYLES
+		where SITE_NAME = #siteName#
+		and DELETED = 0
+	</select>
+
 	<insert id="insert" parameterClass="com.orangeleap.webtools.domain.Style">
 		insert INTO STYLES (Id, USER_NAME, STYLE, STYLE_NAME, INACTIVE, DELETED, SITE_NAME) values
 		(#Id:BIGINT#, #UserName:VARCHAR#, #Style:LONGTEXT#, #StyleName:VARCHAR#, #inactive#, #deleted#, #siteName#)

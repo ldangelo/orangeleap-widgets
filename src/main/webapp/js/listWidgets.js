@@ -60,43 +60,43 @@ Ext.onReady(function() {
 
     Ext.QuickTips.init();
 
-	var proxy=new Ext.data.HttpProxy(    {url:'listWidgets.json'});
+	var proxy = new Ext.data.HttpProxy(    {url:'listWidgets.json'});
 
-		  var reader=new Ext.data.JsonReader(
+	var reader = new Ext.data.JsonReader({
+		totalProperty: 'totalRows',
+		root: 'rows',
+		id: 'widgetid',
+		fields: [
+			{name: 'widgetid', mapping: 'widgetid'},
+			{name: 'guid'},
+			{name: 'type'},
+			{name: 'widgetDescription'},
 			{
-				totalProperty: 'totalRows',
-				root: 'rows',
-				id: 'widgetid',
-			fields: [
-				{name: 'widgetid', mapping: 'widgetid'},
-				{name: 'guid'},
-				{name: 'type'},
-				{name: 'widgetDescription'},
-				{
-					name: 'replaceTopContents',
-					renderer: function(value, metaData, record, rowIndex, colIndex, store) {
-						if (value == 'true' || value == '1') {
-							value = 'Replace Top Window Contents';
-						}
-						else {
-							value = 'Replace Inner Window (IFrame) Contents';
-						}
-						return value;
+				name: 'replaceTopContents',
+				renderer: function(value, metaData, record, rowIndex, colIndex, store) {
+					if (value == 'true' || value == '1') {
+						value = 'Replace Top Window Contents';
 					}
-				},
-				{name: 'entityname'},
-				{name: 'errorcount'},
-				{name: 'inactive'},
-				{name: 'viewcount'}
-			]}
-		)
+					else {
+						value = 'Replace Inner Window (IFrame) Contents';
+					}
+					return value;
+				}
+			},
+			{name: 'entityname'},
+			{name: 'errorcount'},
+			{name: 'inactive'},
+			{name: 'inactive'},
+			{name: 'createdBy'},
+			{name: 'viewcount'}
+		]}
+	)
 
-		var store=new Ext.data.Store(    {
-		  proxy:proxy,
-		  reader:reader
-	   });
-
-	store.load();
+	var store = new Ext.data.Store({
+		proxy: proxy,
+		reader: reader,
+		remoteSort: false
+	});
 
 	var findTitle = function(dataIndex, scope, store) {
         var title = '';
@@ -109,6 +109,36 @@ Ext.onReady(function() {
         return title;
 	};
 
+    var createdByCombo = new Ext.form.ComboBox({
+       store: new Ext.data.ArrayStore({
+            fields: [
+                'name',
+                'desc'
+            ],
+            data: [['me', 'Me'], ['everyone', 'Everyone']]
+        }),
+        displayField: 'desc',
+        valueField: 'name',
+        typeAhead: false,
+        mode: 'local',
+        forceSelection: true,
+        triggerAction: 'all',
+        emptyText: ' ',
+        selectOnFocus: true,
+        minListWidth: 150,
+        id: 'createdByCombo',
+        stateful: true,
+        stateEvents: ['select'],
+        listeners: {
+            'select': function(comboBox, record, index) {
+                if (localStorage) {
+					localStorage.setItem('lastListWidgetCreatedBy', comboBox.getValue());
+                }
+				loadStore();
+            }
+		}
+    });
+
 	//
 	// create the grid
 	var grid = new Ext.grid.GridPanel({
@@ -116,9 +146,10 @@ Ext.onReady(function() {
 		columns: [
 			{
 				id:'widgetid',
-				width: 200,
+				width: 100,
 				header:'Id',
 				dataIndex:'widgetid',
+				sortable: true,
                 renderer: function(value, metaData, record, rowIndex, colIndex, store) {
                     var title = findTitle(this.dataIndex, this.scope, store);
                     return '<span ext:qtitle="' + title + '"ext:qwidth="250" ext:qtip="' + value + '" ext:qclass="constrainText">' + value + '</span>';
@@ -129,6 +160,7 @@ Ext.onReady(function() {
 				width: 200,
 				header: 'Widget Name',
 				dataIndex: 'type',
+				sortable: false,
 				renderer: function(val, metaData, record, rowIndex, colIndex, store) {
 					var displayVal = val;
 					if (record.data.type == "customentity" && record.data.entityname == 'widget_authentication') {
@@ -167,6 +199,18 @@ Ext.onReady(function() {
 				width: 200,
 				header:'Description',
 				dataIndex:'widgetDescription',
+				sortable: true,
+				renderer: function(value, metaData, record, rowIndex, colIndex, store) {
+                    var title = findTitle(this.dataIndex, this.scope, store);
+					return '<span ext:qtitle="' + title + '"ext:qwidth="250" ext:qtip="' + value + '" ext:qclass="constrainText">' + value + '</span>';
+				}
+			},
+			{
+				id:'createdBy',
+				width: 150,
+				header:'Created By',
+				dataIndex:'createdBy',
+				sortable: true,
 				renderer: function(value, metaData, record, rowIndex, colIndex, store) {
                     var title = findTitle(this.dataIndex, this.scope, store);
 					return '<span ext:qtitle="' + title + '"ext:qwidth="250" ext:qtip="' + value + '" ext:qclass="constrainText">' + value + '</span>';
@@ -177,6 +221,7 @@ Ext.onReady(function() {
 				width:50,
 				header:'Inactive',
 				dataIndex:'inactive',
+				sortable: true,
 				renderer: function(value, metaData, record, rowIndex, colIndex, store) {
                     var title = findTitle(this.dataIndex, this.scope, store);
 					return '<span ext:qtitle="' + title + '"ext:qwidth="250" ext:qtip="' + value + '" ext:qclass="constrainText">' + value + '</span>';
@@ -188,11 +233,25 @@ Ext.onReady(function() {
 	    viewConfig: {
             emptyText: 'No Widgets Found'
         },
+        loadMask: true,
 		stripeRows: true,
 		height: 250,
 		width: 900,
 		tbar: {
             items: [
+                { xtype: 'tbtext', text: "View Widgets Created By:" },
+                createdByCombo,
+	            { xtype: 'tbspacer' },
+	            { xtype: 'tbspacer' },
+	            { xtype: 'tbspacer' },
+	            { xtype: 'tbspacer' },
+	            { xtype: 'tbspacer' },
+	            { xtype: 'tbspacer' },
+	            { xtype: 'tbspacer' },
+	            { xtype: 'tbspacer' },
+	            { xtype: 'tbspacer' },
+	            { xtype: 'tbspacer' },
+	            { xtype: 'tbspacer' },
                 {
 					xtype: 'button',
 					'text': 'Add New Widget',
@@ -218,6 +277,26 @@ Ext.onReady(function() {
 	        }
 	    }
 	});
+
+	var lastFilterByCreatedBy = 'everyone';
+	if (localStorage) {
+		lastFilterByCreatedBy = localStorage.getItem('lastListWidgetCreatedBy');
+		if ( ! lastFilterByCreatedBy || (lastFilterByCreatedBy != 'me' && lastFilterByCreatedBy != 'everyone')) {
+			lastFilterByCreatedBy = 'me';
+		}
+		localStorage.setItem('lastListWidgetCreatedBy', lastFilterByCreatedBy);
+	}
+	createdByCombo.setValue(lastFilterByCreatedBy);
+
+	var loadStore = function() {
+		store.load({
+			params: {
+				createdBy: createdByCombo.getValue()
+			}
+		});
+	};
+
+	loadStore();
 
     var panel = new Ext.Panel({
     	height: 350,

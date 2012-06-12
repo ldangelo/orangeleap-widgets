@@ -38,7 +38,7 @@ public interface WidgetService {
 
 	List<Widget> selectWidgetByExample(WidgetExample example);
 
-	public List<Widget> listWidgets(String userName, String password);
+	public List<Widget> listWidgets(boolean displayOnlyUsersWidgets);
 
 	public void updateViewCount(String guid, String refererrer);
 

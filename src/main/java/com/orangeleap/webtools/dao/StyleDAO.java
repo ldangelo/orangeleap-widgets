@@ -8,4 +8,6 @@ public interface StyleDAO {
   List<Style> selectStyleById(Style style);
   List<Style> selectStyleByUserName(Style style);
   void updateStyle(Style style);
+
+	List<Style> selectStyleBySiteName(Style record);
 }

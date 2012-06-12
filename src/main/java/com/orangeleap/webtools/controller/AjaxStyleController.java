@@ -16,6 +16,7 @@ import java.util.Map;
 
 import com.orangeleap.webtools.domain.Style;
 import com.orangeleap.webtools.service.StyleService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.Authentication;
 import org.springframework.security.context.SecurityContextHolder;
@@ -116,15 +117,24 @@ public class AjaxStyleController extends MultiActionController {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ModelAndView list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String userName = auth.getName();
-		Style style = new Style();
+	public ModelAndView list(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
+		final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		final String userName = auth.getName();
+		final Style style = new Style();
 		style.setUserName(userName);
 		List<Style> styles = null;
 
 		if (userName != null && ! userName.equals("")) {
-			styles = styleService.selectByUserName(userName);
+			final String filterByCreatedBy = request.getParameter("createdBy");
+			if (filterByCreatedBy == null || "me".equalsIgnoreCase(filterByCreatedBy)) {
+				styles = styleService.selectByUserName(userName);
+			}
+			else {
+				final String siteName = userName.substring(userName.indexOf('@') + 1);
+				if (StringUtils.isNotBlank(siteName)) {
+					styles = styleService.selectBySiteName(siteName);
+				}
+			}
 		}
 
 		final Map model = new HashMap();
@@ -144,6 +154,7 @@ public class AjaxStyleController extends MultiActionController {
 				row.put("Style", net.sf.json.util.JSONUtils.quote(s.getStyle()));
 				row.put("StyleName", s.getStyleName());
 				row.put("Inactive", false);
+				row.put("CreatedBy", s.getUserName());
 				rows.add(row);
 			}
 		}
@@ -163,6 +174,11 @@ public class AjaxStyleController extends MultiActionController {
 		meta = new HashMap();
 		meta.put("header", "Style");
 		meta.put("name", "Style");
+		fields.add(meta);
+
+		meta = new HashMap();
+		meta.put("header", "Created By");
+		meta.put("name", "CreatedBy");
 		fields.add(meta);
 
 		meta = new HashMap();

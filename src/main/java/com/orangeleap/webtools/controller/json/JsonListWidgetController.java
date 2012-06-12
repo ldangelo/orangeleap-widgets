@@ -1,5 +1,6 @@
 package com.orangeleap.webtools.controller.json;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,8 +9,6 @@ import java.util.Map;
 import com.orangeleap.webtools.domain.Widget;
 import com.orangeleap.webtools.service.WidgetService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.Authentication;
-import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,20 +34,23 @@ public class JsonListWidgetController {
 			map.put("viewcount", widget.getWidgetViewCount());
 			map.put("wid", widget.getWidgetViewCount());
 			map.put("inactive", widget.isInactive());
+			map.put("createdBy", widget.getWidgetUsername());
 			returnList.add(map);
 		}
 	}
 
 	@SuppressWarnings("unchecked")
-	@RequestMapping(method = RequestMethod.GET)
-	public void getWidgetList(ModelMap modelMap) {
+	@RequestMapping(method = RequestMethod.POST)
+	public void getWidgetList(final HttpServletRequest request, final ModelMap modelMap) {
 		
-		List<Map<String, Object>> returnList = new ArrayList<Map<String, Object>>();
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		
-		String userName = auth.getName();
-		String password = (String) auth.getCredentials();
-		List<Widget> widgets = widgetService.listWidgets(userName, password);
+		final List<Map<String, Object>> returnList = new ArrayList<Map<String, Object>>();
+
+		final String filterByCreatedBy = request.getParameter("createdBy");
+		boolean showOnlyForUser = false;
+		if (filterByCreatedBy == null || "me".equalsIgnoreCase(filterByCreatedBy)) {
+			showOnlyForUser = true;
+		}
+		final List<Widget> widgets = widgetService.listWidgets(showOnlyForUser);
 		
 		addWidgets(widgets,returnList);
 		

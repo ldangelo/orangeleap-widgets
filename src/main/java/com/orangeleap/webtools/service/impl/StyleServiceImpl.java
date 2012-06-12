@@ -17,24 +17,37 @@ public class StyleServiceImpl implements StyleService {
 	@Autowired
 	StyleDAO styleDAO = null;
 
+	@Override
 	public Style insert(Style style) {
 		styleDAO.insertStyle(style);
 		return style;
 	}
 
+	@Override
 	public Style update(Style style) {
 		styleDAO.updateStyle(style);
 		return style;
 	}
 
-	public List<Style> selectByUserName(String userName) {
-		Style style = new Style();
+	@Override
+	public List<Style> selectByUserName(final String userName) {
+		final Style style = new Style();
 
 		style.setUserName(userName);
 
 		return styleDAO.selectStyleByUserName(style);
 	}
 
+	@Override
+	public List<Style> selectBySiteName(final String siteName) {
+		final Style style = new Style();
+
+		style.setSiteName(siteName);
+
+		return styleDAO.selectStyleBySiteName(style);
+	}
+
+	@Override
 	public Style selectById(Long id) {
 		Style style = new Style();
 
