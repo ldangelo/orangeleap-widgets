@@ -2,6 +2,8 @@ package com.orangeleap.webtools.domain;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang.StringUtils;
+
 public class Style implements Serializable {
 	/**
 	 * Describe Id here.
@@ -20,6 +22,7 @@ public class Style implements Serializable {
 
 	private boolean inactive;
 	private boolean deleted;
+	private String siteName;
 
 	public String getStyleName() {
 		return StyleName;
@@ -63,6 +66,13 @@ public class Style implements Serializable {
 	 */
 	public final void setUserName(final String UserName) {
 		this.UserName = UserName;
+
+		if (StringUtils.isNotBlank(UserName) && UserName.indexOf('@') > -1 && StringUtils.isEmpty(siteName)) {
+			final String[] tokens = UserName.split("@");
+			if (tokens.length == 2) {
+				setSiteName(tokens[1]);
+			}
+		}
 	}
 
 	/**
@@ -97,5 +107,13 @@ public class Style implements Serializable {
 
 	public void setDeleted(final boolean deleted) {
 		this.deleted = deleted;
+	}
+
+	public String getSiteName() {
+		return siteName;
+	}
+
+	public void setSiteName(final String siteName) {
+		this.siteName = siteName;
 	}
 }

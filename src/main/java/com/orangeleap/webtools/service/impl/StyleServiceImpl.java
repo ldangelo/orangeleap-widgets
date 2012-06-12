@@ -12,43 +12,41 @@ import org.springframework.stereotype.Service;
 
 @Service("styleService")
 public class StyleServiceImpl implements StyleService {
-  private static final Log logger = LogFactory.getLog(StyleServiceImpl.class);
+	private static final Log logger = LogFactory.getLog(StyleServiceImpl.class);
 
-    @Autowired
-    StyleDAO styleDAO = null;
+	@Autowired
+	StyleDAO styleDAO = null;
 
-  public Style insert(Style style)
-  {
-    styleDAO.insertStyle(style);
-    return style;
-  }
+	public Style insert(Style style) {
+		styleDAO.insertStyle(style);
+		return style;
+	}
 
-  public Style update(Style style) {
-    styleDAO.updateStyle(style);
-    return style;
-  }
+	public Style update(Style style) {
+		styleDAO.updateStyle(style);
+		return style;
+	}
 
-  public List<Style> selectByUserName(String userName)
-  {
-    Style style = new Style();
+	public List<Style> selectByUserName(String userName) {
+		Style style = new Style();
 
-    style.setUserName(userName);
+		style.setUserName(userName);
 
-    List<Style> list = styleDAO.selectStyleByUserName(style);
+		return styleDAO.selectStyleByUserName(style);
+	}
 
-    return list;
-  }
+	public Style selectById(Long id) {
+		Style style = new Style();
 
-  public Style selectById(Long id) {
-    Style style = new Style();
+		style.setId(id);
 
-    style.setId(id);
+		List<Style> list = styleDAO.selectStyleById(style);
 
-    List <Style> list = styleDAO.selectStyleById(style);
-
-    if (list.size() > 0)
-    	return list.get(0);
-    else
-    	return null;
-  }
+		if (list.size() > 0) {
+			return list.get(0);
+		}
+		else {
+			return null;
+		}
+	}
 }

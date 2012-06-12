@@ -28,6 +28,7 @@
 		<result column="STYLE_ID" property="styleId" jdbcType="BIGINT"/>
 		<result column="IFRAME_HTML" property="iframeHtml" jdbcType="VARCHAR"/>
 		<result column="DONATION_URL" property="donationUrl" jdbcType="VARCHAR"/>
+		<result column="SITE_NAME" property="siteName"/>
 	</resultMap>
 	<sql id="ibatorgenerated_Example_Where_Clause">
 		<!--
@@ -69,7 +70,9 @@
 		select WIDGET_ID, WIDGET_GUID, WIDGET_USERNAME, WIDGET_PASSWORD, WIDGET_ERROR_COUNT,
 		WIDGET_CREATE_DATE, WIDGET_HTML, WIDGET_VIEW_COUNT, WIDGET_TYPE, WIDGET_DESCRIPTION,
 		REPLACE_TOP_CONTENTS, MOTIVATION_CODE, PROJECT_CODE,
-		CUSTOM_ENTITY_NAME,LOGIN_SUCCESS_URL,LOGIN_FAILURE_URL,AUTHENTICATION_REQUIRED,AUTHENTICATION_URL,SPONSORSHIP_URL,STYLE_ID,IFRAME_HTML,DONATION_URL
+		CUSTOM_ENTITY_NAME,LOGIN_SUCCESS_URL,LOGIN_FAILURE_URL,AUTHENTICATION_REQUIRED,
+		AUTHENTICATION_URL,SPONSORSHIP_URL,STYLE_ID,IFRAME_HTML,DONATION_URL, SITE_NAME
+
 		from WIDGET
 		<isParameterPresent>
 			<include refid="WIDGET.ibatorgenerated_Example_Where_Clause"/>
@@ -87,7 +90,8 @@
 		select WIDGET_ID, WIDGET_GUID, WIDGET_USERNAME, WIDGET_PASSWORD, WIDGET_ERROR_COUNT,
 		WIDGET_CREATE_DATE, WIDGET_HTML, WIDGET_VIEW_COUNT, WIDGET_TYPE, WIDGET_DESCRIPTION,
 		REPLACE_TOP_CONTENTS, MOTIVATION_CODE, PROJECT_CODE,
-		CUSTOM_ENTITY_NAME,LOGIN_SUCCESS_URL,LOGIN_FAILURE_URL,AUTHENTICATION_REQUIRED,AUTHENTICATION_URL,SPONSORSHIP_URL,STYLE_ID,IFRAME_HTML,DONATION_URL
+		CUSTOM_ENTITY_NAME,LOGIN_SUCCESS_URL,LOGIN_FAILURE_URL,AUTHENTICATION_REQUIRED,
+		AUTHENTICATION_URL,SPONSORSHIP_URL,STYLE_ID,IFRAME_HTML,DONATION_URL,SITE_NAME
 		from WIDGET
 		where WIDGET_ID = #widgetId:BIGINT#
 	</select>
@@ -115,12 +119,16 @@
 		insert into WIDGET (WIDGET_ID, WIDGET_GUID, WIDGET_USERNAME, WIDGET_PASSWORD,
 		WIDGET_ERROR_COUNT, WIDGET_CREATE_DATE, WIDGET_HTML, WIDGET_VIEW_COUNT, WIDGET_TYPE,WIDGET_DESCRIPTION,
 		REPLACE_TOP_CONTENTS, MOTIVATION_CODE, PROJECT_CODE,
-		CUSTOM_ENTITY_NAME,LOGIN_SUCCESS_URL,LOGIN_FAILURE_URL,AUTHENTICATION_REQUIRED,AUTHENTICATION_URL,SPONSORSHIP_URL,STYLE_ID,IFRAME_HTML,DONATION_URL)
+		CUSTOM_ENTITY_NAME,LOGIN_SUCCESS_URL,LOGIN_FAILURE_URL,AUTHENTICATION_REQUIRED,AUTHENTICATION_URL,
+		SPONSORSHIP_URL,STYLE_ID,IFRAME_HTML,DONATION_URL,SITE_NAME)
+
 		values (#widgetId:BIGINT#, #widgetGuid:VARCHAR#, #widgetUsername:VARCHAR#,
 		#widgetPassword:VARCHAR#, #widgetErrorCount:BIGINT#, #widgetCreateDate:TIMESTAMP#,
 		#widgetHtml:VARCHAR#, #widgetViewCount:BIGINT#, #widgetType:VARCHAR#, #widgetDescription#,
 		#replaceTopContents#, #motivationCode:VARCHAR#, #projectCode:VARCHAR#,
-		#customEntityName:VARCHAR#,#widgetLoginSuccessURL:VARCHAR#,#widgetLoginFailureURL:VARCHAR#,#widgetAuthenticationRequired:BOOLEAN#,#widgetAuthenticationURL:VARCHAR#,#sponsorshipURL:VARCHAR#,#styleId:BIGINT#,#iframeHtml:VARCHAR#,#donationUrl:VARCHAR#)
+		#customEntityName:VARCHAR#,#widgetLoginSuccessURL:VARCHAR#,
+		#widgetLoginFailureURL:VARCHAR#,#widgetAuthenticationRequired:BOOLEAN#,#widgetAuthenticationURL:VARCHAR#,
+		#sponsorshipURL:VARCHAR#,#styleId:BIGINT#,#iframeHtml:VARCHAR#,#donationUrl:VARCHAR#, #siteName#)
 	</insert>
 	<insert id="ibatorgenerated_insertSelective" parameterClass="com.orangeleap.webtools.domain.Widget">
 		<!--
@@ -195,6 +203,9 @@
 			<isNotNull prepend="," property="donationUrl">
 				DONATION_URL
 			</isNotNull>
+			<isNotNull prepend="," property="siteName">
+				SITE_NAME
+			</isNotNull>
 
 			)
 		</dynamic>
@@ -250,6 +261,9 @@
 			</isNotNull>
 			<isNotNull prepend="," property="donationUrl">
 				#donationUrl:VARCHAR#
+			</isNotNull>
+			<isNotNull prepend="," property="siteName">
+				#siteName#
 			</isNotNull>
 
 			)
@@ -316,6 +330,9 @@
 			<isNotNull prepend="," property="record.donationUrl">
 				DONATION_URL = #record.donationUrl:VARCHAR#
 			</isNotNull>
+			<isNotNull prepend="," property="record.siteName">
+				SITE_NAME = #siteName#
+			</isNotNull>
 		</dynamic>
 		<isParameterPresent>
 			<include refid="WIDGET.ibatorgenerated_Example_Where_Clause"/>
@@ -348,7 +365,8 @@
 		SPONSORSHIP_URL = #record:sponsorshipURL:VARCHAR#,
 		STYLE_ID = #record:styleId:BIGINT#,
 		IFRAME_HTML=#record:iframeHtml#,
-		DONATION_URL=#record:donationUrl#
+		DONATION_URL=#record:donationUrl#,
+		SITE_NAME = #siteName#
 
 		<isParameterPresent>
 			<include refid="WIDGET.ibatorgenerated_Example_Where_Clause"/>
@@ -403,6 +421,9 @@
 			<isNotNull prepend="," property="donationUrl">
 				DONATION_URL = #donationUrl:VARCHAR#
 			</isNotNull>
+			<isNotNull prepend="," property="siteName">
+				SITE_NAME = #siteName#
+			</isNotNull>
 		</dynamic>
 		where WIDGET_ID = #widgetId:BIGINT#
 	</update>
@@ -432,7 +453,8 @@
 		SPONSORSHIP_URL = #sponsorshipURL#,
 		STYLE_ID = #styleId#,
 		IFRAME_HTML = #iframeHtml#,
-		DONATION_URL = #donationUrl#
+		DONATION_URL = #donationUrl#,
+		SITE_NAME = #siteName#
 		where WIDGET_ID = #widgetId:BIGINT#
 	</update>
 </sqlMap>
