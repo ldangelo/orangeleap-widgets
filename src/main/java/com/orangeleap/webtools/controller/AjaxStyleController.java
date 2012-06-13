@@ -48,7 +48,11 @@ public class AjaxStyleController extends MultiActionController {
 			style = styleService.selectById(Long.valueOf(strId));
 
 			if (style != null && style.getSiteName() != null && ! style.getSiteName().equals(userSiteName))  {
-				throw new IllegalAccessException("You are not authorized to view this Style");
+				response.setHeader("errorMsg", userName + " is not authorized to view Style ID: " + style.getId());
+				if (logger.isWarnEnabled()) {
+					logger.warn("!! UNAUTHORIZED ACCESS !!! " + userName + " is not authorized to view Style ID: " + style.getId());
+				}
+				return null;
 			}
 		}
 		else {
@@ -116,7 +120,11 @@ public class AjaxStyleController extends MultiActionController {
 			style = new Style();
 		}
 		else if (style.getSiteName() != null && ! style.getSiteName().equals(userSiteName))  {
-			throw new IllegalAccessException("You are not authorized to view this Style");
+			response.setHeader("errorMsg", auth.getName() + " is not authorized to view Style ID: " + style.getId());
+			if (logger.isWarnEnabled()) {
+				logger.warn("!! UNAUTHORIZED ACCESS !!! " + auth.getName() + " is not authorized to view Style ID: " + style.getId());
+			}
+			return null;
 		}
 
 		final Map model = new HashMap();

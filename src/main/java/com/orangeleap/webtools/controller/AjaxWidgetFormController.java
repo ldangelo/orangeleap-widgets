@@ -236,12 +236,17 @@ public class AjaxWidgetFormController extends MultiActionController {
 		final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		final String userSiteName = resolveSiteName(auth.getName());
 
+		ModelAndView mav = null;
 		if (w.getSiteName() != null && ! w.getSiteName().equals(userSiteName)) {
-			throw new IllegalAccessException("You are not authorized to view this Widget");
+			response.setHeader("errorMsg", auth.getName() + " is not authorized to view Widget: " + w.getWidgetGuid());
+			if (logger.isWarnEnabled()) {
+				logger.warn("!! UNAUTHORIZED ACCESS !!! " + auth.getName() + " is not authorized to view Widget: " + w.getWidgetGuid());
+			}
 		}
-
-		final ModelAndView mav = getModelMap(w, w.getWidgetType(), w.getCustomEntityName());
-		addStyles(mav, w.getStyleId());
+		else {
+			mav = getModelMap(w, w.getWidgetType(), w.getCustomEntityName());
+			addStyles(mav, w.getStyleId());
+		}
 
 		return mav;
 	}
@@ -392,7 +397,11 @@ public class AjaxWidgetFormController extends MultiActionController {
 			final String userSiteName = resolveSiteName(auth.getName());
 
 			if (widget.getSiteName() != null && ! widget.getSiteName().equals(userSiteName)) {
-				throw new IllegalAccessException("You are not authorized to view this Widget");
+				response.setHeader("errorMsg", userName + " is not authorized to view Widget: " + widget.getWidgetGuid());
+				if (logger.isWarnEnabled()) {
+					logger.warn("!! UNAUTHORIZED ACCESS !!! " + auth.getName() + " is not authorized to view Widget: " + widget.getWidgetGuid());
+				}
+				return null;
 			}
 
 			populateWidget(widget, request);

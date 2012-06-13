@@ -106,7 +106,22 @@ WidgetForm = Ext.extend(Ext.form.FormPanel, {
 		}];
 		WidgetForm.superclass.initComponent.call(this);
 
-		var proxy = new Ext.data.HttpProxy( {url: 'widgetform.ajax'}); // Ext.data.HttpProxy
+		var proxy = new Ext.data.HttpProxy({
+			url: 'widgetform.ajax',
+            listeners: {
+                exception: function(proxy, type, action, options, response, arg) {
+					if (response.getResponseHeader('errorMsg')) {
+				        Ext.MessageBox.show({
+				            'title': 'ERROR',
+				            'icon': Ext.MessageBox.ERROR,
+				            'buttons': Ext.MessageBox.OK,
+				            'minWidth': 600,
+				            'msg': response.getResponseHeader('errorMsg')
+				        });
+					}
+                }
+            }
+		}); // Ext.data.HttpProxy
 
 		var reader = new Ext.data.JsonReader({
 			totalProperty: 'totalRows',

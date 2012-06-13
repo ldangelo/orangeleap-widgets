@@ -33,8 +33,8 @@ Ext.onReady(function() {
 		    ,icon:Ext.Msg.INFO
 		    ,buttons:Ext.Msg.OK
 		});
-	    }
-	    function onFailure(form,action) {
+    }
+    function onFailure(form,action) {
 		Ext.Msg.show({
 		    title:'Error'
 		    ,msg:action.result.message || action.response.responseText
@@ -116,10 +116,40 @@ Ext.onReady(function() {
 
     var id = getParameter(window.top.location.search.substring(1),'id');
     if (id != null) {
-        form.getForm().load({url:'style.ajax?action=read&Id='+ id,method: 'GET',waitMsg: 'Loading'});
+        form.getForm().load({
+            url:'style.ajax?action=read&Id='+ id,
+            method: 'GET',
+            waitMsg: 'Loading',
+            failure: function(form, action) {
+                if (action && action.response && action.response.getResponseHeader('errorMsg')) {
+			        Ext.MessageBox.show({
+			            'title': 'ERROR',
+			            'icon': Ext.MessageBox.ERROR,
+			            'buttons': Ext.MessageBox.OK,
+			            'minWidth': 600,
+			            'msg': action.response.getResponseHeader('errorMsg')
+			        });
+                }
+            }
+        });
     }
     else {
-        form.getForm().load({url:'style.ajax?action=create',method:'GET',waitMsg: 'Loading'});
+        form.getForm().load({
+            url:'style.ajax?action=create',
+            method:'GET',
+            waitMsg: 'Loading',
+			failure: function(form, action) {
+	            if (action && action.response && action.response.getResponseHeader('errorMsg')) {
+			        Ext.MessageBox.show({
+			            'title': 'ERROR',
+			            'icon': Ext.MessageBox.ERROR,
+			            'buttons': Ext.MessageBox.OK,
+			            'minWidth': 600,
+			            'msg': action.response.getResponseHeader('errorMsg')
+			        });
+	            }
+			}
+        });
     }
 
     form.on({
