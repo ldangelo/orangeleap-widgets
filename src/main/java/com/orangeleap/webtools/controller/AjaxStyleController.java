@@ -202,7 +202,7 @@ public class AjaxStyleController extends MultiActionController {
 		fields.add(meta);
 
 		meta = new HashMap();
-		meta.put("header", "Created By");
+		meta.put("header", "Last Modified By");
 		meta.put("name", "CreatedBy");
 		fields.add(meta);
 

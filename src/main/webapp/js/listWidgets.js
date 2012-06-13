@@ -72,6 +72,7 @@ Ext.onReady(function() {
 			{name: 'widgetid', mapping: 'widgetid'},
 			{name: 'guid'},
 			{name: 'type'},
+			{name: 'widgetname'},
 			{name: 'widgetDescription'},
 			{
 				name: 'replaceTopContents',
@@ -122,7 +123,7 @@ Ext.onReady(function() {
                 'name',
                 'desc'
             ],
-            data: [['me', 'Me'], ['everyone', 'Everyone']]
+            data: [['me', 'Me'], ['everyone', 'All']]
         }),
         displayField: 'desc',
         valueField: 'name',
@@ -166,39 +167,11 @@ Ext.onReady(function() {
 				id: 'widgetName',
 				width: 200,
 				header: 'Widget Name',
-				dataIndex: 'type',
-				sortable: false,
-				renderer: function(val, metaData, record, rowIndex, colIndex, store) {
-					var displayVal = val;
-					if (record.data.type == "customentity" && record.data.entityname == 'widget_authentication') {
-						displayVal = "Login";
-					}
-					else if (record.data.type == "customentity" && record.data.entityname == 'online_donation') {
-						displayVal = "Donation";
-					}
-					else if (record.data.type == "pledges") {
-						displayVal = "Pledge";
-					}
-					else if (record.data.type == "customentity" && record.data.entityname == 'online_recurringgift') {
-						displayVal = "Recurring Gift";
-					}
-					else if (record.data.type == "customentity" && record.data.entityname == 'online_registration') {
-						displayVal = "Registration";
-					}
-					else if (record.data.type == "customentity" && record.data.entityname == 'donor_profile') {
-						displayVal = "Donor Profile";
-					}
-					else if (record.data.type == "gifthistory") {
-						displayVal = "Gift History";
-					}
-					else if (record.data.type == "customentity" && record.data.entityname == 'online_sponsorship') {
-						displayVal = "Sponsorship";
-					}
-					else if (record.data.type == "customentity" && record.data.entityname == 'sponsorable') {
-						displayVal = "Sponsorable";
-					}
+				dataIndex: 'widgetname',
+				sortable: true,
+				renderer: function(value, metaData, record, rowIndex, colIndex, store) {
                     var title = findTitle(this.dataIndex, this.scope, store);
-					return '<span ext:qtitle="' + title + '"ext:qwidth="250" ext:qtip="' + displayVal + '" ext:qclass="constrainText">' + displayVal + '</span>';
+					return '<span ext:qtitle="' + title + '"ext:qwidth="250" ext:qtip="' + value + '" ext:qclass="constrainText">' + value + '</span>';
 				}
 			},
 			{
@@ -215,7 +188,7 @@ Ext.onReady(function() {
 			{
 				id:'createdBy',
 				width: 150,
-				header:'Created By',
+				header:'Last Modified By',
 				dataIndex:'createdBy',
 				sortable: true,
 				renderer: function(value, metaData, record, rowIndex, colIndex, store) {
@@ -246,7 +219,7 @@ Ext.onReady(function() {
 		width: 900,
 		tbar: {
             items: [
-                { xtype: 'tbtext', text: "View Widgets Created By:" },
+                { xtype: 'tbtext', text: "View Widgets Last Modified By:" },
                 createdByCombo,
 	            { xtype: 'tbspacer' },
 	            { xtype: 'tbspacer' },

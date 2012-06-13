@@ -35,6 +35,37 @@ public class JsonListWidgetController {
 			map.put("wid", widget.getWidgetViewCount());
 			map.put("inactive", widget.isInactive());
 			map.put("createdBy", widget.getWidgetUsername());
+
+			String widgetName = "";
+			if (widget.getWidgetType().equals("customentity") && widget.getCustomEntityName().equals("widget_authentication")) {
+				widgetName = "Login";
+			}
+			else if (widget.getWidgetType().equals("customentity") && widget.getCustomEntityName().equals("online_donation")) {
+				widgetName = "Donation";
+			}
+			else if (widget.getWidgetType().equals("pledges")) {
+				widgetName = "Pledge";
+			}
+			else if (widget.getWidgetType().equals("customentity") && widget.getCustomEntityName().equals("online_recurringgift")) {
+				widgetName = "Recurring Gift";
+			}
+			else if (widget.getWidgetType().equals("customentity") && widget.getCustomEntityName().equals("online_registration")) {
+				widgetName = "Registration";
+			}
+			else if (widget.getWidgetType().equals("customentity") && widget.getCustomEntityName().equals("donor_profile")) {
+				widgetName = "Donor Profile";
+			}
+			else if (widget.getWidgetType().equals("gifthistory")) {
+				widgetName = "Gift History";
+			}
+			else if (widget.getWidgetType().equals("customentity") && widget.getCustomEntityName().equals("online_sponsorship")) {
+				widgetName = "Sponsorship";
+			}
+			else if (widget.getWidgetType().equals("customentity") && widget.getCustomEntityName().equals("sponsorable")) {
+				widgetName = "Sponsorable";
+			}
+			map.put("widgetname", widgetName);
+
 			returnList.add(map);
 		}
 	}

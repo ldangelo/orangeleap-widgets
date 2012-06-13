@@ -71,7 +71,7 @@ Ext.onReady(function() {
                 'name',
                 'desc'
             ],
-            data: [['me', 'Me'], ['everyone', 'Everyone']]
+            data: [['me', 'Me'], ['everyone', 'All']]
         }),
         displayField: 'desc',
         valueField: 'name',
@@ -107,7 +107,7 @@ Ext.onReady(function() {
 		loadMask: true,
 		tbar: {
 			items: [
-                { xtype: 'tbtext', text: "View Styles Created By:" },
+                { xtype: 'tbtext', text: "View Styles Last Modified By:" },
                 createdByCombo,
 	            { xtype: 'tbspacer' },
 	            { xtype: 'tbspacer' },
