@@ -123,7 +123,7 @@ Ext.onReady(function() {
                 'name',
                 'desc'
             ],
-            data: [['me', 'Me'], ['everyone', 'All']]
+            data: [['me', 'Last Modified By Me'], ['everyone', 'All Widgets']]
         }),
         displayField: 'desc',
         valueField: 'name',
@@ -219,7 +219,7 @@ Ext.onReady(function() {
 		width: 900,
 		tbar: {
             items: [
-                { xtype: 'tbtext', text: "View Widgets Last Modified By:" },
+                { xtype: 'tbtext', text: "View Widgets:" },
                 createdByCombo,
 	            { xtype: 'tbspacer' },
 	            { xtype: 'tbspacer' },
