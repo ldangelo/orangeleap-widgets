@@ -349,12 +349,17 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 							// remote error: A valid response was returned from the server having successProperty === false.
 							// This response might contain an error-message sent from the server.
 							// For example, the user may have failed authentication/authorization or a database validation error occurred
+
+							var errorCode = '';
+							if (response.responseText) {
+								errorCode = ' Error Code: ' + response.responseText;
+							}
 			                Ext.MessageBox.show({
 			                    title: 'ERROR',
 			                    icon: Ext.MessageBox.ERROR,
 			                    buttons: Ext.MessageBox.OK,
 			                    minWidth: 500,
-			                    msg: 'The request could not be processed due to an error.  Please try again or contact the website administrator for help.'
+			                    msg: 'The request could not be processed due to an error.  Please try again or contact the website administrator for help.' + errorCode
 			                });
 		                }
 		                else {
@@ -369,12 +374,16 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 				            else if (response.statusText != "abort") {
 			                    // response error: An invalid response from the server was returned: either 404, 500
 			                    // or the response meta-data does not match that defined in the DataReader
+			                    var errorCode = '';
+			                    if (response.status || response.statusText) {
+			                        errorCode = ' Error Code: ' + (response.status ? response.status + ' ' : ' ') + (response.statusText ? response.statusText : '');
+				                }
 				                Ext.MessageBox.show({
 				                    title: 'ERROR',
 				                    icon: Ext.MessageBox.ERROR,
 				                    buttons: Ext.MessageBox.OK,
 				                    minWidth: 500,
-				                    msg: 'An invalid response was returned by the server.  Please try again or contact the website administrator for help.'
+				                    msg: 'An invalid response was returned by the server.  Please try again or contact the website administrator for help.' + errorCode
 				                });
 				            }
 		                }
