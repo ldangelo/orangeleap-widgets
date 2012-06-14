@@ -338,14 +338,46 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 				proxy : proxy,
 				autoSave : false,
 				listeners : {
-					'exception' : function(misc) {
+					'exception' : function(proxy, type, action, options, response, args) {
+						if (console) {
+				            console.log('EXCEPTION in entity, type = "' + type + '" action = "' + action +
+				                    '" options.params = "' + (options && options.params ? Ext.encode(options.params) : '') +
+				                    '" response.status = "' + response.status + '" response.statusText = "' + response.statusText + (args ? '" args = "' + Ext.encode(args) : '') + '"');
+						}
 
-						if (this.replaceTopContent == 'true') {
-							top.location.href = this.loginurl;
-						}
-						else {
-							window.location.href = this.loginurl;
-						}
+						if (type == "remote") {
+							// remote error: A valid response was returned from the server having successProperty === false.
+							// This response might contain an error-message sent from the server.
+							// For example, the user may have failed authentication/authorization or a database validation error occurred
+			                Ext.MessageBox.show({
+			                    title: 'ERROR',
+			                    icon: Ext.MessageBox.ERROR,
+			                    buttons: Ext.MessageBox.OK,
+			                    minWidth: 500,
+			                    msg: 'The request could not be processed due to an error.  Please try again or contact the website administrator for help.'
+			                });
+		                }
+		                else {
+							if (response.statusText == "timeout" && response.readyState != 4) {
+				                Ext.MessageBox.show({
+				                    'title': 'Error',
+				                    'icon': Ext.MessageBox.ERROR,
+				                    'buttons': Ext.MessageBox.OK,
+				                    'msg': 'The request could not be processed because the response timed out.  Please try again or contact the website administrator for help.'
+				                });
+							}
+				            else if (response.statusText == "error" || response.statusText == "parsererror") {
+			                    // response error: An invalid response from the server was returned: either 404, 500
+			                    // or the response meta-data does not match that defined in the DataReader
+				                Ext.MessageBox.show({
+				                    title: 'ERROR',
+				                    icon: Ext.MessageBox.ERROR,
+				                    buttons: Ext.MessageBox.OK,
+				                    minWidth: 500,
+				                    msg: 'An invalid response was returned by the server.  Please try again or contact the website administrator for help.'
+				                });
+				            }
+		                }
 					},
 					'metachange' : function(store, meta) {
 						that.parentFields = {};

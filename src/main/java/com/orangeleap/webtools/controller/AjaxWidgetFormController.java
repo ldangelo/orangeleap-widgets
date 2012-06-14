@@ -329,8 +329,8 @@ public class AjaxWidgetFormController extends MultiActionController {
 		}
 
 		if (tablename != null) {
-			CustomTable table = widgetService.getCustomTableByName(userName, password, tablename);
-			if (table == null || table.isCustomTableActive() == false) {
+			final CustomTable table = widgetService.getCustomTableByName(userName, password, tablename);
+			if (table == null || ! table.isCustomTableActive()) {
 				if (widgettype.equals("customentity") && ! customentitytype.equals("undefined")) {
 					tablename = customentitytype;
 				}
@@ -345,7 +345,7 @@ public class AjaxWidgetFormController extends MultiActionController {
 			}
 		}
 
-		Widget ret = widgetService.createWidget(userName, password, widgettype,
+		final Widget ret = widgetService.createWidget(userName, password, widgettype,
 				customentitytype, inactive, deleted);
 		ret.setWidgetId(0L);
 		ret.setWidgetHtml("Undefined");
@@ -373,14 +373,14 @@ public class AjaxWidgetFormController extends MultiActionController {
 
 	public ModelAndView update(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		Authentication auth = SecurityContextHolder.getContext()
+		final Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
-		String widgettype = request.getParameter("widgettype");
-		String customentitytype = request.getParameter("customentitytype");
-		String guid = request.getParameter("widgetGuid");
-		String userName = auth.getName();
-		String password = (String) auth.getCredentials();
-		String appLocation = System.getProperty("webtools.applocation");
+		final String widgettype = request.getParameter("widgettype");
+		final String customentitytype = request.getParameter("customentitytype");
+		final String guid = request.getParameter("widgetGuid");
+		final String userName = auth.getName();
+		final String password = (String) auth.getCredentials();
+		final String appLocation = System.getProperty("webtools.applocation");
 		final boolean inactive = "true".equalsIgnoreCase(request.getParameter("inactive"));
 		final boolean deleted = "true".equalsIgnoreCase(request.getParameter("deleted"));
 		Widget widget = null;
@@ -456,22 +456,20 @@ public class AjaxWidgetFormController extends MultiActionController {
 		return mav;
 	}
 
-	public ModelAndView save(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ModelAndView save(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		return getModelMapError("Unimplemented");
 	}
 
-	private ModelAndView getModelMap(List<Widget> widgets, String widgettype,
-			String customentitytype) {
-		Map<String, Object> modelMap = new HashMap<String, Object>();
-		Map<String, Object> metaData = new HashMap<String, Object>();
+	private ModelAndView getModelMap(final List<Widget> widgets, final String widgettype, final String customentitytype) {
+		final Map<String, Object> modelMap = new HashMap<String, Object>();
+		final Map<String, Object> metaData = new HashMap<String, Object>();
 
 		metaData.put("idProperty", "id");
 		metaData.put("root", "rows");
 		metaData.put("totalProperty", "totalRows");
 		metaData.put("successProperty", "success");
 
-		List<Map<String, Object>> fields = new ArrayList<Map<String, Object>>();
+		final List<Map<String, Object>> fields = new ArrayList<Map<String, Object>>();
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		map = new HashMap<String, Object>();
@@ -583,15 +581,15 @@ public class AjaxWidgetFormController extends MultiActionController {
 	private ModelAndView getModelMap(Widget widget, String widgettype,
 			String customentitytype) {
 
-		Map<String, Object> modelMap = new HashMap<String, Object>();
-		Map<String, Object> metaData = new HashMap<String, Object>();
+		final Map<String, Object> modelMap = new HashMap<String, Object>();
+		final Map<String, Object> metaData = new HashMap<String, Object>();
 
 		metaData.put("idProperty", "widgetId");
 		metaData.put("root", "rows");
 		metaData.put("totalProperty", "totalRows");
 		metaData.put("successProperty", "success");
 
-		List<Map<String, Object>> fields = new ArrayList<Map<String, Object>>();
+		final List<Map<String, Object>> fields = new ArrayList<Map<String, Object>>();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("name", "widgetGuid");
 		map.put("readonly", true);
