@@ -366,7 +366,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 				                    'msg': 'The request could not be processed because the response timed out.  Please try again or contact the website administrator for help.'
 				                });
 							}
-				            else if (response.statusText == "error" || response.statusText == "parsererror") {
+				            else if (response.statusText != "abort") {
 			                    // response error: An invalid response from the server was returned: either 404, 500
 			                    // or the response meta-data does not match that defined in the DataReader
 				                Ext.MessageBox.show({
