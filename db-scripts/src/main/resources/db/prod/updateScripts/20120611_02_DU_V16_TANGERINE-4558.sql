@@ -1,6 +1,5 @@
 START TRANSACTION;
 
-USE WEBTOOLS;
 
 UPDATE `STYLES`
 SET `SITE_NAME` = substring_index(USER_NAME, '@', -1)
