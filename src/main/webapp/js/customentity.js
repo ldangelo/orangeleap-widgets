@@ -180,10 +180,19 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 		},
 
 		onFailure : function(form, action) {
+			var message;
+			if (action.result || action.response) {
+            	message = action.result.message || action.response.responseText;
+			}
+			else if ( ! form.isValid()) {
+				message = 'Please correct the errors that are in red';
+			}
+			else {
+				message = 'An unspecified error occurred.  Please try again';
+			}
 			Ext.Msg.show({
 				title : 'Error',
-				msg : action.result.message
-						|| action.response.responseText,
+				msg : message,
 				modal : true,
 				icon : Ext.Msg.ERROR,
 				buttons : Ext.Msg.OK
