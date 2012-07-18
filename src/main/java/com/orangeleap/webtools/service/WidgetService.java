@@ -44,7 +44,9 @@ public interface WidgetService {
 
 	public Widget saveOrUpdate(Widget widget);
 
-	public CustomTable getCustomTable(String name);
+	public CustomTable getCustomTable(String guid);
+	
+	public CustomTable getCustomTable(String guid, Boolean useCache);
 
 	public WidgetData process(WidgetData data);
 
@@ -56,4 +58,6 @@ public interface WidgetService {
 			String customentitytype);
 
 	public List<CustomTableRow> getCustomTableRows(String guid,	Map<String, String> whereFieldEqualsValue) throws Exception;
+	
+	public void clearCache(String guid);
 }

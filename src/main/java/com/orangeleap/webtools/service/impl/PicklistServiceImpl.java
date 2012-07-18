@@ -60,4 +60,13 @@ public class PicklistServiceImpl implements PicklistService {
 
     return null;
   }
+  
+  public void clearCache(String username) {
+	  final List<String> keys = picklistCache.getKeys();
+	  for (String key : keys) {
+		  if (key.startsWith(username)) {
+			  picklistCache.remove(key);
+		  }
+	  }
+  }
 }

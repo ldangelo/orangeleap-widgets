@@ -449,6 +449,7 @@ public class AjaxWidgetFormController extends MultiActionController {
 		widget.setWidgetErrorCount(0L);
 		widget.setWidgetViewCount(0L);
 		widgetService.saveWidget(widget);
+		widgetService.getCustomTable(widget.getWidgetGuid(), false);
 
 		final ModelAndView mav = getModelMap(widget, widgettype, customentitytype);
 		addStyles(mav, widget.getStyleId());

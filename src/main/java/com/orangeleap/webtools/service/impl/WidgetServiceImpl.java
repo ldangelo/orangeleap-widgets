@@ -341,7 +341,20 @@ public class WidgetServiceImpl implements WidgetService {
 				return null;
 	}
 	
+	public void clearCache(String guid) {
+	  final List<String> keys = customTableCache.getKeys();
+	  for (String key : keys) {
+		  if (key.startsWith(guid)) {
+			  customTableCache.remove(key);
+		  }
+	  }
+	}
+	
 	public CustomTable getCustomTable(String guid) {
+		return getCustomTable(guid, true);
+	}
+	
+	public CustomTable getCustomTable(String guid, Boolean useCache) {
 		WidgetExample example = new WidgetExample();
 		example.createCriteria().andWidgetGuidEqualTo(guid);
 
@@ -354,9 +367,11 @@ public class WidgetServiceImpl implements WidgetService {
 			Widget widget = widgets.get(0);
 
 			Cache cache = (Cache) customTableCache;
-			Element elem = cache.get(guid + widget.getCustomEntityName());
-			if (elem != null) {
-				return (CustomTable) elem.getObjectValue();
+			if (useCache) {
+				Element elem = cache.get(guid + widget.getCustomEntityName());
+				if (elem != null) {
+					return (CustomTable) elem.getObjectValue();
+				}
 			}
 
 

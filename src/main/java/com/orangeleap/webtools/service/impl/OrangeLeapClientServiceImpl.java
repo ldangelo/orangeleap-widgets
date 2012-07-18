@@ -40,6 +40,15 @@ public class OrangeLeapClientServiceImpl implements OrangeLeapClientService {
     constituentCache.remove(id);
   }
 
+  public void clearCache(String guid) {
+	  final List<String> keys = constituentCache.getKeys();
+	  for (String key : keys) {
+		  if (key.startsWith(guid)) {
+			  constituentCache.remove(key);
+		  }
+	  }
+  }
+  
   public Constituent getConstituentById(String guid, Long id) {
     Element elem = constituentCache.get(guid+id);
     if (elem != null) {

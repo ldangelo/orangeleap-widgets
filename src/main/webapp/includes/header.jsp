@@ -13,6 +13,9 @@
 		<li>
 			<a href="logout">Logout</a>
 		</li>
+		<li>
+			<a href="#" onclick="clearCache();" >Clear Cache</a>		
+		</li>		
 	</ol>
 </div>
 <div id="navmain">
@@ -30,3 +33,42 @@
 		</li>
 	</ul>
 </div>
+
+<script>
+function clearCache() {
+	var url = 'clearCache.json';
+	
+	$.ajax({
+		type: "POST",
+		url: url,
+		cache: false,
+		success: function(data) {
+			if (data.indexOf('clearCacheSuccess') != -1) {
+				Ext.Msg.show({
+					title: 'Success',
+					msg: 'Cache successfully cleared.',
+					modal: true,
+					icon: Ext.Msg.INFO,
+					buttons: Ext.Msg.OK 
+				});
+			} else {
+				Ext.MessageBox.show({
+					'title': 'Error',
+					'icon': Ext.MessageBox.ERROR,
+					'buttons': Ext.MessageBox.OK,
+					'msg': 'The cache was not successfully cleared. ' + data
+				});
+			}
+		},
+		error: function(error){
+			Ext.MessageBox.show({
+				'title': 'Error',
+				'icon': Ext.MessageBox.ERROR,
+				'buttons': Ext.MessageBox.OK,
+				'msg': 'An error occurred attempting to clear cache.  Please see message log for details.'
+			});
+		}
+	});
+}
+</script>
+
