@@ -178,7 +178,7 @@ public class AjaxStyleController extends MultiActionController {
 				row.put("Id", s.getId());
 				row.put("Style", net.sf.json.util.JSONUtils.quote(s.getStyle()));
 				row.put("StyleName", s.getStyleName());
-				row.put("Inactive", false);
+				row.put("Inactive", s.isInactive());
 				row.put("CreatedBy", s.getUserName());
 				rows.add(row);
 			}
