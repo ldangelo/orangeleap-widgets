@@ -145,6 +145,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 				if ( ! user_message) {
 					user_message = 'Your changes were successfully saved';
 				}
+				this.maskAccountNumbers();
 
 				Ext.Msg.show({
 					title : 'Success',
@@ -153,15 +154,6 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 					icon : Ext.Msg.INFO,
 					buttons : Ext.Msg.OK
 				});
-
-				var cardField = Ext.getCmp('form').form.findField('creditCardNumber');
-				if (cardField) {
-					cardField.el.dom.type = 'password';
-				}
-				var achField = Ext.getCmp('form').form.findField('ach_account');
-				if (achField) {
-					achField.el.dom.type = 'password';
-				}
 			}
 			else {
 				var params = new Object();
@@ -170,12 +162,25 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 					params[cfMap[f].key] = cfMap[f].value.value;
 				}
 
+				this.maskAccountNumbers();
+
 			    if (this.replaceTopContent == 'true') {
 					this.postToUrl(this.successurl, params,true);
 			    }
 			    else {
 					this.postToUrl(this.successurl, params,false);
 			    }
+			}
+		},
+
+		maskAccountNumbers: function() {
+			var cardField = Ext.getCmp('form').form.findField('creditCardNumber');
+			if (cardField) {
+				cardField.el.dom.type = 'password';
+			}
+			var achField = Ext.getCmp('form').form.findField('ach_account');
+			if (achField) {
+				achField.el.dom.type = 'password';
 			}
 		},
 
