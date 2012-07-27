@@ -436,7 +436,10 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 								if ( ! this.form.findById(fields[f].name)) {
 									var field = new Ext.form.Hidden();
 									field.id = fields[f].name;
-									field.name = fields[f].name;
+									if (fields[f].type == 'picklist') {
+										field.id = fields[f].name + 'combo';
+									}
+									field.name = fields[f].name;									
 									field.dataIndex = fields[f].name;
 									field.fieldLabel = createFieldLabel(fields[f]);
 									field.store = store;

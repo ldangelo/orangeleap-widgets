@@ -55,6 +55,12 @@ public class WidgetServiceImpl implements WidgetService {
 
 	@Resource(name = "customTableCache")
 	Cache customTableCache;
+	
+	public final static String PROJECT_CODE_PICKLIST_ID = "projectCode";
+	public final static String MOTIVATION_CODE_PICKLIST_ID = "motivationCode";
+	public final static String PROJECT_CODE_FIELD_NAME = "gift_designation";
+	public final static String MOTIVATION_CODE_FIELD_NAME = "gift_motivation";
+	
 
 	public Widget create() {
 		return new Widget();
@@ -164,7 +170,16 @@ public class WidgetServiceImpl implements WidgetService {
 				CustomField val = new CustomField();
 				val.setName(ce.getName());
 				String emptyText = ce.getType().equals("multi-picklist") ? "Select " + ce.getHeader() + "..." : "";
-				String[] values = request.getParameterValues(ce.getName());
+				String[] values = null;
+				if (ce.getPicklistId().equalsIgnoreCase(PROJECT_CODE_PICKLIST_ID)){
+					//set the project code field in the custom table to be the same as the one embedded in the form and saved in the webtools.widget table 
+					values = request.getParameterValues(PROJECT_CODE_FIELD_NAME);
+				} else if (ce.getPicklistId().equalsIgnoreCase(MOTIVATION_CODE_PICKLIST_ID)){
+					//set the motivation code field in the custom table to be the same as the one embedded in the form and saved in the webtools.widget table
+					values = request.getParameterValues(MOTIVATION_CODE_FIELD_NAME);
+				} else {
+					values = request.getParameterValues(ce.getName());
+				}
 				if (values == null || values.length == 0) {
 					val.setValue("");
 				} else if (values.length == 1) {
