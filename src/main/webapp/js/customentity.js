@@ -766,6 +766,21 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 						if (this.form.args) {
 							this.form.populateArgs(this.form, this.form.args);
 						}
+						if (this.form.parentFields) {
+							for (var parentFieldName in this.form.parentFields) {
+					            var aParentElem = this.form.form.findField(parentFieldName);
+					            if (aParentElem) {
+					                var xType = aParentElem.getXType();
+					                if (xType == 'combo') {
+						                aParentElem.fireEvent('select', aParentElem)
+					                }
+					                else if (xType == 'superboxselect') {
+		                                this.form.checkMultiPicklistValue(aParentElem);
+					                }
+					            }
+							}
+						}
+
 						Ext.get('loading').remove();
 						Ext.get('loading-mask').fadeOut({
 							remove : true
@@ -787,24 +802,6 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 				icon : Ext.MessageBox.ERROR,
 				buttons : Ext.Msg.OK
 			});
-		},
-		listeners: {
-            render: function(thisForm) {
-				if (thisForm.parentFields) {
-					for (var parentFieldName in thisForm.parentFields) {
-			            var aParentElem = thisForm.form.findField(parentFieldName);
-			            if (aParentElem) {
-			                var xType = aParentElem.getXType();
-			                if (xType == 'combo') {
-				                aParentElem.fireEvent('select', aParentElem)
-			                }
-			                else if (xType == 'superboxselect') {
-                                thisForm.checkMultiPicklistValue(aParentElem);
-			                }
-			            }
-					}
-				}
-            }
 		}
 });
 Ext.reg('customentity', OrangeLeap.CustomEntity);
