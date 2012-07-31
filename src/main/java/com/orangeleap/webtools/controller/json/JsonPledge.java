@@ -81,7 +81,7 @@ public class JsonPledge {
 
 		}
 		try {
-			picklistService.getPickListItems(wsUserName, wsPassword, MOTIVATION_CODE);
+			motivationCodeItems = picklistService.getPickListItems(wsUserName, wsPassword, MOTIVATION_CODE);
 		}
 		catch (Exception ex) {
 
