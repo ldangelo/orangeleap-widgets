@@ -322,6 +322,8 @@ public class CustomEntityController extends MultiActionController {
 								row.put(ce.getName(), value);
 							}
 						}
+					} else {
+						row.put(ce.getName(), ce.getValue());
 					}
 				}
 				else {
