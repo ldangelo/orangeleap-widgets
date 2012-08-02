@@ -5,12 +5,14 @@ var authentication = {
     loginform:null,
     replaceTopContent:null,
   
-	postToUrl: function(url, params, newWindow) {
+	postToUrl: function(url, params, replaceTopWindow) {
 		var form = $j('<form>');
 		form.attr('action', url);
 		form.attr('method', 'POST');
 
-		if(newWindow){ form.attr('target', '_blank'); }
+		if (replaceTopWindow){
+			form.attr('target', '_top');
+		}
 
 		var addParam = function(paramName, paramValue){
 			var input = $j('<input type="hidden">');
@@ -108,10 +110,12 @@ var authentication = {
 			    params["constituentId"] = session.constituentId;
 			    params["accountnumber"]= session.accountNumber;
 
-			    if (this.replaceTopContent=='true')
-				this.postToUrl(successurl, params,true);
-			    else
-				this.postToUrl(successurl, params,false);
+			    if (this.replaceTopContent=='true') {
+					this.postToUrl(successurl, params,true);
+			    }
+			    else {
+					this.postToUrl(successurl, params,false);
+			    }
 			}
 		}
     },

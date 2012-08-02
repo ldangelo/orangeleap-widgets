@@ -2,12 +2,12 @@ var $j = jQuery.noConflict();
 
 var pledges = {
 		replaceTopContent: null,		
-postToUrl: function(url, params, newWindow)
+postToUrl: function(url, params, replaceTopWindow)
 {
     var form = $('<form>');
     form.attr('action', url);
     form.attr('method', 'POST');
-    if(newWindow){ form.attr('target', '_blank'); }
+    if(replaceTopWindow){ form.attr('target', '_top'); }
 
     var addParam = function(paramName, paramValue){
         var input = $('<input type="hidden">');
