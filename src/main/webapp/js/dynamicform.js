@@ -4,15 +4,15 @@ function generateForm(form,store,meta) {
 			}
 			var fields = meta.fields;
 			var col1 = new Ext.Panel({columnWidth: '.50',layout:'form',defaults:{anchor:'100%'},bodyStyle:'padding:0 18px 0 0',items:[]}); 
-			var col2 = null;
+			var col2;
 
 			if (fields.length > 4) {
 			    col2 =  new Ext.Panel({columnWidth: '.50',layout:'form',defaults:{anchor:'100%'},bodyStyle:'padding:0 18px 0 0',items:[]})
 			}
 
-			var panel = null;
+			var panel;
 
-			if (col2 != null) {
+			if (col2) {
 				panel = new Ext.Panel({ columnWidth:0.5,layout:'column', bodyStyle:'padding:0 18px 0 0',items:[col1,col2]});
 			}
 			else {
@@ -33,7 +33,7 @@ function generateForm(form,store,meta) {
 					   field.readOnly=true;
 					}
 
-					if (col2 != null && f > fields.length/2) {
+					if (col2  && f > fields.length/2) {
 						col2.add(field);
 					}
 					else {
@@ -58,7 +58,7 @@ function generateForm(form,store,meta) {
 						field.blankText="Enter a " + fields[f].header;
 					}
 
-					if (col2 != null && f > fields.length/2) {
+					if (col2  && f > fields.length/2) {
 						col2.add(field);
 					}
 					else {
@@ -85,7 +85,7 @@ function generateForm(form,store,meta) {
 						field.blankText="Enter a " + fields[f].header;
 					}
 
-					if (col2 != null && f > fields.length/2) {
+					if (col2 && f > fields.length/2) {
 						col2.add(field);
 					}
 					else {
@@ -128,7 +128,7 @@ function generateForm(form,store,meta) {
 							'load' : function(store, records, options) {
 								
 								var fld = form.getForm().findField(this.picklistName);
-								if (fld != null) {
+								if (fld) {
 									fld.setValue(fld.value);
 								}								
 							}
@@ -141,7 +141,7 @@ function generateForm(form,store,meta) {
 						comboConfig.allowBlank=false,
 						comboConfig.blankText="Enter a " + fields[f].header;
 					}
-					if (col2 != null && f > fields.length/2) {
+					if (col2 && f > fields.length/2) {
 						col2.add(comboConfig);
 					}
 					else {
@@ -166,7 +166,7 @@ function generateForm(form,store,meta) {
 						field.blankText="Enter a " + fields[f].header;
 					}
 
-					if (col2 != null && f > fields.length/2) {
+					if (col2 && f > fields.length/2) {
 						col2.add(field);
 					}
 					else {
@@ -176,15 +176,16 @@ function generateForm(form,store,meta) {
 			    else if (fields[f].type == 'boolean') {
 			        if (fields[f].element == 'radio') {
 						var field = new Ext.form.RadioGroup({
+							fieldLabel: fields[f].header,
                         	id: fields[f].name,
                         	name: fields[f].name,
                         	readOnly: fields[f].readonly,
 							items: [
 								{ boxLabel: fields[f].trueOption, name: fields[f].name, inputValue: 'true', checked: true},
-								{ boxLabel: fields[f].falseOption, name: fields[f].name, inputValue: 'false' },
+								{ boxLabel: fields[f].falseOption, name: fields[f].name, inputValue: 'false' }
 							]
 						});
-						if (col2 != null && f > fields.length/2) {
+						if (col2 && f > fields.length/2) {
 							col2.add(field);
 						}
 						else {
@@ -209,7 +210,7 @@ function generateForm(form,store,meta) {
 							field.checked=true;
 							field.disabled=true;
 						}
-						if (col2 != null && f > fields.length/2) {
+						if (col2 && f > fields.length/2) {
 							col2.add(field);
 						}
 						else {

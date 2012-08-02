@@ -626,17 +626,6 @@ public class AjaxWidgetFormController extends MultiActionController {
 		}
 
 		map = new HashMap<String, Object>();
-		map.put("name", "replaceTopContents");
-		map.put("readonly", false);
-		map.put("required", true);
-		map.put("type", "boolean");
-		map.put("header", "Replace Content Options");
-		map.put("element", "radio");
-		map.put("trueOption", "Replace The Whole Page");
-		map.put("falseOption", "Replace The Inner Frame");
-		fields.add(map);
-
-		map = new HashMap<String, Object>();
 		map.put("name", "styleId");
 		map.put("readonly", false);
 		map.put("required", true);
@@ -656,7 +645,18 @@ public class AjaxWidgetFormController extends MultiActionController {
 		}
 		map.put("type", "text");
 		map.put("header", "Widget Success URL");
+		fields.add(map);
 
+
+		map = new HashMap<String, Object>();
+		map.put("name", "replaceTopContents");
+		map.put("readonly", false);
+		map.put("required", true);
+		map.put("type", "boolean");
+		map.put("header", "If the Success URL is specified, redirect");
+		map.put("element", "radio");
+		map.put("trueOption", "To Success URL in the Browser Window");
+		map.put("falseOption", "To Success URL in the Inner Frame");
 		fields.add(map);
 
 		if (customentitytype.equals("online_donation") || customentitytype.equals("online_recurringgift")) {
