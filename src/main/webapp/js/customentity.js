@@ -174,20 +174,23 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 		},
 
 		maskAccountNumbers: function() {
-			var cardField = Ext.getCmp('form').form.findField('creditCardNumber');
-			if ( ! cardField) {
-				cardField = Ext.getCmp('form').form.findField('payment_info_paymentSource_creditCardNumber');
+			try {
+				var cardField = Ext.getCmp('form').form.findField('creditCardNumber');
+				if ( ! cardField) {
+					cardField = Ext.getCmp('form').form.findField('payment_info_paymentSource_creditCardNumber');
+				}
+				if (cardField) {
+					cardField.el.dom.type = 'password';
+				}
+				var achField = Ext.getCmp('form').form.findField('ach_account');
+				if ( ! achField) {
+					achField = Ext.getCmp('form').form.findField('payment_info_paymentSource_achAccountNumber');
+				}
+				if (achField) {
+					achField.el.dom.type = 'password';
+				}
 			}
-			if (cardField) {
-				cardField.el.dom.type = 'password';
-			}
-			var achField = Ext.getCmp('form').form.findField('ach_account');
-			if ( ! achField) {
-				achField = Ext.getCmp('form').form.findField('payment_info_paymentSource_achAccountNumber');
-			}
-			if (achField) {
-				achField.el.dom.type = 'password';
-			}
+			catch (exception) {}
 		},
 
 		onFailure : function(form, action) {
