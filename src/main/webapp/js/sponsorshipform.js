@@ -503,6 +503,10 @@ var sponsorshipform =  {
 			}),
 			fieldLabel: 'Country'
 		});
+		var countryComboConfig = comboConfig.store.filter;
+		countryComboConfig.store.filter = function(field, query) {
+			oldFilterFunc.call(this, 'Description', query, false, false); // allow case-insensitive filtering of combobox records
+		};
 		var genderStore = new Ext.data.ArrayStore({
 			fields: ['gender'],
 			data :[['Male'],['Female'],['Unspecified']]

@@ -630,7 +630,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 									triggerAction : 'all',
 									hiddenName : fields[f].name,
 									displayField : 'Description',
-									forceSelection : true,
+									forceSelection: true,
                                     selectOnFocus: true,
 									lazyInit : false,
 									mode : 'local',
@@ -649,6 +649,10 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 										}
 									}
 								});
+								var oldFilterFunc = comboConfig.store.filter;
+								comboConfig.store.filter = function(field, query) {
+									oldFilterFunc.call(this, 'Description', query, false, false); // allow case-insensitive filtering of combobox records
+								};
 
 								if (fields[f].required) {
 									comboConfig.allowBlank = false;

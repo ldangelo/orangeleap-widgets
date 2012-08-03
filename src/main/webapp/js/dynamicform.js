@@ -94,49 +94,54 @@ function generateForm(form,store,meta) {
 			    }
 			    else if (fields[f].type == 'picklist') {
 					var comboConfig = new Ext.form.ComboBox({
-					id:fields[f].name,
-					dataIndex : fields[f].name,
-					valueField:'Name',
-					triggerAction:'all',
-					hiddenName:fields[f].name + 'hidden' ,
-					displayField:'Description',
-					forceSelection:true,
-					lazyInit:false,
-					mode:'local',
-					emptyText: 'Select ' + fields[f].header + '...',
-					store:new Ext.data.JsonStore({
-						id:'Name',
-						root:'rows',
-						totalProperty:'totalRows',
-						autoLoad: true,
-						picklistName: fields[f].name,
-						fields: [
-						{name:'Name',type:'string'},
-						{name:'Description',type:'string'}
-						],
-						proxy: new Ext.data.HttpProxy({
-							api: {
-								read: 'picklistItems.json'
+						id:fields[f].name,
+						dataIndex : fields[f].name,
+						valueField:'Name',
+						triggerAction:'all',
+						hiddenName:fields[f].name + 'hidden' ,
+						displayField:'Description',
+						forceSelection:true,
+                        selectOnFocus: true,
+						lazyInit:false,
+						mode:'local',
+						emptyText: 'Select ' + fields[f].header + '...',
+						store:new Ext.data.JsonStore({
+							id:'Name',
+							root:'rows',
+							totalProperty:'totalRows',
+							autoLoad: true,
+							picklistName: fields[f].name,
+							fields: [
+								{name:'Name',type:'string'},
+								{name:'Description',type:'string'}
+							],
+							proxy: new Ext.data.HttpProxy({
+								api: {
+									read: 'picklistItems.json'
+								},
+								timeout: 120000
+							}),
+							baseParams: {
+								guid: "",
+								picklistname: fields[f].name
 							},
-							timeout: 120000
-						}),
-						baseParams: {
-							guid: "",
-							picklistname: fields[f].name
-						},
-						listeners: {
-							'load' : function(store, records, options) {
-								
-								var fld = form.getForm().findField(this.picklistName);
-								if (fld) {
-									fld.setValue(fld.value);
-								}								
+							listeners: {
+								'load' : function(store, records, options) {
+
+									var fld = form.getForm().findField(this.picklistName);
+									if (fld) {
+										fld.setValue(fld.value);
+									}
+								}
 							}
-						}
-						
-					}),
-					fieldLabel:fields[f].header
+
+						}),
+						fieldLabel:fields[f].header
 					});
+					var oldFilterFunc = comboConfig.store.filter;
+					comboConfig.store.filter = function(field, query) {
+						oldFilterFunc.call(this, 'Description', query, true, false); // allow case-insensitive filtering of combobox records
+					};
 					if (fields[f].required == true) {
 						comboConfig.allowBlank=false,
 						comboConfig.blankText="Enter a " + fields[f].header;

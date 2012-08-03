@@ -61,6 +61,7 @@ Ext.onReady(function() {
 			enableKeyEvents: true,
 			mode: 'local',
 			forceSelection: true,
+            selectOnFocus: true,
 			triggerAction: 'all',
 			emptyText: ' ',
 			width: 250,
@@ -71,6 +72,10 @@ Ext.onReady(function() {
 				scope: this
 			}
 		});
+		var oldFilterFunc = widgetCombo.store.filter;
+		widgetCombo.store.filter = function(field, query) {
+			oldFilterFunc.call(this, 'desc', query, true, false); // allow case-insensitive filtering of combobox records
+		};
 
 		var widgetpanel = new NewWidgetPanelUi();
 		widgetpanel.render("widgetpanel-div");
