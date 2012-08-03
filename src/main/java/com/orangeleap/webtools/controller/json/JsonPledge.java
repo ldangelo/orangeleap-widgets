@@ -75,13 +75,13 @@ public class JsonPledge {
 		List<PicklistItem> projectCodeItems = null;
 		List<PicklistItem> motivationCodeItems = null;
 		try {
-			projectCodeItems = picklistService.getPickListItems(wsUserName, wsPassword, PROJECT_CODE);
+			projectCodeItems = picklistService.getPickListItems(wsUserName, wsPassword, PROJECT_CODE,true);
 		}
 		catch (Exception ex) {
 
 		}
 		try {
-			motivationCodeItems = picklistService.getPickListItems(wsUserName, wsPassword, MOTIVATION_CODE);
+			picklistService.getPickListItems(wsUserName, wsPassword, MOTIVATION_CODE,true);
 		}
 		catch (Exception ex) {
 

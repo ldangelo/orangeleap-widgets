@@ -287,7 +287,7 @@ public class CustomEntityListController {
 
 					//
 					// don't use the value us the displayvalue for the picklist
-					List<PicklistItem> picklistitems = picklistService.getPickListItems(username, password, ctfield.getCustomTableFieldPicklistNameId());
+					List<PicklistItem> picklistitems = picklistService.getPickListItems(username, password, ctfield.getCustomTableFieldPicklistNameId(),true);
 					Iterator<PicklistItem> picklistit = picklistitems.iterator();
 					while (picklistit.hasNext()) {
 						PicklistItem item = picklistit.next();

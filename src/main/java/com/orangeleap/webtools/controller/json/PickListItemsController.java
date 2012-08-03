@@ -51,7 +51,7 @@ public class PickListItemsController {
                 wsusername = widget.getWidgetUsername();
                 wspassword = widget.getWidgetPassword();
             }
-            List<PicklistItem> picklistItems = picklistService.getPickListItems(wsusername, wspassword, picklistname);
+            List<PicklistItem> picklistItems = picklistService.getPickListItems(wsusername, wspassword, picklistname,true);
 
             if (picklistItems != null) {
                 populateMetaData(picklistItems, returnList);

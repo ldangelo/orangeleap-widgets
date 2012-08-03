@@ -28,7 +28,7 @@ public class PicklistServiceImpl implements PicklistService {
   Cache picklistCache;
 
 
-  public List<PicklistItem> getPickListItems(String username, String password, String picklistname)
+  public List<PicklistItem> getPickListItems(String username, String password, String picklistname,boolean useCache)
   {
     Cache cache = (Cache) picklistCache;
 
