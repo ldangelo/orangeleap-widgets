@@ -71,10 +71,14 @@ postToUrl: function(url, params, replaceTopWindow)
 	    this.handlerError("Authentication Failed!");
 	} else {
 	    this.setCookie("constituentId",constituentid);
-	    if (this.replaceTopContent == 'true')
+	    if (this.replaceTopContent == 'true') {
+			Ext.getBody().mask('Loading...', 'x-mask-loading');
 	    	top.location.href = redirecturl;
-	    else
-	    	top.location.href = redirecturl;	    	
+	    }
+	    else {
+			Ext.getBody().mask('Loading...', 'x-mask-loading');
+	    	window.location.href = redirecturl;
+	    }
 	}
     },
 
@@ -101,11 +105,14 @@ postToUrl: function(url, params, replaceTopWindow)
 	
 	
 	if (authenticate == true && sessionId == "") {
-//        window.open(redirecturl, "_blank");
-		if (replaceTopContent == 'true')
+		if (replaceTopContent == 'true') {
+			Ext.getBody().mask('Loading...', 'x-mask-loading');
 			top.location.href=redirecturl;
-		else
-			top.location.href=redirecturl;
+		}
+		else {
+			Ext.getBody().mask('Loading...', 'x-mask-loading');
+			window.location.href=redirecturl;
+		}
 
 		return;
 	}
@@ -167,10 +174,14 @@ postToUrl: function(url, params, replaceTopWindow)
                 case 'payment':
                     console.log('make a payment - ' + record.id);
                     var params = {};
-                    if (replaceTopContent == 'true') 
+                    if (replaceTopContent == 'true') {
+						Ext.getBody().mask('Loading...', 'x-mask-loading');
                     	top.location.href= donationurl + "?pledge_id=" + record.id +"&gift_amount=" + record.data.amount + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;
-                    else
-                    	window.location.href= donationurl + "?pledge_id=" + record.id +"&gift_amount=" + record.data.amount + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;                    	
+                    }
+                    else {
+						Ext.getBody().mask('Loading...', 'x-mask-loading');
+                    	window.location.href= donationurl + "?pledge_id=" + record.id +"&gift_amount=" + record.data.amount + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;
+                    }
                     //pledges.postToUrl('http://localhost/~ldangelo/donation.html',params);
                     break;
                 case 'go':

@@ -447,7 +447,7 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
 							helper.setText("Your password is " + val);
 
 							sender.send(message);
-							returnstr = "An email was sent to the password for the account";
+							returnstr = "An email about your password was sent to your account";
 						}
 						catch (Exception e) {
 

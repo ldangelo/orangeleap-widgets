@@ -441,6 +441,13 @@ var authentication = {
 				}
 			]
 		});
+		try {
+			Ext.get('loading').remove();
+			Ext.get('loading-mask').fadeOut({
+				remove : true
+			});
+		}
+		catch (exception) {}
 
 		this.loginform.render("widget");
 

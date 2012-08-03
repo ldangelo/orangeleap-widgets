@@ -68,10 +68,14 @@ var gifthistory = {
     this.replaceTopContent = replaceTopContent;
 
 	if (authenticate == true && this.sessionId == "") {
-		if (replaceTopContent == 'true')
+		if (replaceTopContent == 'true') {
+			Ext.getBody().mask('Loading...', 'x-mask-loading');
 			top.location.href=redirecturl;
-		else
+		}
+		else {
+			Ext.getBody().mask('Loading...', 'x-mask-loading');
 			window.location.href=redirecturl;
+		}
 		
 	    return;
 	}

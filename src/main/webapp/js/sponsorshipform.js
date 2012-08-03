@@ -164,10 +164,14 @@ var sponsorshipform =  {
 
 			query=query + items[i].name + '=' + items[i].value;
 		}
-		if (this.replaceTopContent == 'true')
+		if (this.replaceTopContent == 'true') {
+			Ext.getBody().mask('Loading...', 'x-mask-loading');
 			top.location.href=sponsorshipform.sponsorshipurl + query
-		else
-			window.location.href=sponsorshipform.sponsorshipurl + query			
+		}
+		else {
+			Ext.getBody().mask('Loading...', 'x-mask-loading');
+			window.location.href=sponsorshipform.sponsorshipurl + query
+		}
     },
     clearForm:function() {
 		//
@@ -239,10 +243,12 @@ var sponsorshipform =  {
 		var constituentId = this.getCookie("constituentId");
 
 		if (authenticate == true &&  constituentId == "") {
-			if (replaceTopContent == 'true')
+			if (replaceTopContent == 'true') {
 				top.location.href=redirecturl;
-			else
+			}
+			else {
 				window.location.href=redirecturl;
+			}
 			return;
 		}
 		OrangeLeapWidget.updateViewCount(guid,this.referer);
