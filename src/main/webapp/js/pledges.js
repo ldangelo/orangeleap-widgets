@@ -172,7 +172,9 @@ postToUrl: function(url, params, replaceTopWindow)
             var control = t.className.split('_')[1];
             switch (control) {
                 case 'payment':
-                    console.log('make a payment - ' + record.id);
+                    if (console) {
+                        console.log('make a payment - ' + record.id);
+                    }
                     var params = {};
                     if (replaceTopContent == 'true') {
 						Ext.getBody().mask('Loading...', 'x-mask-loading');
@@ -185,7 +187,9 @@ postToUrl: function(url, params, replaceTopWindow)
                     //pledges.postToUrl('http://localhost/~ldangelo/donation.html',params);
                     break;
                 case 'go':
-                    console.log('go to this record - ' + record.id);
+                    if (console) {
+                        console.log('go to this record - ' + record.id);
+                    }
                     break;
             }
         }
