@@ -68,11 +68,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 			if (referer[1]) {
 				var parms = referer[1].split('&');
 
-				for (x in parms) {
-					if (x == 'remove') {
-						return;
-					}
-
+				for (x = 0; x < parms.length; x++) {
 					var keyval = parms[x].split('=');
 
 					if (keyval[0] == 'id') {
