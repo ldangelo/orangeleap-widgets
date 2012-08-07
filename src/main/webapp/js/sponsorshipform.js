@@ -503,7 +503,7 @@ var sponsorshipform =  {
 			}),
 			fieldLabel: 'Country'
 		});
-		var countryComboConfig = comboConfig.store.filter;
+		var countryComboConfig = countryComboConfig.store.filter;
 		countryComboConfig.store.filter = function(field, query) {
 			oldFilterFunc.call(this, 'Description', query, false, false); // allow case-insensitive filtering of combobox records
 		};
