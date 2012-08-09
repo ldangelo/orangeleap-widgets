@@ -113,7 +113,7 @@
     <cache name="picklistCache"
            maxElementsInMemory="1000"
            maxElementsOnDisk="0"
-           eternal="false"
+           eternal="true"
            overflowToDisk="true"
            diskSpoolBufferSizeMB="10"
            timeToIdleSeconds="0"
