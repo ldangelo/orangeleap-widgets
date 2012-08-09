@@ -28,16 +28,18 @@ public class PicklistServiceImpl implements PicklistService {
   Cache picklistCache;
 
 
-  public List<PicklistItem> getPickListItems(String username, String password, String picklistname)
+  public List<PicklistItem> getPickListItems(String username, String password, String picklistname,boolean useCache)
   {
-    Cache cache = (Cache) picklistCache;
 
-    Element elem =  cache.get(username+picklistname);
-    if (elem!=null) {
-      Picklist picklist = (Picklist) elem.getObjectValue();
-      return picklist.getPicklistItems();
+      Cache cache = (Cache) picklistCache;
+
+    if (useCache) {
+      Element elem =  cache.get(resolveSiteName(username)+picklistname);
+      if (elem!=null) {
+        Picklist picklist = (Picklist) elem.getObjectValue();
+        return picklist.getPicklistItems();
+      }
     }
-
 
     WSClient wsClient = null;
     OrangeLeap oleap = null;
@@ -51,7 +53,7 @@ public class PicklistServiceImpl implements PicklistService {
     try {
     	response = oleap.getPickListByName(request);
     	if (response != null) {
-    		cache.put(new Element(username+picklistname,response.getPicklist()));
+          cache.put(new Element(resolveSiteName(username)+picklistname,response.getPicklist()));
     		return response.getPicklist().getPicklistItems();
     	}
     } catch (Exception e) {
@@ -61,10 +63,14 @@ public class PicklistServiceImpl implements PicklistService {
     return null;
   }
   
+  public String resolveSiteName(final String userName) { 
+    return userName == null ? null : userName.substring(userName.indexOf('@') + 1);
+  }
+
   public void clearCache(String username) {
 	  final List<String> keys = picklistCache.getKeys();
 	  for (String key : keys) {
-		  if (key.startsWith(username)) {
+        if (key.startsWith(resolveSiteName(username))) {
 			  picklistCache.remove(key);
 		  }
 	  }

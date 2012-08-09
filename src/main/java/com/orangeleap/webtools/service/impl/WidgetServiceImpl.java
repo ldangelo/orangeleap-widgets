@@ -644,7 +644,7 @@ public class WidgetServiceImpl implements WidgetService {
 					    List<PicklistItem> picklistItems = null;
 
 						try {
-							picklistItems = picklistService.getPickListItems(wsUsername, wsPassword, entityMap.get("picklistId"));
+							picklistItems = picklistService.getPickListItems(wsUsername, wsPassword, entityMap.get("picklistId"),true);
 						}
 						catch (Exception ex) {
 							if (logger.isWarnEnabled()) {

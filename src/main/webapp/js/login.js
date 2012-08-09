@@ -5,12 +5,14 @@ var authentication = {
     loginform:null,
     replaceTopContent:null,
   
-	postToUrl: function(url, params, newWindow) {
+	postToUrl: function(url, params, replaceTopWindow) {
 		var form = $j('<form>');
 		form.attr('action', url);
 		form.attr('method', 'POST');
 
-		if(newWindow){ form.attr('target', '_blank'); }
+		if (replaceTopWindow){
+			form.attr('target', '_top');
+		}
 
 		var addParam = function(paramName, paramValue){
 			var input = $j('<input type="hidden">');
@@ -108,10 +110,12 @@ var authentication = {
 			    params["constituentId"] = session.constituentId;
 			    params["accountnumber"]= session.accountNumber;
 
-			    if (this.replaceTopContent=='true')
-				this.postToUrl(successurl, params,true);
-			    else
-				this.postToUrl(successurl, params,false);
+			    if (this.replaceTopContent=='true') {
+					this.postToUrl(successurl, params,true);
+			    }
+			    else {
+					this.postToUrl(successurl, params,false);
+			    }
 			}
 		}
     },
@@ -133,16 +137,13 @@ var authentication = {
     },
     testCookies: function() {
     	this.setCookie("test","test",1);
-    	
-    	if (this.getCookie("test") == "") 
-    		return false;
-    	else
-    		return true;
+    	var cookieValue = this.getCookie("test");
+    	return cookieValue === "test";
     },
     generateWidget: function(widgetid, successurl, replaceTopContent,referer) {
 		sessionId = this.getCookie("sessionId");
 
-		if (this.testCookies() == false) {
+		if (this.testCookies() === false) {
 			// display the error
 			Ext.Msg.show({
 				title: 'ERROR',
@@ -158,6 +159,39 @@ var authentication = {
 		
 		Ext.QuickTips.init();
 		Ext.form.Field.prototype.msgTarget = 'under';
+
+		var loginListener = {
+	        'keydown': function(fld, event) {
+		        if (event.getKey() == event.ENTER) {
+		            setTimeout(function() {
+		                jQuery('#aLoginButton').click();
+		            }, 100);
+		        }
+	        },
+	        scope: this
+		};
+
+		var forgotPasswordListener = {
+	        'keydown': function(fld, event) {
+		        if (event.getKey() == event.ENTER) {
+		            setTimeout(function() {
+		                jQuery('#forgotPasswordButton').click();
+		            }, 100);
+		        }
+	        },
+	        scope: this
+		};
+
+		var changePasswordListener = {
+	        'keydown': function(fld, event) {
+		        if (event.getKey() == event.ENTER) {
+		            setTimeout(function() {
+		                jQuery('#changePasswordButton').click();
+		            }, 100);
+		        }
+	        },
+	        scope: this
+		};
 
 			this.loginform = new Ext.form.FormPanel({
 				id: 'loginform',
@@ -179,7 +213,9 @@ var authentication = {
 					maxLength: 12,
 					id: 'enterUserName',
 					blankText: 'Enter your User Name.',
-					minLengthText: 'User Name must be at least 6 characters'
+					minLengthText: 'User Name must be at least 6 characters',
+					enableKeyEvents: true,
+	                listeners: loginListener
 				},{
 					inputType:'password',
 					fieldLabel: 'Password',
@@ -188,7 +224,9 @@ var authentication = {
 					minLength: 6,
 					maxLength: 12,
 					blankText: 'Enter your Password.',
-					minLengthText: 'Password must be at least 6 characters'
+					minLengthText: 'Password must be at least 6 characters',
+					enableKeyEvents: true,
+	                listeners: loginListener
 				},
 					{
 						id: 'remember',
@@ -208,6 +246,7 @@ var authentication = {
 				fbar: [{
 					text: 'Login',
 					formBind:true,
+					id: 'aLoginButton',
 					cls: 'mainButton',
 					handler: function(b,e) {
 						Ext.get('enterUserName').addClass('showWait');
@@ -246,11 +285,14 @@ var authentication = {
 									minLength: 6,
 									maxLength: 12,
 									blankText: 'Enter your User Name.',
-									minLengthText: 'User Name must be at least 6 characters'
+									minLengthText: 'User Name must be at least 6 characters',
+									enableKeyEvents: true,
+					                listeners: forgotPasswordListener
 								}
 							],
 							buttons: [{
 								text: 'Submit',
+								id: 'forgotPasswordButton',
 								formBind:true,
 								handler: function(b,e) {
 									Ext.get('forgotPasswordUserName').addClass('showWait');
@@ -306,7 +348,9 @@ var authentication = {
 									minLength:6,
 									maxLength:12,
 									blankText: 'Enter your User Name.',
-									minLengthText: 'User Name must be at least 6 characters'
+									minLengthText: 'User Name must be at least 6 characters',
+									enableKeyEvents: true,
+					                listeners: changePasswordListener
 								},
 								{
 									fieldLabel: 'Old Password',
@@ -316,7 +360,9 @@ var authentication = {
 									minLength: 6,
 									maxLength: 12,
 									blankText: 'Enter your current Password.',
-									minLengthText: 'Old Password must be at least 6 characters'
+									minLengthText: 'Old Password must be at least 6 characters',
+									enableKeyEvents: true,
+					                listeners: changePasswordListener
 								},
 								{
 									fieldLabel: 'New Password',
@@ -326,7 +372,9 @@ var authentication = {
 									minLength: 6,
 									maxLength: 12,
 									blankText: 'Enter your New Password.',
-									minLengthText: 'New Password must be at least 6 characters'
+									minLengthText: 'New Password must be at least 6 characters',
+									enableKeyEvents: true,
+					                listeners: changePasswordListener
 								},
 								{
 									fieldLabel: 'New Password',
@@ -336,12 +384,15 @@ var authentication = {
 									minLength: 6,
 									maxLength: 12,
 									blankText: 'Re-Enter your New Password.',
-									minLengthText: 'New Password must be at least 6 characters'
+									minLengthText: 'New Password must be at least 6 characters',
+									enableKeyEvents: true,
+					                listeners: changePasswordListener
 								}
 
 							],
 							buttons: [{
 								text: 'Submit',
+								id: 'changePasswordButton',
 								formBind:true,
 								handler: function(b,e) {
 									if ($j("input[name=newpassword]").val() != $j("input[name=newpasswordre]").val()) {
@@ -390,6 +441,13 @@ var authentication = {
 				}
 			]
 		});
+		try {
+			Ext.get('loading').remove();
+			Ext.get('loading-mask').fadeOut({
+				remove : true
+			});
+		}
+		catch (exception) {}
 
 		this.loginform.render("widget");
 

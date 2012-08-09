@@ -4,15 +4,15 @@ function generateForm(form,store,meta) {
 			}
 			var fields = meta.fields;
 			var col1 = new Ext.Panel({columnWidth: '.50',layout:'form',defaults:{anchor:'100%'},bodyStyle:'padding:0 18px 0 0',items:[]}); 
-			var col2 = null;
+			var col2;
 
 			if (fields.length > 4) {
 			    col2 =  new Ext.Panel({columnWidth: '.50',layout:'form',defaults:{anchor:'100%'},bodyStyle:'padding:0 18px 0 0',items:[]})
 			}
 
-			var panel = null;
+			var panel;
 
-			if (col2 != null) {
+			if (col2) {
 				panel = new Ext.Panel({ columnWidth:0.5,layout:'column', bodyStyle:'padding:0 18px 0 0',items:[col1,col2]});
 			}
 			else {
@@ -33,7 +33,7 @@ function generateForm(form,store,meta) {
 					   field.readOnly=true;
 					}
 
-					if (col2 != null && f > fields.length/2) {
+					if (col2  && f > fields.length/2) {
 						col2.add(field);
 					}
 					else {
@@ -58,7 +58,7 @@ function generateForm(form,store,meta) {
 						field.blankText="Enter a " + fields[f].header;
 					}
 
-					if (col2 != null && f > fields.length/2) {
+					if (col2  && f > fields.length/2) {
 						col2.add(field);
 					}
 					else {
@@ -85,7 +85,7 @@ function generateForm(form,store,meta) {
 						field.blankText="Enter a " + fields[f].header;
 					}
 
-					if (col2 != null && f > fields.length/2) {
+					if (col2 && f > fields.length/2) {
 						col2.add(field);
 					}
 					else {
@@ -94,54 +94,59 @@ function generateForm(form,store,meta) {
 			    }
 			    else if (fields[f].type == 'picklist') {
 					var comboConfig = new Ext.form.ComboBox({
-					id:fields[f].name,
-					dataIndex : fields[f].name,
-					valueField:'Name',
-					triggerAction:'all',
-					hiddenName:fields[f].name + 'hidden' ,
-					displayField:'Description',
-					forceSelection:true,
-					lazyInit:false,
-					mode:'local',
-					emptyText: 'Select ' + fields[f].header + '...',
-					store:new Ext.data.JsonStore({
-						id:'Name',
-						root:'rows',
-						totalProperty:'totalRows',
-						autoLoad: true,
-						picklistName: fields[f].name,
-						fields: [
-						{name:'Name',type:'string'},
-						{name:'Description',type:'string'}
-						],
-						proxy: new Ext.data.HttpProxy({
-							api: {
-								read: 'picklistItems.json'
+						id:fields[f].name,
+						dataIndex : fields[f].name,
+						valueField:'Name',
+						triggerAction:'all',
+						hiddenName:fields[f].name + 'hidden' ,
+						displayField:'Description',
+						forceSelection:true,
+                        selectOnFocus: true,
+						lazyInit:false,
+						mode:'local',
+						emptyText: 'Select ' + fields[f].header + '...',
+						store:new Ext.data.JsonStore({
+							id:'Name',
+							root:'rows',
+							totalProperty:'totalRows',
+							autoLoad: true,
+							picklistName: fields[f].name,
+							fields: [
+								{name:'Name',type:'string'},
+								{name:'Description',type:'string'}
+							],
+							proxy: new Ext.data.HttpProxy({
+								api: {
+									read: 'picklistItems.json'
+								},
+								timeout: 120000
+							}),
+							baseParams: {
+								guid: "",
+								picklistname: fields[f].name
 							},
-							timeout: 120000
-						}),
-						baseParams: {
-							guid: "",
-							picklistname: fields[f].name
-						},
-						listeners: {
-							'load' : function(store, records, options) {
-								
-								var fld = form.getForm().findField(this.picklistName);
-								if (fld != null) {
-									fld.setValue(fld.value);
-								}								
+							listeners: {
+								'load' : function(store, records, options) {
+
+									var fld = form.getForm().findField(this.picklistName);
+									if (fld) {
+										fld.setValue(fld.value);
+									}
+								}
 							}
-						}
-						
-					}),
-					fieldLabel:fields[f].header
+
+						}),
+						fieldLabel:fields[f].header
 					});
+					var oldFilterFunc = comboConfig.store.filter;
+					comboConfig.store.filter = function(field, query) {
+						oldFilterFunc.call(this, 'Description', query, true, false); // allow case-insensitive filtering of combobox records
+					};
 					if (fields[f].required == true) {
 						comboConfig.allowBlank=false,
 						comboConfig.blankText="Enter a " + fields[f].header;
 					}
-					if (col2 != null && f > fields.length/2) {
+					if (col2 && f > fields.length/2) {
 						col2.add(comboConfig);
 					}
 					else {
@@ -166,7 +171,7 @@ function generateForm(form,store,meta) {
 						field.blankText="Enter a " + fields[f].header;
 					}
 
-					if (col2 != null && f > fields.length/2) {
+					if (col2 && f > fields.length/2) {
 						col2.add(field);
 					}
 					else {
@@ -176,15 +181,16 @@ function generateForm(form,store,meta) {
 			    else if (fields[f].type == 'boolean') {
 			        if (fields[f].element == 'radio') {
 						var field = new Ext.form.RadioGroup({
+							fieldLabel: fields[f].header,
                         	id: fields[f].name,
                         	name: fields[f].name,
                         	readOnly: fields[f].readonly,
 							items: [
 								{ boxLabel: fields[f].trueOption, name: fields[f].name, inputValue: 'true', checked: true},
-								{ boxLabel: fields[f].falseOption, name: fields[f].name, inputValue: 'false' },
+								{ boxLabel: fields[f].falseOption, name: fields[f].name, inputValue: 'false' }
 							]
 						});
-						if (col2 != null && f > fields.length/2) {
+						if (col2 && f > fields.length/2) {
 							col2.add(field);
 						}
 						else {
@@ -209,7 +215,7 @@ function generateForm(form,store,meta) {
 							field.checked=true;
 							field.disabled=true;
 						}
-						if (col2 != null && f > fields.length/2) {
+						if (col2 && f > fields.length/2) {
 							col2.add(field);
 						}
 						else {

@@ -461,126 +461,8 @@ public class AjaxWidgetFormController extends MultiActionController {
 		return getModelMapError("Unimplemented");
 	}
 
-	private ModelAndView getModelMap(final List<Widget> widgets, final String widgettype, final String customentitytype) {
-		final Map<String, Object> modelMap = new HashMap<String, Object>();
-		final Map<String, Object> metaData = new HashMap<String, Object>();
-
-		metaData.put("idProperty", "id");
-		metaData.put("root", "rows");
-		metaData.put("totalProperty", "totalRows");
-		metaData.put("successProperty", "success");
-
-		final List<Map<String, Object>> fields = new ArrayList<Map<String, Object>>();
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		map = new HashMap<String, Object>();
-		map.put("name", "widgetGuid");
-		map.put("readonly", true);
-		map.put("required", false);
-		map.put("type", "text");
-		map.put("header", "Widget GUID");
-		fields.add(map);
-
-		map = new HashMap<String, Object>();
-		map.put("name", "widgetAuthenticationRequired");
-		map.put("readonly", false);
-		map.put("required", true);
-		map.put("type", "boolean");
-		map.put("header", "Authentication Required");
-		fields.add(map);
-
-		map = new HashMap<String, Object>();
-		map.put("name", "widgetAuthenticationURL");
-		map.put("readonly", false);
-		map.put("required", false);
-		map.put("type", "text");
-		map.put("header", "Authentication URL");
-		fields.add(map);
-
-
-		map = new HashMap<String, Object>();
-		map.put("name", "widgetLoginSuccessURL");
-		map.put("readonly", false);
-		map.put("required", true);
-		map.put("type", "text");
-		map.put("header", "Widget Success URL");
-		fields.add(map);
-
-		if (customentitytype.equals("online_donation") || customentitytype.equals("online_recurringgift")) {
-			map = new HashMap<String, Object>();
-			map.put("name", "projectCode");
-			map.put("readonly", false);
-			map.put("required", true);
-			map.put("type", "picklist");
-			map.put("header", "Project Code");
-			map.put("pickListId", "projectCode");
-			fields.add(map);
-
-			map = new HashMap<String, Object>();
-			map.put("name", "motivationCode");
-			map.put("readonly", false);
-			map.put("required", false);
-			map.put("type", "picklist");
-			map.put("header", "Motivation Code");
-			map.put("picklistId", "motivationCode");
-			fields.add(map);
-		}
-		else if (customentitytype.equals("sponsorable")) {
-			map = new HashMap<String, Object>();
-			map.put("name", "sponsorshipURL");
-			map.put("readonly", false);
-			map.put("required", true);
-			map.put("type", "text");
-			map.put("header", "Sponsorship URL");
-			map.put("pickListId", "");
-			fields.add(map);
-		}
-		else if (widgettype.equals("pledges")) {
-			map = new HashMap<String, Object>();
-			map.put("name", "donationUrl");
-			map.put("readonly", false);
-			map.put("required", true);
-			map.put("type", "text");
-			map.put("header", "Donation URL");
-			map.put("pickListId", "");
-			fields.add(map);
-		}
-
-		map = new HashMap<String, Object>();
-		map.put("name", "iframeHtml");
-		map.put("readonly", true);
-		map.put("required", false);
-		map.put("type", "comment");
-		map.put("header", "Widget HTML");
-		fields.add(map);
-
-		map = new HashMap<String, Object>();
-		map.put("name", "inactive");
-		map.put("readonly", false);
-		map.put("required", false);
-		map.put("type", "boolean");
-		map.put("header", "Inactive");
-		fields.add(map);
-
-		map = new HashMap<String, Object>();
-		map.put("name", "deleted");
-		map.put("readonly", false);
-		map.put("required", false);
-		map.put("type", "boolean");
-		map.put("header", "Deleted");
-		fields.add(map);
-
-		metaData.put("fields", fields);
-
-		modelMap.put("metaData", metaData);
-		modelMap.put("rows", widgets);
-		modelMap.put("success", true);
-		modelMap.put("totalRows", widgets.size());
-		return new ModelAndView("jsonView", modelMap);
-	}
-
-	private ModelAndView getModelMap(Widget widget, String widgettype,
-			String customentitytype) {
+	private ModelAndView getModelMap(final Widget widget, final String widgettype,
+			final String customentitytype) {
 
 		final Map<String, Object> modelMap = new HashMap<String, Object>();
 		final Map<String, Object> metaData = new HashMap<String, Object>();
@@ -623,18 +505,9 @@ public class AjaxWidgetFormController extends MultiActionController {
 			map.put("type", "text");
 			map.put("header", "Authentication URL");
 			fields.add(map);
-		}
 
-		map = new HashMap<String, Object>();
-		map.put("name", "replaceTopContents");
-		map.put("readonly", false);
-		map.put("required", true);
-		map.put("type", "boolean");
-		map.put("header", "Replace Content Options");
-		map.put("element", "radio");
-		map.put("trueOption", "Replace The Whole Page");
-		map.put("falseOption", "Replace The Inner Frame");
-		fields.add(map);
+			widget.setWidgetAuthenticationRequired(true);
+		}
 
 		map = new HashMap<String, Object>();
 		map.put("name", "styleId");
@@ -656,7 +529,18 @@ public class AjaxWidgetFormController extends MultiActionController {
 		}
 		map.put("type", "text");
 		map.put("header", "Widget Success URL");
+		fields.add(map);
 
+
+		map = new HashMap<String, Object>();
+		map.put("name", "replaceTopContents");
+		map.put("readonly", false);
+		map.put("required", true);
+		map.put("type", "boolean");
+		map.put("header", "If the Success URL is specified, redirect");
+		map.put("element", "radio");
+		map.put("trueOption", "To Success URL in the Browser Window");
+		map.put("falseOption", "To Success URL in the Inner Frame");
 		fields.add(map);
 
 		if (customentitytype.equals("online_donation") || customentitytype.equals("online_recurringgift")) {

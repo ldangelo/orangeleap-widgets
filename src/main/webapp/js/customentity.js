@@ -20,12 +20,12 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 		valueDelimiter: '\u00A7',
 		parentFields: {},
 
-		postToUrl : function(url, params, newWindow) {
+		postToUrl : function(url, params, replaceTopWindow) {
 			var form = $j('<form>');
 			form.attr('action', url);
 			form.attr('method', 'POST');
-			if (newWindow) {
-				form.attr('target', '_blank');
+			if (replaceTopWindow) {
+				form.attr('target', '_top');
 			}
 
 			var addParam = function(paramName, paramValue) {
@@ -68,11 +68,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 			if (referer[1]) {
 				var parms = referer[1].split('&');
 
-				for (x in parms) {
-					if (x == 'remove') {
-						return;
-					}
-
+				for (x = 0; x < parms.length; x++) {
 					var keyval = parms[x].split('=');
 
 					if (keyval[0] == 'id') {
@@ -126,7 +122,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 		onSuccess : function(f, a) {
 			var cfMap = a.result.data.customFieldMap.entry;
 
-			if ( ! this.successurl || this.successurl == '') {
+			if ( ! this.successurl || Ext.isEmpty(this.successurl)) {
 				var user_message = null;
 				for ( var f = 0; f < cfMap.length; f++) {
 					if (cfMap[f].key == 'user_message') {
@@ -174,14 +170,23 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 		},
 
 		maskAccountNumbers: function() {
-			var cardField = Ext.getCmp('form').form.findField('creditCardNumber');
-			if (cardField) {
-				cardField.el.dom.type = 'password';
+			try {
+				var cardField = Ext.getCmp('form').form.findField('creditCardNumber');
+				if ( ! cardField) {
+					cardField = Ext.getCmp('form').form.findField('payment_info_paymentSource_creditCardNumber');
+				}
+				if (cardField) {
+					cardField.el.dom.type = 'password';
+				}
+				var achField = Ext.getCmp('form').form.findField('ach_account');
+				if ( ! achField) {
+					achField = Ext.getCmp('form').form.findField('payment_info_paymentSource_achAccountNumber');
+				}
+				if (achField) {
+					achField.el.dom.type = 'password';
+				}
 			}
-			var achField = Ext.getCmp('form').form.findField('ach_account');
-			if (achField) {
-				achField.el.dom.type = 'password';
-			}
+			catch (exception) {}
 		},
 
 		onFailure : function(form, action) {
@@ -246,9 +251,11 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 			if (this.authenticate == true && this.sessionId == "") {
 				// window.open(this.loginurl,"_blank");
 				if (this.replaceTopContent == 'true') {
+					Ext.getBody().mask('Loading...', 'x-mask-loading');
 					top.location.href = this.loginurl;
 				}
 				else {
+					Ext.getBody().mask('Loading...', 'x-mask-loading');
 					window.location.href = this.loginurl;
 				}
 				return;
@@ -619,7 +626,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 									triggerAction : 'all',
 									hiddenName : fields[f].name,
 									displayField : 'Description',
-									forceSelection : true,
+									forceSelection: true,
                                     selectOnFocus: true,
 									lazyInit : false,
 									mode : 'local',
@@ -638,6 +645,10 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 										}
 									}
 								});
+								var oldFilterFunc = comboConfig.store.filter;
+								comboConfig.store.filter = function(field, query) {
+									oldFilterFunc.call(this, 'Description', query, false, false); // allow case-insensitive filtering of combobox records
+								};
 
 								if (fields[f].required) {
 									comboConfig.allowBlank = false;

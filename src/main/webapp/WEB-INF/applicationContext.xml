@@ -14,6 +14,32 @@
   <context:annotation-config />
 	<context:component-scan base-package="com.orangeleap.webtools" />
 
+	<bean name="jobHelper" class="com.orangeleap.webtools.service.PicklistItemsJobHelper">
+	</bean>
+	
+	<bean name="picklistItemJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+	  <property name="jobClass" value="com.orangeleap.webtools.service.PicklistItemsJob"/>
+  	  <property name="jobDataAsMap">
+    	<map>
+      		<entry key="jobHelper" value-ref="jobHelper"/>
+    	</map>
+  	  </property>	  
+	</bean>
+
+	<bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+	  <property name="jobDetail" ref="picklistItemJob"/>
+	  <property name="startDelay" value="50000"/>
+	  <property name="repeatInterval" value="5000000"/>
+	</bean>
+
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    	<property name="triggers">
+        	<list>
+            	<ref bean="simpleTrigger" />
+        	</list>
+    	</property>
+	</bean>
+
     <!-- Load EHCache bean here, since it is needed by messageSource -->
     <bean id="cacheManager"
           class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"

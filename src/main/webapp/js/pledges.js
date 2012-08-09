@@ -2,12 +2,12 @@ var $j = jQuery.noConflict();
 
 var pledges = {
 		replaceTopContent: null,		
-postToUrl: function(url, params, newWindow)
+postToUrl: function(url, params, replaceTopWindow)
 {
     var form = $('<form>');
     form.attr('action', url);
     form.attr('method', 'POST');
-    if(newWindow){ form.attr('target', '_blank'); }
+    if(replaceTopWindow){ form.attr('target', '_top'); }
 
     var addParam = function(paramName, paramValue){
         var input = $('<input type="hidden">');
@@ -71,10 +71,14 @@ postToUrl: function(url, params, newWindow)
 	    this.handlerError("Authentication Failed!");
 	} else {
 	    this.setCookie("constituentId",constituentid);
-	    if (this.replaceTopContent == 'true')
+	    if (this.replaceTopContent == 'true') {
+			Ext.getBody().mask('Loading...', 'x-mask-loading');
 	    	top.location.href = redirecturl;
-	    else
-	    	top.location.href = redirecturl;	    	
+	    }
+	    else {
+			Ext.getBody().mask('Loading...', 'x-mask-loading');
+	    	window.location.href = redirecturl;
+	    }
 	}
     },
 
@@ -101,11 +105,14 @@ postToUrl: function(url, params, newWindow)
 	
 	
 	if (authenticate == true && sessionId == "") {
-//        window.open(redirecturl, "_blank");
-		if (replaceTopContent == 'true')
+		if (replaceTopContent == 'true') {
+			Ext.getBody().mask('Loading...', 'x-mask-loading');
 			top.location.href=redirecturl;
-		else
-			top.location.href=redirecturl;
+		}
+		else {
+			Ext.getBody().mask('Loading...', 'x-mask-loading');
+			window.location.href=redirecturl;
+		}
 
 		return;
 	}
@@ -165,16 +172,24 @@ postToUrl: function(url, params, newWindow)
             var control = t.className.split('_')[1];
             switch (control) {
                 case 'payment':
-                    console.log('make a payment - ' + record.id);
+                    if (console) {
+                        console.log('make a payment - ' + record.id);
+                    }
                     var params = {};
-                    if (replaceTopContent == 'true') 
+                    if (replaceTopContent == 'true') {
+						Ext.getBody().mask('Loading...', 'x-mask-loading');
                     	top.location.href= donationurl + "?pledge_id=" + record.id +"&gift_amount=" + record.data.amount + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;
-                    else
-                    	window.location.href= donationurl + "?pledge_id=" + record.id +"&gift_amount=" + record.data.amount + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;                    	
+                    }
+                    else {
+						Ext.getBody().mask('Loading...', 'x-mask-loading');
+                    	window.location.href= donationurl + "?pledge_id=" + record.id +"&gift_amount=" + record.data.amount + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;
+                    }
                     //pledges.postToUrl('http://localhost/~ldangelo/donation.html',params);
                     break;
                 case 'go':
-                    console.log('go to this record - ' + record.id);
+                    if (console) {
+                        console.log('go to this record - ' + record.id);
+                    }
                     break;
             }
         }

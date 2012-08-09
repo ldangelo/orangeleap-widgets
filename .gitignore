@@ -1,8 +1,9 @@
-/lib
-/bin
-/target
-.settings
 .project
+.settings
+.classpath
+/bin
+/lib
+/target
 db-scripts/target
 donorwidgets.iml
 donorwidgets.ipr
