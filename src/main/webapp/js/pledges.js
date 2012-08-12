@@ -178,11 +178,11 @@ postToUrl: function(url, params, replaceTopWindow)
                     var params = {};
                     if (replaceTopContent == 'true') {
 						Ext.getBody().mask('Loading...', 'x-mask-loading');
-                    	top.location.href= donationurl + "?pledge_id=" + record.id +"&gift_amount=" + record.data.amount + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;
+                    	top.location.href= donationurl + "?pledge_id=" + record.id +"&transaction_firstDistributionLineAmount=" + record.data.amount + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;
                     }
                     else {
 						Ext.getBody().mask('Loading...', 'x-mask-loading');
-                    	window.location.href= donationurl + "?pledge_id=" + record.id +"&gift_amount=" + record.data.amount + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;
+                    	window.location.href= donationurl + "?pledge_id=" + record.id +"&transaction_firstDistributionLineAmount=" + record.data.amount + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;
                     }
                     //pledges.postToUrl('http://localhost/~ldangelo/donation.html',params);
                     break;
