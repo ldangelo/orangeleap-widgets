@@ -96,6 +96,9 @@ public class JsonPledge {
 		final Map<String, List<PicklistItem>> codeMap = findProjectMotivationCodeItems(guid);
 
 		for (final Pledge pledge : pledges) {
+			if ( !pledge.getPledgeType().equals("MONETARY")){
+				continue;
+			}
 			final Map<String, Object> map = new HashMap<String, Object>();
 			map.put("id", pledge.getId());
 			map.put("donationdate", pledge.getPledgeDate().toString());
@@ -109,16 +112,17 @@ public class JsonPledge {
 			}
 			map.put("status", pledge.getPledgeStatus());
 
-			String projectCode = pledge.getDistributionLines().get(0).getProjectCode();
-			map.put(PROJECT_CODE, projectCode);
-			projectCode = getItemDescription(codeMap, projectCode, PROJECT_CODE);
-			map.put(PROJECT_CODE_DESCRIPTION, projectCode);
-
-			String motivationCode = pledge.getDistributionLines().get(0).getMotivationCode();
-			map.put(MOTIVATION_CODE, motivationCode);
-			motivationCode = getItemDescription(codeMap, motivationCode, MOTIVATION_CODE);
-			map.put(MOTIVATION_CODE_DESCRIPTION, motivationCode);
-
+			if (pledge.getDistributionLines().size() > 0){
+				String projectCode = pledge.getDistributionLines().get(0).getProjectCode();
+				map.put(PROJECT_CODE, projectCode);
+				projectCode = getItemDescription(codeMap, projectCode, PROJECT_CODE);
+				map.put(PROJECT_CODE_DESCRIPTION, projectCode);
+			
+				String motivationCode = pledge.getDistributionLines().get(0).getMotivationCode();
+				map.put(MOTIVATION_CODE, motivationCode);
+				motivationCode = getItemDescription(codeMap, motivationCode, MOTIVATION_CODE);
+				map.put(MOTIVATION_CODE_DESCRIPTION, motivationCode);
+			}
 			returnList.add(map);
 		}
 	}
