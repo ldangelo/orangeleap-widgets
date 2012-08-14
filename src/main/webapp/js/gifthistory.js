@@ -133,7 +133,7 @@ var gifthistory = {
                 var control = t.className.split('_')[1];
                 switch (control) {
                     case 'receipt':
-                        if (console) {
+                        if (window.console) {
                             console.log('send receipt for gift - ' + record.id);
                         }
                         var callbackproxy = function(dataFromServer) {
@@ -147,7 +147,7 @@ var gifthistory = {
 
                         break;
                     case 'go':
-                        if (console) {
+                        if (window.console) {
                             console.log('go to this record - ' + record.id);
                         }
                         break;

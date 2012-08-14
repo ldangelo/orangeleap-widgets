@@ -172,7 +172,7 @@ postToUrl: function(url, params, replaceTopWindow)
             var control = t.className.split('_')[1];
             switch (control) {
                 case 'payment':
-                    if (console) {
+                    if (window.console) {
                         console.log('make a payment - ' + record.id);
                     }
                     var params = {};
@@ -187,7 +187,7 @@ postToUrl: function(url, params, replaceTopWindow)
                     //pledges.postToUrl('http://localhost/~ldangelo/donation.html',params);
                     break;
                 case 'go':
-                    if (console) {
+                    if (window.console) {
                         console.log('go to this record - ' + record.id);
                     }
                     break;

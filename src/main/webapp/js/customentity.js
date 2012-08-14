@@ -360,7 +360,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 				autoSave : false,
 				listeners : {
 					'exception' : function(proxy, type, action, options, response, args) {
-						if (console) {
+						if (window.console) {
 				            console.log('EXCEPTION in entity, type = "' + type + '" action = "' + action +
 				                    '" options.params = "' + (options && options.params ? Ext.encode(options.params) : '') +
 				                    '" response.status = "' + response.status + '" response.statusText = "' + response.statusText + (args ? '" args = "' + Ext.encode(args) : '') + '"');
