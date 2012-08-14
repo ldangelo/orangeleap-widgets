@@ -24,6 +24,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="pledgeStatus" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="projectedDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="recurring" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="pledgeType" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -39,7 +40,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "pledgeDate",
     "pledgeStatus",
     "projectedDate",
-    "recurring"
+    "recurring",
+    "pledgeType"
 })
 public class Pledge
     extends Commitment
@@ -54,6 +56,7 @@ public class Pledge
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar projectedDate;
     protected boolean recurring;
+    protected String pledgeType;
 
     /**
      * Gets the value of the pledgeCancelDate property.
@@ -190,5 +193,30 @@ public class Pledge
     public void setRecurring(boolean value) {
         this.recurring = value;
     }
+    
+    /**
+     * Gets the value of the pledgeType property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getPledgeType() {
+        return pledgeType;
+    }
+
+    /**
+     * Sets the value of the pledgeType property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setPledgeType(String value) {
+        this.pledgeType = value;
+    }
+
 
 }

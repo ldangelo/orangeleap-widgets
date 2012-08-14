@@ -177,6 +177,9 @@ public class WidgetServiceImpl implements WidgetService {
 				} else if (ce.getPicklistId().equalsIgnoreCase(MOTIVATION_CODE_PICKLIST_ID)){
 					//set the motivation code field in the custom table to be the same as the one embedded in the form and saved in the webtools.widget table
 					values = request.getParameterValues(MOTIVATION_CODE_FIELD_NAME);
+				} else if (ce.getName().equalsIgnoreCase("pledge_id")){
+					//set the assoc pledge id field in the custom table to be the same as the one embedded in the form, if there is not one it will get set to empty below
+					values = request.getParameterValues(ce.getName());
 				} else {
 					values = request.getParameterValues(ce.getName());
 				}

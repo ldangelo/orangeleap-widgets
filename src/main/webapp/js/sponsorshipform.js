@@ -101,6 +101,12 @@ var sponsorshipform =  {
 				}
 				else {
 					if (value != null && value != '') {
+		    
+					    if (value.indexOf("|") != -1) {
+					    	value = value.substring(value.indexOf("|") + 1,value.length);
+						}		
+			    	
+					
 						$j("#picture").attr("src",value);
 						$j("#picture").show();
 					}
@@ -214,6 +220,11 @@ var sponsorshipform =  {
 			ffield.setValue(value);
 		} else {
 		    if (value != null && value != '') {
+		    
+		    if (value.indexOf("|") != -1) {
+		    	value = value.substring(value.indexOf("|") + 1,value.length);
+			}		
+			    	
 			$j("#picture").attr("src",value);
 			$j("#picture").show();
 			panel.items.items[0].autoEl = {
@@ -444,12 +455,17 @@ var sponsorshipform =  {
 					if (metaData[m].type != 'url') {
 						if (ffield != null) {
 							if (typeof(value) === 'string')
-								value = value.replace('&#167;','\u00A7');
+							    value = value.replace('&#167;','\u00A7');
+
 							ffield.setValue(value);
 						}
 					}
 					else {
-						var fldImage = new Ext.Panel({
+					    if (value.indexOf("|") != -1) {
+						value = value.substr(value.indexOf("|") + 1,value.length);
+					    }
+
+					    var fldImage = new Ext.Panel({
 							isFormField:true,
 							columnWidth:'.24',
 							layout: 'form',
