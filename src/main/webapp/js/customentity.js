@@ -369,6 +369,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 								// This response might contain an error-message sent from the server.
 								// For example, the user may have failed authentication/authorization or a database validation error occurred
 
+
 								var errorCode = '';
 								if (response.responseText) {
 									errorCode = ' Error Code: ' + response.responseText;

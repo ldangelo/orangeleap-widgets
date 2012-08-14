@@ -131,7 +131,6 @@ postToUrl: function(url, params, replaceTopWindow)
 			});
 
 
-
 			var pledgesGrid = new Ext.grid.GridPanel({
 			    id:'pledgegrid',
 			    store:mydatastore,
