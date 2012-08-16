@@ -2,24 +2,25 @@ Ext.ns('OrangeLeap');
 var $j = jQuery.noConflict();
 
 OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
-		cls: 'widgetForm',
-		buttonAlign: 'center',
-		monitorValid : true,
-		widgetid : null,
-		guid : null,
-		loginurl : null,
-		buttonLabel : null,
-		mydatastore : null,
-		referer : "Unknown",
-		sessionId : null,
-		args : null,
-		successurl : null,
-		picklistNameItemsMap: {},
-		replaceTopContent: null,
-		timeout: 120,
-		valueDelimiter: '\u00A7',
-		parentFields: {},
-
+    cls: 'widgetForm',
+    buttonAlign: 'center',
+    monitorValid : true,
+    widgetid : null,
+    guid : null,
+    loginurl : null,
+    buttonLabel : null,
+    mydatastore : null,
+    referer : "Unknown",
+    sessionId : null,
+    args : null,
+    successurl : null,
+    picklistNameItemsMap: {},
+    replaceTopContent: null,
+    timeout: 120,
+    valueDelimiter: '\u00A7',
+    parentFields: {},
+    helpMsg: null,
+    submitButton: null,
 		postToUrl : function(url, params, replaceTopWindow) {
 			var form = $j('<form>');
 			form.attr('action', url);
@@ -120,8 +121,8 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 			return "";
 		},
 		onSuccess : function(f, a) {
-			var cfMap = a.result.data.customFieldMap.entry;
-
+		    var cfMap = a.result.data.customFieldMap.entry;
+//		    this.submitButton.disable();
 			if ( ! this.successurl || Ext.isEmpty(this.successurl)) {
 				var user_message = null;
 				for ( var f = 0; f < cfMap.length; f++) {
@@ -143,13 +144,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 				}
 				this.maskAccountNumbers();
 
-				Ext.Msg.show({
-					title : 'Success',
-					msg : user_message,
-					modal : true,
-					icon : Ext.Msg.INFO,
-					buttons : Ext.Msg.OK
-				});
+			    this.helpMsg.setValue(user_message);
 			}
 			else {
 				var params = new Object();
@@ -192,7 +187,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 		onFailure : function(form, action) {
 			var message;
 			if (action.result || action.response) {
-            	message = action.result.message || action.response.responseText;
+		message = action.result.message || action.response.responseText;
 			}
 			else if ( ! form.isValid()) {
 				message = 'Please correct the errors that are in red';
@@ -200,13 +195,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 			else {
 				message = 'An unspecified error occurred.  Please try again';
 			}
-			Ext.Msg.show({
-				title : 'Error',
-				msg : message,
-				modal : true,
-				icon : Ext.Msg.ERROR,
-				buttons : Ext.Msg.OK
-			});
+		    this.helpMsg.setValue(message);
 		},
 
 		onSubmit : function() {
@@ -316,9 +305,9 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 				}
 
 				if (that.parentFields[aName]) {
-                    var childFields = that.parentFields[aName];
-                    if (childFields) {
-                        var myForm = Ext.getCmp("form").form;
+		    var childFields = that.parentFields[aName];
+		    if (childFields) {
+			var myForm = Ext.getCmp("form").form;
 						for (var x = 0; x < childFields.length; x++) {
 							var childObj = childFields[x];
 
@@ -343,7 +332,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 								}
 							}
 						}
-                    }
+		    }
 				}
 			};
 
@@ -375,30 +364,32 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 							if (response.responseText) {
 								errorCode = ' Error Code: ' + response.responseText;
 							}
-			                Ext.MessageBox.show({
-			                    title: 'ERROR',
-			                    icon: Ext.MessageBox.ERROR,
-			                    buttons: Ext.MessageBox.OK,
-			                    minWidth: 500,
-			                    msg: 'The request could not be processed due to an error.  Please try again or contact the website administrator for help.' + errorCode
-			                });
-		                }
-		                else {
-							if (response.statusText == "timeout" && response.readyState != 4) {
-				                Ext.MessageBox.show({
-				                    'title': 'Error',
-				                    'icon': Ext.MessageBox.ERROR,
-				                    'buttons': Ext.MessageBox.OK,
-				                    'msg': 'The request could not be processed because the response timed out.  Please try again or contact the website administrator for help.'
-				                });
-							}
-				            else if (response.statusText != "abort") {
-			                    // response error: An invalid response from the server was returned: either 404, 500
-			                    // or the response meta-data does not match that defined in the DataReader
-			                    var errorCode = '';
-			                    if (response.status || response.statusText) {
-			                        errorCode = ' Error Code: ' + (response.status ? response.status + ' ' : ' ') + (response.statusText ? response.statusText : '');
-				                }
+
+						    Ext.MessageBox.show({
+							title: 'ERROR',
+							icon: Ext.MessageBox.ERROR,
+							buttons: Ext.MessageBox.OK,
+							minWidth: 500,
+							msg: 'The request could not be processed due to an error.  Please try again or contact the website administrator for help.' + errorCode
+						    });
+						    
+						}
+					    else {
+						if (response.statusText == "timeout" && response.readyState != 4) {
+				                    Ext.MessageBox.show({
+							'title': 'Error',
+							'icon': Ext.MessageBox.ERROR,
+							'buttons': Ext.MessageBox.OK,
+							'msg': 'The request could not be processed because the response timed out.  Please try again or contact the website administrator for help.'
+				                    });
+						}
+						else if (response.statusText != "abort") {
+					    // response error: An invalid response from the server was returned: either 404, 500
+					    // or the response meta-data does not match that defined in the DataReader
+					    var errorCode = '';
+					    if (response.status || response.statusText) {
+						errorCode = ' Error Code: ' + (response.status ? response.status + ' ' : ' ') + (response.statusText ? response.statusText : '');
+						}
 				                Ext.MessageBox.show({
 				                    title: 'ERROR',
 				                    icon: Ext.MessageBox.ERROR,
@@ -406,8 +397,8 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 				                    minWidth: 500,
 				                    msg: 'An invalid response was returned by the server.  Please try again or contact the website administrator for help.' + errorCode
 				                });
-				            }
-		                }
+					    }
+				}
 					},
 					'metachange' : function(store, meta) {
 						that.parentFields = {};
@@ -422,6 +413,15 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 								that.picklistNameItemsMap[picklistName] = meta.picklistNameItems[picklistName];
 							}
 						}
+
+					    //
+					    // add a message field to use
+					    this.form.helpMsg = new Ext.form.DisplayField();
+					    this.form.helpMsg.id = "helpMsg";
+					    this.form.helpMsg.name = "helpMsg";
+					    this.form.helpMsg.value = "Your help message goes here!";
+
+					    this.form.superclass().add.call(this.form, this.form.helpMsg);
 
 						for ( var f = 0; f < fields.length; f++) {
 							if ( ! Ext.isEmpty(fields[f].parentFieldName)) {
@@ -455,12 +455,12 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 								}
 							}
 							else if (fields[f].type == 'text'
-									|| fields[f].type == 'password'
-									|| fields[f].type == 'date'
-									|| fields[f].type == 'integer'
-									|| fields[f].type == 'number'
-									|| fields[f].type == 'money'
-									|| fields[f].type == 'checkbox') {
+								 || fields[f].type == 'password'
+								 || fields[f].type == 'date'
+								 || fields[f].type == 'integer'
+								 || fields[f].type == 'number'
+								 || fields[f].type == 'money'
+								 || fields[f].type == 'checkbox') {
 								var field = null;
 								if (fields[f].type == 'date') {
 									field = new Ext.form.DateField();
@@ -592,7 +592,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 								// calculate the number of
 								// fields in this section
 								var start = f + 1;
-								for (fieldsectioncount = 0; start < fields.length && fields[start].type != 'section'; fieldsectioncount++) {
+								for (fieldsectioncount = 0; start < fields.length && fields[start].type != 'section' && !fields[start].hidden; fieldsectioncount++) {
 									start++;
 								}
 								fieldsectionindex = 0;
@@ -620,30 +620,30 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
                                     }
 								};
 								var comboConfig = new Ext.form.ComboBox({
-									id : fields[f].name + 'combo',
-									dataIndex : fields[f].name,
-									valueField : 'Name',
-									triggerAction : 'all',
-									hiddenName : fields[f].name,
-									displayField : 'Description',
-									forceSelection: true,
-                                    selectOnFocus: true,
-									lazyInit : false,
-									mode : 'local',
-									emptyText : 'Select ' + fields[f].header + '...',
-									store : new Ext.data.JsonStore({
-										fields : [ 'Name', 'Description'],
-										data: that.picklistNameItemsMap[fields[f].picklistId]
-									}),
-									fieldLabel : createFieldLabel(fields[f]),
-									listeners: {
-                                        select: function(comboBox, record, index) {
-											comboEventHandler(comboBox);
-										},
-										change: function(comboBox, newValue, oldValue) {
-											comboEventHandler(comboBox);
-										}
+								    id : fields[f].name + 'combo',
+								    dataIndex : fields[f].name,
+								    valueField : 'Name',
+								    triggerAction : 'all',
+								    hiddenName : fields[f].name,
+								    displayField : 'Description',
+								    forceSelection: true,
+								    selectOnFocus: true,
+								    lazyInit : false,
+								    mode : 'local',
+								    emptyText : 'Select ' + fields[f].header + '...',
+								    store : new Ext.data.JsonStore({
+									fields : [ 'Name', 'Description'],
+									data: that.picklistNameItemsMap[fields[f].picklistId]
+								    }),
+								    fieldLabel : createFieldLabel(fields[f]),
+								    listeners: {
+									select: function(comboBox, record, index) {
+									    comboEventHandler(comboBox);
+									},
+									change: function(comboBox, newValue, oldValue) {
+									    comboEventHandler(comboBox);
 									}
+								    }
 								});
 								var oldFilterFunc = comboConfig.store.filter;
 								comboConfig.store.filter = function(field, query) {
@@ -664,7 +664,6 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 									else {
 										col1.add(comboConfig);
 									}
-									fieldsectionindex++;
 								}
 							}
 							else if (fields[f].type == 'multi-picklist') {
@@ -714,6 +713,8 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 									else {
 										col1.add(comboConfig);
 									}
+								    
+								    if (!fields[f].hidden)
 									fieldsectionindex++;
 								}
 							}
@@ -740,7 +741,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 								html : 'Powered by Orange Leap'
 							}
 						};
-						this.form.superclass().addButton.call(this.form, btnConfig, this.form.onSubmit, this.form);
+						this.form.submitButton = this.form.superclass().addButton.call(this.form, btnConfig, this.form.onSubmit, this.form);
 						this.form.superclass().add.call(this.form, linkConfig);
 
 						// apply config
@@ -806,13 +807,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 		},
 		showError : function(str) {
 			OrangeLeapWidget.updateErrorCount(this.guid, this.referer);
-
-			Ext.Msg.show({
-				title : 'ERROR',
-				msg : str,
-				icon : Ext.MessageBox.ERROR,
-				buttons : Ext.Msg.OK
-			});
+		    this.helpMsg.setValue(str);
 		}
 });
 Ext.reg('customentity', OrangeLeap.CustomEntity);
