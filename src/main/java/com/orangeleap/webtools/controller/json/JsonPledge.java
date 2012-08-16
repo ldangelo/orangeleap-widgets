@@ -38,6 +38,9 @@ public class JsonPledge {
 	public static final String PROJECT_CODE_DESCRIPTION = "projectCodeDescription";	
 	public static final String MOTIVATION_CODE = "motivationCode";
 	public static final String MOTIVATION_CODE_DESCRIPTION = "motivationCodeDescription";	
+	public static final String FREQUENCY = "frequency";
+	public static final String PLEDGE_STATUS_CANCELLED = "Cancelled";
+	public static final String PLEDGE_STATUS_FULFILLED = "Fulfilled";
 
 	@Autowired
 	WidgetDAO widgetDAO = null;
@@ -48,8 +51,8 @@ public class JsonPledge {
 	@Resource(name = "sessionCache")
 	Cache sessionCache;
 
-	private Map<String, List<PicklistItem>> findProjectMotivationCodeItems(final String guid) {
-		final Map<String, List<PicklistItem>> codeMap = new HashMap<String, List<PicklistItem>>();
+	private Map<String, List<PicklistItem>> loadPicklistItems(final String guid) {
+		final Map<String, List<PicklistItem>> picklistItemMap = new HashMap<String, List<PicklistItem>>();
 
 		String wsUserName = null;
 		String wsPassword = null;
@@ -74,6 +77,7 @@ public class JsonPledge {
 
 		List<PicklistItem> projectCodeItems = null;
 		List<PicklistItem> motivationCodeItems = null;
+		List<PicklistItem> frequencyItems = null;
 		try {
 			projectCodeItems = picklistService.getPickListItems(wsUserName, wsPassword, PROJECT_CODE,true);
 		}
@@ -81,22 +85,29 @@ public class JsonPledge {
 
 		}
 		try {
-			picklistService.getPickListItems(wsUserName, wsPassword, MOTIVATION_CODE,true);
+			motivationCodeItems = picklistService.getPickListItems(wsUserName, wsPassword, MOTIVATION_CODE,true);
 		}
 		catch (Exception ex) {
 
 		}
-		codeMap.put(PROJECT_CODE, projectCodeItems);
-		codeMap.put(MOTIVATION_CODE, motivationCodeItems);
+		try {
+			frequencyItems = picklistService.getPickListItems(wsUserName, wsPassword, FREQUENCY,true);
+		}
+		catch (Exception ex) {
 
-		return codeMap;
+		}
+		picklistItemMap.put(PROJECT_CODE, projectCodeItems);
+		picklistItemMap.put(MOTIVATION_CODE, motivationCodeItems);
+		picklistItemMap.put(FREQUENCY, frequencyItems);
+
+		return picklistItemMap;
 	}
 
 	private void addPledges(final List<Pledge> pledges, final List<Map<String, Object>> returnList, final String guid) {
-		final Map<String, List<PicklistItem>> codeMap = findProjectMotivationCodeItems(guid);
+		final Map<String, List<PicklistItem>> picklistItemMap = loadPicklistItems(guid);
 
 		for (final Pledge pledge : pledges) {
-			if ( !pledge.getPledgeType().equals("MONETARY")){
+			if ( !pledge.getPledgeType().equals("MONETARY") || pledge.getPledgeStatus().equals(PLEDGE_STATUS_CANCELLED) || pledge.getPledgeStatus().equals(PLEDGE_STATUS_FULFILLED)){
 				continue;
 			}
 			final Map<String, Object> map = new HashMap<String, Object>();
@@ -105,22 +116,29 @@ public class JsonPledge {
 			map.put("recurring", pledge.isRecurring());
 
 			if (pledge.isRecurring()) {
-				map.put("amount", pledge.getAmountPerGift() == null ? 0 : pledge.getAmountPerGift());
+				map.put("originalamount", pledge.getAmountPerGift() == null ? 0 : pledge.getAmountPerGift());
+				String frequency = getItemDescription(picklistItemMap, pledge.getFrequency(), FREQUENCY);
+				map.put("frequency", frequency);
 			}
 			else {
-				map.put("amount", pledge.getAmountRemaining());
+				map.put("originalamount", pledge.getAmountTotal());
 			}
+			map.put("amountpaid", pledge.getAmountPaid());
+			map.put("amountremaining", pledge.getAmountRemaining());
 			map.put("status", pledge.getPledgeStatus());
+			map.put("startdate", pledge.getStartDate().toString());
+			map.put("enddate", pledge.getEndDate().toString());
 
+			
 			if (pledge.getDistributionLines().size() > 0){
 				String projectCode = pledge.getDistributionLines().get(0).getProjectCode();
 				map.put(PROJECT_CODE, projectCode);
-				projectCode = getItemDescription(codeMap, projectCode, PROJECT_CODE);
+				projectCode = getItemDescription(picklistItemMap, projectCode, PROJECT_CODE);
 				map.put(PROJECT_CODE_DESCRIPTION, projectCode);
 			
 				String motivationCode = pledge.getDistributionLines().get(0).getMotivationCode();
 				map.put(MOTIVATION_CODE, motivationCode);
-				motivationCode = getItemDescription(codeMap, motivationCode, MOTIVATION_CODE);
+				motivationCode = getItemDescription(picklistItemMap, motivationCode, MOTIVATION_CODE);
 				map.put(MOTIVATION_CODE_DESCRIPTION, motivationCode);
 			}
 			returnList.add(map);

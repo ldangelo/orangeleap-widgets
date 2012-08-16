@@ -123,7 +123,7 @@ postToUrl: function(url, params, replaceTopWindow)
 	var mydatastore = new Ext.data.JsonStore({
 	    url:'pledges.json?guid=' + widgetid + '&sessionId=' + sessionId,
 	    root:'rows',
-	    fields:['id','donationdate','recurring','amount','projectCode','projectCodeDescription','motivationCode','motivationCodeDescription','status'],
+	    fields:['id','donationdate','recurring','startdate','enddate','frequency','originalamount','amountpaid','amountremaining','status','projectCode','projectCodeDescription','motivationCode','motivationCodeDescription'],
 	    sortInfo:{field:'id',direction:'ASC'}
 	});
 
@@ -136,11 +136,15 @@ postToUrl: function(url, params, replaceTopWindow)
 	    columns:	[
 	    {id:'id', header: 'Pledge Id', dataIndex: 'id',sortable:true},
 	    {id:'donationdate',xtype: 'datecolumn', header: 'Pledge Date', dataIndex:'donationdate',sortable:true},
-            {id: 'recurring',header: 'Recurring',dataIndex: 'recurring'},
-	    {id:'amount',xtype: 'numbercolumn', header: 'Pledge Amount',dataIndex:'amount',sortable:true},
-	    {id:'status',header:'Pledge Status',dataIndex:'status',sortable:true},
-	    {id:'projectCodeDescription', header: 'Project Code', dataIndex: 'projectCodeDescription', sortable:true},
-	    {id:'motivationCodeDescription', header: 'Motivation Code', dataIndex: 'motivationCodeDescription', sortable: true},
+	    {id:'startdate',xtype: 'datecolumn', header: 'Start Date', dataIndex:'startdate',sortable:true},
+	    {id:'enddate',xtype: 'datecolumn', header: 'End Date', dataIndex:'enddate',sortable:true},
+        {id:'frequency',header:'Frequency',dataIndex:'frequency',sortable:true},
+		{id:'status',header:'Status',dataIndex:'status',sortable:true},
+		{id:'originalamount',xtype: 'numbercolumn', header: 'Original Amount',dataIndex:'originalamount',sortable:true},
+		{id:'amountpaid',xtype: 'numbercolumn', header: 'Amount Paid',dataIndex:'amountpaid',sortable:true},
+	    {id:'amountremaining',xtype: 'numbercolumn', header: 'Amount Remaining',dataIndex:'amountremaining',sortable:true},
+	    
+	    
 
         {header: "Actions", width: 60, sortable: false, renderer: function() {
             return '<div class="controlBtn"><img src="images/money.png" class="make_payment"></div>';
@@ -178,11 +182,22 @@ postToUrl: function(url, params, replaceTopWindow)
                     var params = {};
                     if (replaceTopContent == 'true') {
 						Ext.getBody().mask('Loading...', 'x-mask-loading');
-                    	top.location.href= donationurl + "?pledge_id=" + record.id +"&transaction_firstDistributionLineAmount=" + record.data.amount + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;
+						if(record.data.recurring){
+							top.location.href= donationurl + "?pledge_id=" + record.id +"&transaction_firstDistributionLineAmount=" + record.data.originalamount + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;
+						}
+						else {
+							top.location.href= donationurl + "?pledge_id=" + record.id + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;
+						}
                     }
                     else {
 						Ext.getBody().mask('Loading...', 'x-mask-loading');
                     	window.location.href= donationurl + "?pledge_id=" + record.id +"&transaction_firstDistributionLineAmount=" + record.data.amount + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;
+						if(record.data.recurring){
+							window.location.href= donationurl + "?pledge_id=" + record.id +"&transaction_firstDistributionLineAmount=" + record.data.originalamount + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;
+						}
+						else {
+							window.location.href= donationurl + "?pledge_id=" + record.id + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;
+						}
                     }
                     //pledges.postToUrl('http://localhost/~ldangelo/donation.html',params);
                     break;
