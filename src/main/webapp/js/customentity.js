@@ -313,6 +313,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 						var tokens = value.split(that.valueDelimiter);
 					}
 
+
 					if (that.parentFields[aName]) {
 			    var childFields = that.parentFields[aName];
 			    if (childFields) {
@@ -748,6 +749,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 							if (fieldset) {
 								this.form.superclass().add.call(this.form, fieldset);
 							}
+
 							var btnConfig = {
 								text : this.form.buttonLabel,
 								handler : this.form.onSubmit,
