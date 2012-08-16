@@ -122,7 +122,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 		},
 		onSuccess : function(f, a) {
 		    var cfMap = a.result.data.customFieldMap.entry;
-//		    this.submitButton.disable();
+		    this.submitButton.disable();
 			if ( ! this.successurl || Ext.isEmpty(this.successurl)) {
 				var user_message = null;
 				for ( var f = 0; f < cfMap.length; f++) {
