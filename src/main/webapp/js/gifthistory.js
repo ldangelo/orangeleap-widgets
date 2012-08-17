@@ -97,10 +97,10 @@ var gifthistory = {
 		cls: 'widgetForm',
 	    columns:	[
 			{id:'id', header: 'Gift Id', dataIndex: 'id',sortable:false},
-			{id:'donationdate',header: 'Donation Date', dataIndex:'donationdate',sortable:false},
-			{id:'amount',header: 'Gift Amount',dataIndex:'amount',sortable:false},
-			{id:'status',header:'Gift Status',dataIndex:'status',sortable:false},
-			{id:'paymentstatus',header:'Payment Status',dataIndex:'paymentstatus',sortable:false},
+			{id:'donationdate', xtype: 'datecolumn', header: 'Donation Date', dataIndex:'donationdate',sortable:false},
+			{id:'amount', xtype: 'numbercolumn', header: 'Gift Amount',dataIndex:'amount',sortable:false},
+			{id:'status', header:'Gift Status',dataIndex:'status',sortable:false},
+			{id:'paymentstatus', header:'Payment Status',dataIndex:'paymentstatus',sortable:false},
 					   {header: "Actions", width: 60, sortable: false, renderer: function() {
 				return '<div class="controlBtn"><img src="images/inboxSmall.png" class="make_receipt"></div>';
 			}, dataIndex: 'Id'}
