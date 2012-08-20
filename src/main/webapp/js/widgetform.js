@@ -149,6 +149,7 @@ WidgetForm = Ext.extend(Ext.form.FormPanel, {
                 	Ext.fly('widgetWrapper').unmask();
 				},
 				'metachange':function(store,meta) {
+					Ext.QuickTips.init();
 					generateForm(store.widgetForm, store, meta);
 				},
 				'beforeload': function(store, options) {

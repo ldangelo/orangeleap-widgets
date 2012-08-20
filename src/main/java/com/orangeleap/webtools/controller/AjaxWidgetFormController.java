@@ -520,15 +520,11 @@ public class AjaxWidgetFormController extends MultiActionController {
 		map = new HashMap<String, Object>();
 		map.put("name", "widgetLoginSuccessURL");
 		map.put("readonly", false);
-
-		if (customentitytype.equals("widget_authentication")) {
-			map.put("required", true);
-		}
-		else {
-			map.put("required", false);
-		}
+		map.put("required", true);
 		map.put("type", "text");
 		map.put("header", "Widget Success URL");
+		map.put("regEx", "^https?:\\/\\/.+$");
+		map.put("regExExample", "The URL must be like - http://orangeleap.com or - https://orangeleap.com");
 		fields.add(map);
 
 
@@ -537,10 +533,10 @@ public class AjaxWidgetFormController extends MultiActionController {
 		map.put("readonly", false);
 		map.put("required", true);
 		map.put("type", "boolean");
-		map.put("header", "If the Success URL is specified, redirect");
+		map.put("header", "Redirect To Success URL");
 		map.put("element", "radio");
-		map.put("trueOption", "To Success URL in the Browser Window");
-		map.put("falseOption", "To Success URL in the Inner Frame");
+		map.put("trueOption", "In the Browser Window");
+		map.put("falseOption", "In the Inner Frame");
 		fields.add(map);
 
 		if (customentitytype.equals("online_donation") || customentitytype.equals("online_recurringgift")) {

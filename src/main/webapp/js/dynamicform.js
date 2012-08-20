@@ -54,8 +54,12 @@ function generateForm(form,store,meta) {
 					}
 
 					if (fields[f].required == true) {
-						field.allowBlank=false,
+						field.allowBlank=false;
 						field.blankText="Enter a " + fields[f].header;
+					}
+					if ( ! Ext.isEmpty(fields[f].regEx)) {
+                        field.regex = new RegExp(fields[f].regEx);
+                        field.regexText = fields[f].regExExample;
 					}
 
 					if (col2  && f > fields.length/2) {
