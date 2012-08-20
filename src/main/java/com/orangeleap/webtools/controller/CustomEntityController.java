@@ -24,6 +24,7 @@ import com.orangeleap.webtools.service.WidgetService;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.Element;
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
@@ -50,7 +51,7 @@ public class CustomEntityController extends MultiActionController {
 		String sessionId = request.getParameter("sessionId");
 		Long constituentid = - 1L;
 
-		Widget w = widgetService.getWidget(guid);
+		final Widget w = widgetService.getWidget(guid);
 		if (w == null) {
 			return getModelMapError("Invalid guid");
 		}
@@ -60,24 +61,7 @@ public class CustomEntityController extends MultiActionController {
 			// get the constituent id out of the session cache
 			Element elem = sessionCache.get(sessionId);
 			if (elem == null) {
-				Cookie sessionCookie = null;
-				Cookie sessionCookies[] = request.getCookies();
-				for (int i = 0; i < sessionCookies.length; i++) {
-					if (sessionCookies[i].getName().equals("sessionId")) {
-						sessionCookie = sessionCookies[i];
-						sessionCookie.setMaxAge(0);
-						sessionCookie.setValue("");
-						break;
-					}
-				}
-
-				if (sessionCookie == null) {
-					//
-					// clear the 
-					sessionCookie = new Cookie("sessionId", "");
-				}
-
-				response.addCookie(sessionCookie);			
+				resetSessionCookie(request, response);
 			
 				return getModelMapError("Invalid Session ID");
 			}
@@ -89,10 +73,31 @@ public class CustomEntityController extends MultiActionController {
 		if (guid != null && ! guid.equals("undefined")) {
 			final List<CustomEntity> ceList = widgetService.getCustomEntity(guid);
 
-			return getModelMap(ceList, guid, constituentid);
+			return getModelMap(ceList, guid, constituentid, w);
 		}
 
 		return getModelMapError("Error trying to retrieve customEntity");
+	}
+
+	private void resetSessionCookie(final HttpServletRequest request, final HttpServletResponse response) {
+		Cookie sessionCookie = null;
+		final Cookie sessionCookies[] = request.getCookies();
+
+		for (final Cookie aCookie : sessionCookies) {
+			if (aCookie.getName().equals("sessionId")) {
+				sessionCookie = aCookie;
+				sessionCookie.setMaxAge(0);
+				sessionCookie.setValue("");
+				break;
+			}
+		}
+		if (sessionCookie == null) {
+			//
+			// clear the
+			sessionCookie = new Cookie("sessionId", "");
+		}
+
+		response.addCookie(sessionCookie);
 	}
 
 	/**
@@ -206,11 +211,11 @@ public class CustomEntityController extends MultiActionController {
 		}
 		return "";
 	}
-	private ModelAndView getModelMap(List<CustomEntity> ceList, String guid,
-			Long constituentid) {
-		List<Map<String, Object>> returnList = new ArrayList<Map<String, Object>>();
-		Map<String, Object> modelMap = new HashMap<String, Object>();
-		Map<String, Object> metaData = new HashMap<String, Object>();
+	private ModelAndView getModelMap(final List<CustomEntity> ceList, final String guid,
+			final Long constituentid, final Widget widget) {
+		final List<Map<String, Object>> returnList = new ArrayList<Map<String, Object>>();
+		final Map<String, Object> modelMap = new HashMap<String, Object>();
+		final Map<String, Object> metaData = new HashMap<String, Object>();
 
 		metaData.put("idProperty", "id");
 		metaData.put("root", "rows");
@@ -219,6 +224,8 @@ public class CustomEntityController extends MultiActionController {
 		metaData.put("fields", ceList);
 		final Map<String, List<Map<String, Object>>> picklistNameItems = widgetService.findPicklistItemsForCustomEntities(ceList, guid);
 		metaData.put("picklistNameItems", picklistNameItems);
+
+		metaData.put("allowLogout", widget.getWidgetAuthenticationRequired());
 
 		modelMap.put("metaData", metaData);
 		modelMap.put("success", true);
@@ -232,7 +239,7 @@ public class CustomEntityController extends MultiActionController {
 					constituentid);
 			//determine if there is only one custom entity record(ie this table has a unique one to one record with the constituent)
 			//if so locate the custom table row(there will only be one) and use that id
-			CustomTable table = widgetService.getCustomTable(guid);
+			final CustomTable table = widgetService.getCustomTable(guid);
 			boolean ceReferencesConstituent = false;
 			boolean forConstituentContext = false;
 			boolean hasConstituentIdKey = false;
@@ -253,7 +260,7 @@ public class CustomEntityController extends MultiActionController {
 			//if there is a unique one to one record with the constituent then we need to locate 
 			//the custom table row id for that record
 			if (ceReferencesConstituent){
-				Map<String, String> whereFieldEqualsValue = new HashMap<String, String>();
+				final Map<String, String> whereFieldEqualsValue = new HashMap<String, String>();
 				whereFieldEqualsValue.put(CONSTITUENT_ID.toLowerCase(), constituentid.toString());
 				
 				try {
@@ -281,12 +288,12 @@ public class CustomEntityController extends MultiActionController {
 
 		//
 		// add a row into the modelMap
-		Iterator<CustomEntity> it = ceList.iterator();
-		Map<String, Object> row = new HashMap<String, Object>();
+		final Iterator<CustomEntity> it = ceList.iterator();
+		final Map<String, Object> row = new HashMap<String, Object>();
 		row.put("id", 0);
 		row.put("customtablerowid", rowId);
 		while (it.hasNext()) {
-			CustomEntity ce = it.next();
+			final CustomEntity ce = it.next();
 
 			//
 			// skip the id as we already put it in...
@@ -355,5 +362,21 @@ public class CustomEntityController extends MultiActionController {
 		modelMap.put("success", false);
 
 		return new ModelAndView("jsonView", modelMap);
+	}
+
+	public void logout(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+		final String guid = request.getParameter("guid");
+		final String sessionId = request.getParameter("sessionId");
+
+		if (StringUtils.isNotBlank(sessionId)) {
+			resetSessionCookie(request, response);
+			sessionCache.remove(sessionId);
+		}
+
+		final Widget widget = widgetService.getWidget(guid);
+		final String authenticationUrl = widget.getWidgetAuthenticationURL();
+
+//		request.getSession().invalidate();
+		response.sendRedirect(authenticationUrl);
 	}
 }

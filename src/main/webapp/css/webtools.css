@@ -7664,14 +7664,21 @@ body.ext-ie6 .x-superboxselect-item {
 	background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(241,241,241,1) 50%,rgba(225,225,225,1) 51%,rgba(246,246,246,1) 100%); /* IE10+ */
 	background: linear-gradient(top, rgba(255,255,255,1) 0%,rgba(241,241,241,1) 50%,rgba(225,225,225,1) 51%,rgba(246,246,246,1) 100%);
 }
-.olLink {
+.logoutLink, .olLink {
     display: block;
     margin: 0 auto;
     text-align: center;
+    color: blue;
 }
 .olLink:hover,
-	.olLink:focus {
-		color: blue;
+	.olLink:focus,
+	.logoutLink:hover,
+	.logoutLink:focus {
+		color: navy;
+}
+.logoutLink {
+	font-size: 0.8rem;
+	margin: 5px auto;
 }
 
 #widget {

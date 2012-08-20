@@ -62,9 +62,9 @@ var gifthistory = {
 	return "";
     },
 
-    generateWidget: function(widgetname,widgetid,authenticate, redirecturl, referer, replaceTopContent) {
+    generateWidget: function(widgetname,widgetId,authenticate, redirecturl, referer, replaceTopContent) {
 	this.sessionId = this.getCookie("sessionId");
-    this.widgetId = widgetid;
+    this.widgetId = widgetId;
     this.replaceTopContent = replaceTopContent;
 
 	if (authenticate == true && this.sessionId == "") {
@@ -81,10 +81,10 @@ var gifthistory = {
 	}
 
 
-	OrangeLeapWidget.updateViewCount(widgetid,referer);
+	OrangeLeapWidget.updateViewCount(widgetId,referer);
 
 	var mydatastore = new Ext.data.JsonStore({
-	    url:'giftHistory.json?guid=' + widgetid + '&sessionId=' + this.sessionId,
+	    url:'giftHistory.json?guid=' + widgetId + '&sessionId=' + this.sessionId,
 	    root:'rows',
 	    fields:['id',
 	    	{name: 'donationdate', type: 'date', dateFormat: 'c'},
@@ -115,7 +115,21 @@ var gifthistory = {
 	    frame:false,
 	    title:'Gift History',
 	    height:350,
-	    width:655
+	    width:655,
+	    bbar: new Ext.Toolbar({
+	        items: [
+	            {
+					xtype : 'box',
+					cls: 'logoutLink',
+					autoEl : {
+						id: 'olLogoutLink',
+						tag : 'a',
+						href : 'javascript:void(0)',
+						html : 'Logout'
+					}
+	            }
+	        ]
+	    })
 	});
 	mydatastore.load({
 		callback: function() {
@@ -124,6 +138,7 @@ var gifthistory = {
 		}
 	});
 
+	var that = this;
 	giftGrid.on("click", function(e) {
             var btn = e.getTarget('.controlBtn');
             if (btn) {
@@ -157,8 +172,21 @@ var gifthistory = {
             }
         },giftGrid);
 
-	giftGrid.render(widgetname);
+		giftGrid.render(widgetname);
+		Ext.get('olLogoutLink').on('click', function() {
+			that.logout.call(that);
+		});
     },
+
+	logout: function() {
+		var logoutUrl = 'logout.json?guid=' + this.widgetId + '&sessionId=' + this.sessionId;
+	    if (this.replaceTopContent == 'true') {
+			top.location.href = logoutUrl;
+	    }
+	    else {
+			window.location.href = logoutUrl;
+	    }
+	},
 
     showError: function() {
 	$j("div#globalErrors").show();

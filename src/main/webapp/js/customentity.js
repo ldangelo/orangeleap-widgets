@@ -15,6 +15,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
     args : null,
     successurl : null,
     picklistNameItemsMap: {},
+    allowLogout: false,
     replaceTopContent: null,
     timeout: 120,
     valueDelimiter: '\u00A7',
@@ -214,6 +215,17 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 				waitMsg : 'Saving...'
 			});
 		},
+
+		logout: function() {
+			var logoutUrl = 'customEntity.ajax?action=logout&guid=' + this.guid + '&sessionId=' + this.sessionId;
+		    if (this.replaceTopContent == 'true') {
+				top.location.href = logoutUrl;
+		    }
+		    else {
+				window.location.href = logoutUrl;
+		    }
+		},
+
 		initComponent : function() {
 			Ext.QuickTips.init();
 
@@ -412,6 +424,9 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 							for (var picklistName in meta.picklistNameItems) {
 								that.picklistNameItemsMap[picklistName] = meta.picklistNameItems[picklistName];
 							}
+						}
+						if (meta.allowLogout) {
+							that.allowLogout = meta.allowLogout;
 						}
 
 					    //
@@ -732,7 +747,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 							scope : this
 						};
 
-						var linkConfig = {
+						var orangeLeapLinkConfig = {
 							xtype : "box",
 							cls: 'olLink',
 							autoEl : {
@@ -742,10 +757,30 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 							}
 						};
 						this.form.submitButton = this.form.superclass().addButton.call(this.form, btnConfig, this.form.onSubmit, this.form);
-						this.form.superclass().add.call(this.form, linkConfig);
+						this.form.superclass().add.call(this.form, orangeLeapLinkConfig);
+
+						if (this.form.allowLogout === true) {
+							var logoutLinkConfig = {
+								xtype : 'box',
+								cls: 'logoutLink',
+								autoEl : {
+									id: 'olLogoutLink',
+									tag : 'a',
+									href : 'javascript:void(0)',
+									html : 'Logout'
+								}
+							};
+							this.form.superclass().add.call(this.form, logoutLinkConfig);
+						}
 
 						// apply config
 						this.form.superclass().render.call(this.form, this.form.widgetid);
+						if (this.form.allowLogout === true) {
+							var aForm = this.form;
+							Ext.get('olLogoutLink').on('click', function() {
+								aForm.logout.call(aForm);
+							});
+						}
 					},
 					'load' : function(store, records, options) {
 						var metaData = store.reader.meta.fields;

@@ -99,12 +99,15 @@ postToUrl: function(url, params, replaceTopWindow)
 	return "";
     },
 
-    generateWidget: function(widgetname,widgetid,authenticate, redirecturl, referer, donationurl, replaceTopContent) {
-	var sessionId = this.getCookie("sessionId");
+    generateWidget: function(widgetname,widgetId,authenticate, redirecturl, referer, donationurl, replaceTopContent) {
+	this.sessionId = this.getCookie("sessionId");
 	this.replaceTopContent = replaceTopContent;
+	this.widgetId = widgetId;
+
+	var that = this;
 	
 	
-	if (authenticate == true && sessionId == "") {
+	if (authenticate == true && this.sessionId == "") {
 		if (replaceTopContent == 'true') {
 			Ext.getBody().mask('Loading...', 'x-mask-loading');
 			top.location.href=redirecturl;
@@ -118,10 +121,10 @@ postToUrl: function(url, params, replaceTopWindow)
 	}
 
 
-	OrangeLeapWidget.updateViewCount(widgetid,referer);
+	OrangeLeapWidget.updateViewCount(widgetId,referer);
 
 	var mydatastore = new Ext.data.JsonStore({
-	    url:'pledges.json?guid=' + widgetid + '&sessionId=' + sessionId,
+	    url:'pledges.json?guid=' + widgetId + '&sessionId=' + that.sessionId,
 	    root:'rows',
 	    fields:['id',
 	    	{name: 'donationdate', type: 'date', dateFormat: 'c'},
@@ -162,7 +165,21 @@ postToUrl: function(url, params, replaceTopWindow)
 	    frame:false,
 	    title:'Pledges',
 	    height:350,
-	    width:655
+	    width:655,
+	    bbar: new Ext.Toolbar({
+	        items: [
+	            {
+					xtype : 'box',
+					cls: 'logoutLink',
+					autoEl : {
+						id: 'olLogoutLink',
+						tag : 'a',
+						href : 'javascript:void(0)',
+						html : 'Logout'
+					}
+	            }
+	        ]
+	    })
 	});
 	mydatastore.load({
 		callback: function() {
@@ -215,8 +232,22 @@ postToUrl: function(url, params, replaceTopWindow)
         }
     },pledgesGrid);
 
-	pledgesGrid.render(widgetname);
+		var that = this;
+		pledgesGrid.render(widgetname);
+		Ext.get('olLogoutLink').on('click', function() {
+			that.logout.call(that);
+		});
     },
+
+	logout: function() {
+		var logoutUrl = 'logout.json?guid=' + this.widgetId + '&sessionId=' + this.sessionId;
+	    if (this.replaceTopContent == 'true') {
+			top.location.href = logoutUrl;
+	    }
+	    else {
+			window.location.href = logoutUrl;
+	    }
+	},
 
     showError: function() {
 	$j("div#globalErrors").show();
