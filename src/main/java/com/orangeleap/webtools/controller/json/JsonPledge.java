@@ -127,7 +127,9 @@ public class JsonPledge {
 			map.put("amountremaining", pledge.getAmountRemaining());
 			map.put("status", pledge.getPledgeStatus());
 			map.put("startdate", pledge.getStartDate().toString());
-			map.put("enddate", pledge.getEndDate().toString());
+			if (pledge.getEndDate() != null) {
+				map.put("enddate", pledge.getEndDate().toString());
+			}
 
 			
 			if (pledge.getDistributionLines().size() > 0){

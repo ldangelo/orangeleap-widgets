@@ -123,7 +123,12 @@ postToUrl: function(url, params, replaceTopWindow)
 	var mydatastore = new Ext.data.JsonStore({
 	    url:'pledges.json?guid=' + widgetid + '&sessionId=' + sessionId,
 	    root:'rows',
-	    fields:['id','donationdate','recurring','startdate','enddate','frequency','originalamount','amountpaid','amountremaining','status','projectCode','projectCodeDescription','motivationCode','motivationCodeDescription'],
+	    fields:['id',
+	    	{name: 'donationdate', type: 'date', dateFormat: 'c'},
+	    	'recurring',
+	    	{name: 'startdate', type: 'date', dateFormat: 'c'},
+	    	{name: 'enddate', type: 'date', dateFormat: 'c'},
+	    	'frequency','originalamount','amountpaid','amountremaining','status','projectCode','projectCodeDescription','motivationCode','motivationCodeDescription'],
 	    sortInfo:{field:'id',direction:'ASC'}
 	});
 
