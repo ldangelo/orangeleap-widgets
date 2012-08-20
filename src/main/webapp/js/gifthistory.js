@@ -86,7 +86,9 @@ var gifthistory = {
 	var mydatastore = new Ext.data.JsonStore({
 	    url:'giftHistory.json?guid=' + widgetid + '&sessionId=' + this.sessionId,
 	    root:'rows',
-	    fields:['id','donationdate','amount','status','paymentstatus'],
+	    fields:['id',
+	    	{name: 'donationdate', type: 'date', dateFormat: 'c'},
+	    	'amount','status','paymentstatus'],
 	    sortInfo:{field:'id',direction:'ASC'}
 	});
 
