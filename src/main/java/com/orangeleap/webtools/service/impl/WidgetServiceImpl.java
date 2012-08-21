@@ -3,6 +3,8 @@ package com.orangeleap.webtools.service.impl;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.ws.soap.SOAPFaultException;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -510,7 +512,14 @@ public class WidgetServiceImpl implements WidgetService {
 			else {
 				ce.setHidden(false);
 			}
-			ce.setValue(ctfield.getCustomTableFieldDefaultValue());
+			
+			if (ctfield.getCustomTableFieldDefaultValue() != null && ctfield.getCustomTableFieldDefaultValue().equals("{TODAY}")) {
+			        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+			        ce.setValue(sdf.format(new java.util.Date()));			        
+			} else {
+				ce.setValue(ctfield.getCustomTableFieldDefaultValue());
+			}
+			
 			ce.setRequired(ctfield.isCustomTableFieldRequired());
 			ce.setExpression(ctfield.getCustomTableFieldExpression());
 			ce.setRegEx(ctfield.getCustomTableFieldRegex());
