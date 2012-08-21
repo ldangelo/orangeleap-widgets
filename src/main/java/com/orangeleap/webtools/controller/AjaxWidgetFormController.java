@@ -489,7 +489,7 @@ public class AjaxWidgetFormController extends MultiActionController {
 		map.put("header", "Description");
 		fields.add(map);
 
-		if (widgettype.equals("pledges") || widgettype.equals("gifthistory") || customentitytype.equals("donor_profile")) {
+		if ("pledges".equals(widgettype) || "gifthistory".equals(widgettype) || "donor_profile".equals(customentitytype)) {
 			map = new HashMap<String, Object>();
 			map.put("name", "widgetAuthenticationRequired");
 			map.put("readonly", false);
@@ -517,23 +517,25 @@ public class AjaxWidgetFormController extends MultiActionController {
 		map.put("header", "Style");
 		fields.add(map);
 
-		map = new HashMap<String, Object>();
-		map.put("name", "widgetLoginSuccessURL");
-		map.put("readonly", false);
-		map.put("required", true);
-		map.put("type", "text");
-		map.put("header", "Widget Success URL");
-		map.put("regEx", "^https?:\\/\\/.+$");
-		map.put("regExExample", "The URL must be like - http://orangeleap.com or - https://orangeleap.com");
-		fields.add(map);
-
+		if ("widget_authentication".equals(customentitytype) || "online_registration".equals(customentitytype) ||
+				"online_donation".equals(customentitytype) || "online_sponsorship".equals(customentitytype)) {
+			map = new HashMap<String, Object>();
+			map.put("name", "widgetLoginSuccessURL");
+			map.put("readonly", false);
+			map.put("required", true);
+			map.put("type", "text");
+			map.put("header", "Widget Success URL");
+			map.put("regEx", "^https?:\\/\\/.+$");
+			map.put("regExExample", "The URL must be like - http://orangeleap.com or - https://orangeleap.com");
+			fields.add(map);
+		}
 
 		map = new HashMap<String, Object>();
 		map.put("name", "replaceTopContents");
 		map.put("readonly", false);
 		map.put("required", true);
 		map.put("type", "boolean");
-		map.put("header", "Redirect To Success URL");
+		map.put("header", "Redirect To URL");
 		map.put("element", "radio");
 		map.put("trueOption", "In the Browser Window");
 		map.put("falseOption", "In the Inner Frame");
