@@ -239,6 +239,7 @@ postToUrl: function(url, params, replaceTopWindow)
 
 	logout: function() {
 		var logoutUrl = 'logout.json?guid=' + this.widgetId + '&sessionId=' + this.sessionId;
+	    document.cookie = 'sessionId=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 	    if (this.replaceTopContent == 'true') {
 			top.location.href = logoutUrl;
 	    }
