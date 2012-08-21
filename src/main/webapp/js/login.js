@@ -100,10 +100,12 @@ var authentication = {
 			this.handleError(widgetid,"Authentication Failed!");
 		}
 		else {
-			if (Ext.get("remember").dom.value == "on")
-			this.setCookie("sessionId",session.sessionId,5);
-			else
-			this.setCookie("sessionId",session.sessionId);
+			if (Ext.get("remember").dom.value == "on") {
+				this.setCookie("sessionId",session.sessionId,5);
+			}
+			else {
+				this.setCookie("sessionId",session.sessionId);
+			}
 
 			if (successurl != null) {
 			    var params = new Object();
@@ -206,28 +208,29 @@ var authentication = {
 				labelAlign: 'right',
 				monitorValid: true,
 				items: [{
-					fieldLabel: 'User Name',
-					name: 'username',
-					allowBlank:false,
-					minLength: 6,
-					maxLength: 12,
-					id: 'enterUserName',
-					blankText: 'Enter your User Name.',
-					minLengthText: 'User Name must be at least 6 characters',
-					enableKeyEvents: true,
-	                listeners: loginListener
-				},{
-					inputType:'password',
-					fieldLabel: 'Password',
-					name:'password',
-					allowBlank:false,
-					minLength: 6,
-					maxLength: 12,
-					blankText: 'Enter your Password.',
-					minLengthText: 'Password must be at least 6 characters',
-					enableKeyEvents: true,
-	                listeners: loginListener
-				},
+						fieldLabel: 'User Name',
+						name: 'username',
+						allowBlank:false,
+						minLength: 6,
+						maxLength: 12,
+						id: 'enterUserName',
+						blankText: 'Enter your User Name.',
+						minLengthText: 'User Name must be at least 6 characters',
+						enableKeyEvents: true,
+		                listeners: loginListener
+					},{
+						inputType:'password',
+						fieldLabel: 'Password',
+						name:'password',
+						allowBlank:false,
+						id: 'enterPassword',
+						minLength: 6,
+						maxLength: 12,
+						blankText: 'Enter your Password.',
+						minLengthText: 'Password must be at least 6 characters',
+						enableKeyEvents: true,
+		                listeners: loginListener
+					},
 					{
 						id: 'remember',
 						xtype:'checkbox',
@@ -243,6 +246,50 @@ var authentication = {
 						}
 					}
 				],
+				listeners: {
+					afterrender: function(form) {
+						form.get('enterUserName').on('blur', function(field) {
+							if (localStorage) {
+								var remembered = form.get('remember').getValue();
+					            if (remembered === true || remembered === 'true') {
+					                localStorage.setItem('donorWidgetsCachedUserName', field.getValue());
+					            }
+					            else {
+					                localStorage.removeItem('donorWidgetsCachedUserName');
+					            }
+							}
+						});
+						form.get('remember').on('check', function(checkbox, checked) {
+							if (localStorage) {
+		                        if (checked) {
+		                            localStorage.setItem('donorWidgetsCachedUserName', form.get('enterUserName').getValue());
+		                            localStorage.setItem('donorWidgetsRememberChecked', 'true');
+		                        }
+		                        else {
+		                            localStorage.removeItem('donorWidgetsCachedUserName');
+		                            localStorage.setItem('donorWidgetsRememberChecked', 'false');
+		                        }
+							}
+						});
+
+						if (localStorage) {
+							var rememberChecked = localStorage.getItem('donorWidgetsRememberChecked');
+				            if (rememberChecked === true || rememberChecked === 'true') {
+				                var rememberCheckbox = form.get('remember');
+				                rememberCheckbox.suspendEvents();
+				                rememberCheckbox.setValue(true);
+				                rememberCheckbox.resumeEvents();
+				            }
+				            if ( ! Ext.isEmpty(localStorage.getItem('donorWidgetsCachedUserName'))) {
+				                form.get('enterUserName').setValue(localStorage.getItem('donorWidgetsCachedUserName'));
+				                form.get('enterPassword').focus(true, 200);
+				            }
+				            else {
+				                form.get('enterUserName').focus(true, 200);
+				            }
+				        }
+					}
+				},
 				fbar: [{
 					text: 'Login',
 					formBind:true,

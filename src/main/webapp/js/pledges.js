@@ -109,11 +109,9 @@ postToUrl: function(url, params, replaceTopWindow)
 	
 	if (authenticate == true && this.sessionId == "") {
 		if (replaceTopContent == 'true') {
-			Ext.getBody().mask('Loading...', 'x-mask-loading');
 			top.location.href=redirecturl;
 		}
 		else {
-			Ext.getBody().mask('Loading...', 'x-mask-loading');
 			window.location.href=redirecturl;
 		}
 
