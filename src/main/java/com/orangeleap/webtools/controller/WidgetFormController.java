@@ -1,18 +1,11 @@
 package com.orangeleap.webtools.controller;
 
-import java.util.List;
+import com.orangeleap.webtools.service.WidgetService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.Authentication;
-import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import com.orangeleap.webtools.dao.WidgetDAO;
-import com.orangeleap.webtools.domain.Widget;
-import com.orangeleap.webtools.service.WidgetService;
 
 @Controller
 public class WidgetFormController {
@@ -61,11 +54,6 @@ public class WidgetFormController {
 			Model model) {
 
 	}
-
-    @RequestMapping("/recurringgiftwidgetform.htm")
-    public void recurringgiftwidget(@RequestParam(required = false) Long id, Model model) {
-
-    }
 
 	@RequestMapping("/donorprofilewidgetform.htm")
 	public void donorprofilewidgets(@RequestParam(required = false) Long id,

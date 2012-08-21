@@ -66,16 +66,6 @@ public class AjaxWidgetFormController extends MultiActionController {
 	 */
 	private String iframeHTML;
 
-	public String getRecurringGiftWidgetHTML() {
-		return recurringGiftWidgetHTML;
-	}
-
-	public void setRecurringGiftWidgetHTML(String recurringGiftWidgetHTML) {
-		this.recurringGiftWidgetHTML = recurringGiftWidgetHTML;
-	}
-
-	private String recurringGiftWidgetHTML;
-
 	/**
 	 * Get the <code>IframeHTML</code> value.
 	 *
@@ -425,9 +415,6 @@ public class AjaxWidgetFormController extends MultiActionController {
 		else if (customentitytype.equals("online_donation")) {
 			widget.setWidgetHtml(donationWidgetHTML);
 		}
-		else if (customentitytype.equals("online_recurringgift")) {
-			widget.setWidgetHtml(recurringGiftWidgetHTML);
-		}
 		else if (customentitytype.equals("online_registration")) {
 			widget.setWidgetHtml(registrationWidgetHTML);
 		}
@@ -541,7 +528,7 @@ public class AjaxWidgetFormController extends MultiActionController {
 		map.put("falseOption", "In the Inner Frame");
 		fields.add(map);
 
-		if (customentitytype.equals("online_donation") || customentitytype.equals("online_recurringgift")) {
+		if (customentitytype.equals("online_donation")) {
 			map = new HashMap<String, Object>();
 			map.put("name", "projectCode");
 			map.put("readonly", false);
