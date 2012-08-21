@@ -15,6 +15,7 @@ import com.orangeleap.client.CustomTable;
 import com.orangeleap.webtools.domain.Widget;
 import com.orangeleap.webtools.service.StyleService;
 import com.orangeleap.webtools.service.WidgetService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.PropertyAccessorFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -242,9 +243,11 @@ public class AjaxWidgetFormController extends MultiActionController {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void addStyles(final ModelAndView mav, final Long widgetStyleId) {
+	private String addStyles(final ModelAndView mav, final Long widgetStyleId) {
+		String errorMessage = null;
 		final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		final String userName = auth.getName();
+		final String siteName = resolveSiteName(userName);
 		final Style style = new Style();
 		style.setUserName(userName);
 		List<Style> styles = null;
@@ -284,14 +287,20 @@ public class AjaxWidgetFormController extends MultiActionController {
 			// this is a deleted style
 			final Style aStyle = styleService.selectById(widgetStyleId);
 			if (aStyle != null) {
-				aStyleRow = new HashMap<String, Object>();
-				aStyleRow.put("Id", aStyle.getId());
-				aStyleRow.put("Style", net.sf.json.util.JSONUtils.quote(aStyle.getStyle()));
-				aStyleRow.put("StyleName", aStyle.getStyleName() + " (Deleted)");
-				styleRows.add(aStyleRow);
+				if (siteName.equals(aStyle.getSiteName())) {
+					aStyleRow = new HashMap<String, Object>();
+					aStyleRow.put("Id", aStyle.getId());
+					aStyleRow.put("Style", net.sf.json.util.JSONUtils.quote(aStyle.getStyle()));
+					aStyleRow.put("StyleName", aStyle.getStyleName() + " (Deleted)");
+					styleRows.add(aStyleRow);
+				}
+				else {
+					errorMessage = "You have chosen an invalid Style.  Please use another.";
+				}
 			}
 		}
 		metaData.put("styles", styleRows);
+		return errorMessage;
 	}
 
 	public ModelAndView create(HttpServletRequest request,
@@ -341,8 +350,11 @@ public class AjaxWidgetFormController extends MultiActionController {
 		ret.setWidgetHtml("Undefined");
 
 		final ModelAndView mav = getModelMap(ret, widgettype, customentitytype);
-		addStyles(mav, ret.getStyleId());
+		final String errorMessage = addStyles(mav, ret.getStyleId());
 
+		if (StringUtils.isNotBlank(errorMessage)) {
+			return getModelMapError(errorMessage);
+		}
 		return mav;
 	}
 
@@ -439,7 +451,11 @@ public class AjaxWidgetFormController extends MultiActionController {
 		widgetService.getCustomTable(widget.getWidgetGuid(), false);
 
 		final ModelAndView mav = getModelMap(widget, widgettype, customentitytype);
-		addStyles(mav, widget.getStyleId());
+		final String errorMessage = addStyles(mav, widget.getStyleId());
+
+		if (StringUtils.isNotBlank(errorMessage)) {
+			return getModelMapError(errorMessage);
+		}
 
 		return mav;
 	}
@@ -600,11 +616,15 @@ public class AjaxWidgetFormController extends MultiActionController {
 		return new ModelAndView("jsonView", modelMap);
 	}
 
-	private ModelAndView getModelMapError(String msg) {
+	private ModelAndView getModelMapError(final String msg) {
 
-		Map<String, Object> modelMap = new HashMap<String, Object>(2);
+		final Map<String, Object> modelMap = new HashMap<String, Object>(2);
 		modelMap.put("message", msg);
 		modelMap.put("success", false);
+
+		if (logger.isErrorEnabled()) {
+			logger.error("ERROR in AjaxWidgetForm: " + msg);
+		}
 
 		return new ModelAndView("jsonView", modelMap);
 	}
