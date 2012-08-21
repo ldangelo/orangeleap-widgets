@@ -250,7 +250,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 			}
 			this.sessionId = this.getCookie("sessionId");
 
-			if (this.authenticate == true && this.sessionId == "") {
+			if (this.authenticate == true && (Ext.isEmpty(this.sessionId) || this.sessionId == '""')) {
 				if (this.replaceTopContent == 'true') {
 					top.location.href = this.loginurl;
 				}

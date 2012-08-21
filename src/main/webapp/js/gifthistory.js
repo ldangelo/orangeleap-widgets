@@ -67,7 +67,7 @@ var gifthistory = {
 	    this.widgetId = widgetId;
 	    this.replaceTopContent = replaceTopContent;
 
-		if (authenticate == true && this.sessionId == "") {
+		if (authenticate == true && (Ext.isEmpty(this.sessionId) || this.sessionId == '""')) {
 			if (replaceTopContent == 'true') {
 				top.location.href=redirecturl;
 			}

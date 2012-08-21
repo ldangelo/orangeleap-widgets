@@ -107,7 +107,7 @@ postToUrl: function(url, params, replaceTopWindow)
 		var that = this;
 
 
-		if (authenticate == true && this.sessionId == "") {
+		if (authenticate == true && (Ext.isEmpty(this.sessionId) || this.sessionId == '""')) {
 			if (replaceTopContent == 'true') {
 				top.location.href=redirecturl;
 			}
