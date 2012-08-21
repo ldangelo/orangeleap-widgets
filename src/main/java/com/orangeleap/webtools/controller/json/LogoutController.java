@@ -30,7 +30,6 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.util.WebUtils;
 
 @Controller
 public class LogoutController {
@@ -48,13 +47,21 @@ public class LogoutController {
 		final String sessionId = request.getParameter("sessionId");
 
 		if (StringUtils.isNotBlank(sessionId)) {
-			final Cookie sessionCookie = WebUtils.getCookie(request, "sessionId");
-			if (sessionCookie != null) {
-				sessionCookie.setMaxAge(0);
-				sessionCookie.setValue("");
+			final Cookie sessionCookies[] = request.getCookies();
+			Cookie sessionCookie = null;
 
-				response.addCookie(sessionCookie);
+			for (final Cookie aCookie : sessionCookies) {
+				if (aCookie.getName().equals("sessionId")) {
+					aCookie.setMaxAge(0);
+					aCookie.setValue("");
+					sessionCookie = aCookie;
+					break;
+				}
 			}
+			if (sessionCookie == null) {
+				sessionCookie = new Cookie("sessionId", "");
+			}
+			response.addCookie(sessionCookie);
 			sessionCache.remove(sessionId);
 		}
 
