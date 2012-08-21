@@ -529,13 +529,15 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 										this.form.superclass().add.call(this.form, field);
 									}
 									else {
-										if (fieldsectionindex >= fieldsectioncount / 2) {
+										if (fieldsectionindex > (fieldsectioncount - 1) / 2) {
 											col2.add(field);
 										}
 										else {
 											col1.add(field);
 										}
-										fieldsectionindex++;
+										if (!fields[f].hidden) {
+											fieldsectionindex++;
+										}
 									}
 								}
 								else if (fields[f].type == 'comments') {
@@ -562,7 +564,9 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 										else {
 											col1.add(field);
 										}
-										fieldsectionindex++;
+										if (!fields[f].hidden) {
+											fieldsectionindex++;
+										}
 									}
 								}
 								else if (fields[f].type == 'section') {
@@ -604,8 +608,12 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 									// calculate the number of
 									// fields in this section
 									var start = f + 1;
-									for (fieldsectioncount = 0; start < fields.length && fields[start].type != 'section' && !fields[start].hidden; fieldsectioncount++) {
-										start++;
+									for (fieldsectioncount = 0; start < fields.length && fields[start].type != 'section'; fieldsectioncount++) {
+										if (fields[start].type == 'custom-table-reference' || fields[start].type == 'multi-custom-table-reference' || fields[start].hidden) {
+											fieldsectioncount--;
+										}
+									
+										start++;										
 									}
 									fieldsectionindex = 0;
 
@@ -676,6 +684,9 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 										else {
 											col1.add(comboConfig);
 										}
+										if (!fields[f].hidden) {
+											fieldsectionindex++;
+										}
 									}
 								}
 								else if (fields[f].type == 'multi-picklist') {
@@ -726,8 +737,9 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 											col1.add(comboConfig);
 										}
 
-									    if (!fields[f].hidden)
-										fieldsectionindex++;
+									    if (!fields[f].hidden) {
+											fieldsectionindex++;
+										}										
 									}
 								}
 							}
