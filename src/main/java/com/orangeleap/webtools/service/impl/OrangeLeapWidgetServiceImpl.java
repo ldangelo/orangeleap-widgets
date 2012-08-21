@@ -397,7 +397,7 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
 		filter.setName("user_name");
 		filter.setValue(username);
 
-		webwidgetRequest.setTablename("widget_authentication");
+		webwidgetRequest.setTablename("online_registration");
 		webwidgetRequest.setOffset(0);
 		webwidgetRequest.setLimit(1);
 		webwidgetRequest.getFilters().add(filter);

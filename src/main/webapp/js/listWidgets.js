@@ -34,8 +34,6 @@ function renderCodeIcon(val,metaData, record, rowIndex, colIndex, store) {
 			url = 'sponsorshipwidgetform.htm?guid=' + val;
 		else if(record.data.entityname == 'online_registration')
 			url = 'registrationwidgetform.htm?guid=' + val;
-		else if(record.data.entityname == 'online_recurringgift')
-			url = 'recurringgiftwidgetform.htm?guid=' + val;
 	} else {
 		if (record.data.type == 'gifthistory') {
 			url = 'gifthistorywidgetform.htm?guid=' + val;

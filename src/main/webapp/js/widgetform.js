@@ -91,6 +91,8 @@ WidgetForm = Ext.extend(Ext.form.FormPanel, {
 			displayField: 'StyleName',
 			valueField: 'Id',
 			lazyInit : false,
+			forceSelection: true,
+            selectOnFocus: true,
 			mode : 'local',
 			store : new Ext.data.JsonStore({
 				fields : [ 'Id', 'Style', 'StyleName'],

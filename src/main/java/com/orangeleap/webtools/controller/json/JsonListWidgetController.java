@@ -46,9 +46,6 @@ public class JsonListWidgetController {
 			else if (widget.getWidgetType().equals("pledges")) {
 				widgetName = "Pledge";
 			}
-			else if (widget.getWidgetType().equals("customentity") && widget.getCustomEntityName().equals("online_recurringgift")) {
-				widgetName = "Recurring Gift";
-			}
 			else if (widget.getWidgetType().equals("customentity") && widget.getCustomEntityName().equals("online_registration")) {
 				widgetName = "Registration";
 			}

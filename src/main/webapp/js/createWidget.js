@@ -11,7 +11,6 @@ Ext.onReady(function() {
 		}
 		if (data.match("WEBTOOLS_DONATION")) {
 			widgetTypes.push(['donation', 'Donation']);
-			widgetTypes.push(['recurringGift', 'Recurring Gift']);
 		}
 		if (data.match("WEBTOOLS_SPONSORSHIP")) {
 			widgetTypes.push(['sponsorable', 'Sponsorable']);
@@ -96,9 +95,6 @@ Ext.onReady(function() {
 		}
 		else if ('pledge' == newValue) {
 			widgetFormParams = { widgettype:'pledges', customentitytype:'undefined' };
-		}
-		else if ('recurringGift' == newValue) {
-			widgetFormParams = { widgettype:'customentity', customentitytype:'online_recurringgift' };
 		}
 		else if ('registration' == newValue) {
 			widgetFormParams = { widgettype:'customentity', customentitytype:'online_registration' };

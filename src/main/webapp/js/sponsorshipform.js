@@ -154,8 +154,6 @@ var sponsorshipform =  {
 
 		mydatastore.load({params:{start:0,limit:pageSize,pattern:pattern}});
     },
-    onRecurringGift: function() {
-    },
     onSponsor: function() {
 		var query = '?';
 		var field = form.getForm().findField("id");
