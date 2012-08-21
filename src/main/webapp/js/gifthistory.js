@@ -63,117 +63,115 @@ var gifthistory = {
     },
 
     generateWidget: function(widgetname,widgetId,authenticate, redirecturl, referer, replaceTopContent) {
-	this.sessionId = this.getCookie("sessionId");
-    this.widgetId = widgetId;
-    this.replaceTopContent = replaceTopContent;
+		this.sessionId = this.getCookie("sessionId");
+	    this.widgetId = widgetId;
+	    this.replaceTopContent = replaceTopContent;
 
-	if (authenticate == true && this.sessionId == "") {
-		if (replaceTopContent == 'true') {
-			top.location.href=redirecturl;
+		if (authenticate == true && this.sessionId == "") {
+			if (replaceTopContent == 'true') {
+				top.location.href=redirecturl;
+			}
+			else {
+				window.location.href=redirecturl;
+			}
 		}
 		else {
-			window.location.href=redirecturl;
-		}
-		
-	    return;
-	}
+			OrangeLeapWidget.updateViewCount(widgetId,referer);
 
+			var mydatastore = new Ext.data.JsonStore({
+			    url:'giftHistory.json?guid=' + widgetId + '&sessionId=' + this.sessionId,
+			    root:'rows',
+			    fields:['id',
+			        {name: 'donationdate', type: 'date', dateFormat: 'c'},
+			        'amount','status','paymentstatus'],
+			    sortInfo:{field:'id',direction:'ASC'}
+			});
 
-	OrangeLeapWidget.updateViewCount(widgetId,referer);
-
-	var mydatastore = new Ext.data.JsonStore({
-	    url:'giftHistory.json?guid=' + widgetId + '&sessionId=' + this.sessionId,
-	    root:'rows',
-	    fields:['id',
-	    	{name: 'donationdate', type: 'date', dateFormat: 'c'},
-	    	'amount','status','paymentstatus'],
-	    sortInfo:{field:'id',direction:'ASC'}
-	});
-
-	var giftGrid = new Ext.grid.GridPanel({
-	    id:'giftgrid',
-	    store: mydatastore,
-	    loadMask: true,
-		cls: 'widgetForm',
-	    columns:	[
-			{id:'id', header: 'Gift Id', dataIndex: 'id',sortable:false},
-			{id:'donationdate', xtype: 'datecolumn', header: 'Donation Date', dataIndex:'donationdate',sortable:false},
-			{id:'amount', xtype: 'numbercolumn', header: 'Gift Amount',dataIndex:'amount',sortable:false},
-			{id:'status', header:'Gift Status',dataIndex:'status',sortable:false},
-			{id:'paymentstatus', header:'Payment Status',dataIndex:'paymentstatus',sortable:false},
-					   {header: "Actions", width: 60, sortable: false, renderer: function() {
-				return '<div class="controlBtn"><img src="images/inboxSmall.png" class="make_receipt"></div>';
-			}, dataIndex: 'Id'}
-		],
-	    viewConfig: {
-			forceFit: true,
-			emptyText: 'No Gift History To Display'
-	    },
-	    stripeRows:true,
-	    frame:false,
-	    title:'Gift History',
-	    height:350,
-	    width:655,
-	    bbar: new Ext.Toolbar({
-	        items: [
-	            {
-					xtype : 'box',
-					cls: 'logoutLink',
-					autoEl : {
-						id: 'olLogoutLink',
-						tag : 'a',
-						href : 'javascript:void(0)',
-						html : 'Logout'
-					}
-	            }
-	        ]
-	    })
-	});
-	mydatastore.load({
-		callback: function() {
-			Ext.get('loading').remove();
-			Ext.get('loading-mask').fadeOut({remove:true});
-		}
-	});
-
-	var that = this;
-	giftGrid.on("click", function(e) {
-            var btn = e.getTarget('.controlBtn');
-            if (btn) {
-                $j(btn).addClass('showWait');
-                var t = e.getTarget();
-                var v = this.getView();
-                var rowIdx = v.findRowIndex(t);
-                var record = this.getStore().getAt(rowIdx);
-                var control = t.className.split('_')[1];
-                switch (control) {
-                    case 'receipt':
-                        if (window.console) {
-                            console.log('send receipt for gift - ' + record.id);
-                        }
-                        var callbackproxy = function(dataFromServer) {
-				            gifthistory.handleReturn(dataFromServer);
-                            $j(btn).removeClass('showWait');
+			var giftGrid = new Ext.grid.GridPanel({
+			    id:'giftgrid',
+			    store: mydatastore,
+			    loadMask: true,
+				cls: 'widgetForm',
+			    columns:	[
+					{id:'id', header: 'Gift Id', dataIndex: 'id',sortable:false},
+					{id:'donationdate', xtype: 'datecolumn', header: 'Donation Date', dataIndex:'donationdate',sortable:false},
+					{id:'amount', xtype: 'numbercolumn', header: 'Gift Amount',dataIndex:'amount',sortable:false},
+					{id:'status', header:'Gift Status',dataIndex:'status',sortable:false},
+					{id:'paymentstatus', header:'Payment Status',dataIndex:'paymentstatus',sortable:false},
+							   {header: "Actions", width: 60, sortable: false, renderer: function() {
+						return '<div class="controlBtn"><img src="images/inboxSmall.png" class="make_receipt"></div>';
+					}, dataIndex: 'Id'}
+				],
+			    viewConfig: {
+					forceFit: true,
+					emptyText: 'No Gift History To Display'
+			    },
+			    stripeRows:true,
+			    frame:false,
+			    title:'Gift History',
+			    height:350,
+			    width:655,
+			    bbar: new Ext.Toolbar({
+			        items: [
+			            {
+							xtype : 'box',
+							cls: 'logoutLink',
+							autoEl : {
+								id: 'olLogoutLink',
+								tag : 'a',
+								href : 'javascript:void(0)',
+								html : 'Logout'
+							}
 			            }
+			        ]
+			    })
+			});
+			mydatastore.load({
+				callback: function() {
+					Ext.get('loading').remove();
+					Ext.get('loading-mask').fadeOut({remove:true});
+				}
+			});
 
-			            var callMetaData={callback:callbackproxy};
+			var that = this;
+			giftGrid.on("click", function(e) {
+	            var btn = e.getTarget('.controlBtn');
+	            if (btn) {
+	                $j(btn).addClass('showWait');
+	                var t = e.getTarget();
+	                var v = this.getView();
+	                var rowIdx = v.findRowIndex(t);
+	                var record = this.getStore().getAt(rowIdx);
+	                var control = t.className.split('_')[1];
+	                switch (control) {
+	                    case 'receipt':
+	                        if (window.console) {
+	                            console.log('send receipt for gift - ' + record.id);
+	                        }
+	                        var callbackproxy = function(dataFromServer) {
+					            gifthistory.handleReturn(dataFromServer);
+	                            $j(btn).removeClass('showWait');
+				            }
 
-			            OrangeLeapWidget.sendGiftReceipt(record.id,gifthistory.sessionId,gifthistory.widgetId,callMetaData);
+				            var callMetaData={callback:callbackproxy};
 
-                        break;
-                    case 'go':
-                        if (window.console) {
-                            console.log('go to this record - ' + record.id);
-                        }
-                        break;
-                }
-            }
-        },giftGrid);
+				            OrangeLeapWidget.sendGiftReceipt(record.id,gifthistory.sessionId,gifthistory.widgetId,callMetaData);
 
-		giftGrid.render(widgetname);
-		Ext.get('olLogoutLink').on('click', function() {
-			that.logout.call(that);
-		});
+	                        break;
+	                    case 'go':
+	                        if (window.console) {
+	                            console.log('go to this record - ' + record.id);
+	                        }
+	                        break;
+	                }
+	            }
+	        },giftGrid);
+
+			giftGrid.render(widgetname);
+			Ext.get('olLogoutLink').on('click', function() {
+				that.logout.call(that);
+			});
+		}
     },
 
 	logout: function() {
