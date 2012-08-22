@@ -44,7 +44,8 @@ public class CustomEntityController extends MultiActionController {
 	Cache sessionCache;
 	
 	public final static String CONSTITUENT_ID = "constituentId";
-
+	public final static String CONSTITUENT_DOT_ID = "constituent.id";
+	
 	@SuppressWarnings("unchecked")
 	public ModelAndView view(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		String guid = request.getParameter("guid");
@@ -235,33 +236,47 @@ public class CustomEntityController extends MultiActionController {
 		if (constituentid != - 1) {
 			//
 			// get the constituent associated with this custom entity
-			constituent = orangeLeapClientService.getConstituentById(guid,
-					constituentid);
+			constituent = orangeLeapClientService.getConstituentById(guid, constituentid);
 			//determine if there is only one custom entity record(ie this table has a unique one to one record with the constituent)
 			//if so locate the custom table row(there will only be one) and use that id
 			final CustomTable table = widgetService.getCustomTable(guid);
 			boolean ceReferencesConstituent = false;
 			boolean forConstituentContext = false;
 			boolean hasConstituentIdKey = false;
+			String constituentIdFieldName = null;
+			int constituentIdFieldCount = 0;
 			int keys = 0;
+			//we need to find the constituent id field, try to use the expression if it's not found or finds more than one use the first occurrence
+			for (final CustomTableField field : table.getFields()) {
+				if (field.getCustomTableFieldExpression().equalsIgnoreCase(CONSTITUENT_DOT_ID)){
+					if (constituentIdFieldCount == 0){
+						constituentIdFieldName = field.getCustomTableFieldName();
+						constituentIdFieldCount ++;
+					}
+				}				
+			}
+			if (constituentIdFieldName == null){ 
+				constituentIdFieldName = CONSTITUENT_ID;// if it wasn't found with the expression above use the standard field name
+			}
 			// for more info see com.orangeleap.tangerine.service.customization.CustomTableMaintenanceServiceImpl.forConstituentAttributes(CustomTable)
 			for (final CustomTableField field : table.getFields()) {
 				if (field.isCustomTableFieldTakeConstituentContext()) {
 					forConstituentContext = true;
 				}
-				if (field.getCustomTableFieldName().equalsIgnoreCase(CONSTITUENT_ID) && field.isCustomTableFieldKey()) {
+				if (field.getCustomTableFieldName().equalsIgnoreCase(constituentIdFieldName) && field.isCustomTableFieldKey()) {
 					hasConstituentIdKey = true;
 				}
 				if (field.isCustomTableFieldKey()) {
 					keys++;
 				}
+				
 			}
 			ceReferencesConstituent = forConstituentContext && hasConstituentIdKey && keys == 1;
 			//if there is a unique one to one record with the constituent then we need to locate 
 			//the custom table row id for that record
 			if (ceReferencesConstituent){
 				final Map<String, String> whereFieldEqualsValue = new HashMap<String, String>();
-				whereFieldEqualsValue.put(CONSTITUENT_ID.toLowerCase(), constituentid.toString());
+				whereFieldEqualsValue.put(constituentIdFieldName, constituentid.toString());
 				
 				try {
 					List<CustomTableRow> rows = widgetService.getCustomTableRows(guid, whereFieldEqualsValue);
@@ -290,14 +305,14 @@ public class CustomEntityController extends MultiActionController {
 		// add a row into the modelMap
 		final Iterator<CustomEntity> it = ceList.iterator();
 		final Map<String, Object> row = new HashMap<String, Object>();
-		row.put("id", 0);
+		row.put("id", rowId);
 		row.put("customtablerowid", rowId);
 		while (it.hasNext()) {
 			final CustomEntity ce = it.next();
 
 			//
 			// skip the id as we already put it in...
-			if (ce.getName().equals("id")) {
+			if (ce.getName().equals("id") || ce.getName().equals("customtablerowid")) {
 				continue;
 			}
 
