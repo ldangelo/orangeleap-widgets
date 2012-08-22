@@ -131,7 +131,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 		},
 		onSuccess : function(f, a) {
 		    var cfMap = a.result.data.customFieldMap.entry;
-		    this.submitButton.disable();
+
 			if ( ! this.successurl || Ext.isEmpty(this.successurl)) {
 				var user_message = null;
 				for ( var f = 0; f < cfMap.length; f++) {
@@ -153,6 +153,9 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 				}
 				this.maskAccountNumbers();
 			    this.showMessage(user_message);
+			    this.submitButton.formBind=false;
+			    this.submitButton.disable();
+			    this.submitButton.disabled = true;
 			}
 			else {
 				var params = new Object();
@@ -207,6 +210,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 		},
 
 		onSubmit : function() {
+		    this.form.submitButton.disable();
 			var customEntityForm = Ext.getCmp('form');
 			customEntityForm.form.submit({
 				url : 'customEntity.ajax?action=create&guid='
