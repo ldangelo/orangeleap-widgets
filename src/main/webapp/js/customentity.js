@@ -22,7 +22,15 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
     parentFields: {},
     helpMsg: null,
     submitButton: null,
-		postToUrl : function(url, params, replaceTopWindow) {
+    showErrorMessage: function(message) {
+	this.helpMsg.setValue("<span style=\"color:red;font-size:20px\">" + message + "</span>");    
+	this.helpMsg.show();
+    },
+    showMessage: function(message) {
+	this.helpMsg.setValue ("<span style=\"color:green;font-size:20px\">" + message + "</span>");    
+	this.helpMsg.show(); 
+    },
+    postToUrl : function(url, params, replaceTopWindow) {
 			var form = $j('<form>');
 			form.attr('action', url);
 			form.attr('method', 'POST');
@@ -144,8 +152,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 					user_message = 'Your changes were successfully saved';
 				}
 				this.maskAccountNumbers();
-
-			    this.helpMsg.setValue(user_message);
+			    this.showMessage(user_message);
 			}
 			else {
 				var params = new Object();
@@ -196,7 +203,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 			else {
 				message = 'An unspecified error occurred.  Please try again';
 			}
-		    this.helpMsg.setValue(message);
+		    this.showErrorMessage(message);
 		},
 
 		onSubmit : function() {
@@ -855,7 +862,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 		},
 		showError : function(str) {
 			OrangeLeapWidget.updateErrorCount(this.guid, this.referer);
-		    this.helpMsg.setValue(str);
+		    this.showErrorMessage(str);
 		}
 });
 Ext.reg('customentity', OrangeLeap.CustomEntity);
