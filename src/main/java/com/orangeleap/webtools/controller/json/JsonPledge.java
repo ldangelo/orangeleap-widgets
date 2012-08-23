@@ -141,7 +141,7 @@ public class JsonPledge {
 			
 				String motivationCode = pledge.getDistributionLines().get(0).getMotivationCode();
 				map.put(MOTIVATION_CODE, motivationCode);
-				motivationCode = getItemDescription(codeMap, motivationCode, MOTIVATION_CODE);
+				motivationCode = getItemDescription(picklistItemMap, motivationCode, MOTIVATION_CODE);
 				map.put(MOTIVATION_CODE_DESCRIPTION, motivationCode);
 			}
 			returnList.add(map);
