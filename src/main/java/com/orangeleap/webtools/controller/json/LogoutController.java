@@ -22,7 +22,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.orangeleap.webtools.domain.Widget;
 import com.orangeleap.webtools.service.WidgetService;
 import net.sf.ehcache.Cache;

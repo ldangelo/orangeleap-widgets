@@ -130,7 +130,6 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
 		Filter filter = new Filter();
 		filter.setName("user_name");
 		filter.setValue(username);
-
 		webwidgetRequest.setTablename("online_registration");
 		webwidgetRequest.setOffset(0);
 		webwidgetRequest.setLimit(1);
