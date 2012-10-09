@@ -33,6 +33,7 @@ import com.orangeleap.webtools.domain.CustomEntity;
 import com.orangeleap.webtools.domain.Widget;
 import com.orangeleap.webtools.domain.WidgetData;
 import com.orangeleap.webtools.domain.WidgetExample;
+import com.orangeleap.webtools.service.OrangeLeapClientService;
 import com.orangeleap.webtools.service.PicklistService;
 import com.orangeleap.webtools.service.WidgetService;
 import net.sf.ehcache.Cache;
@@ -57,7 +58,10 @@ public class WidgetServiceImpl implements WidgetService {
 
 	@Resource(name = "customTableCache")
 	Cache customTableCache;
-	
+
+	@Autowired
+	OrangeLeapClientService orangeLeapClientService;
+
 	public final static String PROJECT_CODE_PICKLIST_ID = "projectCode";
 	public final static String MOTIVATION_CODE_PICKLIST_ID = "motivationCode";
 	public final static String PROJECT_CODE_FIELD_NAME = "gift_designation";
@@ -156,12 +160,13 @@ public class WidgetServiceImpl implements WidgetService {
 		CustomFieldMap customFieldMap = new CustomFieldMap();
 		row.setCustomFieldMap(customFieldMap);
 
+		Long constituentId = null;		
 		while (it.hasNext()) {
 			CustomEntity ce = it.next();
 			if (ce.getName().equals("customtablerowid")) {
 				String[] values = request.getParameterValues(ce.getName());
 				if (values != null && values.length == 1 && values[0].length() > 0) {
-					row.setId(Long.parseLong(values[0]));
+						row.setId(Long.parseLong(values[0]));
 				}			
 			} else {
 				Entry entry = new Entry();
@@ -188,7 +193,11 @@ public class WidgetServiceImpl implements WidgetService {
 				if (values == null || values.length == 0) {
 					val.setValue("");
 				} else if (values.length == 1) {
-					val.setValue((values[0] == null) ? "" : (emptyText.equals(values[0]) ? "" : values[0]));				
+					val.setValue((values[0] == null) ? "" : (emptyText.equals(values[0]) ? "" : values[0]));
+					if (ce.getExpression().equals("constituent.id")
+							&& !val.getValue().isEmpty()) {
+						constituentId = Long.parseLong(val.getValue());
+					}
 				} else {
 					StringBuilder concatenatedValues = new StringBuilder();
 					for (String value : values) {
@@ -247,6 +256,9 @@ public class WidgetServiceImpl implements WidgetService {
 			rowrequest.setCustomTableRow(row);
 			try {
 				rowresponse = oleap.saveOrUpdateCustomTableRow(rowrequest);
+				if (constituentId != null) {
+					orangeLeapClientService.removeFromCache(guid, constituentId);
+				}
 			}
 			catch (Exception e) {
 				if (e instanceof SOAPFaultException) {

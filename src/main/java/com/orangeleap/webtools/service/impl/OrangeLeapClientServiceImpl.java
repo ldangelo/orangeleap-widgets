@@ -36,8 +36,8 @@ public class OrangeLeapClientServiceImpl implements OrangeLeapClientService {
   WidgetDAO widgetDAO = null;
 
 
-  public void removeFromCache(Long id) {
-    constituentCache.remove(id);
+  public void removeFromCache(String guid, Long id) {
+    constituentCache.remove(guid + id);
   }
 
   public void clearCache(String guid) {

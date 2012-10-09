@@ -164,7 +164,7 @@ public class CustomEntityController extends MultiActionController {
 
 		if (constituentid != null && ! constituentid.equals("undefined")
 				&& ! constituentid.equals("")) {
-			orangeLeapClientService.removeFromCache(new Long(constituentid));
+			orangeLeapClientService.removeFromCache(guid, new Long(constituentid));
 		}
 
 		if (guid != null && ! guid.equals("undefined")) {
