@@ -16,6 +16,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
     successurl : null,
     picklistNameItemsMap: {},
     allowLogout: false,
+    allowLogoutReset: false,
     replaceTopContent: null,
     timeout: 120,
     valueDelimiter: '\u00A7',
@@ -238,6 +239,11 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 		    }
 		},
 
+		logoutReset: function() {
+	        document.cookie = 'sessionId=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+	        Ext.getCmp('form').form.reset();
+		},
+
 		initComponent : function() {
 			Ext.QuickTips.init();
 
@@ -437,6 +443,9 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 							}
 							if (meta.allowLogout) {
 								that.allowLogout = meta.allowLogout;
+							}
+							if (meta.allowLogoutReset) {
+								that.allowLogoutReset = meta.allowLogoutReset;
 							}
 
 						    //
@@ -795,6 +804,19 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 								};
 								this.form.superclass().add.call(this.form, logoutLinkConfig);
 							}
+							else if (this.form.allowLogoutReset === true) {
+                                var logoutResetLinkConfig = {
+                                    xtype : 'box',
+                                    cls: 'logoutLink',
+                                    autoEl : {
+                                        id: 'olLogoutResetLink',
+                                        tag : 'a',
+                                        href : 'javascript:void(0)',
+                                        html : 'Logout'
+                                    }
+                                };
+                                this.form.superclass().add.call(this.form, logoutResetLinkConfig);
+                            }
 
 							// apply config
 							this.form.superclass().render.call(this.form, this.form.widgetid);
@@ -802,6 +824,12 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 								var aForm = this.form;
 								Ext.get('olLogoutLink').on('click', function() {
 									aForm.logout.call(aForm);
+								});
+							}
+							else if (this.form.allowLogoutReset === true) {
+								var aForm = this.form;
+								Ext.get('olLogoutResetLink').on('click', function() {
+									aForm.logoutReset.call(aForm);
 								});
 							}
 						},

@@ -226,8 +226,8 @@ public class CustomEntityController extends MultiActionController {
 		final Map<String, List<Map<String, Object>>> picklistNameItems = widgetService.findPicklistItemsForCustomEntities(ceList, guid);
 		metaData.put("picklistNameItems", picklistNameItems);
 
-		metaData.put("allowLogout", widget.getWidgetAuthenticationRequired() ||
-				"online_sponsorship".equalsIgnoreCase(widget.getCustomEntityName()) ||
+		metaData.put("allowLogout", widget.getWidgetAuthenticationRequired());
+		metaData.put("allowLogoutReset", "online_sponsorship".equalsIgnoreCase(widget.getCustomEntityName()) ||
 				"online_donation".equalsIgnoreCase(widget.getCustomEntityName()));
 
 		modelMap.put("metaData", metaData);
