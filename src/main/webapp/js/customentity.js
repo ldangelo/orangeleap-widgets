@@ -791,16 +791,6 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 							this.form.submitButton = this.form.superclass().addButton.call(this.form, btnConfig, this.form.onSubmit, this.form);
 							this.form.superclass().add.call(this.form, orangeLeapLinkConfig);
 
-							var showLogoutResetField = function(aForm) {
-								var firstNameElem = Ext.get('first_name');
-								var lastNameElem = Ext.get('last_name');
-
-								var firstNameValue = firstNameElem ? firstNameElem.getValue() : '';
-								var lastNameValue = lastNameElem ? lastNameElem.getValue() : '';
-
-								return aForm.allowLogoutReset === true && ( ! Ext.isEmpty(firstNameValue) || ! Ext.isEmpty(lastNameValue));
-							};
-
 							if (this.form.allowLogout === true) {
 								var logoutLinkConfig = {
 									xtype : 'box',
@@ -814,7 +804,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 								};
 								this.form.superclass().add.call(this.form, logoutLinkConfig);
 							}
-							else if (showLogoutResetField(this.form)) {
+							else if (aForm.allowLogoutReset === true) {
                                 var logoutResetLinkConfig = {
                                     xtype : 'box',
                                     cls: 'logoutLink',
@@ -836,7 +826,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 									aForm.logout.call(aForm);
 								});
 							}
-							else if (showLogoutResetField(this.form)) {
+							else if (aForm.allowLogoutReset === true) {
 								var aForm = this.form;
 								Ext.get('olLogoutResetLink').on('click', function() {
 									aForm.logoutReset.call(aForm);
@@ -886,6 +876,20 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 			                                this.form.checkMultiPicklistValue(aParentElem);
 						                }
 						            }
+								}
+							}
+
+							if (this.form.allowLogoutReset === true && Ext.get('olLogoutResetLink')) {
+								var firstNameElem = Ext.get('first_name');
+								var lastNameElem = Ext.get('last_name');
+
+								if (firstNameElem || lastNameElem) {
+									var firstNameValue = firstNameElem ? firstNameElem.getValue() : '';
+									var lastNameValue = lastNameElem ? lastNameElem.getValue() : '';
+
+									if (Ext.isEmpty(firstNameValue) && Ext.isEmpty(lastNameValue)) {
+										Ext.get('olLogoutResetLink').hide();
+									}
 								}
 							}
 
