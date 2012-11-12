@@ -791,6 +791,16 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 							this.form.submitButton = this.form.superclass().addButton.call(this.form, btnConfig, this.form.onSubmit, this.form);
 							this.form.superclass().add.call(this.form, orangeLeapLinkConfig);
 
+							var showLogoutResetField = function() {
+								var firstNameElem = Ext.get('first_name');
+								var lastNameElem = Ext.get('last_name');
+
+								var firstNameValue = firstNameElem ? firstNameElem.getValue() : '';
+								var lastNameValue = lastNameElem ? lastNameElem.getValue() : '';
+
+								return this.form.allowLogoutReset === true && ( ! Ext.isEmpty(firstNameValue) || ! Ext.isEmpty(lastNameValue));
+							};
+
 							if (this.form.allowLogout === true) {
 								var logoutLinkConfig = {
 									xtype : 'box',
@@ -804,7 +814,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 								};
 								this.form.superclass().add.call(this.form, logoutLinkConfig);
 							}
-							else if (this.form.allowLogoutReset === true) {
+							else if (showLogoutResetField()) {
                                 var logoutResetLinkConfig = {
                                     xtype : 'box',
                                     cls: 'logoutLink',
@@ -826,7 +836,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 									aForm.logout.call(aForm);
 								});
 							}
-							else if (this.form.allowLogoutReset === true) {
+							else if (showLogoutResetField()) {
 								var aForm = this.form;
 								Ext.get('olLogoutResetLink').on('click', function() {
 									aForm.logoutReset.call(aForm);
