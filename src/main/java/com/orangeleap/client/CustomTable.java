@@ -26,6 +26,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="fields" type="{http://www.orangeleap.com/orangeleap/typesv3}customTableField" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="siteName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="updatedBy" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="deleted" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -42,7 +43,8 @@ import javax.xml.bind.annotation.XmlType;
     "customTableName",
     "fields",
     "siteName",
-    "updatedBy"
+    "updatedBy",
+    "deleted"
 })
 public class CustomTable
     extends AbstractCustomizableEntity
@@ -56,6 +58,7 @@ public class CustomTable
     protected List<CustomTableField> fields;
     protected String siteName;
     protected String updatedBy;
+    protected boolean deleted;
 
     /**
      * Gets the value of the customTableActive property.
@@ -220,6 +223,22 @@ public class CustomTable
      */
     public void setUpdatedBy(String value) {
         this.updatedBy = value;
+    }
+
+    /**
+     * Gets the value of the deleted property.
+     * 
+     */
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    /**
+     * Sets the value of the deleted property.
+     * 
+     */
+    public void setDeleted(boolean value) {
+        this.deleted = value;
     }
 
 }

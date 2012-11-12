@@ -24,6 +24,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="effectiveDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="throughDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="inactive" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="deleted" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="primary" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="receiveCorrespondence" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="seasonalEndDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
@@ -47,6 +48,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "effectiveDate",
     "throughDate",
     "inactive",
+    "deleted",
     "primary",
     "receiveCorrespondence",
     "seasonalEndDate",
@@ -57,9 +59,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "userCreated"
 })
 @XmlSeeAlso({
-    Address.class,
     Phone.class,
-    Email.class
+    Email.class,
+    Address.class
 })
 public abstract class AbstractCommunicationEntity
     extends AbstractCustomizableEntity
@@ -72,6 +74,7 @@ public abstract class AbstractCommunicationEntity
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar throughDate;
     protected boolean inactive;
+    protected boolean deleted;
     protected boolean primary;
     protected boolean receiveCorrespondence;
     @XmlSchemaType(name = "dateTime")
@@ -195,6 +198,22 @@ public abstract class AbstractCommunicationEntity
      */
     public void setInactive(boolean value) {
         this.inactive = value;
+    }
+
+    /**
+     * Gets the value of the deleted property.
+     * 
+     */
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    /**
+     * Sets the value of the deleted property.
+     * 
+     */
+    public void setDeleted(boolean value) {
+        this.deleted = value;
     }
 
     /**

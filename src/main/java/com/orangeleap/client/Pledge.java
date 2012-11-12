@@ -193,7 +193,7 @@ public class Pledge
     public void setRecurring(boolean value) {
         this.recurring = value;
     }
-    
+
     /**
      * Gets the value of the pledgeType property.
      * 
@@ -217,6 +217,5 @@ public class Pledge
     public void setPledgeType(String value) {
         this.pledgeType = value;
     }
-
 
 }

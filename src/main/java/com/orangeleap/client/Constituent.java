@@ -40,6 +40,8 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="constituentType" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="preferredPhoneType" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="site" type="{http://www.orangeleap.com/orangeleap/typesv3}site" minOccurs="0"/>
+ *         &lt;element name="inactive" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="deleted" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -70,7 +72,9 @@ import javax.xml.bind.annotation.XmlType;
     "constituentOrganizationRoles",
     "constituentType",
     "preferredPhoneType",
-    "site"
+    "site",
+    "inactive",
+    "deleted"
 })
 public class Constituent
     extends AbstractCustomizableEntity
@@ -102,6 +106,8 @@ public class Constituent
     protected String constituentType;
     protected String preferredPhoneType;
     protected Site site;
+    protected boolean inactive;
+    protected boolean deleted;
 
     /**
      * Gets the value of the constituentId property.
@@ -620,6 +626,38 @@ public class Constituent
      */
     public void setSite(Site value) {
         this.site = value;
+    }
+
+    /**
+     * Gets the value of the inactive property.
+     * 
+     */
+    public boolean isInactive() {
+        return inactive;
+    }
+
+    /**
+     * Sets the value of the inactive property.
+     * 
+     */
+    public void setInactive(boolean value) {
+        this.inactive = value;
+    }
+
+    /**
+     * Gets the value of the deleted property.
+     * 
+     */
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    /**
+     * Sets the value of the deleted property.
+     * 
+     */
+    public void setDeleted(boolean value) {
+        this.deleted = value;
     }
 
 }

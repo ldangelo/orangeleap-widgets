@@ -57,6 +57,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="updatedBy" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="validValueList" type="{http://www.orangeleap.com/orangeleap/typesv3}validValue" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="customTableFieldGuiOptions" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="deleted" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -102,7 +103,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "updateDate",
     "updatedBy",
     "validValueList",
-    "customTableFieldGuiOptions"
+    "customTableFieldGuiOptions",
+    "deleted"
 })
 public class CustomTableField {
 
@@ -145,6 +147,7 @@ public class CustomTableField {
     @XmlElement(nillable = true)
     protected List<ValidValue> validValueList;
     protected String customTableFieldGuiOptions;
+    protected boolean deleted;
 
     /**
      * Gets the value of the createDate property.
@@ -957,6 +960,22 @@ public class CustomTableField {
      */
     public void setCustomTableFieldGuiOptions(String value) {
         this.customTableFieldGuiOptions = value;
+    }
+
+    /**
+     * Gets the value of the deleted property.
+     * 
+     */
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    /**
+     * Sets the value of the deleted property.
+     * 
+     */
+    public void setDeleted(boolean value) {
+        this.deleted = value;
     }
 
 }

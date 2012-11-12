@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="picklistDesc" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="multiselect" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="picklistItems" type="{http://www.orangeleap.com/orangeleap/typesv3}picklistItem" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="deleted" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -38,7 +39,8 @@ import javax.xml.bind.annotation.XmlType;
     "picklistName",
     "picklistDesc",
     "multiselect",
-    "picklistItems"
+    "picklistItems",
+    "deleted"
 })
 public class Picklist
     extends AbstractCustomizableEntity
@@ -52,6 +54,7 @@ public class Picklist
     protected String picklistDesc;
     protected boolean multiselect;
     protected List<PicklistItem> picklistItems;
+    protected boolean deleted;
 
     /**
      * Gets the value of the picklistNameId property.
@@ -168,6 +171,22 @@ public class Picklist
             picklistItems = new ArrayList<PicklistItem>();
         }
         return this.picklistItems;
+    }
+
+    /**
+     * Gets the value of the deleted property.
+     * 
+     */
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    /**
+     * Sets the value of the deleted property.
+     * 
+     */
+    public void setDeleted(boolean value) {
+        this.deleted = value;
     }
 
 }

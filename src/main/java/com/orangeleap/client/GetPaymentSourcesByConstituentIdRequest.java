@@ -9,7 +9,8 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * Retrieve the list of existing payment sources for a
+ * 
+ * 						Retrieve the list of existing payment sources for a
  * 						given constituent id.
  * 
  * 						Requires a valid constituentid.
@@ -29,6 +30,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  * 						If you try and create a new payment source that already exists you
  * 						will receive a SoapFault.
+ * 		  
  * 
  * 
  * 
@@ -38,11 +40,11 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "GetPaymentSourcesByConstituentIdRequest")
 public class GetPaymentSourcesByConstituentIdRequest {
 
-    @XmlAttribute(required = true)
+    @XmlAttribute(namespace = "http://www.orangeleap.com/orangeleap/services3.0/", required = true)
     protected int offset;
-    @XmlAttribute
+    @XmlAttribute(namespace = "http://www.orangeleap.com/orangeleap/services3.0/")
     protected Integer limit;
-    @XmlAttribute(required = true)
+    @XmlAttribute(namespace = "http://www.orangeleap.com/orangeleap/services3.0/", required = true)
     protected long constituentId;
 
     /**

@@ -10,7 +10,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
- * CommunicationHistory is used to update/add any type of
+ * 
+ * 						CommunicationHistory is used to update/add any type of
  * 						communication with a
  * 						constituent. It will map to the
  * 						"touch points"
@@ -40,6 +41,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * 						abstractCustomizableEntity
  * 						that we inherit
  * 						from.
+ * 				
  * 
  * 
  * 
@@ -67,6 +69,8 @@ public class CommunicationHistory
     protected XMLGregorianCalendar recordDate;
     @XmlAttribute
     protected Long recurringGiftId;
+    @XmlAttribute(required = true)
+    protected boolean deleted;
 
     /**
      * Gets the value of the comments property.
@@ -250,6 +254,22 @@ public class CommunicationHistory
      */
     public void setRecurringGiftId(Long value) {
         this.recurringGiftId = value;
+    }
+
+    /**
+     * Gets the value of the deleted property.
+     * 
+     */
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    /**
+     * Sets the value of the deleted property.
+     * 
+     */
+    public void setDeleted(boolean value) {
+        this.deleted = value;
     }
 
 }

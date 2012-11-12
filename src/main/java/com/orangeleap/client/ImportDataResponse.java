@@ -17,6 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="importId" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="jobId" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -28,12 +29,30 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+    "importId",
     "jobId"
 })
-@XmlRootElement(name = "ImportResponse")
-public class ImportResponse {
+@XmlRootElement(name = "ImportDataResponse")
+public class ImportDataResponse {
 
+    protected long importId;
     protected long jobId;
+
+    /**
+     * Gets the value of the importId property.
+     * 
+     */
+    public long getImportId() {
+        return importId;
+    }
+
+    /**
+     * Sets the value of the importId property.
+     * 
+     */
+    public void setImportId(long value) {
+        this.importId = value;
+    }
 
     /**
      * Gets the value of the jobId property.

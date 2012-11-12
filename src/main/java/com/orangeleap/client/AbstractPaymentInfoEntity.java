@@ -34,6 +34,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="constituentId" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="phone" type="{http://www.orangeleap.com/orangeleap/typesv3}phone" minOccurs="0"/>
  *         &lt;element name="sendAcknowledgment" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="inactive" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="deleted" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -55,7 +57,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "paymentType",
     "constituentId",
     "phone",
-    "sendAcknowledgment"
+    "sendAcknowledgment",
+    "inactive",
+    "deleted"
 })
 @XmlSeeAlso({
     Gift.class,
@@ -82,6 +86,8 @@ public abstract class AbstractPaymentInfoEntity
     protected long constituentId;
     protected Phone phone;
     protected boolean sendAcknowledgment;
+    protected boolean inactive;
+    protected boolean deleted;
 
     /**
      * Gets the value of the acknowledgmentDate property.
@@ -358,6 +364,38 @@ public abstract class AbstractPaymentInfoEntity
      */
     public void setSendAcknowledgment(boolean value) {
         this.sendAcknowledgment = value;
+    }
+
+    /**
+     * Gets the value of the inactive property.
+     * 
+     */
+    public boolean isInactive() {
+        return inactive;
+    }
+
+    /**
+     * Sets the value of the inactive property.
+     * 
+     */
+    public void setInactive(boolean value) {
+        this.inactive = value;
+    }
+
+    /**
+     * Gets the value of the deleted property.
+     * 
+     */
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    /**
+     * Sets the value of the deleted property.
+     * 
+     */
+    public void setDeleted(boolean value) {
+        this.deleted = value;
     }
 
 }
