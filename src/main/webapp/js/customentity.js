@@ -883,6 +883,13 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 								var firstNameElem = this.form.form.findField('first_name');
 								var lastNameElem = this.form.form.findField('last_name');
 
+								if ( ! firstNameElem) {
+									firstNameElem = this.form.form.findField('constituent_firstName');
+								}
+								if ( ! lastNameElem) {
+									lastNameElem = this.form.form.findField('constituent_lastName');
+								}
+
 								if (firstNameElem || lastNameElem) {
 									var firstNameValue = firstNameElem ? firstNameElem.getValue() : '';
 									var lastNameValue = lastNameElem ? lastNameElem.getValue() : '';
