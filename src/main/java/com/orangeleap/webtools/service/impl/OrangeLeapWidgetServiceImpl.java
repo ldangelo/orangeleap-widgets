@@ -503,11 +503,6 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
 		jserver.setUrl(baseUri + repositoryUri);
 
 		try {
-
-			CasUtil.populateJserverWithCasCredentials(jserver, baseUri
-					+ "/j_acegi_cas_security_check");
-
-
 			JasperPrint print = jserver.getWSClient().runReport(
 					getReportUnit(jserver, templateName, params, site).getDescriptor(), params);
 
