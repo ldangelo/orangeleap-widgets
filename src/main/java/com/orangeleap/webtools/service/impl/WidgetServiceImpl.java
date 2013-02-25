@@ -179,7 +179,7 @@ public class WidgetServiceImpl implements WidgetService {
 				String emptyText = ce.getType().equals("multi-picklist") ? "Select " + ce.getHeader() + "..." : "";
 				String[] values = null;
 				values = request.getParameterValues(ce.getName());
-				if (values == null || values.length == 0) {
+				if (values == null || values.length == 0 || (values.length == 1 && values[0].length() == 0)) {
 					if (ce.getPicklistId().equalsIgnoreCase(PROJECT_CODE_PICKLIST_ID)){
 						//set the project code field in the custom table to be the same as the one embedded in the form and saved in the webtools.widget table 
 						values = request.getParameterValues(PROJECT_CODE_FIELD_NAME);
