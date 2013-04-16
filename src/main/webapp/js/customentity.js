@@ -453,7 +453,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 						    this.form.helpMsg = new Ext.form.DisplayField();
 						    this.form.helpMsg.id = "helpMsg";
 						    this.form.helpMsg.name = "helpMsg";
-						    this.form.helpMsg.value = "Your help message goes here!";
+//						    this.form.helpMsg.value = "Your help message goes here!";
 
 						    this.form.superclass().add.call(this.form, this.form.helpMsg);
 
