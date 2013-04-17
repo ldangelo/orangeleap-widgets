@@ -216,7 +216,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 			customEntityForm.form.submit({
 				url : 'customEntity.ajax?action=create&guid='
 						+ customEntityForm.guid
-						+ '&sessionId'
+						+ '&sessionId='
 						+ customEntityForm.sessionId,
 				scope : customEntityForm,
 				success : customEntityForm.onSuccess,
