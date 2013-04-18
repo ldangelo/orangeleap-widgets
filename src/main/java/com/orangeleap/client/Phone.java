@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="phone">
  *   &lt;complexContent>
- *     &lt;extension base="{http://www.orangeleap.com/orangeleap/typesv3}abstractCommunicationEntity">
+ *     &lt;extension base="{http://www.orangeleap.com/orangeleap/typesv3_1}abstractCommunicationEntity">
  *       &lt;sequence>
  *         &lt;element name="number" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="provider" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "phone", namespace = "http://www.orangeleap.com/orangeleap/typesv3", propOrder = {
+@XmlType(name = "phone", namespace = "http://www.orangeleap.com/orangeleap/typesv3_1", propOrder = {
     "number",
     "provider",
     "sms"

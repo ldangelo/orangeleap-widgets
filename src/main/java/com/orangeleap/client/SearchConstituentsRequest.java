@@ -19,9 +19,12 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="firstName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="lastName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="primaryAddress" type="{http://www.orangeleap.com/orangeleap/typesv3}address" minOccurs="0"/>
- *         &lt;element name="primaryPhone" type="{http://www.orangeleap.com/orangeleap/typesv3}phone" minOccurs="0"/>
- *         &lt;element name="primaryEmail" type="{http://www.orangeleap.com/orangeleap/typesv3}email" minOccurs="0"/>
+ *         &lt;element name="constituentType" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="organizationName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="primaryAddress" type="{http://www.orangeleap.com/orangeleap/typesv3_1}address" minOccurs="0"/>
+ *         &lt;element name="primaryPhone" type="{http://www.orangeleap.com/orangeleap/typesv3_1}phone" minOccurs="0"/>
+ *         &lt;element name="primaryEmail" type="{http://www.orangeleap.com/orangeleap/typesv3_1}email" minOccurs="0"/>
+ *         &lt;element name="includeDeletedRecords" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -34,18 +37,24 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "firstName",
     "lastName",
+    "constituentType",
+    "organizationName",
     "primaryAddress",
     "primaryPhone",
-    "primaryEmail"
+    "primaryEmail",
+    "includeDeletedRecords"
 })
 @XmlRootElement(name = "SearchConstituentsRequest")
 public class SearchConstituentsRequest {
 
     protected String firstName;
     protected String lastName;
+    protected String constituentType;
+    protected String organizationName;
     protected Address primaryAddress;
     protected Phone primaryPhone;
     protected Email primaryEmail;
+    protected Boolean includeDeletedRecords;
 
     /**
      * Gets the value of the firstName property.
@@ -93,6 +102,54 @@ public class SearchConstituentsRequest {
      */
     public void setLastName(String value) {
         this.lastName = value;
+    }
+
+    /**
+     * Gets the value of the constituentType property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getConstituentType() {
+        return constituentType;
+    }
+
+    /**
+     * Sets the value of the constituentType property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setConstituentType(String value) {
+        this.constituentType = value;
+    }
+
+    /**
+     * Gets the value of the organizationName property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getOrganizationName() {
+        return organizationName;
+    }
+
+    /**
+     * Sets the value of the organizationName property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setOrganizationName(String value) {
+        this.organizationName = value;
     }
 
     /**
@@ -165,6 +222,30 @@ public class SearchConstituentsRequest {
      */
     public void setPrimaryEmail(Email value) {
         this.primaryEmail = value;
+    }
+
+    /**
+     * Gets the value of the includeDeletedRecords property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isIncludeDeletedRecords() {
+        return includeDeletedRecords;
+    }
+
+    /**
+     * Sets the value of the includeDeletedRecords property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setIncludeDeletedRecords(Boolean value) {
+        this.includeDeletedRecords = value;
     }
 
 }

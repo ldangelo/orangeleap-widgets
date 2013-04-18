@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="customTableFieldId" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="includeValidValues" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="filterActive" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
- *         &lt;element name="row" type="{http://www.orangeleap.com/orangeleap/typesv3}customTableRow"/>
+ *         &lt;element name="row" type="{http://www.orangeleap.com/orangeleap/typesv3_1}customTableRow"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>

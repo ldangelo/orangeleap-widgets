@@ -21,6 +21,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long" maxOccurs="100"/>
+ *         &lt;element name="includeDeletedRecords" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -31,13 +32,15 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "id"
+    "id",
+    "includeDeletedRecords"
 })
 @XmlRootElement(name = "GetConstituentByListIdRequest")
 public class GetConstituentByListIdRequest {
 
     @XmlElement(type = Long.class)
     protected List<Long> id;
+    protected Boolean includeDeletedRecords;
 
     /**
      * Gets the value of the id property.
@@ -66,6 +69,30 @@ public class GetConstituentByListIdRequest {
             id = new ArrayList<Long>();
         }
         return this.id;
+    }
+
+    /**
+     * Gets the value of the includeDeletedRecords property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isIncludeDeletedRecords() {
+        return includeDeletedRecords;
+    }
+
+    /**
+     * Sets the value of the includeDeletedRecords property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setIncludeDeletedRecords(Boolean value) {
+        this.includeDeletedRecords = value;
     }
 
 }

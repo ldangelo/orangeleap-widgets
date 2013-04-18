@@ -16,7 +16,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * <pre>
  * &lt;complexType name="pledge">
  *   &lt;complexContent>
- *     &lt;extension base="{http://www.orangeleap.com/orangeleap/typesv3}commitment">
+ *     &lt;extension base="{http://www.orangeleap.com/orangeleap/typesv3_1}commitment">
  *       &lt;sequence>
  *         &lt;element name="pledgeCancelDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="pledgeCancelReason" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -34,7 +34,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "pledge", namespace = "http://www.orangeleap.com/orangeleap/typesv3", propOrder = {
+@XmlType(name = "pledge", namespace = "http://www.orangeleap.com/orangeleap/typesv3_1", propOrder = {
     "pledgeCancelDate",
     "pledgeCancelReason",
     "pledgeDate",

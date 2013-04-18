@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="result" type="{http://www.orangeleap.com/orangeleap/typesv3}StringMapList"/>
+ *         &lt;element name="result" type="{http://www.orangeleap.com/orangeleap/typesv3_1}StringMapList"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>

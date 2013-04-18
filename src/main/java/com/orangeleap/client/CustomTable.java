@@ -17,13 +17,13 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="customTable">
  *   &lt;complexContent>
- *     &lt;extension base="{http://www.orangeleap.com/orangeleap/typesv3}abstractCustomizableEntity">
+ *     &lt;extension base="{http://www.orangeleap.com/orangeleap/typesv3_1}abstractCustomizableEntity">
  *       &lt;sequence>
  *         &lt;element name="customTableActive" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="customTableDesc" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="customTableEntity" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="customTableName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="fields" type="{http://www.orangeleap.com/orangeleap/typesv3}customTableField" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="fields" type="{http://www.orangeleap.com/orangeleap/typesv3_1}customTableField" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="siteName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="updatedBy" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="deleted" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "customTable", namespace = "http://www.orangeleap.com/orangeleap/typesv3", propOrder = {
+@XmlType(name = "customTable", namespace = "http://www.orangeleap.com/orangeleap/typesv3_1", propOrder = {
     "customTableActive",
     "customTableDesc",
     "customTableEntity",

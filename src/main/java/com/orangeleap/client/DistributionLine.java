@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="distributionLine">
  *   &lt;complexContent>
- *     &lt;extension base="{http://www.orangeleap.com/orangeleap/typesv3}abstractCustomizableEntity">
+ *     &lt;extension base="{http://www.orangeleap.com/orangeleap/typesv3_1}abstractCustomizableEntity">
  *       &lt;sequence>
  *         &lt;element name="adjustedGiftId" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
  *         &lt;element name="amount" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "distributionLine", namespace = "http://www.orangeleap.com/orangeleap/typesv3", propOrder = {
+@XmlType(name = "distributionLine", namespace = "http://www.orangeleap.com/orangeleap/typesv3_1", propOrder = {
     "adjustedGiftId",
     "amount",
     "giftId",

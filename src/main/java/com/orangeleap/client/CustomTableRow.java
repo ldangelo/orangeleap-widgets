@@ -1,8 +1,11 @@
 
 package com.orangeleap.client;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -14,13 +17,14 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="customTableRow">
  *   &lt;complexContent>
- *     &lt;extension base="{http://www.orangeleap.com/orangeleap/typesv3}abstractCustomizableEntity">
+ *     &lt;extension base="{http://www.orangeleap.com/orangeleap/typesv3_1}abstractCustomizableEntity">
  *       &lt;sequence>
  *         &lt;element name="customTableId" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
  *         &lt;element name="customTableRowActive" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="updatedBy" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="isActive" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="deleted" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="childCustomTables" type="{http://www.orangeleap.com/orangeleap/typesv3_1}childCustomTable" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -30,12 +34,13 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "customTableRow", namespace = "http://www.orangeleap.com/orangeleap/typesv3", propOrder = {
+@XmlType(name = "customTableRow", namespace = "http://www.orangeleap.com/orangeleap/typesv3_1", propOrder = {
     "customTableId",
     "customTableRowActive",
     "updatedBy",
     "isActive",
-    "deleted"
+    "deleted",
+    "childCustomTables"
 })
 public class CustomTableRow
     extends AbstractCustomizableEntity
@@ -46,6 +51,8 @@ public class CustomTableRow
     protected String updatedBy;
     protected boolean isActive;
     protected boolean deleted;
+    @XmlElement(nillable = true)
+    protected List<ChildCustomTable> childCustomTables;
 
     /**
      * Gets the value of the customTableId property.
@@ -141,6 +148,35 @@ public class CustomTableRow
      */
     public void setDeleted(boolean value) {
         this.deleted = value;
+    }
+
+    /**
+     * Gets the value of the childCustomTables property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the childCustomTables property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getChildCustomTables().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link ChildCustomTable }
+     * 
+     * 
+     */
+    public List<ChildCustomTable> getChildCustomTables() {
+        if (childCustomTables == null) {
+            childCustomTables = new ArrayList<ChildCustomTable>();
+        }
+        return this.childCustomTables;
     }
 
 }

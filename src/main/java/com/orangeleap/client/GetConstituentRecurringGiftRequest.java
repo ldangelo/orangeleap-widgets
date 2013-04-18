@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
+ *         &lt;element name="includeDeletedRecords" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -39,7 +40,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "constituentId",
     "offset",
-    "limit"
+    "limit",
+    "includeDeletedRecords"
 })
 @XmlRootElement(name = "GetConstituentRecurringGiftRequest")
 public class GetConstituentRecurringGiftRequest {
@@ -47,6 +49,7 @@ public class GetConstituentRecurringGiftRequest {
     protected long constituentId;
     protected int offset;
     protected int limit;
+    protected Boolean includeDeletedRecords;
 
     /**
      * Gets the value of the constituentId property.
@@ -94,6 +97,30 @@ public class GetConstituentRecurringGiftRequest {
      */
     public void setLimit(int value) {
         this.limit = value;
+    }
+
+    /**
+     * Gets the value of the includeDeletedRecords property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isIncludeDeletedRecords() {
+        return includeDeletedRecords;
+    }
+
+    /**
+     * Sets the value of the includeDeletedRecords property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setIncludeDeletedRecords(Boolean value) {
+        this.includeDeletedRecords = value;
     }
 
 }

@@ -30,8 +30,10 @@ import javax.xml.bind.annotation.XmlType;
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
- *         &lt;element name="filters" type="{http://www.orangeleap.com/orangeleap/services3.0/}filter" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="dateFilters" type="{http://www.orangeleap.com/orangeleap/services3.0/}dateFilter" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="filters" type="{http://www.orangeleap.com/orangeleap/services3.1/}filter" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="dateFilters" type="{http://www.orangeleap.com/orangeleap/services3.1/}dateFilter" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="includeChildCustomTableRows" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
+ *         &lt;element name="includeDeletedRecords" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -46,7 +48,9 @@ import javax.xml.bind.annotation.XmlType;
     "offset",
     "limit",
     "filters",
-    "dateFilters"
+    "dateFilters",
+    "includeChildCustomTableRows",
+    "includeDeletedRecords"
 })
 @XmlRootElement(name = "GetCustomTableRowsRequest")
 public class GetCustomTableRowsRequest {
@@ -57,6 +61,8 @@ public class GetCustomTableRowsRequest {
     protected int limit;
     protected List<Filter> filters;
     protected List<DateFilter> dateFilters;
+    protected Boolean includeChildCustomTableRows;
+    protected Boolean includeDeletedRecords;
 
     /**
      * Gets the value of the tablename property.
@@ -170,6 +176,54 @@ public class GetCustomTableRowsRequest {
             dateFilters = new ArrayList<DateFilter>();
         }
         return this.dateFilters;
+    }
+
+    /**
+     * Gets the value of the includeChildCustomTableRows property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isIncludeChildCustomTableRows() {
+        return includeChildCustomTableRows;
+    }
+
+    /**
+     * Sets the value of the includeChildCustomTableRows property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setIncludeChildCustomTableRows(Boolean value) {
+        this.includeChildCustomTableRows = value;
+    }
+
+    /**
+     * Gets the value of the includeDeletedRecords property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isIncludeDeletedRecords() {
+        return includeDeletedRecords;
+    }
+
+    /**
+     * Sets the value of the includeDeletedRecords property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setIncludeDeletedRecords(Boolean value) {
+        this.includeDeletedRecords = value;
     }
 
 }

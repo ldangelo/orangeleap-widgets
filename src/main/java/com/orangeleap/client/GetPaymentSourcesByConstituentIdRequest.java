@@ -40,12 +40,14 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "GetPaymentSourcesByConstituentIdRequest")
 public class GetPaymentSourcesByConstituentIdRequest {
 
-    @XmlAttribute(namespace = "http://www.orangeleap.com/orangeleap/services3.0/", required = true)
+    @XmlAttribute(namespace = "http://www.orangeleap.com/orangeleap/services3.1/", required = true)
     protected int offset;
-    @XmlAttribute(namespace = "http://www.orangeleap.com/orangeleap/services3.0/")
+    @XmlAttribute(namespace = "http://www.orangeleap.com/orangeleap/services3.1/")
     protected Integer limit;
-    @XmlAttribute(namespace = "http://www.orangeleap.com/orangeleap/services3.0/", required = true)
+    @XmlAttribute(namespace = "http://www.orangeleap.com/orangeleap/services3.1/", required = true)
     protected long constituentId;
+    @XmlAttribute(namespace = "http://www.orangeleap.com/orangeleap/services3.1/")
+    protected Boolean includeDeletedRecords;
 
     /**
      * Gets the value of the offset property.
@@ -101,6 +103,30 @@ public class GetPaymentSourcesByConstituentIdRequest {
      */
     public void setConstituentId(long value) {
         this.constituentId = value;
+    }
+
+    /**
+     * Gets the value of the includeDeletedRecords property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isIncludeDeletedRecords() {
+        return includeDeletedRecords;
+    }
+
+    /**
+     * Sets the value of the includeDeletedRecords property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setIncludeDeletedRecords(Boolean value) {
+        this.includeDeletedRecords = value;
     }
 
 }

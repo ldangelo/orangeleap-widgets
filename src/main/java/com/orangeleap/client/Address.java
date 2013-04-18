@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="address">
  *   &lt;complexContent>
- *     &lt;extension base="{http://www.orangeleap.com/orangeleap/typesv3}abstractCommunicationEntity">
+ *     &lt;extension base="{http://www.orangeleap.com/orangeleap/typesv3_1}abstractCommunicationEntity">
  *       &lt;sequence>
  *         &lt;element name="addressLine1" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="addressLine2" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "address", namespace = "http://www.orangeleap.com/orangeleap/typesv3", propOrder = {
+@XmlType(name = "address", namespace = "http://www.orangeleap.com/orangeleap/typesv3_1", propOrder = {
     "addressLine1",
     "addressLine2",
     "addressLine3",

@@ -55,7 +55,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
  *         &lt;element name="updateDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="updatedBy" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="validValueList" type="{http://www.orangeleap.com/orangeleap/typesv3}validValue" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="validValueList" type="{http://www.orangeleap.com/orangeleap/typesv3_1}validValue" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="customTableFieldGuiOptions" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="deleted" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *       &lt;/sequence>
@@ -67,7 +67,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "customTableField", namespace = "http://www.orangeleap.com/orangeleap/typesv3", propOrder = {
+@XmlType(name = "customTableField", namespace = "http://www.orangeleap.com/orangeleap/typesv3_1", propOrder = {
     "createDate",
     "customTableFieldActive",
     "customTableFieldDatatype",

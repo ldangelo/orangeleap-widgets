@@ -20,7 +20,7 @@ public class WSClient  {
 		OrangeLeapService orangeLeapService;
 		try {
 
-			orangeLeapService = new OrangeLeapService(new URL(wsdlUrl),new QName("http://www.orangeleap.com/orangeleap/services3.0/", "OrangeLeapService"));
+			orangeLeapService = new OrangeLeapService(new URL(wsdlUrl),new QName("http://www.orangeleap.com/orangeleap/services3.1/", "OrangeLeapService"));
 
 		} catch (MalformedURLException e) {
 			e.printStackTrace();

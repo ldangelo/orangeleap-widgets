@@ -35,7 +35,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "segmentation", namespace = "http://www.orangeleap.com/orangeleap/typesv3", propOrder = {
+@XmlType(name = "segmentation", namespace = "http://www.orangeleap.com/orangeleap/typesv3_1", propOrder = {
     "name",
     "description",
     "id",

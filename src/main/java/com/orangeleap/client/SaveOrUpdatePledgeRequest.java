@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="constituentId" type="{http://www.w3.org/2001/XMLSchema}long"/>
- *         &lt;element name="pledge" type="{http://www.orangeleap.com/orangeleap/typesv3}pledge"/>
+ *         &lt;element name="pledge" type="{http://www.orangeleap.com/orangeleap/typesv3_1}pledge"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>

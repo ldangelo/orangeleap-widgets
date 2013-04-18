@@ -18,6 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="constituentId" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="includeDeletedRecords" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -28,12 +29,14 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "constituentId"
+    "constituentId",
+    "includeDeletedRecords"
 })
 @XmlRootElement(name = "GetConstituentGiftCountRequest")
 public class GetConstituentGiftCountRequest {
 
     protected long constituentId;
+    protected Boolean includeDeletedRecords;
 
     /**
      * Gets the value of the constituentId property.
@@ -49,6 +52,30 @@ public class GetConstituentGiftCountRequest {
      */
     public void setConstituentId(long value) {
         this.constituentId = value;
+    }
+
+    /**
+     * Gets the value of the includeDeletedRecords property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isIncludeDeletedRecords() {
+        return includeDeletedRecords;
+    }
+
+    /**
+     * Sets the value of the includeDeletedRecords property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setIncludeDeletedRecords(Boolean value) {
+        this.includeDeletedRecords = value;
     }
 
 }

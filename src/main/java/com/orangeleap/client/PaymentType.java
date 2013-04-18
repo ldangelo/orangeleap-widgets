@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlType;
  * </pre>
  * 
  */
-@XmlType(name = "PaymentType", namespace = "http://www.orangeleap.com/orangeleap/typesv3")
+@XmlType(name = "PaymentType", namespace = "http://www.orangeleap.com/orangeleap/typesv3_1")
 @XmlEnum
 public enum PaymentType {
 

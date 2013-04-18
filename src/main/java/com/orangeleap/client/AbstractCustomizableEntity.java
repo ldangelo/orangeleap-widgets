@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="abstractCustomizableEntity">
  *   &lt;complexContent>
- *     &lt;extension base="{http://www.orangeleap.com/orangeleap/typesv3}abstractEntity">
+ *     &lt;extension base="{http://www.orangeleap.com/orangeleap/typesv3_1}abstractEntity">
  *       &lt;sequence>
  *         &lt;element name="customFieldMap">
  *           &lt;complexType>
@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlType;
  *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *                           &lt;sequence>
  *                             &lt;element name="key" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *                             &lt;element name="value" type="{http://www.orangeleap.com/orangeleap/typesv3}customField"/>
+ *                             &lt;element name="value" type="{http://www.orangeleap.com/orangeleap/typesv3_1}customField"/>
  *                           &lt;/sequence>
  *                         &lt;/restriction>
  *                       &lt;/complexContent>
@@ -51,7 +51,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "abstractCustomizableEntity", namespace = "http://www.orangeleap.com/orangeleap/typesv3", propOrder = {
+@XmlType(name = "abstractCustomizableEntity", namespace = "http://www.orangeleap.com/orangeleap/typesv3_1", propOrder = {
     "customFieldMap"
 })
 @XmlSeeAlso({
@@ -113,7 +113,7 @@ public abstract class AbstractCustomizableEntity
      *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
      *                 &lt;sequence>
      *                   &lt;element name="key" type="{http://www.w3.org/2001/XMLSchema}string"/>
-     *                   &lt;element name="value" type="{http://www.orangeleap.com/orangeleap/typesv3}customField"/>
+     *                   &lt;element name="value" type="{http://www.orangeleap.com/orangeleap/typesv3_1}customField"/>
      *                 &lt;/sequence>
      *               &lt;/restriction>
      *             &lt;/complexContent>
@@ -133,7 +133,7 @@ public abstract class AbstractCustomizableEntity
     })
     public static class CustomFieldMap {
 
-        @XmlElement(namespace = "http://www.orangeleap.com/orangeleap/typesv3")
+        @XmlElement(namespace = "http://www.orangeleap.com/orangeleap/typesv3_1")
         protected List<AbstractCustomizableEntity.CustomFieldMap.Entry> entry;
 
         /**
@@ -177,7 +177,7 @@ public abstract class AbstractCustomizableEntity
          *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
          *       &lt;sequence>
          *         &lt;element name="key" type="{http://www.w3.org/2001/XMLSchema}string"/>
-         *         &lt;element name="value" type="{http://www.orangeleap.com/orangeleap/typesv3}customField"/>
+         *         &lt;element name="value" type="{http://www.orangeleap.com/orangeleap/typesv3_1}customField"/>
          *       &lt;/sequence>
          *     &lt;/restriction>
          *   &lt;/complexContent>
@@ -193,9 +193,9 @@ public abstract class AbstractCustomizableEntity
         })
         public static class Entry {
 
-            @XmlElement(namespace = "http://www.orangeleap.com/orangeleap/typesv3", required = true)
+            @XmlElement(namespace = "http://www.orangeleap.com/orangeleap/typesv3_1", required = true)
             protected String key;
-            @XmlElement(namespace = "http://www.orangeleap.com/orangeleap/typesv3", required = true)
+            @XmlElement(namespace = "http://www.orangeleap.com/orangeleap/typesv3_1", required = true)
             protected CustomField value;
 
             /**

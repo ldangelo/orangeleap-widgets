@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="customTable" type="{http://www.orangeleap.com/orangeleap/typesv3_1}customTable"/>
+ *         &lt;element name="communicationHistory" type="{http://www.orangeleap.com/orangeleap/typesv3_1}communicationHistory"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -29,36 +29,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "customTable"
+    "communicationHistory"
 })
-@XmlRootElement(name = "GetCustomTableConstituentContextFieldResponse")
-public class GetCustomTableConstituentContextFieldResponse {
+@XmlRootElement(name = "SaveOrUpdateCommunicationHistoryResponse")
+public class SaveOrUpdateCommunicationHistoryResponse {
 
     @XmlElement(required = true)
-    protected CustomTable customTable;
+    protected CommunicationHistory communicationHistory;
 
     /**
-     * Gets the value of the customTable property.
+     * Gets the value of the communicationHistory property.
      * 
      * @return
      *     possible object is
-     *     {@link CustomTable }
+     *     {@link CommunicationHistory }
      *     
      */
-    public CustomTable getCustomTable() {
-        return customTable;
+    public CommunicationHistory getCommunicationHistory() {
+        return communicationHistory;
     }
 
     /**
-     * Sets the value of the customTable property.
+     * Sets the value of the communicationHistory property.
      * 
      * @param value
      *     allowed object is
-     *     {@link CustomTable }
+     *     {@link CommunicationHistory }
      *     
      */
-    public void setCustomTable(CustomTable value) {
-        this.customTable = value;
+    public void setCommunicationHistory(CommunicationHistory value) {
+        this.communicationHistory = value;
     }
 
 }

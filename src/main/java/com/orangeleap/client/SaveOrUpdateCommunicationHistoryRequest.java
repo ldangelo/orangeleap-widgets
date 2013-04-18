@@ -3,6 +3,7 @@ package com.orangeleap.client;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -18,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="constituentId" type="{http://www.w3.org/2001/XMLSchema}long"/>
- *         &lt;element name="includeDeletedRecords" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
+ *         &lt;element name="communicationHistory" type="{http://www.orangeleap.com/orangeleap/typesv3_1}communicationHistory"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -30,13 +31,14 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "constituentId",
-    "includeDeletedRecords"
+    "communicationHistory"
 })
-@XmlRootElement(name = "GetConstituentRecurringGiftCountRequest")
-public class GetConstituentRecurringGiftCountRequest {
+@XmlRootElement(name = "SaveOrUpdateCommunicationHistoryRequest")
+public class SaveOrUpdateCommunicationHistoryRequest {
 
     protected long constituentId;
-    protected Boolean includeDeletedRecords;
+    @XmlElement(required = true)
+    protected CommunicationHistory communicationHistory;
 
     /**
      * Gets the value of the constituentId property.
@@ -55,27 +57,27 @@ public class GetConstituentRecurringGiftCountRequest {
     }
 
     /**
-     * Gets the value of the includeDeletedRecords property.
+     * Gets the value of the communicationHistory property.
      * 
      * @return
      *     possible object is
-     *     {@link Boolean }
+     *     {@link CommunicationHistory }
      *     
      */
-    public Boolean isIncludeDeletedRecords() {
-        return includeDeletedRecords;
+    public CommunicationHistory getCommunicationHistory() {
+        return communicationHistory;
     }
 
     /**
-     * Sets the value of the includeDeletedRecords property.
+     * Sets the value of the communicationHistory property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Boolean }
+     *     {@link CommunicationHistory }
      *     
      */
-    public void setIncludeDeletedRecords(Boolean value) {
-        this.includeDeletedRecords = value;
+    public void setCommunicationHistory(CommunicationHistory value) {
+        this.communicationHistory = value;
     }
 
 }

@@ -47,7 +47,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "communicationHistory", namespace = "http://www.orangeleap.com/orangeleap/typesv3")
+@XmlType(name = "communicationHistory", namespace = "http://www.orangeleap.com/orangeleap/typesv3_1")
 public class CommunicationHistory
     extends AbstractCustomizableEntity
 {

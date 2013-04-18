@@ -1,25 +1,26 @@
 
 package com.orangeleap.client;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for anonymous complex type.
+ * <p>Java class for childCustomTable complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType>
+ * &lt;complexType name="childCustomTable">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="customTableName" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="entity" type="{http://www.orangeleap.com/orangeleap/typesv3_1}StringMap"/>
+ *         &lt;element name="customTableRows" type="{http://www.orangeleap.com/orangeleap/typesv3_1}customTableRow" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -29,17 +30,16 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
+@XmlType(name = "childCustomTable", namespace = "http://www.orangeleap.com/orangeleap/typesv3_1", propOrder = {
     "customTableName",
-    "entity"
+    "customTableRows"
 })
-@XmlRootElement(name = "SetEntityRequest")
-public class SetEntityRequest {
+public class ChildCustomTable {
 
     @XmlElement(required = true)
     protected String customTableName;
-    @XmlElement(required = true)
-    protected StringMap entity;
+    @XmlElement(nillable = true)
+    protected List<CustomTableRow> customTableRows;
 
     /**
      * Gets the value of the customTableName property.
@@ -66,27 +66,32 @@ public class SetEntityRequest {
     }
 
     /**
-     * Gets the value of the entity property.
+     * Gets the value of the customTableRows property.
      * 
-     * @return
-     *     possible object is
-     *     {@link StringMap }
-     *     
-     */
-    public StringMap getEntity() {
-        return entity;
-    }
-
-    /**
-     * Sets the value of the entity property.
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the customTableRows property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link StringMap }
-     *     
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getCustomTableRows().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link CustomTableRow }
+     * 
+     * 
      */
-    public void setEntity(StringMap value) {
-        this.entity = value;
+    public List<CustomTableRow> getCustomTableRows() {
+        if (customTableRows == null) {
+            customTableRows = new ArrayList<CustomTableRow>();
+        }
+        return this.customTableRows;
     }
 
 }

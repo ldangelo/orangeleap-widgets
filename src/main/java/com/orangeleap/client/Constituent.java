@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="constituent">
  *   &lt;complexContent>
- *     &lt;extension base="{http://www.orangeleap.com/orangeleap/typesv3}abstractCustomizableEntity">
+ *     &lt;extension base="{http://www.orangeleap.com/orangeleap/typesv3_1}abstractCustomizableEntity">
  *       &lt;sequence>
  *         &lt;element name="constituentId" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
  *         &lt;element name="accountNumber" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
@@ -27,21 +27,22 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="suffix" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="title" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="maritalStatus" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="addresses" type="{http://www.orangeleap.com/orangeleap/typesv3}address" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="emails" type="{http://www.orangeleap.com/orangeleap/typesv3}email" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="phones" type="{http://www.orangeleap.com/orangeleap/typesv3}phone" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="primaryAddress" type="{http://www.orangeleap.com/orangeleap/typesv3}address" minOccurs="0"/>
- *         &lt;element name="primaryEmail" type="{http://www.orangeleap.com/orangeleap/typesv3}email" minOccurs="0"/>
- *         &lt;element name="primaryPhone" type="{http://www.orangeleap.com/orangeleap/typesv3}phone" minOccurs="0"/>
+ *         &lt;element name="addresses" type="{http://www.orangeleap.com/orangeleap/typesv3_1}address" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="emails" type="{http://www.orangeleap.com/orangeleap/typesv3_1}email" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="phones" type="{http://www.orangeleap.com/orangeleap/typesv3_1}phone" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="primaryAddress" type="{http://www.orangeleap.com/orangeleap/typesv3_1}address" minOccurs="0"/>
+ *         &lt;element name="primaryEmail" type="{http://www.orangeleap.com/orangeleap/typesv3_1}email" minOccurs="0"/>
+ *         &lt;element name="primaryPhone" type="{http://www.orangeleap.com/orangeleap/typesv3_1}phone" minOccurs="0"/>
  *         &lt;element name="organizationName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="constituentAttributes" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="constituentIndividualRoles" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="constituentOrganizationRoles" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="constituentType" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="preferredPhoneType" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="site" type="{http://www.orangeleap.com/orangeleap/typesv3}site" minOccurs="0"/>
+ *         &lt;element name="site" type="{http://www.orangeleap.com/orangeleap/typesv3_1}site" minOccurs="0"/>
  *         &lt;element name="inactive" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="deleted" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="byPassDuplicateDetection" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -51,7 +52,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "constituent", namespace = "http://www.orangeleap.com/orangeleap/typesv3", propOrder = {
+@XmlType(name = "constituent", namespace = "http://www.orangeleap.com/orangeleap/typesv3_1", propOrder = {
     "constituentId",
     "accountNumber",
     "firstName",
@@ -74,7 +75,8 @@ import javax.xml.bind.annotation.XmlType;
     "preferredPhoneType",
     "site",
     "inactive",
-    "deleted"
+    "deleted",
+    "byPassDuplicateDetection"
 })
 public class Constituent
     extends AbstractCustomizableEntity
@@ -108,6 +110,7 @@ public class Constituent
     protected Site site;
     protected boolean inactive;
     protected boolean deleted;
+    protected boolean byPassDuplicateDetection;
 
     /**
      * Gets the value of the constituentId property.
@@ -658,6 +661,22 @@ public class Constituent
      */
     public void setDeleted(boolean value) {
         this.deleted = value;
+    }
+
+    /**
+     * Gets the value of the byPassDuplicateDetection property.
+     * 
+     */
+    public boolean isByPassDuplicateDetection() {
+        return byPassDuplicateDetection;
+    }
+
+    /**
+     * Sets the value of the byPassDuplicateDetection property.
+     * 
+     */
+    public void setByPassDuplicateDetection(boolean value) {
+        this.byPassDuplicateDetection = value;
     }
 
 }

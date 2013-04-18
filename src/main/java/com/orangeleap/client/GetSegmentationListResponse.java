@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="segmentation" type="{http://www.orangeleap.com/orangeleap/typesv3}segmentation" maxOccurs="100" minOccurs="0"/>
+ *         &lt;element name="segmentation" type="{http://www.orangeleap.com/orangeleap/typesv3_1}segmentation" maxOccurs="100" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>

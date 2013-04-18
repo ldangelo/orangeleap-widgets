@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "StringMapEntry", namespace = "http://www.orangeleap.com/orangeleap/typesv3", propOrder = {
+@XmlType(name = "StringMapEntry", namespace = "http://www.orangeleap.com/orangeleap/typesv3_1", propOrder = {
 
 })
 public class StringMapEntry {

@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "site", namespace = "http://www.orangeleap.com/orangeleap/typesv3", propOrder = {
+@XmlType(name = "site", namespace = "http://www.orangeleap.com/orangeleap/typesv3_1", propOrder = {
     "name",
     "smtpServerName",
     "smtpAccountName",

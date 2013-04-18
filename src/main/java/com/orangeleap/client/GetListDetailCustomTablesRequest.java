@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="customTable" type="{http://www.orangeleap.com/orangeleap/typesv3}customTable"/>
+ *         &lt;element name="customTable" type="{http://www.orangeleap.com/orangeleap/typesv3_1}customTable"/>
  *         &lt;element name="excludeEntityRelated" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
