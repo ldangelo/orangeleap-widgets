@@ -136,9 +136,6 @@
                                 <include>${basedir}/src/main/webapp/js/extjs/ext-all.js</include>
                                 <include>${basedir}/src/main/webapp/js/extjs/SuperBoxSelect.js</include>
                             </includes>
-			<excludes>
-                            <exclude>**/maven-metadata-repos.zeroturnaround.com.xml</exclude> 
-			</excludes>
                             <!-- files to exclude, path relative to output's directory <excludes>
                                        <exclude>**/*.pack.js</exclude> <exclude>**/compressed.css</exclude> </excludes> -->
                         </aggregation>
