@@ -137,7 +137,6 @@
 							<executableDependency>
 								<groupId>com.orangeleap</groupId>
 								<artifactId>databaseUpdateUtility</artifactId>
-								<version>1.4</version>
 							</executableDependency>
 							<mainClass>com.orangeleap.theguru.databaseupdateutility.DatabaseUpdateUtility</mainClass>
 							<arguments>
