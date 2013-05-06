@@ -55,28 +55,6 @@
             </plugin>
 
             <plugin>
-                <groupId>org.zeroturnaround</groupId>
-                <artifactId>jrebel-maven-plugin</artifactId>
-                <version>1.0.7</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>commons-lang</groupId>
-                        <artifactId>commons-lang</artifactId>
-                        <version>2.5</version>
-                    </dependency>
-                </dependencies>
-                <executions>
-                    <execution>
-                        <id>generate-rebel-xml</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
@@ -130,6 +108,7 @@
             <plugin>
                 <groupId>net.sf.alchim</groupId>
                 <artifactId>yuicompressor-maven-plugin</artifactId>
+		<version>0.7.0</version>
                 <executions>
                     <execution>
                         <phase>process-resources</phase>
@@ -157,6 +136,9 @@
                                 <include>${basedir}/src/main/webapp/js/extjs/ext-all.js</include>
                                 <include>${basedir}/src/main/webapp/js/extjs/SuperBoxSelect.js</include>
                             </includes>
+			<excludes>
+                            <exclude>**/maven-metadata-repos.zeroturnaround.com.xml</exclude> 
+			</excludes>
                             <!-- files to exclude, path relative to output's directory <excludes>
                                        <exclude>**/*.pack.js</exclude> <exclude>**/compressed.css</exclude> </excludes> -->
                         </aggregation>
@@ -182,12 +164,34 @@
                                 <directory>target/classes</directory>
                             </resource>
                             <resource>
-                                <!-- Empty resource element marks default configuration. -->
                             </resource>
                         </resources>
                     </classpath>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.zeroturnaround</groupId>
+                <artifactId>jrebel-maven-plugin</artifactId>
+                <version>1.0.7</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>commons-lang</groupId>
+                        <artifactId>commons-lang</artifactId>
+                        <version>2.5</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>generate-rebel-xml</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 
@@ -556,10 +560,6 @@
     </profiles>
 
     <dependencies>
-        <dependency>
-            <groupId>com.lowagie</groupId>
-            <artifactId>itext</artifactId>
-        </dependency>
         <dependency>
             <groupId>com.orangeleap</groupId>
             <artifactId>asm-dep</artifactId>
