@@ -466,6 +466,7 @@ public class WidgetServiceImpl implements WidgetService {
 		ce.setRegExExample("");
 		ce.setParentFieldName("");
 		ce.setParentFieldValue("");
+		ce.setReferencedEntityType("");
 		retList.add(ce);
 
 		// add the customtablerowid
@@ -483,6 +484,7 @@ public class WidgetServiceImpl implements WidgetService {
 		ce.setRegExExample("");
 		ce.setParentFieldName("");
 		ce.setParentFieldValue("");
+		ce.setReferencedEntityType("");
 		retList.add(ce);
 		
 		while (ctit.hasNext()) {
@@ -537,6 +539,7 @@ public class WidgetServiceImpl implements WidgetService {
 			ce.setExpression(ctfield.getCustomTableFieldExpression());
 			ce.setRegEx(ctfield.getCustomTableFieldRegex());
 			ce.setRegExExample(ctfield.getCustomTableFieldRegexExample());
+			ce.setReferencedEntityType(ctfield.getCustomTableFieldFkEntityType());
 
 			ce.setParentFieldName(ctfield.getCustomTableFieldParentFieldName());
 			ce.setParentFieldValue(ctfield.getCustomTableFieldParentFieldValue());

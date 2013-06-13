@@ -52,6 +52,8 @@ public class CustomEntity {
 
 	private String parentFieldName;
 	private String parentFieldValue;
+	
+  private String referencedEntityType;
 
   /**
    * Get the <code>Expression</code> value.
@@ -264,6 +266,14 @@ public class CustomEntity {
 		this.parentFieldValue = parentFieldValue;
 	}
 
+	public String getReferencedEntityType() {
+		return referencedEntityType;
+	}
+
+	public void setReferencedEntityType(final String referencedEntityType) {
+		this.referencedEntityType = referencedEntityType;
+	}
+	
 	public CustomEntity() {
     name="";
     guid="";

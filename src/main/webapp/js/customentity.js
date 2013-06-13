@@ -15,6 +15,9 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
     args : null,
     successurl : null,
     picklistNameItemsMap: {},
+    addresses: {},
+    phones: {},
+    emails: {},
     allowLogout: false,
     allowLogoutReset: false,
     replaceTopContent: null,
@@ -341,6 +344,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 								if ( ! Ext.isEmpty(childObj.parentFieldValue)) {
 									if (Ext.isEmpty(value)) {
 										myForm.findField(childObj.thisFieldName).hide();
+										myForm.findField(childObj.thisFieldName).disable();
 									}
 									else {
 										var show = false;
@@ -352,9 +356,11 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 										}
 										if (show) {
 											myForm.findField(childObj.thisFieldName).show();
+											myForm.findField(childObj.thisFieldName).enable();
 										}
 										else {
 											myForm.findField(childObj.thisFieldName).hide();
+											myForm.findField(childObj.thisFieldName).disable();
 										}
 									}
 								}
@@ -446,6 +452,18 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 							}
 							if (meta.allowLogoutReset) {
 								that.allowLogoutReset = meta.allowLogoutReset;
+							}
+							that.addresses = {};
+							if (meta.addresses) {
+								that.addresses = meta.addresses;
+							}
+							that.phones = {};
+							if (meta.phones) {
+								that.phones = meta.phones;
+							}
+							that.emails = {};
+							if (meta.emails) {
+								that.emails = meta.emails;
 							}
 
 						    //
@@ -653,9 +671,11 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 													var show = (value == childObj.parentFieldValue);
 													if (show) {
 														myForm.findField(childObj.thisFieldName).show();
+														myForm.findField(childObj.thisFieldName).enable();
 													}
 													else {
 														myForm.findField(childObj.thisFieldName).hide();
+														myForm.findField(childObj.thisFieldName).disable();
 													}
 												}
 											}
@@ -763,6 +783,90 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 											fieldsectionindex++;
 										}										
 									}
+								} else if (fields[f].type == 'entity-reference') {
+									var comboEventHandler = function(comboBox) {
+										var value = comboBox.getValue();
+	                                    var childFields = that.parentFields[comboBox.getName()];
+	                                    if (childFields) {
+	                                        var myForm = Ext.getCmp("form").form;
+											for (var x = 0; x < childFields.length; x++) {
+												var childObj = childFields[x];
+
+												if ( ! Ext.isEmpty(childObj.parentFieldValue)) {
+													var show = (value == childObj.parentFieldValue);
+													if (show) {
+														myForm.findField(childObj.thisFieldName).show();
+														myForm.findField(childObj.thisFieldName).enable();
+													}
+													else {
+														myForm.findField(childObj.thisFieldName).hide();
+														myForm.findField(childObj.thisFieldName).disable();
+													}
+												}
+											}
+	                                    }
+									};
+									
+									var dataSource = null;
+									if (fields[f].referencedEntityType == 'address') {
+										dataSource = that.addresses
+									} else if (fields[f].referencedEntityType == 'phone') {
+										dataSource = that.phones
+									} else if (fields[f].referencedEntityType == 'email') {
+										dataSource = that.emails
+									} else if (fields[f].referencedEntityType == 'paymentSource') {
+										dataSource = that.paymentSources
+									}
+									
+									var comboConfig = new Ext.form.ComboBox({
+									    id : fields[f].name + 'combo',
+									    dataIndex : fields[f].name,
+									    valueField : 'Name',
+									    triggerAction : 'all',
+									    hiddenName : fields[f].name,
+									    displayField : 'Description',
+									    forceSelection: true,
+									    selectOnFocus: true,
+									    lazyInit : false,
+									    mode : 'local',
+									    emptyText : 'Select ' + fields[f].header + '...',
+									    store : new Ext.data.JsonStore({
+										fields : [ 'Name', 'Description'],
+										data: dataSource
+									    }),
+									    fieldLabel : createFieldLabel(fields[f]),
+									    listeners: {
+										select: function(comboBox, record, index) {
+										    comboEventHandler(comboBox);
+										},
+										change: function(comboBox, newValue, oldValue) {
+										    comboEventHandler(comboBox);
+										}
+									    }
+									});
+									var oldFilterFunc = comboConfig.store.filter;
+									comboConfig.store.filter = function(field, query) {
+										oldFilterFunc.call(this, 'Description', query, false, false); // allow case-insensitive filtering of combobox records
+									};
+
+									if (fields[f].required) {
+										comboConfig.allowBlank = false;
+										comboConfig.blankText = "Enter a " + fields[f].header;
+									}
+									if ( ! fieldset) {
+										this.form.superclass().add.call(this.form, field);
+									}
+									else {
+										if (fieldsectionindex > (fieldsectioncount - 1) / 2) {
+											col2.add(comboConfig);
+										}
+										else {
+											col1.add(comboConfig);
+										}
+										if (!fields[f].hidden) {
+											fieldsectionindex++;
+										}
+									}
 								}
 							}
 
@@ -845,7 +949,11 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 											if (this.form.findById(metaData[m].name + 'combo')) {
 												this.form.findById(metaData[m].name + 'combo').setValue(value);
 											}
-										}
+										} else if (metaData[m].type == 'entity-reference' && !metaData[m].hidden) {
+											if (this.form.findById(metaData[m].name + 'combo')) {
+												this.form.findById(metaData[m].name + 'combo').setValue(value);
+											}
+										} 
 										else if (metaData[m].type == 'checkbox'){
 											this.form.findById(metaData[m].name).setValue(value);
 											this.form.findById(metaData[m].name).checked = value;

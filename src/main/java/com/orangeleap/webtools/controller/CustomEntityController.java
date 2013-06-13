@@ -148,18 +148,25 @@ public class CustomEntityController extends MultiActionController {
 						break;
 					}
 				}
-
+				
 				if (sessionCookie == null) {
 					//
 					// clear the 
 					sessionCookie = new Cookie("sessionId", "");
 				}
-
+				
 				response.addCookie(sessionCookie);
 			}
 			else {
 				constituentid = (Long) elem.getObjectValue();
 			}
+		} else {
+			//
+			// get the constituent id out of the session cache if it's there
+			Element elem = sessionCache.get(sessionId);
+			if (elem != null) {
+				constituentid = (Long) elem.getObjectValue();
+			}			
 		}
 
 		if (constituentid != null && ! constituentid.equals("undefined")
@@ -322,13 +329,101 @@ public class CustomEntityController extends MultiActionController {
 				String ceName = ce.getName();
 
 				if (constituent != null) {
-					if (ce.getExpression().startsWith("constituent")) {
+					if (ce.getExpression().startsWith("constituent") || ce.getType().equals("entity-reference")) {
 						//
 						// split the string on instances of '.'
 						String args[] = ce.getExpression().split("\\.", - 1);
-						if (args.length == 2) {
-							row.put(ce.getName(), PropertyUtils
-									.getSimpleProperty(constituent, args[1]));
+						if (args.length == 2 || ce.getType().equals("entity-reference")) {
+							if (ce.getType().equals("entity-reference")) {
+								if (ce.getReferencedEntityType().equals("address")) {
+									List<Map<String, Object>> addressList = new ArrayList<Map<String, Object>>();
+									ArrayList<com.orangeleap.client.Address> addresses = (ArrayList) PropertyUtils.getSimpleProperty(constituent, "addresses");
+
+									Map<String, Object> blankAddressMap = new HashMap<String, Object>();
+									blankAddressMap.put("Name", "0");
+									blankAddressMap.put("Description", "Create New");
+									addressList.add(blankAddressMap);
+									
+									for (com.orangeleap.client.Address address : addresses) {
+										if (address.isPrimary()) {
+											row.put(ce.getName(), address.getId().toString());
+										}
+										StringBuilder shortDisplay = new StringBuilder();
+							            shortDisplay.append(org.apache.commons.lang.StringUtils.substring(address.getAddressLine1(), 0, 10));
+								        shortDisplay.append(" ... ");
+								        if (org.apache.commons.lang.StringUtils.isNotEmpty(address.getPostalCode())) {
+									        shortDisplay.append(org.apache.commons.lang.StringUtils.substring(address.getPostalCode(), 0, 5));
+								        }
+								        else {
+									        shortDisplay.append(address.getCountry());
+								        }
+								        Map<String, Object> addressMap = new HashMap<String, Object>();
+								        addressMap.put("Name", address.getId().toString());
+								        addressMap.put("Description", shortDisplay.toString());
+								        addressList.add(addressMap);
+									}
+									
+									if (addresses.size() == 0) {
+										row.put(ce.getName(), "0");
+									}
+
+									metaData.put("addresses", addressList);
+								} else if (ce.getReferencedEntityType().equals("phone")) {
+									List<Map<String, Object>> phoneList = new ArrayList<Map<String, Object>>();
+									ArrayList<com.orangeleap.client.Phone> phones = (ArrayList) PropertyUtils.getSimpleProperty(constituent, "phones");
+
+									Map<String, Object> blankPhoneMap = new HashMap<String, Object>();
+									blankPhoneMap.put("Name", "0");
+									blankPhoneMap.put("Description", "Create New");
+									phoneList.add(blankPhoneMap);
+									
+									for (com.orangeleap.client.Phone phone : phones) {
+										if (phone.isPrimary()) {
+											row.put(ce.getName(), phone.getId().toString());
+										}
+								        Map<String, Object> phoneMap = new HashMap<String, Object>();
+								        phoneMap.put("Name", phone.getId().toString());
+								        phoneMap.put("Description", phone.getNumber());
+								        phoneList.add(phoneMap);
+									}
+
+									if (phones.size() == 0) {
+										row.put(ce.getName(), "0");
+									}
+									
+									metaData.put("phones", phoneList);
+								} else if (ce.getReferencedEntityType().equals("email")) {
+									List<Map<String, Object>> emailList = new ArrayList<Map<String, Object>>();
+									ArrayList<com.orangeleap.client.Email> emails = (ArrayList) PropertyUtils.getSimpleProperty(constituent, "emails");
+
+									Map<String, Object> blankEmailMap = new HashMap<String, Object>();
+									blankEmailMap.put("Name", "0");
+									blankEmailMap.put("Description", "Create New");
+									emailList.add(blankEmailMap);
+									
+									for (com.orangeleap.client.Email email : emails) {
+										if (email.isPrimary()) {
+											row.put(ce.getName(), email.getId().toString());
+										}
+								        Map<String, Object> emailMap = new HashMap<String, Object>();
+								        emailMap.put("Name", email.getId().toString());
+								        emailMap.put("Description", email.getEmailAddress());
+								        emailList.add(emailMap);
+									}
+									
+									if (emails.size() == 0) {
+										row.put(ce.getName(), "0");
+									}
+									
+									metaData.put("emails", emailList);
+								} else {
+									Object property = PropertyUtils.getSimpleProperty(constituent, args[1]);
+									row.put(ce.getName(), property);
+								}
+							} else {
+								Object property = PropertyUtils.getSimpleProperty(constituent, args[1]);
+								row.put(ce.getName(), property);
+							}
 						}
 						else { 
 							String property = ce.getExpression().substring(ce.getExpression().indexOf(".") + 1);
@@ -352,7 +447,43 @@ public class CustomEntityController extends MultiActionController {
 				}
 				else {
 					// we don't have a constituent
-					row.put(ce.getName(), ce.getValue());
+					if (ce.getType().equals("entity-reference")) {
+						List<Map<String, Object>> blankList = new ArrayList<Map<String, Object>>();
+						
+						// Create blank address/email/phone list
+						Map<String, Object> blankMap = new HashMap<String, Object>();
+						blankMap.put("Name", "0");
+						blankMap.put("Description", "Create New");
+						blankList.add(blankMap);
+
+						if (ce.getReferencedEntityType().equals("address")) {
+							metaData.put("addresses", blankList);
+							// Default to create new
+							row.put(ce.getName(), 0);
+							// No addresses, just hide the addresses drop down
+							List<CustomEntity> customEntityList = (List<CustomEntity>) metaData.get("fields");
+							CustomEntity customEntity = customEntityList.get(customEntityList.indexOf(ce));
+							customEntity.setHidden(true);
+						} else if (ce.getReferencedEntityType().equals("email")) {
+							metaData.put("phones", blankList);
+							// Default to create new
+							row.put(ce.getName(), 0);						
+							// No phones, just hide the addresses drop down
+							List<CustomEntity> customEntityList = (List<CustomEntity>) metaData.get("fields");
+							CustomEntity customEntity = customEntityList.get(customEntityList.indexOf(ce));
+							customEntity.setHidden(true);
+						} else if (ce.getReferencedEntityType().equals("phone")) {
+							metaData.put("emails", blankList);
+							// Default to create new
+							row.put(ce.getName(), 0);						
+							// No emails, just hide the addresses drop down
+							List<CustomEntity> customEntityList = (List<CustomEntity>) metaData.get("fields");
+							CustomEntity customEntity = customEntityList.get(customEntityList.indexOf(ce));
+							customEntity.setHidden(true);
+						}
+					} else {
+						row.put(ce.getName(), ce.getValue());
+					}
 				}
 			}
 			catch (Exception e) {
