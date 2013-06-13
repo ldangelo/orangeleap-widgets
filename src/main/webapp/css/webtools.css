@@ -654,6 +654,10 @@ q:before, q:after {
     cursor: default;
     opacity: 0.6;
 }
+.x-item-disabled-sponsorable {
+    cursor: default;
+    opacity: 1;
+}
 .x-item-disabled * {
     cursor: default !important;
 }
@@ -4799,6 +4803,10 @@ body.ext-ie6.x-body-masked .x-window select {
 }
 .x-item-disabled {
     color: gray;
+}
+.x-item-disabled-sponsorable * {
+    color: black !important;
+    opacity: 1;
 }
 .x-item-disabled * {
     color: gray !important;

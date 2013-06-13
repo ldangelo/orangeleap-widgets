@@ -413,6 +413,9 @@ var sponsorshipform =  {
 //									lazyInit : false,
 									mode : 'local',
 									emptyText : 'Select ' + fields[f].header + '...',
+									editable: false,
+									disabled: true,
+									disabledClass: 'x-item-disabled-sponsorable',
 									store : new Ext.data.JsonStore({
 										fields : [ 'Name', 'Description'],
 										data: that.picklistNameItemsMap[fields[f].picklistId]
