@@ -162,7 +162,7 @@
 							<dependency>
 								<groupId>com.orangeleap</groupId>
 								<artifactId>databaseUpdateUtility</artifactId>
-								<version>1.4</version>
+								<version>1.5.1</version>
 							</dependency>
 						</dependencies>
 					</plugin>
