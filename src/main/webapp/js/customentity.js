@@ -227,7 +227,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 				params : {
 					cmd : 'save'
 				},
-				waitMsg : 'Saving...'
+				waitMsg : 'Processing...'
 			});
 		},
 
