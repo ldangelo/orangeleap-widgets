@@ -14,16 +14,38 @@
   <context:annotation-config />
 	<context:component-scan base-package="com.orangeleap.webtools" />
 
+  <bean id="jasperhost" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+      <property name="targetClass"><ref local="sysProps"/></property>
+      <property name="targetMethod"><value>setProperty</value></property>
+      <property name="arguments">
+	  <list>
+	      <value>jasper.host</value>
+	      <value>${jasper.host}</value>
+	  </list>
+      </property>
+  </bean>
+
+  <bean id="hasperport" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+      <property name="targetClass"><ref local="sysProps"/></property>
+      <property name="targetMethod"><value>setProperty</value></property>
+      <property name="arguments">
+	  <list>
+	      <value>jasper.port</value>
+	      <value>${jasper.port}</value>
+	  </list>
+      </property>
+  </bean>
+
 	<bean name="jobHelper" class="com.orangeleap.webtools.service.PicklistItemsJobHelper">
 	</bean>
-	
+
 	<bean name="picklistItemJob" class="org.springframework.scheduling.quartz.JobDetailBean">
 	  <property name="jobClass" value="com.orangeleap.webtools.service.PicklistItemsJob"/>
   	  <property name="jobDataAsMap">
     	<map>
       		<entry key="jobHelper" value-ref="jobHelper"/>
     	</map>
-  	  </property>	  
+  	  </property>
 	</bean>
 
 	<bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
@@ -99,7 +121,7 @@
       <dwr:include method="changePassword"/>
       <dwr:include method="forgotPassword"/>
       <dwr:include method="sendGiftReceipt"/>
-      <dwr:convert type="bean"  class="com.orangeleap.webtools.domain.Session" />      
+      <dwr:convert type="bean"  class="com.orangeleap.webtools.domain.Session" />
       <dwr:convert type="bean"  class="com.orangeleap.webtools.domain.WidgetData" />
       <dwr:convert type="bean"  class="com.orangeleap.client.*"/>
       <dwr:convert type="bean"  class="com.orangeleap.client.CustomTable"/>
@@ -110,4 +132,3 @@
   </bean>
 
 </beans>
-

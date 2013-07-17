@@ -17,6 +17,67 @@
     </property>
   </bean>
 
+  <bean id="sysProps"
+	class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+      <property name="targetClass"><value>java.lang.System</value></property>
+      <property name="targetMethod"><value>getProperties</value></property>
+  </bean>
+
+  <bean id="ldaphost" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+      <property name="targetClass"><ref local="sysProps"/></property>
+      <property name="targetMethod"><value>setProperty</value></property>
+      <property name="arguments">
+	  <list>
+	      <value>ldap.host</value>
+	      <value>${ldap.host}</value>
+	  </list>
+      </property>
+  </bean>
+
+  <bean id="ldapport" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+      <property name="targetClass"><ref local="sysProps"/></property>
+      <property name="targetMethod"><value>setProperty</value></property>
+      <property name="arguments">
+	  <list>
+	      <value>ldap.port</value>
+	      <value>${ldap.port}</value>
+	  </list>
+      </property>
+  </bean>
+
+  <bean id="ldaproot" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+      <property name="targetClass"><ref local="sysProps"/></property>
+      <property name="targetMethod"><value>setProperty</value></property>
+      <property name="arguments">
+	  <list>
+	      <value>ldap.root</value>
+	      <value>${ldap.root}</value>
+	  </list>
+      </property>
+  </bean>
+
+  <bean id="ldapuserDn" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+      <property name="targetClass"><ref local="sysProps"/></property>
+      <property name="targetMethod"><value>setProperty</value></property>
+      <property name="arguments">
+	  <list>
+	      <value>ldap.userDn</value>
+	      <value>${ldap.userDn}</value>
+	  </list>
+      </property>
+  </bean>
+
+  <bean id="ldappassword" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+      <property name="targetClass"><ref local="sysProps"/></property>
+      <property name="targetMethod"><value>setProperty</value></property>
+      <property name="arguments">
+	  <list>
+	      <value>ldap.password</value>
+	      <value>${ldap.password}</value>
+	  </list>
+      </property>
+  </bean>
+
     <!-- Enable usage of the @Secured annotation, although not thinking we're using it -->
 	<sec:global-method-security secured-annotations="enabled"/>
 
