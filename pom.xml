@@ -312,7 +312,7 @@
                                     <contextPath>/cas</contextPath>
                                 </contextHandler>
                                 <contextHandler implementation="org.eclipse.jetty.webapp.WebAppContext">
-                                    <war>${basedir}/../tangerine/target/tangerine-${project.version}.war</war>
+                                    <war>${basedir}/../tangerine/web/target/tangerine-web-${project.version}.war</war>
                                     <contextPath>/orangeleap</contextPath>
                                 </contextHandler>
                             </contextHandlers>

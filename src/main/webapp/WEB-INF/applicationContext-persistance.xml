@@ -25,7 +25,7 @@
 	</bean>
 
         <bean id="webtoolsjdbcurl" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-            <property name="targetClass"><ref local="sysProps"/></property>
+            <property name="targetObject"><ref local="sysProps"/></property>
 		<property name="targetMethod"><value>setProperty</value></property>
 		<property name="arguments">
 			<list>
@@ -36,7 +36,7 @@
 	</bean>
 
         <bean id="jdbcuser" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-            <property name="targetClass"><ref local="sysProps"/></property>
+            <property name="targetObject"><ref local="sysProps"/></property>
 		<property name="targetMethod"><value>setProperty</value></property>
 		<property name="arguments">
 			<list>
@@ -47,7 +47,7 @@
 	</bean>
 
         <bean id="jdbcpassword" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-            <property name="targetClass"><ref local="sysProps"/></property>
+            <property name="targetObject"><ref local="sysProps"/></property>
 		<property name="targetMethod"><value>setProperty</value></property>
 		<property name="arguments">
 			<list>

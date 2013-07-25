@@ -24,7 +24,7 @@
   </bean>
 
   <bean id="ldaphost" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-      <property name="targetClass"><ref local="sysProps"/></property>
+      <property name="targetObject"><ref local="sysProps"/></property>
       <property name="targetMethod"><value>setProperty</value></property>
       <property name="arguments">
 	  <list>
@@ -35,7 +35,7 @@
   </bean>
 
   <bean id="ldapport" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-      <property name="targetClass"><ref local="sysProps"/></property>
+      <property name="targetObject"><ref local="sysProps"/></property>
       <property name="targetMethod"><value>setProperty</value></property>
       <property name="arguments">
 	  <list>
@@ -46,7 +46,7 @@
   </bean>
 
   <bean id="ldaproot" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-      <property name="targetClass"><ref local="sysProps"/></property>
+      <property name="targetObject"><ref local="sysProps"/></property>
       <property name="targetMethod"><value>setProperty</value></property>
       <property name="arguments">
 	  <list>
@@ -57,7 +57,7 @@
   </bean>
 
   <bean id="ldapuserDn" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-      <property name="targetClass"><ref local="sysProps"/></property>
+      <property name="targetObject"><ref local="sysProps"/></property>
       <property name="targetMethod"><value>setProperty</value></property>
       <property name="arguments">
 	  <list>
@@ -68,7 +68,7 @@
   </bean>
 
   <bean id="ldappassword" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-      <property name="targetClass"><ref local="sysProps"/></property>
+      <property name="targetObject"><ref local="sysProps"/></property>
       <property name="targetMethod"><value>setProperty</value></property>
       <property name="arguments">
 	  <list>
