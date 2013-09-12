@@ -93,12 +93,12 @@ var gifthistory = {
 			    loadMask: true,
 				cls: 'widgetForm',
 			    columns:	[
-					{id:'id', header: 'Gift Id', dataIndex: 'id',sortable:false},
-					{id:'donationdate', xtype: 'datecolumn', header: 'Donation Date', dataIndex:'donationdate',sortable:false},
-					{id:'amount', xtype: 'numbercolumn', header: 'Gift Amount',dataIndex:'amount',sortable:false},
-					{id:'status', header:'Gift Status',dataIndex:'status',sortable:false},
-					{id:'paymentstatus', header:'Payment Status',dataIndex:'paymentstatus',sortable:false},
-							   {header: "Actions", width: 60, sortable: false, renderer: function() {
+					{id:'id', header: 'Gift Id', dataIndex: 'id',sortable:true},
+					{id:'donationdate', xtype: 'datecolumn', header: 'Donation Date', dataIndex:'donationdate',sortable:true},
+					{id:'amount', xtype: 'numbercolumn', header: 'Gift Amount',dataIndex:'amount',sortable:true},
+					{id:'status', header:'Gift Status',dataIndex:'status',sortable:true},
+					{id:'paymentstatus', header:'Payment Status',dataIndex:'paymentstatus',sortable:true},
+							   {header: "Actions", width: 60, sortable: true, renderer: function() {
 						return '<div class="controlBtn"><img src="images/inboxSmall.png" class="make_receipt"></div>';
 					}, dataIndex: 'Id'}
 				],
