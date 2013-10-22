@@ -10,6 +10,8 @@ import com.orangeleap.client.GetConstituentGiftRequest;
 import com.orangeleap.client.GetConstituentGiftResponse;
 import com.orangeleap.client.Gift;
 import com.orangeleap.webtools.service.OrangeLeapClientService;
+import com.orangeleap.webtools.service.SiteService;
+
 import org.springframework.stereotype.Service;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
@@ -21,6 +23,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.orangeleap.webtools.dao.WidgetDAO;
+import com.orangeleap.webtools.domain.Site;
 import com.orangeleap.webtools.domain.Widget;
 import com.orangeleap.webtools.domain.WidgetData;
 import com.orangeleap.webtools.domain.WidgetExample;
@@ -35,6 +38,8 @@ public class OrangeLeapClientServiceImpl implements OrangeLeapClientService {
   @Autowired
   WidgetDAO widgetDAO = null;
 
+  @Autowired
+  SiteService siteService;
 
   public void removeFromCache(String guid, Long id) {
     constituentCache.remove(guid + id);
@@ -65,8 +70,9 @@ public class OrangeLeapClientServiceImpl implements OrangeLeapClientService {
       //
       // guid is a unique key so this will only return one widget
       Widget widget = widgets.get(0);
-      String wsusername = widgets.get(0).getWidgetUsername();
-      String wspassword = widgets.get(0).getWidgetPassword();
+      Site site = siteService.getSite(widgets.get(0).getSiteName());
+      String wsusername = site.getOrangeLeapUserId();
+      String wspassword = site.getOrangeLeapPassword();
 
       WSClient wsClient = null;
       OrangeLeap oleap = null;
@@ -92,39 +98,40 @@ public class OrangeLeapClientServiceImpl implements OrangeLeapClientService {
   }
 
   public List<Gift> getConstituentGifts(String guid, Long constituentId) {
-    WidgetExample example = new WidgetExample();
-    example.createCriteria().andWidgetGuidEqualTo(guid);
-    List<Widget> widgets = widgetDAO.selectWidgetByExample(example);
+	  WidgetExample example = new WidgetExample();
+	  example.createCriteria().andWidgetGuidEqualTo(guid);
+	  List<Widget> widgets = widgetDAO.selectWidgetByExample(example);
 
-    if (widgets.size() > 0) {
+	  if (widgets.size() > 0) {
+    	
+		  //
+		  // guid is a unique key so this will only return one widget
+		  Widget widget = widgets.get(0);
 
-      //
-      // guid is a unique key so this will only return one widget
-      Widget widget = widgets.get(0);
+		  Site site = siteService.getSite(widgets.get(0).getSiteName());
+		  String wsusername = site.getOrangeLeapUserId();
+		  String wspassword = site.getOrangeLeapPassword();      
 
-    String wsusername = widgets.get(0).getWidgetUsername();
-    String wspassword = widgets.get(0).getWidgetPassword();
+		  WSClient wsClient = null;
+		  OrangeLeap oleap = null;
 
-    WSClient wsClient = null;
-    OrangeLeap oleap = null;
+		  wsClient = new WSClient();
+		  oleap = wsClient.getOrangeLeap(System.getProperty("webtools.wsdllocation"),wsusername, wspassword);
 
-    wsClient = new WSClient();
-    oleap = wsClient.getOrangeLeap(System.getProperty("webtools.wsdllocation"),wsusername, wspassword);
+		  GetConstituentGiftRequest request = new GetConstituentGiftRequest();
+		  GetConstituentGiftResponse response = null;
 
-    GetConstituentGiftRequest request = new GetConstituentGiftRequest();
-    GetConstituentGiftResponse response = null;
+		  request.setConstituentId(constituentId);
+		  request.setOffset(0);
+		  request.setLimit(99);
 
-    request.setConstituentId(constituentId);
-    request.setOffset(0);
-    request.setLimit(99);
+		  response = oleap.getConstituentGift(request);
 
-    response = oleap.getConstituentGift(request);
+		  if (response != null) {
+			  return response.getGift();
+		  }
 
-    if (response != null) {
-      return response.getGift();
-    }
-
-    }
+	  }
     return null;
   }
 }

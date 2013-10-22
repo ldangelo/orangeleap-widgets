@@ -30,11 +30,13 @@ import com.orangeleap.client.SaveOrUpdateCustomTableRowResponse;
 import com.orangeleap.client.WSClient;
 import com.orangeleap.webtools.dao.WidgetDAO;
 import com.orangeleap.webtools.domain.CustomEntity;
+import com.orangeleap.webtools.domain.Site;
 import com.orangeleap.webtools.domain.Widget;
 import com.orangeleap.webtools.domain.WidgetData;
 import com.orangeleap.webtools.domain.WidgetExample;
 import com.orangeleap.webtools.service.OrangeLeapClientService;
 import com.orangeleap.webtools.service.PicklistService;
+import com.orangeleap.webtools.service.SiteService;
 import com.orangeleap.webtools.service.WidgetService;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.Element;
@@ -61,6 +63,9 @@ public class WidgetServiceImpl implements WidgetService {
 
 	@Autowired
 	OrangeLeapClientService orangeLeapClientService;
+	
+	@Autowired
+	SiteService siteService;
 
 	public final static String PROJECT_CODE_PICKLIST_ID = "projectCode";
 	public final static String MOTIVATION_CODE_PICKLIST_ID = "motivationCode";
@@ -100,10 +105,8 @@ public class WidgetServiceImpl implements WidgetService {
 		final String userName = auth.getName();
 
 		if (displayOnlyUsersWidgets || (userName.indexOf('@') == -1 || StringUtils.isBlank(userName.substring(userName.indexOf('@') + 1)))) {
-			final String password = (String) auth.getCredentials();
-
 			example.createCriteria().andWidgetUsernameEqualTo(userName)
-					.andWidgetPasswordEqualTo(password).andDeletedEqualTo("0");
+					.andDeletedEqualTo("0");
 		}
 		else {
 			final String siteName = userName.substring(userName.indexOf('@') + 1);
@@ -134,11 +137,8 @@ public class WidgetServiceImpl implements WidgetService {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 		String userName = auth.getName();
-		String password = (String) auth.getCredentials();
 		String siteName = userName.substring(userName.indexOf('@') + 1);
 		widget.setWidgetUsername(userName);
-		widget.setWidgetPassword(password);
-
 
 		Widget result = null;
 
@@ -239,8 +239,9 @@ public class WidgetServiceImpl implements WidgetService {
 			// guid is a unique key so this will only return one widget
 			Widget widget = widgets.get(0);
 
-			String wsusername = widgets.get(0).getWidgetUsername();
-			String wspassword = widgets.get(0).getWidgetPassword();
+			Site site = siteService.getSite(widgets.get(0).getSiteName());
+			String wsusername = site.getOrangeLeapUserId();
+			String wspassword = site.getOrangeLeapPassword();
 
 			WSClient wsClient = null;
 			OrangeLeap oleap = null;
@@ -304,9 +305,10 @@ public class WidgetServiceImpl implements WidgetService {
 			// guid is a unique key so this will only return one widget
 			Widget widget = widgets.get(0);
 
-			String wsusername = widgets.get(0).getWidgetUsername();
-			String wspassword = widgets.get(0).getWidgetPassword();
-
+			Site site = siteService.getSite(widgets.get(0).getSiteName());
+			String wsusername = site.getOrangeLeapUserId();
+			String wspassword = site.getOrangeLeapPassword();
+			
 			WSClient wsClient = null;
 			OrangeLeap oleap = null;
 
@@ -408,9 +410,10 @@ public class WidgetServiceImpl implements WidgetService {
 			}
 
 
-			String wsusername = widgets.get(0).getWidgetUsername();
-			String wspassword = widgets.get(0).getWidgetPassword();
-
+			Site site = siteService.getSite(widgets.get(0).getSiteName());
+			String wsusername = site.getOrangeLeapUserId();
+			String wspassword = site.getOrangeLeapPassword();
+			
 			WSClient wsClient = null;
 			OrangeLeap oleap = null;
 
@@ -551,7 +554,6 @@ public class WidgetServiceImpl implements WidgetService {
 	public List<Widget> getLoginWidgets(String userName, String passWord) {
 		WidgetExample example = new WidgetExample();
 		example.createCriteria().andWidgetUsernameEqualTo(userName)
-				.andWidgetPasswordEqualTo(passWord)
 				.andWidgetTypeEqualTo("customentity")
 				.andCustomEntityNameEqualTo("widget_authentication");
 
@@ -559,10 +561,9 @@ public class WidgetServiceImpl implements WidgetService {
 		return widgets;
 	}
 
-	public Widget createWidget(String userName, String passWord, String widgettype, String customentitytype, final boolean inactive, final boolean deleted) {
+	public Widget createWidget(String userName, String widgettype, String customentitytype, final boolean inactive, final boolean deleted) {
 		Widget widget = new Widget();
 		widget.setWidgetUsername(userName);
-		widget.setWidgetPassword(passWord);
 		widget.setWidgetType(widgettype);
 		widget.setCustomEntityName(customentitytype);
 		widget.setInactive(inactive);
@@ -579,10 +580,9 @@ public class WidgetServiceImpl implements WidgetService {
 
 	}
 
-	public List<Widget> getWidgets(String userName, String passWord, String widgettype, String customentitytype) {
+	public List<Widget> getWidgets(String userName, String widgettype, String customentitytype) {
 		WidgetExample example = new WidgetExample();
 		example.createCriteria().andWidgetUsernameEqualTo(userName)
-				.andWidgetPasswordEqualTo(passWord)
 				.andWidgetTypeEqualTo(widgettype)
 				.andCustomEntityNameEqualTo(customentitytype);
 
@@ -659,15 +659,18 @@ public class WidgetServiceImpl implements WidgetService {
 					        //
 					        // get the authenticated user...
 					        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-					        wsUsername = auth.getName();
-					        wsPassword = (String) auth.getCredentials();
+
+					        Site site = siteService.getSite(auth.getName().substring(auth.getName().indexOf('@') + 1));
+						    wsUsername = site.getOrangeLeapUserId();
+						    wsPassword = site.getOrangeLeapPassword();
 					    }
 					    else {
 
 					        Widget widget = widgets.get(0);
 
-					        wsUsername = widget.getWidgetUsername();
-					        wsPassword = widget.getWidgetPassword();
+							Site site = siteService.getSite(widget.getSiteName());
+							wsUsername = site.getOrangeLeapUserId();
+							wsPassword = site.getOrangeLeapPassword();
 					    }
 					    List<PicklistItem> picklistItems = null;
 

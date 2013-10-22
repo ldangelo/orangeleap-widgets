@@ -10,9 +10,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import com.orangeleap.webtools.domain.Site;
 import com.orangeleap.webtools.domain.Style;
 import com.orangeleap.client.CustomTable;
 import com.orangeleap.webtools.domain.Widget;
+import com.orangeleap.webtools.service.SiteService;
 import com.orangeleap.webtools.service.StyleService;
 import com.orangeleap.webtools.service.WidgetService;
 import org.apache.commons.lang.StringUtils;
@@ -30,6 +32,9 @@ public class AjaxWidgetFormController extends MultiActionController {
 
 	@Autowired
 	StyleService styleService;
+
+	@Autowired
+	SiteService siteService;
 
 	/**
 	 * Describe loginWidgetHTML here.
@@ -310,7 +315,6 @@ public class AjaxWidgetFormController extends MultiActionController {
 		String widgettype = request.getParameter("widgettype");
 		String customentitytype = request.getParameter("customentitytype");
 		String userName = auth.getName();
-		String password = (String) auth.getCredentials();
 		String tablename = null;
 		final boolean inactive = "true".equalsIgnoreCase(request.getParameter("inactive"));
 		final boolean deleted = "true".equalsIgnoreCase(request.getParameter("deleted"));
@@ -328,7 +332,8 @@ public class AjaxWidgetFormController extends MultiActionController {
 		}
 
 		if (tablename != null) {
-			final CustomTable table = widgetService.getCustomTableByName(userName, password, tablename);
+			Site site = siteService.getSite(resolveSiteName(userName));
+			final CustomTable table = widgetService.getCustomTableByName(site.getOrangeLeapUserId(), site.getOrangeLeapPassword(), tablename);
 			if (table == null || ! table.isCustomTableActive()) {
 				if (widgettype.equals("customentity") && ! customentitytype.equals("undefined")) {
 					tablename = customentitytype;
@@ -344,7 +349,7 @@ public class AjaxWidgetFormController extends MultiActionController {
 			}
 		}
 
-		final Widget ret = widgetService.createWidget(userName, password, widgettype,
+		final Widget ret = widgetService.createWidget(userName, widgettype,
 				customentitytype, inactive, deleted);
 		ret.setWidgetId(0L);
 		ret.setWidgetHtml("Undefined");
@@ -381,14 +386,13 @@ public class AjaxWidgetFormController extends MultiActionController {
 		final String customentitytype = request.getParameter("customentitytype");
 		final String guid = request.getParameter("widgetGuid");
 		final String userName = auth.getName();
-		final String password = (String) auth.getCredentials();
 		final String appLocation = System.getProperty("webtools.applocation");
 		final boolean inactive = "true".equalsIgnoreCase(request.getParameter("inactive"));
 		final boolean deleted = "true".equalsIgnoreCase(request.getParameter("deleted"));
 		Widget widget = null;
 
 		if (guid.isEmpty()) {
-			widget = widgetService.createWidget(userName, password, widgettype, customentitytype, inactive, deleted);
+			widget = widgetService.createWidget(userName, widgettype, customentitytype, inactive, deleted);
 			populateWidget(widget, request);
 			widget.setWidgetId(0L);
 			widget.setWidgetGuid(UUID.randomUUID().toString());

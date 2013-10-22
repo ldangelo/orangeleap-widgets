@@ -18,6 +18,9 @@ public class PicklistItemsJobHelper {
 	  @Autowired
 	  protected PicklistService picklistService;
 
+	  @Autowired
+	  SiteService siteService;
+	  
 	  public void updateCache() throws JobExecutionException {
 		  WidgetExample example = new WidgetExample();
 		  
@@ -30,8 +33,9 @@ public class PicklistItemsJobHelper {
 			  Widget w = it.next();
 
 			  if (!w.getWidgetUsername().equals(lastUserID)) {
-				  picklistService.getPickListItems(w.getWidgetUsername(), w.getWidgetPassword(), "projectCode",false);
-				  picklistService.getPickListItems(w.getWidgetUsername(), w.getWidgetPassword(), "motivationCode",false);
+    			  com.orangeleap.webtools.domain.Site site = siteService.getSite(w.getSiteName());
+				  picklistService.getPickListItems(site.getOrangeLeapUserId(), site.getOrangeLeapPassword(), "projectCode",false);
+				  picklistService.getPickListItems(site.getOrangeLeapUserId(), site.getOrangeLeapPassword(), "motivationCode",false);
 				  lastUserID = w.getWidgetUsername();
 			  }
 			  

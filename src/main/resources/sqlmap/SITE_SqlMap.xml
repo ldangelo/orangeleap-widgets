@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="SITE">
+	<resultMap id="BaseResultMap" class="com.orangeleap.webtools.domain.Site">
+		<result column="SITE_NAME" property="siteName" jdbcType="VARCHAR"/>
+		<result column="ORANGE_LEAP_USER_ID" property="orangeLeapUserId" jdbcType="VARCHAR"/>
+		<result column="ORANGE_LEAP_PASSWORD" property="orangeLeapPassword" jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<select id="SELECT_BY_SITE_NAME" resultMap="BaseResultMap" parameterClass="map">
+		select SITE_NAME, ORANGE_LEAP_USER_ID, ORANGE_LEAP_PASSWORD
+		from SITE
+		where SITE_NAME = #siteName#
+	</select>
+
+	<insert id="INSERT_SITE" parameterClass="com.orangeleap.webtools.domain.Site">
+		insert INTO SITE (
+			SITE_NAME
+			, ORANGE_LEAP_USER_ID
+			, ORANGE_LEAP_PASSWORD
+		)
+		values
+		(
+			#siteName#
+			, #orangeLeapUserId#
+			, #orangeLeapPasswordEncrypted#
+		)
+	</insert>
+
+	<update id="UPDATE_SITE" parameterClass="com.orangeleap.webtools.domain.Site">
+		UPDATE SITE
+		SET ORANGE_LEAP_USER_ID = #orangeLeapUserId#
+		, ORANGE_LEAP_PASSWORD = #orangeLeapPasswordEncrypted#
+		WHERE SITE_NAME = #siteName#
+	</update>
+</sqlMap>

@@ -15,9 +15,12 @@ import com.orangeleap.client.PicklistItem;
 import com.orangeleap.client.Pledge;
 import com.orangeleap.client.WSClient;
 import com.orangeleap.webtools.dao.WidgetDAO;
+import com.orangeleap.webtools.domain.Site;
 import com.orangeleap.webtools.domain.Widget;
 import com.orangeleap.webtools.domain.WidgetExample;
 import com.orangeleap.webtools.service.PicklistService;
+import com.orangeleap.webtools.service.SiteService;
+
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.Element;
 import org.apache.commons.lang.StringUtils;
@@ -50,6 +53,9 @@ public class JsonPledge {
 
 	@Resource(name = "sessionCache")
 	Cache sessionCache;
+	
+	@Autowired
+	SiteService siteService;
 
 	private Map<String, List<PicklistItem>> loadPicklistItems(final String guid) {
 		final Map<String, List<PicklistItem>> picklistItemMap = new HashMap<String, List<PicklistItem>>();
@@ -65,13 +71,16 @@ public class JsonPledge {
 		if ( ! widgets.isEmpty() || guid.equals("")) {
 		    if (guid.equals("")) {
 			    final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		        wsUserName = auth.getName();
-		        wsPassword = (String) auth.getCredentials();
+
+			    Site site = siteService.getSite(auth.getName().substring(auth.getName().indexOf('@') + 1));
+			    wsUserName = site.getOrangeLeapUserId();
+			    wsPassword = site.getOrangeLeapPassword();
 		    }
 		    else {
 		        final Widget widget = widgets.get(0);
-		        wsUserName = widget.getWidgetUsername();
-		        wsPassword = widget.getWidgetPassword();
+		        Site site = siteService.getSite(widgets.get(0).getSiteName());
+		        wsUserName = site.getOrangeLeapUserId();
+		        wsPassword = site.getOrangeLeapPassword();
 		    }
 		}
 
@@ -196,8 +205,9 @@ public class JsonPledge {
 			// guid is a unique key so this will only return one widget
 			Widget widget = widgets.get(0);
 
-			String wsusername = widgets.get(0).getWidgetUsername();
-			String wspassword = widgets.get(0).getWidgetPassword();
+			Site site = siteService.getSite(widgets.get(0).getSiteName());
+			String wsusername = site.getOrangeLeapUserId();
+			String wspassword = site.getOrangeLeapPassword();
 
 			WSClient wsClient = null;
 			OrangeLeap oleap = null;

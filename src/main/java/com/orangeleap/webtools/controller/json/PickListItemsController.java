@@ -5,6 +5,8 @@ import com.orangeleap.webtools.dao.WidgetDAO;
 import com.orangeleap.webtools.domain.Widget;
 import com.orangeleap.webtools.domain.WidgetExample;
 import com.orangeleap.webtools.service.PicklistService;
+import com.orangeleap.webtools.service.SiteService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.Authentication;
 import org.springframework.security.context.SecurityContextHolder;
@@ -24,6 +26,9 @@ public class PickListItemsController {
 
     @Autowired
     PicklistService picklistService;
+    
+    @Autowired
+    SiteService siteService;
 
     @RequestMapping(method = RequestMethod.POST)
     public void getPickListItems(@RequestParam(required = true) String guid, @RequestParam(required = true) String picklistname, ModelMap modelMap) {
@@ -42,14 +47,16 @@ public class PickListItemsController {
                 //
                 // get the authenticated user...
                 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-                wsusername = auth.getName();
-                wspassword = (String) auth.getCredentials();
+                com.orangeleap.webtools.domain.Site site = siteService.getSite(auth.getName().substring(auth.getName().indexOf('@') + 1));
+                wsusername = site.getOrangeLeapUserId();
+                wspassword = site.getOrangeLeapPassword();
             } else {
 
                 Widget widget = widgets.get(0);
 
-                wsusername = widget.getWidgetUsername();
-                wspassword = widget.getWidgetPassword();
+        		com.orangeleap.webtools.domain.Site site = siteService.getSite(widgets.get(0).getSiteName());
+        	    wsusername = site.getOrangeLeapUserId();
+        	    wspassword = site.getOrangeLeapPassword();		
             }
             List<PicklistItem> picklistItems = picklistService.getPickListItems(wsusername, wspassword, picklistname,true);
 

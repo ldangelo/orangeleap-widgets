@@ -110,6 +110,9 @@
 		<property name="methodNameResolver" ref="paramResolver"/>
 	</bean>
 
+	<bean id="ajaxSiteController" class="com.orangeleap.webtools.controller.AjaxSiteController">
+		<property name="methodNameResolver" ref="paramResolver"/>
+	</bean>
 
 	<bean id="handlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 		<property name="mappings">
@@ -120,6 +123,7 @@
 				<prop key="widgetform.ajax">ajaxWidgetFormController</prop>
 				<prop key="widget.ajax">ajaxWidgetController</prop>
 				<prop key="style.ajax">ajaxStyleController</prop>
+				<prop key="site.ajax">ajaxSiteController</prop>
 			</props>
 		</property>
 	</bean>

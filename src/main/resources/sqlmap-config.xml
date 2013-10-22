@@ -5,4 +5,5 @@
   <sqlMap resource="sqlmap/PLACEMENTS_SqlMap.xml" />
   <sqlMap resource="sqlmap/WIDGET_SqlMap.xml" />
   <sqlMap resource="sqlmap/STYLE_SqlMap.xml" />
+  <sqlMap resource="sqlmap/SITE_SqlMap.xml" />
 </sqlMapConfig>

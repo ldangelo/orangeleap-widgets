@@ -42,6 +42,8 @@ import com.orangeleap.webtools.domain.WidgetExample;
 import com.orangeleap.webtools.service.OrangeLeapClientService;
 import com.orangeleap.webtools.service.OrangeLeapWidgetService;
 import com.orangeleap.webtools.service.PlacementsService;
+import com.orangeleap.webtools.service.SiteService;
+
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.Element;
 import net.sf.jasperreports.engine.JRException;
@@ -74,6 +76,9 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
 
 	@Resource(name = "sessionCache")
 	Cache sessionCache;
+	
+	@Autowired
+	SiteService siteService;
 
 	private Boolean setCustomFieldMapValue(CustomFieldMap map, String fieldName, String value) {
 		List<Entry> entries = map.getEntry();
@@ -113,8 +118,9 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
 			return null;
 		}
 
-		String wsusername = widgets.get(0).getWidgetUsername();
-		String wspassword = widgets.get(0).getWidgetPassword();
+		com.orangeleap.webtools.domain.Site site = siteService.getSite(widgets.get(0).getSiteName());
+	    String wsusername = site.getOrangeLeapUserId();
+	    String wspassword = site.getOrangeLeapPassword();		
 
 		WSClient wsClient = null;
 		OrangeLeap oleap = null;
@@ -192,7 +198,6 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
 		WidgetExample example = new WidgetExample();
 
 		example.createCriteria().andWidgetUsernameEqualTo(userName);
-		example.createCriteria().andWidgetPasswordEqualTo(password);
 
 		return widgetDAO.selectWidgetByExample(example);
 	}
@@ -256,10 +261,8 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
 
 
 		String userName = auth.getName();
-		String password = (String) auth.getCredentials();
 		String siteName = userName.substring(userName.indexOf('@') + 1);
 		widget.setWidgetUsername(userName);
-		widget.setWidgetPassword(password);
 
 		Widget result = null;
 
@@ -292,8 +295,9 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
 			return null;
 		}
 
-		String wsusername = widgets.get(0).getWidgetUsername();
-		String wspassword = widgets.get(0).getWidgetPassword();
+		com.orangeleap.webtools.domain.Site site = siteService.getSite(widgets.get(0).getSiteName());
+	    String wsusername = site.getOrangeLeapUserId();
+	    String wspassword = site.getOrangeLeapPassword();		
 
 		WSClient wsClient = null;
 		OrangeLeap oleap = null;
@@ -378,8 +382,9 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
 			return null;
 		}
 
-		String wsusername = widgets.get(0).getWidgetUsername();
-		String wspassword = widgets.get(0).getWidgetPassword();
+		com.orangeleap.webtools.domain.Site widgetSite = siteService.getSite(widgets.get(0).getSiteName());
+	    String wsusername = widgetSite.getOrangeLeapUserId();
+	    String wspassword = widgetSite.getOrangeLeapPassword();		
 
 		WSClient wsClient = null;
 		OrangeLeap oleap = null;
@@ -555,8 +560,9 @@ public class OrangeLeapWidgetServiceImpl implements OrangeLeapWidgetService {
 			return null;
 		}
 
-		String wsusername = widgets.get(0).getWidgetUsername();
-		String wspassword = widgets.get(0).getWidgetPassword();
+		com.orangeleap.webtools.domain.Site widgetSite = siteService.getSite(widgets.get(0).getSiteName());
+	    String wsusername = widgetSite.getOrangeLeapUserId();
+	    String wspassword = widgetSite.getOrangeLeapPassword();		
 
 		WSClient wsClient = null;
 		OrangeLeap oleap = null;

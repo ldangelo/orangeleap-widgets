@@ -20,9 +20,9 @@ public interface WidgetService {
 
 	public List<Widget> getLoginWidgets(String username, String password);
 
-	public Widget createWidget(String username, String password, String widgettype, String customentitytype, final boolean inactive, final boolean deleted);
+	public Widget createWidget(String username, String widgettype, String customentitytype, final boolean inactive, final boolean deleted);
 
-	public List<Widget> getWidgets(String username, String password, String widgettype, String customentitytype);
+	public List<Widget> getWidgets(String username, String widgettype, String customentitytype);
 
 	public Widget getWidget(String guid);
 
@@ -54,8 +54,7 @@ public interface WidgetService {
 
 	Map<String, List<Map<String, Object>>> findPicklistItemsForCustomTableFields(List<CustomTableField> customTableFieldsList, String guid);
 
-	public CustomTable getCustomTableByName(String userName, String password,
-			String customentitytype);
+	public CustomTable getCustomTableByName(String userName, String password, String customentitytype);
 
 	public List<CustomTableRow> getCustomTableRows(String guid,	Map<String, String> whereFieldEqualsValue) throws Exception;
 	

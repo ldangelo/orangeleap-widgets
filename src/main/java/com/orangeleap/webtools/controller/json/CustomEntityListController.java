@@ -23,9 +23,11 @@ import com.orangeleap.client.PicklistItem;
 import com.orangeleap.client.ReadCustomTableByNameRequest;
 import com.orangeleap.client.ReadCustomTableByNameResponse;
 import com.orangeleap.client.WSClient;
+import com.orangeleap.webtools.domain.Site;
 import com.orangeleap.webtools.domain.Widget;
 import com.orangeleap.webtools.domain.WidgetExample;
 import com.orangeleap.webtools.service.PicklistService;
+import com.orangeleap.webtools.service.SiteService;
 import com.orangeleap.webtools.service.WidgetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,6 +45,9 @@ public class CustomEntityListController {
 
 	@Autowired
 	PicklistService picklistService;
+	
+	@Autowired
+	SiteService siteService;
 
 	private Map fieldMap = new HashMap<String, CustomTableField>();
 
@@ -58,15 +63,17 @@ public class CustomEntityListController {
 		example.createCriteria().andWidgetGuidEqualTo(guid);
 
 		List<Widget> widgets = widgetService.selectWidgetByExample(example);
-
+		
 		if (widgets.size() > 0) {
 
 			//
 			// guid is a unique key so this will only return one widget
 			Widget widget = widgets.get(0);
 
-			String wsusername = widgets.get(0).getWidgetUsername();
-			String wspassword = widgets.get(0).getWidgetPassword();
+			Site site = siteService.getSite(widgets.get(0).getSiteName());
+
+			String wsusername = site.getOrangeLeapUserId();
+			String wspassword = site.getOrangeLeapPassword();
 
 			WSClient wsClient = null;
 			OrangeLeap oleap = null;
@@ -113,8 +120,10 @@ public class CustomEntityListController {
 			// guid is a unique key so this will only return one widget
 			Widget widget = widgets.get(0);
 
-			String wsusername = widgets.get(0).getWidgetUsername();
-			String wspassword = widgets.get(0).getWidgetPassword();
+			Site site = siteService.getSite(widgets.get(0).getSiteName());
+			
+			String wsusername = site.getOrangeLeapUserId();
+			String wspassword = site.getOrangeLeapPassword();
 
 			WSClient wsClient = null;
 			OrangeLeap oleap = null;

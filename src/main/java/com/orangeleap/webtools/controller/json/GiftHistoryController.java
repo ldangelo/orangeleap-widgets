@@ -7,11 +7,14 @@ import com.orangeleap.client.GetConstituentGiftCountResponse;
 import com.orangeleap.client.Gift;
 import com.orangeleap.client.OrangeLeap;
 import com.orangeleap.client.WSClient;
+import com.orangeleap.webtools.domain.Site;
 import com.orangeleap.webtools.domain.Widget;
 import com.orangeleap.webtools.domain.Placements;
 import com.orangeleap.webtools.domain.WidgetExample;
 import com.orangeleap.webtools.dao.WidgetDAO;
 import com.orangeleap.webtools.service.PlacementsService;
+import com.orangeleap.webtools.service.SiteService;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -40,6 +43,9 @@ public class GiftHistoryController {
 
     @Resource(name="sessionCache")
     Cache sessionCache;
+    
+    @Autowired
+    SiteService siteService;
 
 	private void addGifts(List<Gift> gifts, List<Map<String, Object>> returnList) {
 		Iterator<Gift> it = gifts.iterator();
@@ -91,9 +97,10 @@ public class GiftHistoryController {
       // guid is a unique key so this will only return one widget
       Widget widget = widgets.get(0);
 
-    String wsusername = widgets.get(0).getWidgetUsername();
-    String wspassword = widgets.get(0).getWidgetPassword();
-
+	Site site = siteService.getSite(widgets.get(0).getSiteName());
+	String wsusername = site.getOrangeLeapUserId();
+    String wspassword = site.getOrangeLeapPassword();		
+      
     WSClient wsClient = null;
     OrangeLeap oleap = null;
 

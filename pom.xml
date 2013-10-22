@@ -633,6 +633,11 @@
             <version>${project.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.orangeleap</groupId>
+            <artifactId>tangerine-utilities</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>com.orangeleap</groupId>
