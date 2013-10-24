@@ -41,7 +41,6 @@ public class AjaxSiteController extends MultiActionController {
 				return null;
 			} else {
 				site = new Site();
-				site.setSiteName(userSiteName);
 			}
 		}
 		else {
