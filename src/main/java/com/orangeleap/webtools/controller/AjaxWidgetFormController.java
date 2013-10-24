@@ -333,6 +333,9 @@ public class AjaxWidgetFormController extends MultiActionController {
 
 		if (tablename != null) {
 			Site site = siteService.getSite(resolveSiteName(userName));
+			if (site == null) {
+				return getModelMapError("Please fill out the site settings before attempting to create a widget.");
+			}
 			final CustomTable table = widgetService.getCustomTableByName(site.getOrangeLeapUserId(), site.getOrangeLeapPassword(), tablename);
 			if (table == null || ! table.isCustomTableActive()) {
 				if (widgettype.equals("customentity") && ! customentitytype.equals("undefined")) {
