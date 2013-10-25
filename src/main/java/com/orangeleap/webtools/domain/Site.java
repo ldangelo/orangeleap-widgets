@@ -44,6 +44,9 @@ public class Site implements Serializable {
 	}
 
 	public void setOrangeLeapPassword(String orangeLeapPassword) {
+		if (orangeLeapPassword == null) {
+			orangeLeapPassword = "";
+		}
 		// Check if value is already encrypted.  It will be encrypted if it's coming from the SITE table after previously being encrypted.  It will not be encrypted coming from the UI.
 		try {
 			AES.decrypt(orangeLeapPassword);
@@ -53,6 +56,5 @@ public class Site implements Serializable {
 			// Value was not encrypted.  Encrypt it and set
 			this.orangeLeapPassword = AES.encrypt(orangeLeapPassword);
 		}
-		
 	}
 }
