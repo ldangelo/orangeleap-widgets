@@ -225,7 +225,8 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 				success : customEntityForm.onSuccess,
 				failure : customEntityForm.onFailure,
 				params : {
-					cmd : 'save'
+					cmd : 'save',
+					referer : customEntityForm.referer
 				},
 				waitMsg : 'Processing...'
 			});

@@ -71,8 +71,13 @@ public class WidgetServiceImpl implements WidgetService {
 	public final static String MOTIVATION_CODE_PICKLIST_ID = "motivationCode";
 	public final static String PROJECT_CODE_FIELD_NAME = "gift_designation";
 	public final static String MOTIVATION_CODE_FIELD_NAME = "gift_motivation";
+	public final static String WIDGET_DESCRIPTION_FIELD_NAME = "widgetdescription";
+	public final static String WIDGET_ID_FIELD_NAME = "widgetid";
+	public final static String WIDGET_GUID_FIELD_NAME = "widgetguid";
+	public final static String WIDGET_TYPE_FIELD_NAME = "widgettype";
+	public final static String WIDGET_CUSTOM_ENTITY_NAME_FIELD_NAME = "widgetcustomentityname";
+	public final static String WIDGET_REFERER_FIELD_NAME = "widgetreferer";
 	
-
 	public Widget create() {
 		return new Widget();
 	}
@@ -160,6 +165,8 @@ public class WidgetServiceImpl implements WidgetService {
 		CustomFieldMap customFieldMap = new CustomFieldMap();
 		row.setCustomFieldMap(customFieldMap);
 
+		Widget widget = selectWidgetByGuid(guid);
+
 		Long constituentId = null;		
 		while (it.hasNext()) {
 			CustomEntity ce = it.next();
@@ -189,6 +196,23 @@ public class WidgetServiceImpl implements WidgetService {
 					} else if (ce.getName().equalsIgnoreCase("pledge_id")){
 						//set the assoc pledge id field in the custom table to be the same as the one embedded in the form, if there is not one it will get set to empty below
 						values = request.getParameterValues(ce.getName());
+					} else if (ce.getName().equalsIgnoreCase(WIDGET_DESCRIPTION_FIELD_NAME)) {
+						values = new String[1]; 
+						values[0] = widget.getWidgetDescription();
+					} else if (ce.getName().equalsIgnoreCase(WIDGET_ID_FIELD_NAME)) {
+						values = new String[1]; 
+						values[0] = widget.getWidgetId().toString();
+					} else if (ce.getName().equalsIgnoreCase(WIDGET_GUID_FIELD_NAME)) {
+						values = new String[1]; 
+						values[0] = widget.getWidgetGuid();
+					} else if (ce.getName().equalsIgnoreCase(WIDGET_TYPE_FIELD_NAME)) {
+						values = new String[1]; 
+						values[0] = widget.getWidgetType();
+					} else if (ce.getName().equalsIgnoreCase(WIDGET_CUSTOM_ENTITY_NAME_FIELD_NAME)) {
+						values = new String[1]; 
+						values[0] = widget.getCustomEntityName();
+					} else if (ce.getName().equalsIgnoreCase(WIDGET_REFERER_FIELD_NAME)) {
+						values = request.getParameterValues("referer");
 					}
 				}
 				if (values == null || values.length == 0) {
@@ -237,7 +261,7 @@ public class WidgetServiceImpl implements WidgetService {
 
 			//
 			// guid is a unique key so this will only return one widget
-			Widget widget = widgets.get(0);
+			widget = widgets.get(0);
 
 			Site site = siteService.getSite(widgets.get(0).getSiteName());
 			String wsusername = site.getOrangeLeapUserId();
