@@ -718,7 +718,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 										comboConfig.blankText = "Enter a " + fields[f].header;
 									}
 									if ( ! fieldset) {
-										this.form.superclass().add.call(this.form, field);
+										this.form.superclass().add.call(this.form, comboConfig);
 									}
 									else {
 										if (fieldsectionindex > (fieldsectioncount - 1) / 2) {
@@ -770,7 +770,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 										comboConfig.blankText = "Enter a " + fields[f].header;
 									}
 									if ( ! fieldset) {
-										this.form.superclass().add.call(this.form, field);
+										this.form.superclass().add.call(this.form, comboConfig);
 									}
 									else {
 										if (fieldsectionindex > (fieldsectioncount - 1) / 2) {
@@ -855,7 +855,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 										comboConfig.blankText = "Enter a " + fields[f].header;
 									}
 									if ( ! fieldset) {
-										this.form.superclass().add.call(this.form, field);
+										this.form.superclass().add.call(this.form, comboConfig);
 									}
 									else {
 										if (fieldsectionindex > (fieldsectioncount - 1) / 2) {
