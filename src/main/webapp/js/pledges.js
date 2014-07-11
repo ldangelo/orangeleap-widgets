@@ -198,21 +198,29 @@ postToUrl: function(url, params, replaceTopWindow)
 		                    var params = {};
 		                    if (replaceTopContent == 'true') {
 								Ext.getBody().mask('Loading...', 'x-mask-loading');
+								var separator = "?";
+								if (donationurl.indexOf("?") >= 0) {
+									separator = "&";
+								}
 								if(record.data.recurring){
-									top.location.href= donationurl + "?pledge_id=" + record.id +"&transaction_firstDistributionLineAmount=" + record.data.originalamount + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;
+									top.location.href= donationurl + separator + "pledge_id=" + record.id +"&transaction_firstDistributionLineAmount=" + record.data.originalamount + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;
 								}
 								else {
-									top.location.href= donationurl + "?pledge_id=" + record.id + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;
+									top.location.href= donationurl + separator + "pledge_id=" + record.id + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;
 								}
 		                    }
 		                    else {
 								Ext.getBody().mask('Loading...', 'x-mask-loading');
-		                        window.location.href= donationurl + "?pledge_id=" + record.id +"&transaction_firstDistributionLineAmount=" + record.data.amount + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;
+								var separator = "?";
+								if (donationurl.indexOf("?") >= 0) {
+									separator = "&";
+								}
+		                        window.location.href= donationurl + separator + "pledge_id=" + record.id +"&transaction_firstDistributionLineAmount=" + record.data.amount + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;
 								if(record.data.recurring){
-									window.location.href= donationurl + "?pledge_id=" + record.id +"&transaction_firstDistributionLineAmount=" + record.data.originalamount + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;
+									window.location.href= donationurl + separator + "pledge_id=" + record.id +"&transaction_firstDistributionLineAmount=" + record.data.originalamount + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;
 								}
 								else {
-									window.location.href= donationurl + "?pledge_id=" + record.id + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;
+									window.location.href= donationurl + separator + "pledge_id=" + record.id + "&gift_designation=" + record.data.projectCode + "&gift_motivation=" + record.data.motivationCode;
 								}
 		                    }
 		                    //pledges.postToUrl('http://localhost/~ldangelo/donation.html',params);

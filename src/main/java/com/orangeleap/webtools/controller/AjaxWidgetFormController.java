@@ -65,7 +65,8 @@ public class AjaxWidgetFormController extends MultiActionController {
 	private String sponsorshipWidgetHTML;
 
 	private String pledgesWidgetHTML;
-
+	
+	private String pledgeCardWidgetHTML;
 
 	/**
 	 * Describe iframeHTML here.
@@ -89,6 +90,14 @@ public class AjaxWidgetFormController extends MultiActionController {
 		this.pledgesWidgetHTML = pledgesWidgetHTML;
 	}
 
+	public String getPledgeCardWidgetHTML() {
+		return pledgeCardWidgetHTML;
+	}
+
+	public void setPledgeCardWidgetHTML(String pledgeCardWidgetHTML) {
+		this.pledgeCardWidgetHTML = pledgeCardWidgetHTML;
+	}
+	
 	/**
 	 * Set the <code>IframeHTML</code> value.
 	 *
@@ -444,6 +453,9 @@ public class AjaxWidgetFormController extends MultiActionController {
 		else if (customentitytype.equals("undefined") && widgettype.equals("pledges")) {
 			widget.setWidgetHtml(pledgesWidgetHTML);
 		}
+		else if (customentitytype.equals("pledge_card")) {
+			widget.setWidgetHtml(pledgeCardWidgetHTML);
+		}
 
 		widget.setIframeHtml(this.getIframeHTML()
 				.replaceAll("@APPLOCATION@", appLocation)
@@ -499,7 +511,7 @@ public class AjaxWidgetFormController extends MultiActionController {
 		map.put("header", "Description");
 		fields.add(map);
 
-		if ("pledges".equals(widgettype) || "gifthistory".equals(widgettype) || "donor_profile".equals(customentitytype)) {
+		if ("pledges".equals(widgettype) || "gifthistory".equals(widgettype) || "donor_profile".equals(customentitytype) || "pledge_card".equals(customentitytype)) {
 			map = new HashMap<String, Object>();
 			map.put("name", "widgetAuthenticationRequired");
 			map.put("readonly", false);
@@ -528,7 +540,7 @@ public class AjaxWidgetFormController extends MultiActionController {
 		fields.add(map);
 
 		if ("widget_authentication".equals(customentitytype) || "online_registration".equals(customentitytype) ||
-				"online_donation".equals(customentitytype) || "online_sponsorship".equals(customentitytype)) {
+				"online_donation".equals(customentitytype) || "online_sponsorship".equals(customentitytype) || "pledge_card".equals(customentitytype)) {
 			map = new HashMap<String, Object>();
 			map.put("name", "widgetLoginSuccessURL");
 			map.put("readonly", false);
@@ -587,6 +599,14 @@ public class AjaxWidgetFormController extends MultiActionController {
 			map.put("type", "text");
 			map.put("header", "Donation URL");
 			map.put("pickListId", "");
+			fields.add(map);
+		} else if (customentitytype.equals("pledge_card")) {
+			map = new HashMap<String, Object>();
+			map.put("name", "projectCode");
+			map.put("readonly", false);
+			map.put("required", true);
+			map.put("type", "picklist");
+			map.put("header", "Project Code");
 			fields.add(map);
 		}
 

@@ -30,7 +30,6 @@ public class WidgetController extends MultiActionController {
 
     public ModelAndView view(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String guid = request.getParameter("guid");
-        String constituentid = request.getParameter("constituentId");
         Style style = null;
         String appLocation = System.getProperty("webtools.applocation");
         String refererUrl = request.getHeader("Referer");
@@ -55,14 +54,45 @@ public class WidgetController extends MultiActionController {
                 w.setWidgetHtml(w.getWidgetHtml().replace("@SUCCESSURL@", (w.getWidgetLoginSuccessURL() != null ? w.getWidgetLoginSuccessURL() : "")));
                 w.setWidgetHtml(w.getWidgetHtml().replace("@AUTHENTICATE@", w.getWidgetAuthenticationRequired().toString()));
                 w.setWidgetHtml(w.getWidgetHtml().replace("@LOGINURL@", (w.getWidgetAuthenticationURL() != null) ? w.getWidgetAuthenticationURL() : ""));
-                w.setWidgetHtml(w.getWidgetHtml().replace("@PROJECTCODE@", (w.getProjectCode() != null) ? w.getProjectCode() : ""));
-                w.setWidgetHtml(w.getWidgetHtml().replace("@MOTIVATIONCODE@", (w.getMotivationCode() != null) ? w.getMotivationCode() : ""));
+                // If the designation code was passed in the URL, use it instead of the default widget designation
+                String paramDesignationCode = request.getParameter("gift_designation"); 
+                if (paramDesignationCode != null && paramDesignationCode.length() > 0) {
+                	w.setWidgetHtml(w.getWidgetHtml().replace("@PROJECTCODE@", paramDesignationCode));
+                } else {
+                	w.setWidgetHtml(w.getWidgetHtml().replace("@PROJECTCODE@", (w.getProjectCode() != null) ? w.getProjectCode() : ""));
+                }
+                // If the motivation code was passed in the URL, use it instead of the default widget motivation                
+                String paramMotivationCode = request.getParameter("gift_motivation"); 
+                if (paramMotivationCode != null && paramMotivationCode.length() > 0) {
+                	w.setWidgetHtml(w.getWidgetHtml().replace("@MOTIVATIONCODE@", paramMotivationCode));
+                } else {
+                	w.setWidgetHtml(w.getWidgetHtml().replace("@MOTIVATIONCODE@", (w.getMotivationCode() != null) ? w.getMotivationCode() : ""));
+                }
                 w.setWidgetHtml(w.getWidgetHtml().replace("@SPONSORSHIPFORMURL@", (w.getSponsorshipURL() != null) ? w.getSponsorshipURL() : ""));
                 w.setWidgetHtml(w.getWidgetHtml().replace("@ARGS@", (request.getHeader("Referer") != null) ? request.getHeader("Referer") : ""));
                 w.setWidgetHtml(w.getWidgetHtml().replace("@STYLE@", (style != null) ? style.getStyle() : ""));
                 w.setWidgetHtml(w.getWidgetHtml().replace("@DONATIONURL@", (w.getDonationUrl() != null) ? w.getDonationUrl() : ""));
                 w.setWidgetHtml(w.getWidgetHtml().replace("@REPLACETOPCONTENT@", w.isReplaceTopContents().toString()));
-
+                if (request.getParameter("pledge_id") != null) {
+                	w.setWidgetHtml(w.getWidgetHtml().replace("@PARAM_PLEDGE_ID@", request.getParameter("pledge_id")));
+                } else {
+                	w.setWidgetHtml(w.getWidgetHtml().replace("@PARAM_PLEDGE_ID@", ""));
+                }
+                if (request.getParameter("transaction_firstDistributionLineAmount") != null) {
+                	w.setWidgetHtml(w.getWidgetHtml().replace("@PARAM_TRANSACTION_FIRSTDISTRIBUTIONLINEAMOUNT@", request.getParameter("transaction_firstDistributionLineAmount")));
+                } else {
+                	w.setWidgetHtml(w.getWidgetHtml().replace("@PARAM_TRANSACTION_FIRSTDISTRIBUTIONLINEAMOUNT@", ""));	
+                }
+                if (paramDesignationCode != null) {
+                	w.setWidgetHtml(w.getWidgetHtml().replace("@PARAM_GIFT_DESIGNATION@", paramDesignationCode));
+                } else {
+                	w.setWidgetHtml(w.getWidgetHtml().replace("@PARAM_GIFT_DESIGNATION@", ""));
+                }
+                if (paramMotivationCode != null) {
+                	w.setWidgetHtml(w.getWidgetHtml().replace("@PARAM_GIFT_MOTIVATION@", paramMotivationCode));
+                } else {
+                	w.setWidgetHtml(w.getWidgetHtml().replace("@PARAM_GIFT_MOTIVATION@", ""));
+                }
                 response.setIntHeader("Content-Length", w.getWidgetHtml().length());
                 response.setHeader("Content-Type", "text/html; charset=UTF-8");
                 response.setHeader("p3p", "CP=\"ALL ADM DEV PSAi COM OUR OTRo STP IND ONL\"");

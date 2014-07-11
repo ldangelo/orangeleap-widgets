@@ -276,6 +276,7 @@ public class WidgetServiceImpl implements WidgetService {
 
 			row.setCustomTableId(table.getId());
 			row.setCustomTableRowActive(true);
+			row.setIsActive(true);
 
 			SaveOrUpdateCustomTableRowRequest rowrequest = new SaveOrUpdateCustomTableRowRequest();
 			SaveOrUpdateCustomTableRowResponse rowresponse = null;

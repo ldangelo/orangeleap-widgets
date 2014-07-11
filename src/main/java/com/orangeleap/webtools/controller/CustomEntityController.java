@@ -5,22 +5,29 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import com.orangeleap.client.AbstractCustomizableEntity.CustomFieldMap;
+import com.orangeleap.client.Address;
 import com.orangeleap.client.Constituent;
 import com.orangeleap.client.CustomField;
 import com.orangeleap.client.CustomTable;
 import com.orangeleap.client.CustomTableField;
 import com.orangeleap.client.CustomTableRow;
+import com.orangeleap.client.Email;
+import com.orangeleap.client.Phone;
 import com.orangeleap.webtools.domain.CustomEntity;
 import com.orangeleap.webtools.domain.Widget;
 import com.orangeleap.webtools.service.OrangeLeapClientService;
 import com.orangeleap.webtools.service.PicklistService;
 import com.orangeleap.webtools.service.WidgetService;
+import com.orangeleap.webtools.util.CustomTableRowComparator;
+
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.Element;
 import org.apache.commons.beanutils.PropertyUtils;
@@ -46,7 +53,6 @@ public class CustomEntityController extends MultiActionController {
 	public final static String CONSTITUENT_ID = "constituentId";
 	public final static String CONSTITUENT_DOT_ID = "constituent.id";
 	
-	@SuppressWarnings("unchecked")
 	public ModelAndView view(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		String guid = request.getParameter("guid");
 		String sessionId = request.getParameter("sessionId");
@@ -74,7 +80,7 @@ public class CustomEntityController extends MultiActionController {
 		if (guid != null && ! guid.equals("undefined")) {
 			final List<CustomEntity> ceList = widgetService.getCustomEntity(guid);
 
-			return getModelMap(ceList, guid, constituentid, w);
+			return getModelMap(ceList, guid, constituentid, w, request);
 		}
 
 		return getModelMapError("Error trying to retrieve customEntity");
@@ -220,7 +226,7 @@ public class CustomEntityController extends MultiActionController {
 		return "";
 	}
 	private ModelAndView getModelMap(final List<CustomEntity> ceList, final String guid,
-			final Long constituentid, final Widget widget) {
+			final Long constituentid, final Widget widget, final HttpServletRequest request) {
 		final List<Map<String, Object>> returnList = new ArrayList<Map<String, Object>>();
 		final Map<String, Object> modelMap = new HashMap<String, Object>();
 		final Map<String, Object> metaData = new HashMap<String, Object>();
@@ -242,6 +248,7 @@ public class CustomEntityController extends MultiActionController {
 
 		Constituent constituent = null;
 		long rowId = 0;
+		CustomTableRow customTableRowToPopulateFrom = null;
 		if (constituentid != - 1) {
 			//
 			// get the constituent associated with this custom entity
@@ -283,31 +290,35 @@ public class CustomEntityController extends MultiActionController {
 			ceReferencesConstituent = forConstituentContext && hasConstituentIdKey && keys == 1;
 			//if there is a unique one to one record with the constituent then we need to locate 
 			//the custom table row id for that record
-			if (ceReferencesConstituent){
+			// Or if this is the pledge card widget, then load the last pledge card record on the account
+			if (ceReferencesConstituent || widget.getCustomEntityName().equals("pledge_card")) {
 				final Map<String, String> whereFieldEqualsValue = new HashMap<String, String>();
 				whereFieldEqualsValue.put(constituentIdFieldName, constituentid.toString());
 				
 				try {
 					List<CustomTableRow> rows = widgetService.getCustomTableRows(guid, whereFieldEqualsValue);
-					//if a row was returned
-					if (rows != null && rows.size() == 1){
+					if (widget.getCustomEntityName().equals("pledge_card") && rows.size() > 0) {
+						// If any rows were returned and it's the pledge card widget, get the row with the latest mail date 
+						// Sort the rows by mail date
+						Collections.sort(rows, new CustomTableRowComparator("mail_date", Date.class));
+						// Get the last record (latest date)
+						customTableRowToPopulateFrom = rows.get(rows.size() - 1); 
+						rowId = customTableRowToPopulateFrom.getId();
+					} else if (rows != null && rows.size() == 1) {
+						//if a row was returned
 						rowId = rows.get(0).getId();
 					}
-					else if (rows != null && rows.size() == 0){
+					else if (rows != null && rows.size() == 0) {
 						//set rowId to zero so it will create a new row
 						rowId = 0;
-					}
-					else {
+					} else {
 						//TODO throw error as the row count should be 0 or 1
 					}
 				}
 				catch (Exception e) {
 						return getModelMapError(e.getMessage());
 				}
-				
 			}
-			
-			
 		}
 
 		//
@@ -326,8 +337,6 @@ public class CustomEntityController extends MultiActionController {
 			}
 
 			try {
-				String ceName = ce.getName();
-
 				if (constituent != null) {
 					if (ce.getExpression().startsWith("constituent") || ce.getType().equals("entity-reference")) {
 						//
@@ -337,7 +346,8 @@ public class CustomEntityController extends MultiActionController {
 							if (ce.getType().equals("entity-reference")) {
 								if (ce.getReferencedEntityType().equals("address")) {
 									List<Map<String, Object>> addressList = new ArrayList<Map<String, Object>>();
-									ArrayList<com.orangeleap.client.Address> addresses = (ArrayList) PropertyUtils.getSimpleProperty(constituent, "addresses");
+									@SuppressWarnings("unchecked")
+									ArrayList<com.orangeleap.client.Address> addresses = (ArrayList<Address>) PropertyUtils.getSimpleProperty(constituent, "addresses");
 
 									Map<String, Object> blankAddressMap = new HashMap<String, Object>();
 									blankAddressMap.put("Name", "0");
@@ -370,7 +380,8 @@ public class CustomEntityController extends MultiActionController {
 									metaData.put("addresses", addressList);
 								} else if (ce.getReferencedEntityType().equals("phone")) {
 									List<Map<String, Object>> phoneList = new ArrayList<Map<String, Object>>();
-									ArrayList<com.orangeleap.client.Phone> phones = (ArrayList) PropertyUtils.getSimpleProperty(constituent, "phones");
+									@SuppressWarnings("unchecked")
+									ArrayList<com.orangeleap.client.Phone> phones = (ArrayList<Phone>) PropertyUtils.getSimpleProperty(constituent, "phones");
 
 									Map<String, Object> blankPhoneMap = new HashMap<String, Object>();
 									blankPhoneMap.put("Name", "0");
@@ -394,7 +405,8 @@ public class CustomEntityController extends MultiActionController {
 									metaData.put("phones", phoneList);
 								} else if (ce.getReferencedEntityType().equals("email")) {
 									List<Map<String, Object>> emailList = new ArrayList<Map<String, Object>>();
-									ArrayList<com.orangeleap.client.Email> emails = (ArrayList) PropertyUtils.getSimpleProperty(constituent, "emails");
+									@SuppressWarnings("unchecked")
+									ArrayList<com.orangeleap.client.Email> emails = (ArrayList<Email>) PropertyUtils.getSimpleProperty(constituent, "emails");
 
 									Map<String, Object> blankEmailMap = new HashMap<String, Object>();
 									blankEmailMap.put("Name", "0");
@@ -417,15 +429,18 @@ public class CustomEntityController extends MultiActionController {
 									
 									metaData.put("emails", emailList);
 								} else {
-									Object property = PropertyUtils.getSimpleProperty(constituent, args[1]);
-									row.put(ce.getName(), property);
+									if (widget.getCustomEntityName().equals("pledge_card") && args[0].equals("constituent") || ! widget.getCustomEntityName().equals("pledge_card")) {
+										Object property = PropertyUtils.getSimpleProperty(constituent, args[1]);
+										row.put(ce.getName(), property);
+									} else if (customTableRowToPopulateFrom != null) {
+										row.put(ce.getName(), getCustomFieldMapValue(customTableRowToPopulateFrom.getCustomFieldMap(), ce.getName()));
+									}
 								}
 							} else {
 								Object property = PropertyUtils.getSimpleProperty(constituent, args[1]);
 								row.put(ce.getName(), property);
 							}
-						}
-						else { 
+						} else { 
 							String property = ce.getExpression().substring(ce.getExpression().indexOf(".") + 1);
 							
 							if (property.contains("customFieldMap")) {
@@ -441,8 +456,23 @@ public class CustomEntityController extends MultiActionController {
 								row.put(ce.getName(), value);
 							}
 						}
+					} else if (widget.getCustomEntityName().equals("pledge_card") && ce.getName().equals("parish_name")) {
+						// Pull the constituent for the parish and put the name into the parish_name field
+						Constituent parish = orangeLeapClientService.getConstituentById(guid, Long.parseLong(getCustomFieldMapValue(customTableRowToPopulateFrom.getCustomFieldMap(), "parish_id")));
+						if (parish.getConstituentType().equals("individual")) {
+							row.put(ce.getName(), getCustomFieldMapValue(parish.getCustomFieldMap(), "formalSalutation"));
+						} else {
+							row.put(ce.getName(), parish.getOrganizationName());
+						}
+					} else if (customTableRowToPopulateFrom != null) {
+						row.put(ce.getName(), getCustomFieldMapValue(customTableRowToPopulateFrom.getCustomFieldMap(), ce.getName()));
 					} else {
-						row.put(ce.getName(), ce.getValue());
+						String value = request.getParameter(ce.getName());
+						if (value != null && value.length() > 0) {
+							row.put(ce.getName(), value);
+						} else {
+							row.put(ce.getName(), ce.getValue());
+						}
 					}
 				}
 				else {
@@ -461,6 +491,7 @@ public class CustomEntityController extends MultiActionController {
 							// Default to create new
 							row.put(ce.getName(), 0);
 							// No addresses, just hide the addresses drop down
+							@SuppressWarnings("unchecked")
 							List<CustomEntity> customEntityList = (List<CustomEntity>) metaData.get("fields");
 							CustomEntity customEntity = customEntityList.get(customEntityList.indexOf(ce));
 							customEntity.setHidden(true);
@@ -469,6 +500,7 @@ public class CustomEntityController extends MultiActionController {
 							// Default to create new
 							row.put(ce.getName(), 0);						
 							// No phones, just hide the addresses drop down
+							@SuppressWarnings("unchecked")
 							List<CustomEntity> customEntityList = (List<CustomEntity>) metaData.get("fields");
 							CustomEntity customEntity = customEntityList.get(customEntityList.indexOf(ce));
 							customEntity.setHidden(true);
@@ -477,12 +509,18 @@ public class CustomEntityController extends MultiActionController {
 							// Default to create new
 							row.put(ce.getName(), 0);						
 							// No emails, just hide the addresses drop down
+							@SuppressWarnings("unchecked")
 							List<CustomEntity> customEntityList = (List<CustomEntity>) metaData.get("fields");
 							CustomEntity customEntity = customEntityList.get(customEntityList.indexOf(ce));
 							customEntity.setHidden(true);
 						}
 					} else {
-						row.put(ce.getName(), ce.getValue());
+						String value = request.getParameter(ce.getName());
+						if (value != null && value.length() > 0) {
+							row.put(ce.getName(), value);
+						} else {
+							row.put(ce.getName(), ce.getValue());
+						}
 					}
 				}
 			}

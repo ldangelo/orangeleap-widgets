@@ -37,6 +37,11 @@ public class WidgetFormController {
     public void pledgelist(@RequestParam(required = false) Long id, Model model) {
 
     }
+    
+    @RequestMapping("/pledgecardwidgetform.htm")
+    public void pledgeCardWidget(@RequestParam(required = false) Long id, Model model) {
+
+    }
 
 	@RequestMapping("/widgetform.htm")
 	public void widgets(@RequestParam(required = false) Long id, Model model) {

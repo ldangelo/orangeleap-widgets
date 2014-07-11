@@ -7,6 +7,7 @@ Ext.onReady(function() {
 			widgetTypes.push(['login', 'Login']);
 			widgetTypes.push(['donorProfile', 'Donor Profile']);
 			widgetTypes.push(['giftHistory', 'Gift History']);
+			widgetTypes.push(['pledgeCard', 'Pledge Card']);
 			widgetTypes.push(['pledge', 'Pledge']);
 		}
 		if (data.match("WEBTOOLS_DONATION")) {
@@ -95,6 +96,9 @@ Ext.onReady(function() {
 		}
 		else if ('pledge' == newValue) {
 			widgetFormParams = { widgettype:'pledges', customentitytype:'undefined' };
+		}
+		else if ('pledgeCard' == newValue) {
+			widgetFormParams = { widgettype:'customentity', customentitytype:'pledge_card' };
 		}
 		else if ('registration' == newValue) {
 			widgetFormParams = { widgettype:'customentity', customentitytype:'online_registration' };

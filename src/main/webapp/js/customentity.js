@@ -246,6 +246,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 		logoutReset: function() {
 	        document.cookie = 'sessionId=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 	        Ext.getCmp('form').form.reset();
+	        location.reload();
 		},
 
 		initComponent : function() {
@@ -296,12 +297,26 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 
 				// call parent
 				OrangeLeap.CustomEntity.superclass.initComponent.apply(this, arguments);
+				var readURL = 'customEntity.ajax?action=view&guid='
+						+ this.guid
+						+ '&sessionId='
+						+ this.sessionId;
+				if (this.param_pledge_id && this.param_pledge_id.length > 0) {
+					readURL += '&pledge_id=' + this.param_pledge_id;
+				}
+				if (this.param_transaction_firstDistributionLineAmount && this.param_transaction_firstDistributionLineAmount.length > 0) {
+					readURL += '&transaction_firstDistributionLineAmount=' + this.param_transaction_firstDistributionLineAmount;
+				}
+				if (this.param_gift_designation && this.param_gift_designation.length > 0) {
+					readURL += '&gift_designation=' + this.param_gift_designation;
+				}
+				if (this.param_gift_motivation && this.param_gift_motivation.length > 0) {
+					readURL += '&gift_motivation=' + this.param_gift_motivation;
+				}
+				
 				var proxy = new Ext.data.HttpProxy({
 					api : {
-						read : 'customEntity.ajax?action=view&guid='
-								+ this.guid
-								+ '&sessionId='
-								+ this.sessionId,
+						read : readURL,
 						create : 'customEntity.ajax?action=create&guid='
 								+ this.guid
 								+ '&sessionId='
@@ -819,41 +834,55 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 										dataSource = that.paymentSources
 									}
 									
-									var comboConfig = new Ext.form.ComboBox({
-									    id : fields[f].name + 'combo',
-									    dataIndex : fields[f].name,
-									    valueField : 'Name',
-									    triggerAction : 'all',
-									    hiddenName : fields[f].name,
-									    displayField : 'Description',
-									    forceSelection: true,
-									    selectOnFocus: true,
-									    lazyInit : false,
-									    mode : 'local',
-									    emptyText : 'Select ' + fields[f].header + '...',
-									    store : new Ext.data.JsonStore({
-										fields : [ 'Name', 'Description'],
-										data: dataSource
-									    }),
-									    fieldLabel : createFieldLabel(fields[f]),
-									    listeners: {
-										select: function(comboBox, record, index) {
-										    comboEventHandler(comboBox);
-										},
-										change: function(comboBox, newValue, oldValue) {
-										    comboEventHandler(comboBox);
+									if (dataSource != null) {
+										var comboConfig = new Ext.form.ComboBox({
+										    id : fields[f].name + 'combo',
+										    dataIndex : fields[f].name,
+										    valueField : 'Name',
+										    triggerAction : 'all',
+										    hiddenName : fields[f].name,
+										    displayField : 'Description',
+										    forceSelection: true,
+										    selectOnFocus: true,
+										    lazyInit : false,
+										    mode : 'local',
+										    emptyText : 'Select ' + fields[f].header + '...',
+										    store : new Ext.data.JsonStore({
+											fields : [ 'Name', 'Description'],
+											data: dataSource
+										    }),
+										    fieldLabel : createFieldLabel(fields[f]),
+										    listeners: {
+											select: function(comboBox, record, index) {
+											    comboEventHandler(comboBox);
+											},
+											change: function(comboBox, newValue, oldValue) {
+											    comboEventHandler(comboBox);
+											}
+										    }
+										});
+										var oldFilterFunc = comboConfig.store.filter;
+										comboConfig.store.filter = function(field, query) {
+											oldFilterFunc.call(this, 'Description', query, false, false); // allow case-insensitive filtering of combobox records
+										};
+	
+										if (fields[f].required) {
+											comboConfig.allowBlank = false;
+											comboConfig.blankText = "Enter a " + fields[f].header;
 										}
-									    }
-									});
-									var oldFilterFunc = comboConfig.store.filter;
-									comboConfig.store.filter = function(field, query) {
-										oldFilterFunc.call(this, 'Description', query, false, false); // allow case-insensitive filtering of combobox records
-									};
-
-									if (fields[f].required) {
-										comboConfig.allowBlank = false;
-										comboConfig.blankText = "Enter a " + fields[f].header;
+										
+									} else {
+										// No data source - just create a text box
+									    fields[f].type = "text";
+										comboConfig = new Ext.form.TextField();
+										comboConfig.id = fields[f].name;
+										comboConfig.name = fields[f].name;
+										comboConfig.dataIndex = fields[f].name;
+										comboConfig.fieldLabel = createFieldLabel(fields[f]);
+										comboConfig.store = store;
+										comboConfig.border = false;
 									}
+									
 									if ( ! fieldset) {
 										this.form.superclass().add.call(this.form, comboConfig);
 									}
@@ -869,8 +898,8 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 										}
 									}
 								}
-							}
-
+							}		
+								
 							if (fieldset) {
 								this.form.superclass().add.call(this.form, fieldset);
 							}
