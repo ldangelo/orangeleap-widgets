@@ -33,6 +33,11 @@ public class PicklistServiceImpl implements PicklistService {
 
       Cache cache = (Cache) picklistCache;
 
+      //
+      // this is a greasy hack to get around the fact that the json parser
+      // seems to barf on the name customFieldName[bank] LAD
+      if (picklistname.equals("bank")) picklistname = "customFieldMap[bank]";
+      
     if (useCache) {
       Element elem =  cache.get(resolveSiteName(username)+picklistname);
       if (elem!=null) {

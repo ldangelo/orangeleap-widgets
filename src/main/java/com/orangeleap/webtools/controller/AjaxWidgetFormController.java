@@ -580,6 +580,16 @@ public class AjaxWidgetFormController extends MultiActionController {
 			map.put("header", "Motivation Code");
 			map.put("picklistId", "motivationCode");
 			fields.add(map);
+
+            map = new HashMap<String, Object>();
+            map.put("name", "bank");
+            map.put("readonly", false);
+            map.put("required", true);
+            map.put("type","picklist");
+            map.put("header", "Bank");
+            map.put("picklistId", "bank");
+            fields.add(map);
+            
 		}
 		else if (customentitytype.equals("sponsorable")) {
 			map = new HashMap<String, Object>();

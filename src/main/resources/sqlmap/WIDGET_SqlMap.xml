@@ -18,6 +18,7 @@
 		<result column="REPLACE_TOP_CONTENTS" property="replaceTopContents" jdbcType="BOOLEAN"/>
 		<result column="MOTIVATION_CODE" property="motivationCode" jdbcType="VARCHAR"/>
 		<result column="PROJECT_CODE" property="projectCode" jdbcType="VARCHAR"/>
+        <result column="BANK_CODE" property="bank" jdbcType="VARCHAR"/>
 		<result column="CUSTOM_ENTITY_NAME" property="customEntityName" jdbcType="VARCHAR"/>
 		<result column="LOGIN_SUCCESS_URL" property="widgetLoginSuccessURL" jdbcType="VARCHAR"/>
 		<result column="LOGIN_FAILURE_URL" property="widgetLoginFailureURL" jdbcType="VARCHAR"/>
@@ -70,7 +71,7 @@
 			-->
 		select WIDGET_ID, WIDGET_GUID, WIDGET_USERNAME, WIDGET_ERROR_COUNT,
 		WIDGET_CREATE_DATE, WIDGET_HTML, WIDGET_VIEW_COUNT, WIDGET_TYPE, WIDGET_DESCRIPTION,
-		REPLACE_TOP_CONTENTS, MOTIVATION_CODE, PROJECT_CODE,
+		REPLACE_TOP_CONTENTS, MOTIVATION_CODE, PROJECT_CODE,BANK_CODE,
 		CUSTOM_ENTITY_NAME,LOGIN_SUCCESS_URL,LOGIN_FAILURE_URL,AUTHENTICATION_REQUIRED,
 		AUTHENTICATION_URL,SPONSORSHIP_URL,STYLE_ID,IFRAME_HTML,DONATION_URL, SITE_NAME, INACTIVE, DELETED
 
@@ -90,7 +91,7 @@
 			-->
 		select WIDGET_ID, WIDGET_GUID, WIDGET_USERNAME, WIDGET_ERROR_COUNT,
 		WIDGET_CREATE_DATE, WIDGET_HTML, WIDGET_VIEW_COUNT, WIDGET_TYPE, WIDGET_DESCRIPTION,
-		REPLACE_TOP_CONTENTS, MOTIVATION_CODE, PROJECT_CODE,
+		REPLACE_TOP_CONTENTS, MOTIVATION_CODE, PROJECT_CODE,BANK_CODE,
 		CUSTOM_ENTITY_NAME,LOGIN_SUCCESS_URL,LOGIN_FAILURE_URL,AUTHENTICATION_REQUIRED,
 		AUTHENTICATION_URL,SPONSORSHIP_URL,STYLE_ID,IFRAME_HTML,DONATION_URL,SITE_NAME, INACTIVE, DELETED
 		from WIDGET
@@ -119,14 +120,14 @@
 			-->
 		insert into WIDGET (WIDGET_ID, WIDGET_GUID, WIDGET_USERNAME,
 		WIDGET_ERROR_COUNT, WIDGET_CREATE_DATE, WIDGET_HTML, WIDGET_VIEW_COUNT, WIDGET_TYPE,WIDGET_DESCRIPTION,
-		REPLACE_TOP_CONTENTS, MOTIVATION_CODE, PROJECT_CODE,
+		REPLACE_TOP_CONTENTS, MOTIVATION_CODE, PROJECT_CODE,BANK_CODE,
 		CUSTOM_ENTITY_NAME,LOGIN_SUCCESS_URL,LOGIN_FAILURE_URL,AUTHENTICATION_REQUIRED,AUTHENTICATION_URL,
 		SPONSORSHIP_URL,STYLE_ID,IFRAME_HTML,DONATION_URL,SITE_NAME, INACTIVE, DELETED)
 
 		values (#widgetId:BIGINT#, #widgetGuid:VARCHAR#, #widgetUsername:VARCHAR#,
 		#widgetErrorCount:BIGINT#, #widgetCreateDate:TIMESTAMP#,
 		#widgetHtml:VARCHAR#, #widgetViewCount:BIGINT#, #widgetType:VARCHAR#, #widgetDescription#,
-		#replaceTopContents#, #motivationCode:VARCHAR#, #projectCode:VARCHAR#,
+		#replaceTopContents#, #motivationCode:VARCHAR#, #projectCode:VARCHAR#,#bank:VARCHAR#,
 		#customEntityName:VARCHAR#,#widgetLoginSuccessURL:VARCHAR#,
 		#widgetLoginFailureURL:VARCHAR#,#widgetAuthenticationRequired:BOOLEAN#,#widgetAuthenticationURL:VARCHAR#,
 		#sponsorshipURL:VARCHAR#,#styleId:BIGINT#,#iframeHtml:VARCHAR#,#donationUrl:VARCHAR#, #siteName#, #inactive#, #deleted#)
@@ -173,6 +174,9 @@
 			</isNotNull>
 			<isNotNull prepend="," property="projectCode">
 				PROJECT_CODE
+			</isNotNull>
+			<isNotNull prepend="," property="bank">
+                BANK_CODE
 			</isNotNull>
 			<isNotNull prepend="," property="customEntityName">
 				CUSTOM_ENTITY_NAME
@@ -247,6 +251,9 @@
 			</isNotNull>
 			<isNotNull prepend="," property="projectCode">
 				#projectCode:VARCHAR#
+			</isNotNull>
+			<isNotNull prepend="," property="bank">
+				#bank:VARCHAR#
 			</isNotNull>
 			<isNotNull prepend="," property="customEntityName">
 				#customEntityName:VARCHAR#
@@ -328,6 +335,9 @@
 			<isNotNull prepend="," property="record.projectCode">
 				PROJECT_CODE = #record.projectCode:VARCHAR#
 			</isNotNull>
+			<isNotNull prepend="," property="record.bank">
+				PROJECT_CODE = #record.bank:VARCHAR#
+			</isNotNull>
 			<isNotNull prepend="," property="record.customEntityName">
 				CUSTOM_ENTITY_NAME = #record.customEntityName:VARCHAR#
 			</isNotNull>
@@ -366,6 +376,7 @@
 		REPLACE_TOP_CONTENTS = #record.replaceTopContents#,
 		MOTIVATION_CODE = #record.motivationCode:VARCHAR#,
 		PROJECT_CODE = #record.projectCode:VARCHAR#,
+		BANK_CODE = #record.bank:VARCHAR#,
 		CUSTOM_ENTITY_NAME = #record.customEntityName:VARCHAR#,
 		LOGIN_SUCCESS_URL = #record.widgetLoginSuccessURL:VARCHAR#,
 		LOGIN_FAILURE_URL = #record.widgetLoginFailureURL:VARCHAR#,
@@ -423,6 +434,9 @@
 			<isNotNull prepend="," property="projectCode">
 				PROJECT_CODE = #projectCode:VARCHAR#
 			</isNotNull>
+			<isNotNull prepend="," property="bank">
+				BANK_CODE = #bank:VARCHAR#
+			</isNotNull>
 			<isNotNull prepend="," property="customEntityName">
 				CUSTOM_ENTITY_NAME = #customEntityName:VARCHAR#
 			</isNotNull>
@@ -458,6 +472,7 @@
 		REPLACE_TOP_CONTENTS = #replaceTopContents#,
 		MOTIVATION_CODE = #motivationCode:VARCHAR#,
 		PROJECT_CODE = #projectCode:VARCHAR#,
+		BANK_CODE = #bank:VARCHAR#,
 		CUSTOM_ENTITY_NAME = #customEntityName:VARCHAR#,
 		LOGIN_SUCCESS_URL = #widgetLoginSuccessURL:VARCHAR#,
 		LOGIN_FAILURE_URL = #widgetLoginFailureURL:VARCHAR#,
