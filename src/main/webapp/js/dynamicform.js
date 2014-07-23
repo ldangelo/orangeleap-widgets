@@ -1,6 +1,16 @@
 function generateForm(form,store,meta) {
 			if (form.items.length > 1) {
-				return;  // we are paging through data and the fields already exist
+				var shouldReturn = true;
+			
+				// if the length is 2 and the 2 fields are the styleId and javascriptId, then the fields have not already been created 
+				if (form.items.length == 2
+					&& (form.items.get(0).id == 'styleId' || form.items.get(1).id == 'styleId')
+					&& (form.items.get(0).id == 'javascriptId' || form.items.get(1).id == 'javascriptId')) {
+					shouldReturn = false;
+				} 
+				if (shouldReturn) {
+					return;  // we are paging through data and the fields already exist
+				}
 			}
 			var fields = meta.fields;
 			var col1 = new Ext.Panel({columnWidth: '.50',layout:'form',defaults:{anchor:'100%'},bodyStyle:'padding:0 18px 0 0',items:[]}); 

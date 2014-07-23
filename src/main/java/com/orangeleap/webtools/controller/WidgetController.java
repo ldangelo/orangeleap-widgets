@@ -1,7 +1,9 @@
 package com.orangeleap.webtools.controller;
 
+import com.orangeleap.webtools.domain.Javascript;
 import com.orangeleap.webtools.domain.Style;
 import com.orangeleap.webtools.domain.Widget;
+import com.orangeleap.webtools.service.JavascriptService;
 import com.orangeleap.webtools.service.OrangeLeapClientService;
 import com.orangeleap.webtools.service.StyleService;
 import com.orangeleap.webtools.service.WidgetService;
@@ -28,9 +30,13 @@ public class WidgetController extends MultiActionController {
     @Autowired
     StyleService styleService;
 
+    @Autowired
+    JavascriptService javascriptService;
+    
     public ModelAndView view(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String guid = request.getParameter("guid");
         Style style = null;
+        Javascript javascript = null;
         String appLocation = System.getProperty("webtools.applocation");
         String refererUrl = request.getHeader("Referer");
 
@@ -46,6 +52,9 @@ public class WidgetController extends MultiActionController {
                 if (w.getStyleId() != null)
                     style = styleService.selectById(w.getStyleId());
 
+                if (w.getJavascriptId() != null) {
+                    javascript = javascriptService.selectById(w.getJavascriptId());
+                }
 
                 w.setWidgetHtml(w.getWidgetHtml().replace("@REFERER@", refererUrl));
                 w.setWidgetHtml(w.getWidgetHtml().replace("@APPLOCATION@", (appLocation != null) ? appLocation : ""));
@@ -71,6 +80,7 @@ public class WidgetController extends MultiActionController {
                 w.setWidgetHtml(w.getWidgetHtml().replace("@SPONSORSHIPFORMURL@", (w.getSponsorshipURL() != null) ? w.getSponsorshipURL() : ""));
                 w.setWidgetHtml(w.getWidgetHtml().replace("@ARGS@", (request.getHeader("Referer") != null) ? request.getHeader("Referer") : ""));
                 w.setWidgetHtml(w.getWidgetHtml().replace("@STYLE@", (style != null) ? style.getStyle() : ""));
+                w.setWidgetHtml(w.getWidgetHtml().replace("@JAVASCRIPT@", (javascript != null) ? javascript.getJavascript() : ""));
                 w.setWidgetHtml(w.getWidgetHtml().replace("@DONATIONURL@", (w.getDonationUrl() != null) ? w.getDonationUrl() : ""));
                 w.setWidgetHtml(w.getWidgetHtml().replace("@REPLACETOPCONTENT@", w.isReplaceTopContents().toString()));
                 if (request.getParameter("pledge_id") != null) {

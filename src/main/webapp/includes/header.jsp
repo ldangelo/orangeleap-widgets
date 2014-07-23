@@ -32,6 +32,9 @@
 			<a href="stylelist.htm">Styles</a>
 		</li>
 		<li>
+			<a href="javascriptlist.htm">Javascripts</a>
+		</li>
+		<li>
 			<a href="site.htm">Settings</a>
 		</li>		
 	</ul>

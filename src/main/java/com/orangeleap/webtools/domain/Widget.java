@@ -101,6 +101,7 @@ public class Widget implements Serializable {
     private String customEntityName;
 
     private Long StyleId;
+    private Long javascriptId;
 
 
     private Boolean 	widgetAuthenticationRequired = false;
@@ -145,6 +146,14 @@ public class Widget implements Serializable {
         this.StyleId = StyleId;
     }
 
+	public Long getJavascriptId() {
+		return javascriptId;
+	}
+	
+	public void setJavascriptId(Long javascriptId) {
+		this.javascriptId = javascriptId;
+	}
+  
   public final String getSponsorshipURL() {
     return sponsorshipURL;
   }

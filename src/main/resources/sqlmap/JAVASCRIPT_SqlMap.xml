@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="JAVASCRIPT">
+	<resultMap id="BaseResultMap" class="com.orangeleap.webtools.domain.Javascript">
+		<result column="JAVASCRIPT_ID" property="javascriptId" jdbcType="BIGINT"/>
+		<result column="JAVASCRIPT" property="javascript" jdbcType="LONGTEXT"/>
+		<result column="JAVASCRIPT_NAME" property="javascriptName" jdbcType="VARCHAR"/>
+		<result column="INACTIVE" property="inactive"/>
+		<result column="DELETED" property="deleted"/>
+		<result column="USER_NAME" property="userName" jdbcType="VARCHAR"/>
+		<result column="SITE_NAME" property="siteName" jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<select id="SELECT_JAVASCRIPT_BY_ID" resultMap="BaseResultMap" parameterClass="map">
+		select JAVASCRIPT_ID, JAVASCRIPT, JAVASCRIPT_NAME, INACTIVE, DELETED, USER_NAME, SITE_NAME
+		from JAVASCRIPT
+		where JAVASCRIPT_ID = #javascriptId#
+	</select>
+
+	<select id="SELECT_JAVASCRIPT_BY_USER_NAME" resultMap="BaseResultMap" parameterClass="map">
+		select JAVASCRIPT_ID, JAVASCRIPT, JAVASCRIPT_NAME, INACTIVE, DELETED, USER_NAME, SITE_NAME
+		from JAVASCRIPT
+		where USER_NAME = #userName#
+		and DELETED = 0
+	</select>
+
+	<select id="SELECT_JAVASCRIPT_BY_SITE_NAME" resultMap="BaseResultMap" parameterClass="map">
+		select JAVASCRIPT_ID, JAVASCRIPT, JAVASCRIPT_NAME, INACTIVE, DELETED, USER_NAME, SITE_NAME
+		from JAVASCRIPT
+		where SITE_NAME = #siteName#
+		and DELETED = 0
+	</select>
+
+	<insert id="INSERT_JAVASCRIPT" parameterClass="com.orangeleap.webtools.domain.Javascript">
+		insert into JAVASCRIPT (
+			JAVASCRIPT
+			, JAVASCRIPT_NAME
+			, INACTIVE
+			, DELETED
+			, USER_NAME
+			, SITE_NAME
+		) values (
+			#javascript#
+			, #javascriptName#
+			, #inactive#
+			, #deleted#
+			, #userName#
+			, #siteName#
+		)
+		<selectKey keyProperty="javascriptId" resultClass="long">
+			SELECT LAST_INSERT_ID() AS value
+		</selectKey>	
+	</insert>
+
+	<update id="UPDATE_JAVASCRIPT">
+		update JAVASCRIPT set
+			JAVASCRIPT = #javascript#
+			, JAVASCRIPT_NAME = #javascriptName#
+			, INACTIVE = #inactive#
+			, DELETED = #deleted#
+			, USER_NAME = #userName#
+			, SITE_NAME = #siteName#
+		where JAVASCRIPT_ID = #javascriptId#
+	</update>
+</sqlMap>

@@ -98,7 +98,25 @@ WidgetForm = Ext.extend(Ext.form.FormPanel, {
 				fields : [ 'Id', 'Style', 'StyleName'],
 				data: []
 			})
-		})];
+		}),
+			new Ext.form.ComboBox({
+			id: 'javascriptId',
+			fieldLabel: 'Javascript',
+			hiddenName: 'javascriptIdHidden',
+			triggerAction: 'all',
+			emptyText: 'Select Javascript...',
+			displayField: 'JavascriptName',
+			valueField: 'javascriptId',
+			lazyInit : false,
+			forceSelection: true,
+	        selectOnFocus: true,
+			mode : 'local',
+			store : new Ext.data.JsonStore({
+				fields : [ 'javascriptId', 'Javascript', 'JavascriptName'],
+				data: []
+			})			
+		})			
+		];
 
 		this.buttons =  [{
 			text: 'Save',
@@ -164,6 +182,9 @@ WidgetForm = Ext.extend(Ext.form.FormPanel, {
 					if (store.reader.meta.styles) {
 						Ext.getCmp('styleId').store.loadData(store.reader.meta.styles);
 					}
+					if (store.reader.meta.javascripts) {
+						Ext.getCmp('javascriptId').store.loadData(store.reader.meta.javascripts);
+					}
 
 					var metaData = store.reader.meta.fields;
 					var value = null;
@@ -181,6 +202,13 @@ WidgetForm = Ext.extend(Ext.form.FormPanel, {
 								value = '0';
 							}
 							Ext.getCmp('styleId').setValue(value);
+						}
+						else if (metaData[m].type == 'javascript') {
+							value = records[records.length-1].get(metaData[m].name);
+							if ( ! value) {
+								value = '0';
+							}
+							Ext.getCmp('javascriptId').setValue(value);
 						}
 						else if (metaData[m].type == 'boolean') {
 							value = records[records.length-1].get(metaData[m].name);

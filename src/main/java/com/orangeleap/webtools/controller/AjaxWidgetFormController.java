@@ -10,10 +10,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import com.orangeleap.webtools.domain.Javascript;
 import com.orangeleap.webtools.domain.Site;
 import com.orangeleap.webtools.domain.Style;
 import com.orangeleap.client.CustomTable;
 import com.orangeleap.webtools.domain.Widget;
+import com.orangeleap.webtools.service.JavascriptService;
 import com.orangeleap.webtools.service.SiteService;
 import com.orangeleap.webtools.service.StyleService;
 import com.orangeleap.webtools.service.WidgetService;
@@ -33,6 +35,9 @@ public class AjaxWidgetFormController extends MultiActionController {
 	@Autowired
 	StyleService styleService;
 
+	@Autowired
+	JavascriptService javascriptService;
+	
 	@Autowired
 	SiteService siteService;
 
@@ -251,6 +256,7 @@ public class AjaxWidgetFormController extends MultiActionController {
 		else {
 			mav = getModelMap(w, w.getWidgetType(), w.getCustomEntityName());
 			addStyles(mav, w.getStyleId());
+			addJavascripts(mav, w.getJavascriptId());
 		}
 
 		return mav;
@@ -317,6 +323,67 @@ public class AjaxWidgetFormController extends MultiActionController {
 		return errorMessage;
 	}
 
+	private String addJavascripts(final ModelAndView mav, final Long widgetJavascriptId) {
+		String errorMessage = null;
+		final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		final String userName = auth.getName();
+		final String siteName = resolveSiteName(userName);
+		final Javascript javascript = new Javascript();
+		javascript.setUserName(userName);
+		List<Javascript> javascripts = null;
+
+		if (userName != null && ! userName.equals("")) {
+			javascripts = javascriptService.selectByUserName(userName);
+		}
+		@SuppressWarnings("unchecked")
+		final Map<String, Object> metaData = (Map<String, Object>) mav.getModel().get("metaData");
+
+		final List<Map<String, Object>> javascriptRows = new ArrayList<Map<String, Object>>();
+
+		boolean foundJavascript = false;
+
+		Map<String, Object> aJavascriptRow = new HashMap<String, Object>();
+		aJavascriptRow.put("javascriptId", "0");
+		aJavascriptRow.put("Javascript", "");
+		aJavascriptRow.put("JavascriptName", "Default");
+		javascriptRows.add(aJavascriptRow);
+		if (new Long(0L).equals(widgetJavascriptId)) {
+			foundJavascript = true;
+		}
+
+		if (javascripts != null) {
+			for (final Javascript aJavascript : javascripts) {
+				aJavascriptRow = new HashMap<String, Object>();
+				aJavascriptRow.put("javascriptId", aJavascript.getJavascriptId());
+				aJavascriptRow.put("Javascript", net.sf.json.util.JSONUtils.quote(aJavascript.getJavascript()));
+				aJavascriptRow.put("JavascriptName", aJavascript.getJavascriptName() + (aJavascript.isInactive() ? " (Inactive)" : ""));
+				javascriptRows.add(aJavascriptRow);
+
+				if (aJavascript.getJavascriptId().equals(widgetJavascriptId)) {
+					foundJavascript = true;
+				}
+			}
+		}
+		if (! foundJavascript && widgetJavascriptId != null && widgetJavascriptId > 0) {
+			// this is a deleted javascript
+			final Javascript aJavascript = javascriptService.selectById(widgetJavascriptId);
+			if (aJavascript != null) {
+				if (siteName.equals(aJavascript.getSiteName())) {
+					aJavascriptRow = new HashMap<String, Object>();
+					aJavascriptRow.put("Id", aJavascript.getJavascriptId());
+					aJavascriptRow.put("Javascript", net.sf.json.util.JSONUtils.quote(aJavascript.getJavascript()));
+					aJavascriptRow.put("JavascriptName", aJavascript.getJavascriptName() + " (Deleted)");
+					javascriptRows.add(aJavascriptRow);
+				}
+				else {
+					errorMessage = "You have chosen an invalid Javascript.  Please use another.";
+				}
+			}
+		}
+		metaData.put("javascripts", javascriptRows);
+		return errorMessage;
+	}
+	
 	public ModelAndView create(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		Authentication auth = SecurityContextHolder.getContext()
@@ -371,6 +438,12 @@ public class AjaxWidgetFormController extends MultiActionController {
 
 		if (StringUtils.isNotBlank(errorMessage)) {
 			return getModelMapError(errorMessage);
+		}
+
+		final String javascriptErrorMessage = addJavascripts(mav, ret.getJavascriptId());
+
+		if (StringUtils.isNotBlank(javascriptErrorMessage)) {
+			return getModelMapError(javascriptErrorMessage);
 		}
 		return mav;
 	}
@@ -476,6 +549,12 @@ public class AjaxWidgetFormController extends MultiActionController {
 			return getModelMapError(errorMessage);
 		}
 
+		final String javascriptErrorMessage = addJavascripts(mav, widget.getJavascriptId());
+
+		if (StringUtils.isNotBlank(javascriptErrorMessage)) {
+			return getModelMapError(javascriptErrorMessage);
+		}
+		
 		return mav;
 	}
 
@@ -539,6 +618,14 @@ public class AjaxWidgetFormController extends MultiActionController {
 		map.put("header", "Style");
 		fields.add(map);
 
+		map = new HashMap<String, Object>();
+		map.put("name", "javascriptId");
+		map.put("readonly", false);
+		map.put("required", true);
+		map.put("type", "javascript");
+		map.put("header", "Javascript");
+		fields.add(map);
+		
 		if ("widget_authentication".equals(customentitytype) || "online_registration".equals(customentitytype) ||
 				"online_donation".equals(customentitytype) || "online_sponsorship".equals(customentitytype) || "pledge_card".equals(customentitytype)) {
 			map = new HashMap<String, Object>();

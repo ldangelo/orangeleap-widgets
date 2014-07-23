@@ -1042,6 +1042,11 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 							Ext.get('loading-mask').fadeOut({
 								remove : true
 							});
+
+							// call the afterWidgetDataLoaded function if it exists (would be defined in the custom javascript for the widget)
+							if (typeof afterWidgetDataLoaded == 'function') {
+								afterWidgetDataLoaded();
+							}
 						}
 					}
 				});

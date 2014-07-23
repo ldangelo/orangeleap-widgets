@@ -99,6 +99,10 @@
 		<property name="sqlMapClient"><ref local="sqlMap"/></property>
 	</bean>
 
+	<bean id="javascriptDAO" class="com.orangeleap.webtools.dao.impl.JavascriptDAOImpl">
+		<property name="sqlMapClient"><ref local="sqlMap"/></property>
+	</bean>
+	
 	<bean id="sqlMap" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
 		<property name="configLocations">
 			<value>classpath:sqlmap-config.xml</value>

@@ -26,6 +26,7 @@
 		<result column="AUTHENTICATION_URL" property="widgetAuthenticationURL" jdbcType="VARCHAR"/>
 		<result column="SPONSORSHIP_URL" property="sponsorshipURL" jdbcType="VARCHAR"/>
 		<result column="STYLE_ID" property="styleId" jdbcType="BIGINT"/>
+		<result column="JAVASCRIPT_ID" property="javascriptId" jdbcType="BIGINT"/>
 		<result column="IFRAME_HTML" property="iframeHtml" jdbcType="VARCHAR"/>
 		<result column="DONATION_URL" property="donationUrl" jdbcType="VARCHAR"/>
 		<result column="SITE_NAME" property="siteName"/>
@@ -73,7 +74,7 @@
 		WIDGET_CREATE_DATE, WIDGET_HTML, WIDGET_VIEW_COUNT, WIDGET_TYPE, WIDGET_DESCRIPTION,
 		REPLACE_TOP_CONTENTS, MOTIVATION_CODE, PROJECT_CODE,BANK_CODE,
 		CUSTOM_ENTITY_NAME,LOGIN_SUCCESS_URL,LOGIN_FAILURE_URL,AUTHENTICATION_REQUIRED,
-		AUTHENTICATION_URL,SPONSORSHIP_URL,STYLE_ID,IFRAME_HTML,DONATION_URL, SITE_NAME, INACTIVE, DELETED
+		AUTHENTICATION_URL,SPONSORSHIP_URL,STYLE_ID,JAVASCRIPT_ID,IFRAME_HTML,DONATION_URL, SITE_NAME, INACTIVE, DELETED
 
 		from WIDGET
 		<isParameterPresent>
@@ -93,7 +94,7 @@
 		WIDGET_CREATE_DATE, WIDGET_HTML, WIDGET_VIEW_COUNT, WIDGET_TYPE, WIDGET_DESCRIPTION,
 		REPLACE_TOP_CONTENTS, MOTIVATION_CODE, PROJECT_CODE,BANK_CODE,
 		CUSTOM_ENTITY_NAME,LOGIN_SUCCESS_URL,LOGIN_FAILURE_URL,AUTHENTICATION_REQUIRED,
-		AUTHENTICATION_URL,SPONSORSHIP_URL,STYLE_ID,IFRAME_HTML,DONATION_URL,SITE_NAME, INACTIVE, DELETED
+		AUTHENTICATION_URL,SPONSORSHIP_URL,STYLE_ID,JAVASCRIPT_ID,IFRAME_HTML,DONATION_URL,SITE_NAME, INACTIVE, DELETED
 		from WIDGET
 		where WIDGET_ID = #widgetId:BIGINT#
 	</select>
@@ -122,7 +123,7 @@
 		WIDGET_ERROR_COUNT, WIDGET_CREATE_DATE, WIDGET_HTML, WIDGET_VIEW_COUNT, WIDGET_TYPE,WIDGET_DESCRIPTION,
 		REPLACE_TOP_CONTENTS, MOTIVATION_CODE, PROJECT_CODE,BANK_CODE,
 		CUSTOM_ENTITY_NAME,LOGIN_SUCCESS_URL,LOGIN_FAILURE_URL,AUTHENTICATION_REQUIRED,AUTHENTICATION_URL,
-		SPONSORSHIP_URL,STYLE_ID,IFRAME_HTML,DONATION_URL,SITE_NAME, INACTIVE, DELETED)
+		SPONSORSHIP_URL,STYLE_ID,JAVASCRIPT_ID,IFRAME_HTML,DONATION_URL,SITE_NAME, INACTIVE, DELETED)
 
 		values (#widgetId:BIGINT#, #widgetGuid:VARCHAR#, #widgetUsername:VARCHAR#,
 		#widgetErrorCount:BIGINT#, #widgetCreateDate:TIMESTAMP#,
@@ -130,7 +131,7 @@
 		#replaceTopContents#, #motivationCode:VARCHAR#, #projectCode:VARCHAR#,#bank:VARCHAR#,
 		#customEntityName:VARCHAR#,#widgetLoginSuccessURL:VARCHAR#,
 		#widgetLoginFailureURL:VARCHAR#,#widgetAuthenticationRequired:BOOLEAN#,#widgetAuthenticationURL:VARCHAR#,
-		#sponsorshipURL:VARCHAR#,#styleId:BIGINT#,#iframeHtml:VARCHAR#,#donationUrl:VARCHAR#, #siteName#, #inactive#, #deleted#)
+		#sponsorshipURL:VARCHAR#,#styleId:BIGINT#,#javascriptId:BIGINT#,#iframeHtml:VARCHAR#,#donationUrl:VARCHAR#, #siteName#, #inactive#, #deleted#)
 	</insert>
 	<insert id="ibatorgenerated_insertSelective" parameterClass="com.orangeleap.webtools.domain.Widget">
 		<!--
@@ -198,6 +199,9 @@
 			</isNotNull>
 			<isNotNull prepend="," property="styleId">
 				STYLE_ID
+			</isNotNull>
+			<isNotNull prepend="," property="javascriptId">
+				JAVASCRIPT_ID
 			</isNotNull>
 			<isNotNull prepend="," property="iframeHtml">
 				IFRAME_HTML
@@ -384,6 +388,7 @@
 		AUTHENTICATION_URL = #record:widgetAuthenticationURL:VARCHAR#,
 		SPONSORSHIP_URL = #record:sponsorshipURL:VARCHAR#,
 		STYLE_ID = #record:styleId:BIGINT#,
+		JAVASCRIPT_ID = #record:javascriptId:BIGINT#,
 		IFRAME_HTML=#record:iframeHtml#,
 		DONATION_URL=#record:donationUrl#,
 		SITE_NAME = #siteName#,
@@ -480,6 +485,7 @@
 		AUTHENTICATION_URL = #widgetAuthenticationURL#,
 		SPONSORSHIP_URL = #sponsorshipURL#,
 		STYLE_ID = #styleId#,
+		JAVASCRIPT_ID = #javascriptId#,
 		IFRAME_HTML = #iframeHtml#,
 		DONATION_URL = #donationUrl#,
 		SITE_NAME = #siteName#,
