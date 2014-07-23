@@ -68,6 +68,7 @@ public class WidgetServiceImpl implements WidgetService {
 	SiteService siteService;
 
     public final static String BANK_CODE_PICKLIST_ID = "bank";
+    public final static String BANK_CODE_FIELD_NAME = "gift_bank";
 	public final static String PROJECT_CODE_PICKLIST_ID = "projectCode";
 	public final static String MOTIVATION_CODE_PICKLIST_ID = "motivationCode";
 	public final static String PROJECT_CODE_FIELD_NAME = "gift_designation";
@@ -191,7 +192,8 @@ public class WidgetServiceImpl implements WidgetService {
 					if (ce.getPicklistId().equalsIgnoreCase(PROJECT_CODE_PICKLIST_ID)){
 						//set the project code field in the custom table to be the same as the one embedded in the form and saved in the webtools.widget table 
 						values = request.getParameterValues(PROJECT_CODE_FIELD_NAME);
-                    } else if (ce.getPicklistId().equalsIgnoreCase(BANK_CODE_PICKLIST_ID))
+                    } else if (ce.getPicklistId().equalsIgnoreCase(BANK_CODE_PICKLIST_ID)) {
+                        values = request.getParameterValues(BANK_CODE_FIELD_NAME);
 					} else if (ce.getPicklistId().equalsIgnoreCase(MOTIVATION_CODE_PICKLIST_ID)){
 						//set the motivation code field in the custom table to be the same as the one embedded in the form and saved in the webtools.widget table
 						values = request.getParameterValues(MOTIVATION_CODE_FIELD_NAME);
