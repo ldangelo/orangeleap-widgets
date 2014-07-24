@@ -301,9 +301,18 @@ public class CustomEntityController extends MultiActionController {
 						// If any rows were returned and it's the pledge card widget, get the row with the latest mail date 
 						// Sort the rows by mail date
 						Collections.sort(rows, new CustomTableRowComparator("mail_date", Date.class));
-						// Get the last record (latest date)
-						customTableRowToPopulateFrom = rows.get(rows.size() - 1); 
-						rowId = customTableRowToPopulateFrom.getId();
+						// Get the last active record (latest date)
+						int index = 1;
+						boolean foundPledgeCard = false;
+						while (!foundPledgeCard && index < rows.size()) {
+							CustomTableRow customTableRowToCheck = rows.get(rows.size() - index); 
+							if (customTableRowToCheck.isIsActive()) {
+								customTableRowToPopulateFrom = customTableRowToCheck;
+								rowId = customTableRowToPopulateFrom.getId();
+								foundPledgeCard = true;
+							}
+							index++;
+						}
 					} else if (rows != null && rows.size() == 1) {
 						//if a row was returned
 						rowId = rows.get(0).getId();
