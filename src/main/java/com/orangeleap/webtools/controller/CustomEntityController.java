@@ -304,7 +304,7 @@ public class CustomEntityController extends MultiActionController {
 						// Get the last active record (latest date)
 						int index = 1;
 						boolean foundPledgeCard = false;
-						while (!foundPledgeCard && index < rows.size()) {
+						while (!foundPledgeCard && index <= rows.size()) {
 							CustomTableRow customTableRowToCheck = rows.get(rows.size() - index); 
 							if (customTableRowToCheck.isIsActive()) {
 								customTableRowToPopulateFrom = customTableRowToCheck;
