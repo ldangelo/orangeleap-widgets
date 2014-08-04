@@ -538,6 +538,7 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 									}
 									else if (fields[f].type == "checkbox") {
 										field = new Ext.form.Checkbox();
+										field.inputValue = "true";
 									}
 									else {
 										field = new Ext.form.TextField();
