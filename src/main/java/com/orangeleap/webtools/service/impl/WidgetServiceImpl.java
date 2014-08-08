@@ -67,7 +67,7 @@ public class WidgetServiceImpl implements WidgetService {
 	@Autowired
 	SiteService siteService;
 
-    public final static String BANK_CODE_PICKLIST_ID = "bank";
+    public final static String BANK_CODE_PICKLIST_ID = "customFieldMap[bank]";
     public final static String BANK_CODE_FIELD_NAME = "gift_bank";
 	public final static String PROJECT_CODE_PICKLIST_ID = "projectCode";
 	public final static String MOTIVATION_CODE_PICKLIST_ID = "motivationCode";
@@ -189,6 +189,8 @@ public class WidgetServiceImpl implements WidgetService {
 				String[] values = null;
 				values = request.getParameterValues(ce.getName());
 				if (values == null || values.length == 0 || (values.length == 1 && values[0].length() == 0)) {
+                    logger.debug("Picklist Id: " + ce.getPicklistId());
+                        
 					if (ce.getPicklistId().equalsIgnoreCase(PROJECT_CODE_PICKLIST_ID)){
 						//set the project code field in the custom table to be the same as the one embedded in the form and saved in the webtools.widget table 
 						values = request.getParameterValues(PROJECT_CODE_FIELD_NAME);

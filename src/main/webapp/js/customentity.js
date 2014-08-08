@@ -313,7 +313,9 @@ OrangeLeap.CustomEntity = Ext.extend(Ext.form.FormPanel, {
 				if (this.param_gift_motivation && this.param_gift_motivation.length > 0) {
 					readURL += '&gift_motivation=' + this.param_gift_motivation;
 				}
-				
+				if (this.param_gift_bank && this.param_gift_bank.length > 0) {
+                    readURL += '&gift_bank=' + this.param_gift_bank;
+                }
 				var proxy = new Ext.data.HttpProxy({
 					api : {
 						read : readURL,

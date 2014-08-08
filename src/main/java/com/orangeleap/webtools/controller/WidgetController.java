@@ -77,6 +77,12 @@ public class WidgetController extends MultiActionController {
                 } else {
                 	w.setWidgetHtml(w.getWidgetHtml().replace("@MOTIVATIONCODE@", (w.getMotivationCode() != null) ? w.getMotivationCode() : ""));
                 }
+
+                if (request.getParameter("gift_bank") != null && request.getParameter("gift_bank").length() > 0) {
+                    w.setWidgetHtml(w.getWidgetHtml().replace("@BANKCODE", request.getParameter("gift_bank")));
+                } else {
+                    w.setWidgetHtml(w.getWidgetHtml().replace("@BANKCODE@", (w.getBank() != null) ? w.getBank() :  ""));
+                }
                 w.setWidgetHtml(w.getWidgetHtml().replace("@SPONSORSHIPFORMURL@", (w.getSponsorshipURL() != null) ? w.getSponsorshipURL() : ""));
                 w.setWidgetHtml(w.getWidgetHtml().replace("@ARGS@", (request.getHeader("Referer") != null) ? request.getHeader("Referer") : ""));
                 w.setWidgetHtml(w.getWidgetHtml().replace("@STYLE@", (style != null) ? style.getStyle() : ""));
